@@ -1,8 +1,12 @@
-# SSW.SohieBot
+# SSW.SophieBot
 
-# Provisioninig 
+# Provisioning 
 We deploy SophieBot fully on Azure 
 Resources we used
-- Azure Bot Service
-- Azure Congnitive Service - Language Understanding (LUIS)
-- 
+- Bot Service
+- Cognitive Service - Language Understanding (LUIS)
+- Cosmos Database 
+- Storage account 
+- Application Insight 
+
+Refer to [Provisioning Steps](src/BotProvisionScripts/README.MD)
