@@ -155,6 +155,13 @@ const createResourceGroup = async (client, location, resourceGroupName) => {
   });
   const param = {
     location: location,
+    //SSW Resource group policy
+    tags: {
+        OWNER: "Patrick Zhao",
+        DESCRIPTION: "SophieBot resources",
+        ENVIRONMENT: "Prod",
+        CREATEDBY: "Patrick Zhao"
+    }
   };
 
   return await client.resourceGroups.createOrUpdate(resourceGroupName, param);

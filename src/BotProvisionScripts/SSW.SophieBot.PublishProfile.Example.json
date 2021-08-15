@@ -1,0 +1,36 @@
+{
+  "accessToken": "{azure-access-token}",
+  "name": "{name-of-your-bot}",
+  "environment": "prod",
+  "hostname": "{bot-hosting-web-app-name}",
+  "luisResource": "{luis-resource-name}",
+  "settings": {
+    "applicationInsights": {
+      "InstrumentationKey": "{app-insight-instrument-key}"
+    },
+    "cosmosDb": {
+      "cosmosDBEndpoint": "{cosmos-db-endpoint}",
+      "authKey": "{cosmos-auth-key}",
+      "databaseId": "botstate-db",
+      "containerId": "botstate-container"
+    },
+    "blobStorage": {
+      "connectionString": "{storage-account-connection-string}",
+      "container": "transcripts"
+    },
+    "luis": {
+      "endpointKey": "{luis-endpoint-key}",
+      "authoringKey": "{luis-authoring-key}",
+      "region": "australiaeast",
+      "endpoint": "https://australiaeast.api.cognitive.microsoft.com/",
+      "authoringEndpoint": "https://australiaeast.api.cognitive.microsoft.com/"
+    },
+    "MicrosoftAppId": "{registered-app-id}",
+    "MicrosoftAppPassword": "{registered-app-password}"
+  },
+  "runtimeIdentifier": "win-x64",
+  "resourceGroup": "{resource-group-name}",
+  "botName": "{name-of-your-bot}",
+  "region": "australiaeast",
+  "subscriptionId": "{subscription-id}"
+}
