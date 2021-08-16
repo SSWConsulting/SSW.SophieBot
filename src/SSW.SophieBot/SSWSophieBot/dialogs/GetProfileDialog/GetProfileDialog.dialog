@@ -1,0 +1,199 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "1dAZlt",
+    "name": "GetProfileDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "XToxGY"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "FPmp8f"
+          },
+          "name": "SSWSophieBot.GetProfileDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "b09m2z"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_b09m2z()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "property": "user.AuthorizationAndTenant"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "xC7ABA"
+          },
+          "assignments": [
+            {
+              "property": "dialog.headers.Authorization",
+              "value": "=split(user.AuthorizationAndTenant, '/')[0]"
+            },
+            {
+              "value": "=split(user.AuthorizationAndTenant, '/')[1]",
+              "property": "dialog.headers.Tenant"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "WTo6gs"
+          },
+          "resultProperty": "turn.response",
+          "url": "https://ssw-people.azurewebsites.net/api/employees?firstName=${dialog.nameEntity}",
+          "method": "GET",
+          "headers": {
+            "Authorization": "${dialog.headers.Authorization}",
+            "Tenant": "${dialog.headers.Tenant}"
+          },
+          "contentType": "application/json",
+          "responseType": "json"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "hVMQy4"
+          },
+          "condition": "=turn.response.statusCode == 200",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "E1qghn"
+              },
+              "activity": "${SendActivity_E1qghn()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "o52iG9"
+              },
+              "property": "turn.items",
+              "value": "=turn.response.content"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "SLFVdZ"
+              },
+              "condition": "=exists(turn.items) && count(turn.items) > 0",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "Ut9mVe"
+                  },
+                  "activity": "${SendActivity_Ut9mVe()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "sm9K8b"
+                  },
+                  "condition": "=count(turn.items) > 1",
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "SSFRHh"
+                      },
+                      "property": "turn.displayName",
+                      "value": "=concat(turn.items[0].firstName, \" \", turn.items[0].lastName)"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "q5H2c0"
+                      },
+                      "activity": "${SendActivity_q5H2c0()}"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "pkRvWS"
+                      },
+                      "activity": "${SendActivity_pkRvWS()}"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.Foreach",
+                  "$designer": {
+                    "id": "dQQXqE"
+                  },
+                  "index": "dialog.foreach.index",
+                  "value": "dialog.foreach.value",
+                  "itemsProperty": "turn.items",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "hZI1zE"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.foreach.value.displayName",
+                          "value": "=concat(dialog.foreach.value.firstName, \" \", dialog.foreach.value.lastName)"
+                        },
+                        {
+                          "property": "dialog.foreach.value.skillsInfo",
+                          "value": "=concat(join(take(select(dialog.foreach.value.skills, s, s.technology), max(count(dialog.foreach.value.skills) - 1, 0)), \", \"), \" and \", last(dialog.foreach.value.skills).technology)"
+                        },
+                        {
+                          "property": "dialog.foreach.value.lastSeenInfo",
+                          "value": "Last seen in ${dialog.foreach.value.lastSeenAt.siteId}."
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "D9w7zc"
+                      },
+                      "activity": "${SendActivity_D9w7zc()}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "XYzO24"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "GetProfileDialog.lg",
+  "recognizer": "GetProfileDialog.lu.qna",
+  "id": "GetProfileDialog"
+}
