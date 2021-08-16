@@ -17,10 +17,4 @@
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.13.2" />
     <PackageReference Include="Microsoft.Bot.Components.Graph" Version="1.0.0" />
   </ItemGroup>
-  <ItemGroup>
-    <EditorConfigFiles Remove="D:\SSW\Codes\SSWInternal\Bots\SSW.SophieBot-GitHub\src\SSW.SophieBot\SSWSophieBot\.editorconfig" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="D:\SSW\Codes\SSWInternal\Bots\SSW.SophieBot-GitHub\src\SSW.SophieBot\SSWSophieBot\.editorconfig" />
-  </ItemGroup>
 </Project>
