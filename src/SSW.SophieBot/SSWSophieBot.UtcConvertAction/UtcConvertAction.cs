@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SSWSophieBot.actions.UtcConvert
+namespace SSWSophieBot.UtcConvertAction
 {
     public class UtcConvertAction : Dialog
     {
