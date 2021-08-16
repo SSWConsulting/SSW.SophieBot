@@ -1,0 +1,167 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "dpmSkY",
+    "name": "GetSkillsDialog",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "3KfXTr"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "1ZSPRL"
+          },
+          "name": "SSWSophieBot.GetProfileDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "PSsrd9"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_PSsrd9()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "property": "user.AuthorizationAndTenant"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "xC7ABA"
+          },
+          "assignments": [
+            {
+              "property": "dialog.headers.Authorization",
+              "value": "=split(user.AuthorizationAndTenant, '/')[0]"
+            },
+            {
+              "value": "=split(user.AuthorizationAndTenant, '/')[1]",
+              "property": "dialog.headers.Tenant"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "dclrdz"
+          },
+          "resultProperty": "turn.response",
+          "url": "https://ssw-people.azurewebsites.net/api/employees?firstName=${dialog.nameEntity}",
+          "method": "GET",
+          "headers": {
+            "Authorization": "${dialog.headers.Authorization}",
+            "Tenant": "${dialog.headers.Tenant}"
+          },
+          "contentType": "application/json",
+          "responseType": "json"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "DKwk7N"
+          },
+          "condition": "=turn.response.statusCode == 200",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "sOvRvR"
+              },
+              "activity": "${SendActivity_sOvRvR()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "P6KkbS"
+              },
+              "property": "turn.items",
+              "value": "=turn.response.content"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "W9reNj"
+              },
+              "condition": "=exists(turn.items) && count(turn.items) > 0",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "USdQMN"
+                  },
+                  "activity": "${SendActivity_USdQMN()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.Foreach",
+                  "$designer": {
+                    "id": "mG5DPW"
+                  },
+                  "index": "dialog.foreach.index",
+                  "value": "dialog.foreach.value",
+                  "itemsProperty": "turn.items",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "qaZgNs"
+                      },
+                      "assignments": [
+                        {
+                          "property": "turn.advancedSkills",
+                          "value": "=join(select(where(dialog.foreach.value.skills, s, s.experienceLevel == \"Advanced\"), s, s.technology), \" | \")"
+                        },
+                        {
+                          "property": "turn.intermediateSkills",
+                          "value": "=join(select(where(dialog.foreach.value.skills, s, s.experienceLevel == \"Intermediate\"), s, s.technology), \" | \")"
+                        },
+                        {
+                          "property": "turn.displayName",
+                          "value": "=concat(dialog.foreach.value.firstName, \" \", dialog.foreach.value.lastName)"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "oMFRZo"
+                      },
+                      "activity": "${SendActivity_oMFRZo()}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "R8c3iD"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "GetSkillsDialog.lg",
+  "recognizer": "GetSkillsDialog.lu.qna",
+  "id": "GetSkillsDialog"
+}

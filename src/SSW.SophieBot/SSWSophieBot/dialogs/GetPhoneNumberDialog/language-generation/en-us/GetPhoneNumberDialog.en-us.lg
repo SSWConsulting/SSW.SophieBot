@@ -1,0 +1,44 @@
+[import](common.lg)
+
+# SendActivity_ooStup_text()
+- I got an error: ${dialog.api_response.content.message}.
+# SendActivity_ooStup()
+[Activity
+    Text = ${SendActivity_ooStup_text()}
+]
+
+# SendActivity_AOE7pz()
+[Activity
+    Text = ${SendActivity_AOE7pz_text()}
+]
+
+# SendActivity_AOE7pz_text()
+- Sorry, I couldn't find anyone named **${dialog.contact}** in your organization. Please try again.
+# LogAction_Text_IxMRSi()
+[Activity
+    Text = ${LogAction_Text_IxMRSi_text()}
+]
+
+# LogAction_Text_IxMRSi_text()
+- ${dialog}
+# SendActivity_CoOTZW()
+[Activity
+    Text = ${SendActivity_CoOTZW_text()}
+]
+
+# SendActivity_CoOTZW_text()
+- **${dialog.displayName}**'s mobile number is: **${dialog.mobilePhone}**
+# LogAction_Text_uysiOu()
+[Activity
+    Text = ${LogAction_Text_uysiOu_text()}
+]
+
+# LogAction_Text_uysiOu_text()
+- ${turn}
+# TextInput_Prompt_WORskD()
+[Activity
+    Text = ${TextInput_Prompt_WORskD_text()}
+]
+
+# TextInput_Prompt_WORskD_text()
+- What is your Authorization and Tenant headers(use / to separate)?
