@@ -1,0 +1,152 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "HYXLve",
+    "name": "GetPeopleBasedOnLocationDialog",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "N21Py6"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "h9dcRS"
+          },
+          "name": "SSWSophieBot.GetPeopleBasedOnLocation.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "mMy8YQ"
+          },
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "CR9ta7"
+              },
+              "activity": "${SendActivity_CR9ta7()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "ppMzeA"
+              }
+            }
+          ],
+          "condition": "dialog.location != null"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "gJp00U"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_gJp00U()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "property": "user.AuthorizationAndTenant"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "xC7ABA"
+          },
+          "assignments": [
+            {
+              "property": "dialog.headers.Authorization",
+              "value": "=split(user.AuthorizationAndTenant, '/')[0]"
+            },
+            {
+              "value": "=split(user.AuthorizationAndTenant, '/')[1]",
+              "property": "dialog.headers.Tenant"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "EVWEXC"
+          },
+          "resultProperty": "turn.response",
+          "url": "https://ssw-people.azurewebsites.net/api/employees?location=${dialog.location}",
+          "method": "GET",
+          "headers": {
+            "Authorization": "${dialog.headers.Authorization}",
+            "Tenant": "${dialog.headers.Tenant}"
+          },
+          "contentType": "application/json",
+          "responseType": "json"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "J45PCj"
+          },
+          "condition": "=turn.response.statusCode == 200",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "nvgfb0"
+              },
+              "activity": "${SendActivity_nvgfb0()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "VoQUFR"
+              },
+              "property": "turn.items",
+              "value": "=turn.response.content"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "JZiSHU"
+              },
+              "condition": "=exists(turn.items) && count(turn.items) > 0",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "fAH1iZ"
+                  },
+                  "activity": "${SendActivity_fAH1iZ()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "Grcpla"
+                  },
+                  "activity": "${SendActivity_Grcpla()}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "GetPeopleBasedOnLocationDialog.lg",
+  "recognizer": "GetPeopleBasedOnLocationDialog.lu.qna",
+  "id": "GetPeopleBasedOnLocationDialog"
+}

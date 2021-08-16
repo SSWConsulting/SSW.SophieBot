@@ -1,17 +1,144 @@
-[import](common.lg)
+[Common](common.en-us.lg)
 
-# SendActivity_Greeting()
+# SendActivity_DWdyHg()
 [Activity
-    Text = ${SendActivity_Greeting_text()}
+    Text = You're signed out!
 ]
 
-# SendActivity_Greeting_text()
-- Welcome to your bot.
-
-# SendActivity_DidNotUnderstand()
+# SendActivity_HTkwlL()
 [Activity
-    Text = ${SendActivity_DidNotUnderstand_text()}
+    Text = Sorry I didn't understand your phrase. Can you please try again?
 ]
 
-# SendActivity_DidNotUnderstand_text()
-- Sorry, I didn't get that.
+# SendActivity_DP3pJu()
+[Activity
+    Text = ${WelcomeUser()}
+]
+
+# SendActivity_W4IWlO()
+[Activity
+    Attachments = ${SendActivity_W4IWlO_attachment_EvFkJ1()}
+]
+
+# SendActivity_W4IWlO_attachment_EvFkJ1()
+[HeroCard
+  title = Welcome to People Skill!
+  subtitle = Find people in your organization by asking.
+  text = WelcomeUser()
+]
+
+
+
+# SendActivity_ipHTXS()
+[Activity
+    Text = Sorry! An error was encountered.
+]
+
+# SendActivity_AV87xs()
+[Activity
+    Text = An error was encountered, please see below message for detail.
+]
+
+# SendActivity_y3gv3g()
+[Activity
+    Text = Conversation Id: ${turn.activity.conversation.id}
+]
+
+# SendActivity_Tcje3O()
+[Activity
+    Text = Error: ${turn.dialogEvent.value}
+]
+
+# WelcomeUser()
+- IF: ${turn.signedInUser.givenName != null}
+    - Hi ${turn.signedInUser.givenName} 🖐, ${IntroMessage()}
+- ELSE: 
+    - Hi there 🖐, ${IntroMessage()}
+
+# IntroMessage()
+- I can help you search for people in your organization.
+- I'm ready to help answer questions about people in your organization.
+- I'm here to help you find people in your organization.
+# SendActivity_ZLLvJg()
+[Activity
+    Text = ${SendActivity_ZLLvJg_text()}
+]
+
+# SendActivity_ZLLvJg_text()
+- Getting collaborators is still working in progress.
+# SendActivity_Fqfm3K()
+[Activity
+    Text = ${SendActivity_Fqfm3K_text()}
+]
+
+# SendActivity_Fqfm3K_text()
+- Getting department is still working in progress.
+# SendActivity_1vF7d8()
+[Activity
+    Text = ${SendActivity_1vF7d8_text()}
+]
+
+# SendActivity_1vF7d8_text()
+- Getting direct reports is still working in progress.
+# SendActivity_Z0VDAj()
+[Activity
+    Text = ${SendActivity_Z0VDAj_text()}
+]
+
+# SendActivity_Z0VDAj_text()
+- Getting email address is still working in progress.
+# SendActivity_zDgeTJ()
+[Activity
+    Text = ${SendActivity_zDgeTJ_text()}
+]
+
+# SendActivity_zDgeTJ_text()
+- Getting job title is still working in progress.
+# SendActivity_IBib22()
+[Activity
+    Text = ${SendActivity_IBib22_text()}
+]
+
+# SendActivity_IBib22_text()
+- Getting location is still working in progress.
+# SendActivity_AL5aNe()
+[Activity
+    Text = ${SendActivity_AL5aNe_text()}
+]
+
+# SendActivity_AL5aNe_text()
+- Getting manager is still working in progress.
+# SendActivity_SVlVLv()
+[Activity
+    Text = ${SendActivity_SVlVLv_text()}
+]
+
+# SendActivity_SVlVLv_text()
+- Getting peers is still working in progress.
+# SendActivity_RXwe62()
+[Activity
+    Text = ${SendActivity_RXwe62_text()}
+]
+
+# SendActivity_RXwe62_text()
+- Getting phone number is still working in progress.
+# SendActivity_ea2BG1()
+[Activity
+    Text = ${SendActivity_ea2BG1_text()}
+]
+
+# SendActivity_ea2BG1_text()
+- Getting profile is still working in progress.
+# SendActivity_980h76()
+[Activity
+    Text = ${SendActivity_980h76_text()}
+]
+
+# SendActivity_980h76_text()
+- Getting skills is still working in progress.
+# SendActivity_I3wW7h_text()
+- Getting people based on location is still working in progress.
+# SendActivity_I3wW7h()
+[Activity
+    Text = ${SendActivity_I3wW7h_text()}
+]
