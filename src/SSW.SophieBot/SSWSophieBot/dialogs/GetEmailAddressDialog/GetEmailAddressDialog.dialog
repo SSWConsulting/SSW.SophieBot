@@ -1,0 +1,163 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "0y31Tq",
+    "name": "GetEmailAddressDialog",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "zsS10E"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "tSQGsG"
+          },
+          "name": "SSWSophieBot.GetPhoneNumberDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "PlapBu"
+          },
+          "property": "dialog.contact",
+          "value": "=dialog.nameEntity"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "t2f3QE"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_t2f3QE()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "property": "user.AuthorizationAndTenant"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "xC7ABA"
+          },
+          "assignments": [
+            {
+              "property": "dialog.headers.Authorization",
+              "value": "=split(user.AuthorizationAndTenant, '/')[0]"
+            },
+            {
+              "value": "=split(user.AuthorizationAndTenant, '/')[1]",
+              "property": "dialog.headers.Tenant"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "ucQc3X"
+          },
+          "resultProperty": "turn.response",
+          "method": "GET",
+          "url": "https://ssw-people.azurewebsites.net/api/employees?firstName=${dialog.contact}",
+          "contentType": "application/json",
+          "responseType": "json",
+          "headers": {
+            "Authorization": "${dialog.headers.Authorization}",
+            "Tenant": "${dialog.headers.Tenant}"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "I7XDdE"
+          },
+          "condition": "=turn.response.statusCode == 200",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "mrti0A"
+              },
+              "activity": "${SendActivity_mrti0A()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "tF88n8"
+              },
+              "condition": "=turn.response.content.count != 0",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "s0q8VQ"
+                  },
+                  "activity": "${SendActivity_s0q8VQ()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.Foreach",
+                  "$designer": {
+                    "id": "2pRu0N"
+                  },
+                  "index": "dialog.foreach.index",
+                  "value": "dialog.profile",
+                  "itemsProperty": "turn.response.content",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "AeCySL"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.displayName",
+                          "value": "=concat(dialog.profile.firstName, \" \", dialog.profile.lastName)"
+                        },
+                        {
+                          "property": "dialog.emailAddress",
+                          "value": "=dialog.profile.emailAddress"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "ojOPMX"
+                      },
+                      "activity": "${SendActivity_ojOPMX()}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "usM0wt"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "GetEmailAddressDialog.lg",
+  "recognizer": "GetEmailAddressDialog.lu.qna",
+  "id": "GetEmailAddressDialog"
+}

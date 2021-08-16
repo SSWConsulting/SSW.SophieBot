@@ -1,0 +1,36 @@
+[import](common.lg)
+
+# SendActivity_sOvRvR()
+[Activity
+    Text = ${SendActivity_sOvRvR_text()}
+]
+
+# SendActivity_sOvRvR_text()
+- ${requestFailed()}
+# SendActivity_USdQMN()
+[Activity
+    Text = ${SendActivity_USdQMN_text()}
+]
+
+# SendActivity_USdQMN_text()
+- Sorry, I couldn't find anyone named **${turn.recognized.entities.contact[0]}** in your organization. Please try again.
+# SendActivity_oMFRZo()
+[Activity
+    Text = ${SendActivity_oMFRZo_text()}
+]
+
+# SendActivity_oMFRZo_text()
+- ```**${turn.displayName}** knows:
+<br/>
+**${turn.advancedSkills}**
+<br/><br/>
+He also knows:
+<br/>
+${turn.intermediateSkills}```
+# TextInput_Prompt_PSsrd9()
+[Activity
+    Text = ${TextInput_Prompt_PSsrd9_text()}
+]
+
+# TextInput_Prompt_PSsrd9_text()
+- What is your Authorization and Tenant headers(use / to separate)?
