@@ -1,7 +1,7 @@
 name: Build store front and upload to azure blog storage
 
 on:
-  pull_request:
+  push:
     branches:
       - main
     paths:
