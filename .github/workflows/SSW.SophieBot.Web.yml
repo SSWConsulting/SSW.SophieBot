@@ -1,0 +1,35 @@
+name: Build store front and upload to azure blog storage
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - src/SSW.SophieBot.Web/**
+      - .github/workflows/SSW.SophieBot.Web.yml
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check out branch
+        uses: actions/checkout@v2
+      
+      - name: set up Node.js version
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+
+      - name: install browserify and bundle
+        run: |
+          npm install browserify
+          browserify "js/index.js" -o "index.min.js"
+        working-directory: src/SSW.SophieBot.Web
+
+      - name: upload to storage account
+        uses: bacongobbler/azure-blob-storage-upload@v1.2.0
+        with:
+          source_dir: src/SSW.SophieBot.Web
+          container_name: '$web'
+          connection_string: ${{ secrets.WEBBLOBSTORAGECONNECTIONSTRING }}
+          sync: true
