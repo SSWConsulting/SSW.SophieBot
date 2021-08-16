@@ -1,6 +1,4 @@
-using System;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
@@ -17,11 +15,9 @@ namespace SSWSophieBot
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, builder) =>
                 {
-                    var applicationRoot = AppDomain.CurrentDomain.BaseDirectory;
                     var environmentName = hostingContext.HostingEnvironment.EnvironmentName;
-                    var settingsDirectory = "settings";
 
-                    builder.AddBotRuntimeConfiguration(applicationRoot, settingsDirectory, environmentName);
+                    builder.AddBotConfiguration(environmentName);
 
                     builder.AddCommandLine(args);
                 })
