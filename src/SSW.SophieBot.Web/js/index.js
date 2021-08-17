@@ -1,7 +1,7 @@
-const { DirectLine } = require('./directline');
-const AdaptiveCards = require('./adaptivecards');
-const marked = require('./marked.min');
-const moment = require('./moment');
+const { DirectLine } = require('botframework-directlinejs');
+const AdaptiveCards = require('adaptivecards');
+const marked = require('marked');
+const moment = require('moment');
 
 var replyToId = '';
 const directLine = new DirectLine({
