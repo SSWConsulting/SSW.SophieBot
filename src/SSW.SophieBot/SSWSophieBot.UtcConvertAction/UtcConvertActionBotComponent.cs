@@ -3,7 +3,7 @@ using Microsoft.Bot.Builder.Dialogs.Declarative;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace SSWSophieBot.actions.UtcConvert
+namespace SSWSophieBot.UtcConvertAction
 {
     public class UtcConvertActionBotComponent : BotComponent
     {

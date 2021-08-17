@@ -17,4 +17,7 @@
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.13.2" />
     <PackageReference Include="Microsoft.Bot.Components.Graph" Version="1.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SSWSophieBot.UtcConvertAction\SSWSophieBot.UtcConvertAction.csproj" />
+  </ItemGroup>
 </Project>

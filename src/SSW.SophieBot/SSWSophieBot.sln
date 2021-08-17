@@ -1,9 +1,10 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSWSophieBot", "SSWSophieBot\SSWSophieBot.csproj", "{A442AB9C-1784-4921-BC56-A58F3AFB9392}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSWSophieBot.UtcConvertAction", "SSWSophieBot.UtcConvertAction\SSWSophieBot.UtcConvertAction.csproj", "{326C4E02-EA18-450B-B851-4F71AE7B1A89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +16,10 @@ Global
 		{A442AB9C-1784-4921-BC56-A58F3AFB9392}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A442AB9C-1784-4921-BC56-A58F3AFB9392}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A442AB9C-1784-4921-BC56-A58F3AFB9392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{326C4E02-EA18-450B-B851-4F71AE7B1A89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{326C4E02-EA18-450B-B851-4F71AE7B1A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{326C4E02-EA18-450B-B851-4F71AE7B1A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{326C4E02-EA18-450B-B851-4F71AE7B1A89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

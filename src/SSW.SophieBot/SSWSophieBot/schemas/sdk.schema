@@ -5,10 +5,22 @@
   "description": "These are all of the kinds that can be created by the loader.",
   "oneOf": [
     {
+      "$ref": "#/definitions/GetEmailAddressDialog.dialog"
+    },
+    {
       "$ref": "#/definitions/GetManagerDialog.dialog"
     },
     {
+      "$ref": "#/definitions/GetPeopleBasedOnLocationDialog.dialog"
+    },
+    {
+      "$ref": "#/definitions/GetPhoneNumberDialog.dialog"
+    },
+    {
       "$ref": "#/definitions/GetProfileDialog.dialog"
+    },
+    {
+      "$ref": "#/definitions/GetSkillsDialog.dialog"
     },
     {
       "$ref": "#/definitions/Microsoft.ActivityTemplate"
@@ -417,9 +429,6 @@
     },
     {
       "$ref": "#/definitions/ResolveUserDialog.dialog"
-    },
-    {
-      "$ref": "#/definitions/UtcConvertAction"
     }
   ],
   "definitions": {
@@ -524,6 +533,78 @@
         "user.age > 13"
       ]
     },
+    "GetEmailAddressDialog.dialog": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetEmailAddressDialog",
+      "type": "object",
+      "$result": {
+        "type": "object",
+        "properties": {}
+      },
+      "definitions": {
+        "equalsExpression": {
+          "$role": "expression",
+          "type": "string",
+          "title": "Equals Expression",
+          "description": "Expression starting with =.",
+          "pattern": "^=.*\\S.*",
+          "examples": [
+            "=user.name"
+          ]
+        },
+        "stringExpression": {
+          "$role": "expression",
+          "title": "String or expression",
+          "description": "Interpolated string or expression to evaluate.",
+          "oneOf": [
+            {
+              "type": "string",
+              "title": "String",
+              "description": "Interpolated string",
+              "pattern": "^(?!(=)).*",
+              "examples": [
+                "Hello ${user.name}"
+              ]
+            },
+            {
+              "$ref": "#/definitions/GetEmailAddressDialog.dialog/definitions/equalsExpression",
+              "examples": [
+                "=concat('x','y','z')"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "nameEntity": {
+          "description": "Name entity to search",
+          "$ref": "#/definitions/GetEmailAddressDialog.dialog/definitions/stringExpression",
+          "title": "Name Entity"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetEmailAddressDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "GetManagerDialog.dialog": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "GetManagerDialog",
@@ -596,6 +677,149 @@
         }
       }
     },
+    "GetPeopleBasedOnLocationDialog.dialog": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetPeopleBasedOnLocationDialog",
+      "type": "object",
+      "$result": {
+        "type": "object",
+        "properties": {}
+      },
+      "definitions": {
+        "equalsExpression": {
+          "$role": "expression",
+          "type": "string",
+          "title": "Equals Expression",
+          "description": "Expression starting with =.",
+          "pattern": "^=.*\\S.*",
+          "examples": [
+            "=user.name"
+          ]
+        },
+        "stringExpression": {
+          "$role": "expression",
+          "title": "String or expression",
+          "description": "Interpolated string or expression to evaluate.",
+          "oneOf": [
+            {
+              "type": "string",
+              "title": "String",
+              "description": "Interpolated string",
+              "pattern": "^(?!(=)).*",
+              "examples": [
+                "Hello ${user.name}"
+              ]
+            },
+            {
+              "$ref": "#/definitions/GetPeopleBasedOnLocationDialog.dialog/definitions/equalsExpression",
+              "examples": [
+                "=concat('x','y','z')"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "location": {
+          "title": "Location",
+          "$ref": "#/definitions/GetPeopleBasedOnLocationDialog.dialog/definitions/stringExpression"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetPeopleBasedOnLocationDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetPhoneNumberDialog.dialog": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetPhoneNumberDialog",
+      "type": "object",
+      "$result": {
+        "type": "object",
+        "properties": {}
+      },
+      "definitions": {
+        "equalsExpression": {
+          "$role": "expression",
+          "type": "string",
+          "title": "Equals Expression",
+          "description": "Expression starting with =.",
+          "pattern": "^=.*\\S.*",
+          "examples": [
+            "=user.name"
+          ]
+        },
+        "stringExpression": {
+          "$role": "expression",
+          "title": "String or expression",
+          "description": "Interpolated string or expression to evaluate.",
+          "oneOf": [
+            {
+              "type": "string",
+              "title": "String",
+              "description": "Interpolated string",
+              "pattern": "^(?!(=)).*",
+              "examples": [
+                "Hello ${user.name}"
+              ]
+            },
+            {
+              "$ref": "#/definitions/GetPhoneNumberDialog.dialog/definitions/equalsExpression",
+              "examples": [
+                "=concat('x','y','z')"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "nameEntity": {
+          "description": "Name entity to search",
+          "$ref": "#/definitions/GetPhoneNumberDialog.dialog/definitions/stringExpression",
+          "title": "Name Entity"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetPhoneNumberDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "GetProfileDialog.dialog": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "GetProfileDialog",
@@ -660,6 +884,78 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "GetProfileDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetSkillsDialog.dialog": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetSkillsDialog",
+      "type": "object",
+      "$result": {
+        "type": "object",
+        "properties": {}
+      },
+      "definitions": {
+        "equalsExpression": {
+          "$role": "expression",
+          "type": "string",
+          "title": "Equals Expression",
+          "description": "Expression starting with =.",
+          "pattern": "^=.*\\S.*",
+          "examples": [
+            "=user.name"
+          ]
+        },
+        "stringExpression": {
+          "$role": "expression",
+          "title": "String or expression",
+          "description": "Interpolated string or expression to evaluate.",
+          "oneOf": [
+            {
+              "type": "string",
+              "title": "String",
+              "description": "Interpolated string",
+              "pattern": "^(?!(=)).*",
+              "examples": [
+                "Hello ${user.name}"
+              ]
+            },
+            {
+              "$ref": "#/definitions/GetSkillsDialog.dialog/definitions/equalsExpression",
+              "examples": [
+                "=concat('x','y','z')"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "nameEntity": {
+          "title": "Name Entity",
+          "description": "Name entity to search",
+          "$ref": "#/definitions/GetSkillsDialog.dialog/definitions/stringExpression"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetSkillsDialog.dialog"
         },
         "$designer": {
           "title": "Designer information",
@@ -6455,10 +6751,22 @@
       "$role": "interface",
       "oneOf": [
         {
+          "$ref": "#/definitions/GetEmailAddressDialog.dialog"
+        },
+        {
           "$ref": "#/definitions/GetManagerDialog.dialog"
         },
         {
+          "$ref": "#/definitions/GetPeopleBasedOnLocationDialog.dialog"
+        },
+        {
+          "$ref": "#/definitions/GetPhoneNumberDialog.dialog"
+        },
+        {
           "$ref": "#/definitions/GetProfileDialog.dialog"
+        },
+        {
+          "$ref": "#/definitions/GetSkillsDialog.dialog"
         },
         {
           "$ref": "#/definitions/Microsoft.AdaptiveDialog"
@@ -6675,9 +6983,6 @@
         },
         {
           "$ref": "#/definitions/ResolveUserDialog.dialog"
-        },
-        {
-          "$ref": "#/definitions/UtcConvertAction"
         },
         {
           "type": "string",
@@ -12165,51 +12470,6 @@
           ]
         }
       ]
-    },
-    "UtcConvertAction": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "UtcConvert",
-      "description": "This will return the result of UTC formatted datetime string",
-      "type": "object",
-      "required": [
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "datetime": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "DateTime",
-          "description": "Original string representation of the datetime"
-        },
-        "format": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "TargetFormat",
-          "description": "Target format"
-        },
-        "resultProperty": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Result",
-          "description": "Target path of the memory variable storing the result"
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "UtcConvertAction"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
     },
     "valueExpression": {
       "$role": "expression",
