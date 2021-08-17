@@ -2,10 +2,11 @@
 using Microsoft.Bot.Builder.Dialogs.Declarative;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SSWSophieBot.TimeComponents.Actions;
 
-namespace SSWSophieBot.UtcConvertAction
+namespace SSWSophieBot.TimeComponents.Components
 {
-    public class UtcConvertActionBotComponent : BotComponent
+    public class UtcConvertBotComponent : BotComponent
     {
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {

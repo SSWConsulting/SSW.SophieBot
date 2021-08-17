@@ -6,10 +6,13 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SSWSophieBot.UtcConvertAction
+namespace SSWSophieBot.TimeComponents.Actions
 {
     public class UtcConvertAction : Dialog
     {
+        [JsonProperty("$kind")]
+        public const string Kind = "UtcConvertAction";
+
         [JsonConstructor]
         public UtcConvertAction([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
             : base()
@@ -19,9 +22,6 @@ namespace SSWSophieBot.UtcConvertAction
                 RegisterSourceLocation(sourceFilePath, sourceLineNumber);
             }
         }
-
-        [JsonProperty("$kind")]
-        public const string Kind = "UtcConvertAction";
 
         [JsonProperty("datetime")]
         public StringExpression DateTimeString { get; set; }
