@@ -8,17 +8,17 @@
   "properties": {
     "datetime": {
       "$ref": "schema:#/definitions/stringExpression",
-      "title": "DateTime",
-      "description": "Original string representation of the datetime"
+      "title": "Date time",
+      "description": "Original string representation of the date time"
     },
     "format": {
       "$ref": "schema:#/definitions/stringExpression",
-      "title": "TargetFormat",
+      "title": "Target format",
       "description": "Target format"
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
-      "title": "Result",
+      "title": "Result property",
       "description": "Target path of the memory variable storing the result"
     }
   }

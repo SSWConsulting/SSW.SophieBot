@@ -14,10 +14,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
     <PackageReference Include="Microsoft.Bot.Builder.AI.Luis" Version="4.13.2" />
     <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.13.2" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.13.2" />
     <PackageReference Include="Microsoft.Bot.Components.Graph" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SSWSophieBot.UtcConvertAction\SSWSophieBot.UtcConvertAction.csproj" />
+    <ProjectReference Include="..\components\SSWSophieBot.HttpClientComponents.PersonQuery\SSWSophieBot.HttpClientComponents.PersonQuery.csproj" />
+    <ProjectReference Include="..\components\SSWSophieBot.TimeComponents\SSWSophieBot.TimeComponents.csproj" />
   </ItemGroup>
 </Project>
