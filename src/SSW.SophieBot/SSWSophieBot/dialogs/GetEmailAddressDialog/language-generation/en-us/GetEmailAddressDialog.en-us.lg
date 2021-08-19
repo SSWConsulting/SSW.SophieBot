@@ -8,23 +8,16 @@
 ]
 
 # SendActivity_s0q8VQ_text()
-- Sorry, I couldn't find anyone named **${dialog.contact}** in your organization. Please try again.
+- Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
 # SendActivity_s0q8VQ()
 [Activity
     Text = ${SendActivity_s0q8VQ_text()}
 ]
 
 # SendActivity_mrti0A_text()
-- I got an error: ${dialog.api_response.content.message}.
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
 # SendActivity_mrti0A()
 [Activity
     Text = ${SendActivity_mrti0A_text()}
 ]
 
-# TextInput_Prompt_t2f3QE()
-[Activity
-    Text = ${TextInput_Prompt_t2f3QE_text()}
-]
-
-# TextInput_Prompt_t2f3QE_text()
-- What is your Authorization and Tenant headers(use / to separate)?

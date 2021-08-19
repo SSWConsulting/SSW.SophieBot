@@ -25,65 +25,21 @@
           "value": "=null"
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "GetProfileAction",
           "$designer": {
-            "id": "PlapBu"
+            "id": "YWDVK0"
           },
-          "property": "dialog.contact",
-          "value": "=dialog.nameEntity"
-        },
-        {
-          "$kind": "Microsoft.TextInput",
-          "$designer": {
-            "id": "t2f3QE"
-          },
-          "disabled": false,
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "allowInterruptions": false,
-          "prompt": "${TextInput_Prompt_t2f3QE()}",
-          "unrecognizedPrompt": "",
-          "invalidPrompt": "",
-          "defaultValueResponse": "",
-          "property": "user.AuthorizationAndTenant"
-        },
-        {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "xC7ABA"
-          },
-          "assignments": [
-            {
-              "property": "dialog.headers.Authorization",
-              "value": "=split(user.AuthorizationAndTenant, '/')[0]"
-            },
-            {
-              "value": "=split(user.AuthorizationAndTenant, '/')[1]",
-              "property": "dialog.headers.Tenant"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.HttpRequest",
-          "$designer": {
-            "id": "ucQc3X"
-          },
-          "resultProperty": "turn.response",
-          "method": "GET",
-          "url": "https://ssw-people.azurewebsites.net/api/employees?firstName=${dialog.contact}",
-          "contentType": "application/json",
-          "responseType": "json",
-          "headers": {
-            "Authorization": "${dialog.headers.Authorization}",
-            "Tenant": "${dialog.headers.Tenant}"
-          }
+          "firstName": "=dialog.nameEntity",
+          "statusCodeProperty": "turn.responseCode",
+          "employeesProperty": "turn.employees",
+          "reasonPhraseProperty": "turn.reasonPhrase"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "I7XDdE"
           },
-          "condition": "=turn.response.statusCode == 200",
+          "condition": "=turn.responseCode == 200",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -99,7 +55,7 @@
               "$designer": {
                 "id": "tF88n8"
               },
-              "condition": "=turn.response.content.count != 0",
+              "condition": "=turn.employees.count != 0",
               "elseActions": [
                 {
                   "$kind": "Microsoft.SendActivity",
@@ -117,7 +73,7 @@
                   },
                   "index": "dialog.foreach.index",
                   "value": "dialog.profile",
-                  "itemsProperty": "turn.response.content",
+                  "itemsProperty": "turn.employees",
                   "actions": [
                     {
                       "$kind": "Microsoft.SetProperties",
