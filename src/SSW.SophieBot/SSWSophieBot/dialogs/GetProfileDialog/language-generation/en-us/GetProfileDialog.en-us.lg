@@ -35,7 +35,7 @@
 ]
 
 # SendActivity_E1qghn_text()
-- ${requestFailed()}
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
 # LogAction_Text_Y3HX7q()
 [Activity
     Text = ${LogAction_Text_Y3HX7q_text()}
@@ -50,10 +50,3 @@
 
 # LogAction_Text_F2eG4B_text()
 - ${dialog.foreach.value.lastSeenSite}
-# TextInput_Prompt_b09m2z()
-[Activity
-    Text = ${TextInput_Prompt_b09m2z_text()}
-]
-
-# TextInput_Prompt_b09m2z_text()
-- What is your Authorization and Tenant headers(use / to separate)?
