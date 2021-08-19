@@ -35,7 +35,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "There are ${peopleList.count} people in **${location}**:"
+                    "text": "There are **${peopleList.count}** people in **${location}**:"
                 }
             ]
         },
@@ -49,10 +49,11 @@
 ```
 
 # generateList(peopleList)
-- ${join(foreach(peopleList, people, readout(people)), ' | ')}
+- ${join(foreach(peopleList, people, readout(people)), '')}
 
 # readout(people)
-- **${people.firstName} ${people.lastName}**
+-```${people.index}. **${people.firstName} ${people.lastName}**  
+```
 
 # SendActivity_Grcpla()
 [Activity

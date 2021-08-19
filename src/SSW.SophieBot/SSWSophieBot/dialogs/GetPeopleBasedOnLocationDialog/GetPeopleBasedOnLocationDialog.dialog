@@ -89,6 +89,25 @@
               ],
               "actions": [
                 {
+                  "$kind": "Microsoft.Foreach",
+                  "$designer": {
+                    "id": "Qq0pTL"
+                  },
+                  "index": "dialog.foreach.index",
+                  "value": "dialog.foreach.value",
+                  "itemsProperty": "turn.items",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "ovDZyU"
+                      },
+                      "property": "turn.items[dialog.foreach.index].index",
+                      "value": "=dialog.foreach.index+1"
+                    }
+                  ]
+                },
+                {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
                     "id": "Grcpla"
