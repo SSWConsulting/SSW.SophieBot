@@ -54,39 +54,6 @@
     {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
-        "id": "52Yo92",
-        "name": "OnIntent (Logout)"
-      },
-      "intent": "Logout",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "SjeplQ"
-          },
-          "name": "SSWSophieBot.OnIntent_Logout",
-          "value": "=null"
-        },
-        {
-          "$kind": "Microsoft.SignOutUser",
-          "$designer": {
-            "id": "7Ibk0G"
-          },
-          "userId": "=user.id"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "DWdyHg"
-          },
-          "activity": "${SendActivity_DWdyHg()}"
-        }
-      ],
-      "condition": "=turn.recognized.score > 0.8"
-    },
-    {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
         "id": "blfdn9",
         "name": "OnIntent (GetCollaborators)"
       },
@@ -889,6 +856,36 @@
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "ypo1PI",
+        "name": "OnIntent (Goodbye)"
+      },
+      "intent": "Goodbye",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "HBvExO"
+          },
+          "name": "SSWSophieBot.OnIntent_Goodbye"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "JcLjcy"
+          },
+          "activity": "${SendActivity_JcLjcy()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "593gjl"
+          }
         }
       ]
     }
