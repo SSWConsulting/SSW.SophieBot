@@ -1,14 +1,12 @@
 ﻿using Microsoft.Extensions.Options;
-using SSWSophieBot.HttpClientAction.Models;
 using SSWSophieBot.HttpClientComponents.Abstractions;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace SSWSophieBot.HttpClientComponents.PersonQuery.Clients
 {
-    public class GetProfileClient : HttpClientBase<List<GetEmployeeModel>>
+    public class GetProfileClient : HttpClientBase
     {
         public override string EndpointName { get; } = "GetProfile";
 

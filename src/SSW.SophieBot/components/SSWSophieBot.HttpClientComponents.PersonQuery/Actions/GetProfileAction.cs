@@ -6,13 +6,14 @@ using SSWSophieBot.HttpClientComponents.Abstractions;
 using SSWSophieBot.HttpClientComponents.PersonQuery.Clients;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 {
-    public class GetProfileAction : HttpClientActionBase<GetProfileClient, List<GetEmployeeModel>>
+    public class GetProfileAction : HttpClientActionBase<GetProfileClient, HttpResponseMessage>
     {
         [JsonProperty("$kind")]
         public const string Kind = "GetProfileAction";
@@ -26,25 +27,42 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
         [JsonProperty("firstName")]
         public StringExpression FirstName { get; set; }
 
-        [JsonProperty("resultProperty")]
-        public StringExpression ResultProperty { get; set; }
+        [JsonProperty("location")]
+        public StringExpression Location { get; set; }
+
+        [JsonProperty("employeesProperty")]
+        public StringExpression EmployeesProperty { get; set; }
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
-            var firstName = FirstName.GetValue(dc.State);
-            if (string.IsNullOrWhiteSpace(firstName))
+            var httpClient = GetClient(dc);
+            var responseMessage = await httpClient.SendRequestAsync(request =>
+                request.RequestUri = new Uri(GetQuery(request.RequestUri.OriginalString, dc)));
+
+            if (StatusCodeProperty != null)
             {
-                throw new ArgumentNullException(nameof(FirstName), $"{nameof(FirstName)} param value cannot be null");
+                dc.State.SetValue(dc.GetValue(StatusCodeProperty), (int)responseMessage.StatusCode);
             }
 
-            var profiles = await GetClient(dc).SendRequestAsync(request => request.RequestUri = new Uri(request.RequestUri, $"?firstName={firstName}"));
-
-            if (ResultProperty != null)
+            if (ReasonPhraseProperty != null)
             {
-                dc.State.SetValue(ResultProperty.GetValue(dc.State), profiles);
+                dc.State.SetValue(dc.GetValue(ReasonPhraseProperty), responseMessage.ReasonPhrase);
             }
 
-            return await dc.EndDialogAsync(result: profiles, cancellationToken: cancellationToken);
+            if (EmployeesProperty != null)
+            {
+                var employees = await httpClient.GetContentAsync<List<GetEmployeeModel>>(responseMessage);
+                dc.State.SetValue(dc.GetValue(EmployeesProperty), employees);
+            }
+
+            return await dc.EndDialogAsync(result: responseMessage, cancellationToken: cancellationToken);
+        }
+
+        private string GetQuery(string uri, DialogContext dc)
+        {
+            AddQueryString(ref uri, dc, FirstName, "firstName");
+            AddQueryString(ref uri, dc, Location, "location");
+            return uri;
         }
     }
 }
