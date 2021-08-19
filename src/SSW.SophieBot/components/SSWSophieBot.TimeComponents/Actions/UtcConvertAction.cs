@@ -34,8 +34,8 @@ namespace SSWSophieBot.TimeComponents.Actions
 
         public override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
-            var dateTime = DateTimeString.GetValue(dc.State);
-            var targetFormat = TargetFormat.GetValue(dc.State);
+            var dateTime = DateTimeString?.GetValue(dc.State) ?? throw new ArgumentNullException(nameof(DateTimeString));
+            var targetFormat = TargetFormat?.GetValue(dc.State);
 
             string result;
             if (DateTime.TryParse(dateTime, out var dateTimeLocal))
