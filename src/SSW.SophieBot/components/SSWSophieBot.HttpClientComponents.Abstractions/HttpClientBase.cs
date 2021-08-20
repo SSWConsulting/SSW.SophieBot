@@ -39,19 +39,35 @@ namespace SSWSophieBot.HttpClientComponents.Abstractions
         public virtual async Task<TResponse> SendRequestAsync(Action<HttpRequestMessage> action = null)
         {
             var responseMessage = await GetResponseMessageAsync(action);
-
-            responseMessage.EnsureSuccessStatusCode();
-
             return await GetResponseAsync(responseMessage);
         }
 
-        protected abstract Task<HttpResponseMessage> GetResponseMessageAsync(Action<HttpRequestMessage> action = null);
+        public virtual async Task<TResponse> GetResponseAsync(HttpResponseMessage responseMessage)
+        {
+            return await GetContentAsync<TResponse>(responseMessage);
+        }
 
-        protected virtual async Task<TResponse> GetResponseAsync(HttpResponseMessage responseMessage)
+        public virtual async Task<T> GetContentAsync<T>(HttpResponseMessage responseMessage)
         {
             using var responseStream = await responseMessage.Content.ReadAsStreamAsync();
             using var reader = new JsonTextReader(new StreamReader(responseStream, Encoding.UTF8));
-            return new JsonSerializer().Deserialize<TResponse>(reader);
+            return new JsonSerializer().Deserialize<T>(reader);
+        }
+
+        protected abstract Task<HttpResponseMessage> GetResponseMessageAsync(Action<HttpRequestMessage> action = null);
+    }
+
+    public abstract class HttpClientBase : HttpClientBase<HttpResponseMessage>
+    {
+        public HttpClientBase(HttpClient client, IOptions<HttpClientOptions> options)
+            : base(client, options)
+        {
+
+        }
+
+        public override Task<HttpResponseMessage> GetResponseAsync(HttpResponseMessage responseMessage)
+        {
+            return Task.FromResult(responseMessage);
         }
     }
 }

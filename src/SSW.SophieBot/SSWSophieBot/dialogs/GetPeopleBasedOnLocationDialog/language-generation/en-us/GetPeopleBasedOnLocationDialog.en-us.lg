@@ -9,7 +9,7 @@
 ]
 
 # SendActivity_nvgfb0_text()
-- ${requestFailed()}
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
 # SendActivity_nvgfb0()
 [Activity
     Text = ${SendActivity_nvgfb0_text()}
@@ -35,7 +35,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "There are ${peopleList.count} people in **${location}**:"
+                    "text": "There are **${peopleList.count}** people in **${location}**:"
                 }
             ]
         },
@@ -49,19 +49,13 @@
 ```
 
 # generateList(peopleList)
-- ${join(foreach(peopleList, people, readout(people)), ' | ')}
+- ${join(foreach(peopleList, people, readout(people)), '')}
 
 # readout(people)
-- **${people.firstName} ${people.lastName}**
+-```${people.index}. **${people.firstName} ${people.lastName}**  
+```
 
 # SendActivity_Grcpla()
 [Activity
-    Attachments = ${json(PeopleListCard(dialog.location, turn.items))}
+    Attachments = ${json(PeopleListCard(dialog.location, turn.employees))}
 ]
-# TextInput_Prompt_gJp00U()
-[Activity
-    Text = ${TextInput_Prompt_gJp00U_text()}
-]
-
-# TextInput_Prompt_gJp00U_text()
-- What is your Authorization and Tenant headers(use / to separate)?

@@ -2,7 +2,6 @@
   "SSWSophieBot.en-us": {
     "rootDialog": true,
     "triggers": {
-      "Logout": "",
       "GetCollaborators": [
         "GetCollaboratorsDialog.en-us"
       ],
@@ -38,7 +37,8 @@
       ],
       "GetPeopleBasedOnLocation": [
         "GetPeopleBasedOnLocationDialog.en-us"
-      ]
+      ],
+      "Goodbye": ""
     }
   },
   "ListDialog.en-us": {

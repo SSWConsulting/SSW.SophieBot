@@ -1,12 +1,5 @@
 > # Intent definitions
 
-# Logout
-- Signout
-- Logout
-- Sign out
-- Log out
-- Forget me
-
 # GetDepartment
 - can you tell me the work area of {@contact=valderrama}?
 - do you know {@contact=robert}´s department?
@@ -563,3 +556,12 @@
 - Who works in {location = Melbourne}?
 - Who works in {location = Brisbane}?
 - Who works in {location = Newcastle}?
+
+
+
+# Goodbye
+- goodbye
+- bye
+- bye for now
+- you're very helpful
+- good bye
