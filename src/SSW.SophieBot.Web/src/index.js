@@ -5,7 +5,7 @@ const moment = require('moment');
 
 var replyToId = '';
 const directLine = new DirectLine({
-    secret: 'f37kTZm5XFA.jXPdXyXlyEKVvWaANVaekirkql4vFmBvT24m0yJ_tAw'
+    secret: 'aQwYsxuu2JA._35eQDOfa22hZEXVpsa3R3fHKi_ibGJvZJr30c0nYNI',
 });
 const adaptiveCard = new AdaptiveCards.AdaptiveCard();
 AdaptiveCards.AdaptiveCard.onProcessMarkdown = function (text, result) {
@@ -14,7 +14,7 @@ AdaptiveCards.AdaptiveCard.onProcessMarkdown = function (text, result) {
 };
 
 directLine.activity$
-    .filter(activity => activity.type === 'message' && activity.from.id === 'sswpplbot')
+    .filter(activity => activity.type === 'message' && activity.from.id === 'SSWSophieBot')
     .subscribe(
         message => {
             addIncomingMsg(message);
