@@ -95,14 +95,14 @@
                   },
                   "index": "dialog.foreach.index",
                   "value": "dialog.foreach.value",
-                  "itemsProperty": "turn.items",
+                  "itemsProperty": "turn.employees",
                   "actions": [
                     {
                       "$kind": "Microsoft.SetProperty",
                       "$designer": {
                         "id": "ovDZyU"
                       },
-                      "property": "turn.items[dialog.foreach.index].index",
+                      "property": "turn.employees[dialog.foreach.index].index",
                       "value": "=dialog.foreach.index+1"
                     }
                   ]
