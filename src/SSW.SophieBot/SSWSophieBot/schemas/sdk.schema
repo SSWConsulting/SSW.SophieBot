@@ -8,6 +8,12 @@
       "$ref": "#/definitions/GetEmailAddressDialog.dialog"
     },
     {
+      "$ref": "#/definitions/GetExpertsByLocation.dialog"
+    },
+    {
+      "$ref": "#/definitions/GetFirstNamesBySkillAndLocationAction"
+    },
+    {
       "$ref": "#/definitions/GetManagerDialog.dialog"
     },
     {
@@ -434,6 +440,9 @@
       "$ref": "#/definitions/ResolveUserDialog.dialog"
     },
     {
+      "$ref": "#/definitions/StringJoinAction"
+    },
+    {
       "$ref": "#/definitions/UtcConvertAction"
     }
   ],
@@ -603,6 +612,138 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "GetEmailAddressDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetExpertsByLocation.dialog": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetExpertsByLocation",
+      "type": "object",
+      "$result": {
+        "type": "object",
+        "properties": {}
+      },
+      "definitions": {
+        "equalsExpression": {
+          "$role": "expression",
+          "type": "string",
+          "title": "Equals Expression",
+          "description": "Expression starting with =.",
+          "pattern": "^=.*\\S.*",
+          "examples": [
+            "=user.name"
+          ]
+        },
+        "stringExpression": {
+          "$role": "expression",
+          "title": "String or expression",
+          "description": "Interpolated string or expression to evaluate.",
+          "oneOf": [
+            {
+              "type": "string",
+              "title": "String",
+              "description": "Interpolated string",
+              "pattern": "^(?!(=)).*",
+              "examples": [
+                "Hello ${user.name}"
+              ]
+            },
+            {
+              "$ref": "#/definitions/GetExpertsByLocation.dialog/definitions/equalsExpression",
+              "examples": [
+                "=concat('x','y','z')"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "skillEntity": {
+          "description": "The advanced skill of the experts",
+          "title": "Skill Entity",
+          "$ref": "#/definitions/GetExpertsByLocation.dialog/definitions/stringExpression"
+        },
+        "locationEntity": {
+          "description": "The current location of the experts",
+          "$ref": "#/definitions/GetExpertsByLocation.dialog/definitions/stringExpression",
+          "title": "Location Entity"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetExpertsByLocation.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetFirstNamesBySkillAndLocationAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetFirstNamesBySkillAndLocationRequest",
+      "description": "This will return the result of GetFirstNamesByLocationAndSkill query",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "skill": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Advanced Skill",
+          "description": "Employee's advanced Skill"
+        },
+        "currentLocation": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Current location",
+          "description": "Employee's current location"
+        },
+        "statusCodeProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Status code Property",
+          "description": "Target path of the memory variable storing the status code"
+        },
+        "reasonPhraseProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Reason phrase property",
+          "description": "Target path of the memory variable storing the reason phrase"
+        },
+        "firstNamesProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "First names property",
+          "description": "Target path of the memory variable storing the first names in array form"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetFirstNamesBySkillAndLocationAction"
         },
         "$designer": {
           "title": "Designer information",
@@ -6815,6 +6956,12 @@
           "$ref": "#/definitions/GetEmailAddressDialog.dialog"
         },
         {
+          "$ref": "#/definitions/GetExpertsByLocation.dialog"
+        },
+        {
+          "$ref": "#/definitions/GetFirstNamesBySkillAndLocationAction"
+        },
+        {
           "$ref": "#/definitions/GetManagerDialog.dialog"
         },
         {
@@ -7047,6 +7194,9 @@
         },
         {
           "$ref": "#/definitions/ResolveUserDialog.dialog"
+        },
+        {
+          "$ref": "#/definitions/StringJoinAction"
         },
         {
           "$ref": "#/definitions/UtcConvertAction"
@@ -12537,6 +12687,56 @@
           ]
         }
       ]
+    },
+    "StringJoinAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "StringJoin",
+      "description": "This will return the result of GetProfile query",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "stringList": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "String list",
+          "description": "String list to be joined"
+        },
+        "delimiter": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Delimiter",
+          "description": "Delimiter used to join the string list"
+        },
+        "lastDelimiter": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Last delimiter",
+          "description": "Delimiter used to concat the last element from the string list"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Employees property",
+          "description": "Target path of the memory variable storing the joined string"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "StringJoinAction"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
     },
     "UtcConvertAction": {
       "$role": "implements(Microsoft.IDialog)",
