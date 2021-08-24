@@ -1,0 +1,101 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "PRCvf9",
+    "name": "GetExpertsByLocation",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "aAox74"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "WBXxN0"
+          }
+        },
+        {
+          "$kind": "GetFirstNamesBySkillAndLocationAction",
+          "$designer": {
+            "id": "thVudT"
+          },
+          "skill": "=dialog.skillEntity",
+          "currentLocation": "=dialog.locationEntity",
+          "statusCodeProperty": "turn.statusCode",
+          "reasonPhraseProperty": "turn.reasonPhrase",
+          "firstNamesProperty": "turn.firstNames"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "JtN8iE"
+          },
+          "condition": "=turn.statusCode == 200",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "emJef2"
+              },
+              "activity": "${SendActivity_emJef2()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "9lOauV"
+              },
+              "condition": "=exists(turn.firstNames) && count(turn.firstNames) > 0",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "o4r1IC"
+                  },
+                  "activity": "${SendActivity_o4r1IC()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "StringJoinAction",
+                  "$designer": {
+                    "id": "KLVsYE"
+                  },
+                  "stringList": "=select(turn.firstNames, n, concat(\"**\", n, \"**\"))",
+                  "delimiter": ", ",
+                  "lastDelimiter": " and ",
+                  "resultProperty": "dialog.firstNames"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "hAZAEe"
+                  },
+                  "activity": "${SendActivity_hAZAEe()}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "IclLWP"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "GetExpertsByLocation.lg",
+  "recognizer": "GetExpertsByLocation.lu.qna",
+  "id": "GetExpertsByLocation"
+}

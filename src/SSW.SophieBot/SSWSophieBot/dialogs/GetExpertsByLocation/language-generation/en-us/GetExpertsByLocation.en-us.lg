@@ -1,0 +1,23 @@
+[import](common.lg)
+
+# SendActivity_emJef2()
+[Activity
+    Text = ${SendActivity_emJef2_text()}
+]
+
+# SendActivity_emJef2_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_o4r1IC()
+[Activity
+    Text = ${SendActivity_o4r1IC_text()}
+]
+
+# SendActivity_o4r1IC_text()
+- Sorry, I couldn't find anyone with **${dialog.skillEntity}** skill in **${dialog.locationEntity}** office. Please try again.
+# SendActivity_hAZAEe()
+[Activity
+    Text = ${SendActivity_hAZAEe_text()}
+]
+
+# SendActivity_hAZAEe_text()
+- I have ${dialog.firstNames} with ${dialog.skillEntity} skills in the ${dialog.locationEntity} office

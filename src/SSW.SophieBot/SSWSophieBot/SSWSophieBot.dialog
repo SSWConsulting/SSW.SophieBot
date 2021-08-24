@@ -687,13 +687,18 @@
               "value": "=@location"
             },
             {
+              "property": "$options.skill",
+              "value": "=@skill"
+            },
+            {
               "property": "$options.implemented",
               "value": [
                 "GetEmailAddress",
                 "GetPhoneNumber",
                 "GetProfile",
                 "GetSkills",
-                "GetPeopleBasedOnLocation"
+                "GetPeopleBasedOnLocation",
+                "GetExpertsByLocation"
               ]
             }
           ]
@@ -886,6 +891,60 @@
           "$designer": {
             "id": "593gjl"
           }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "mBzfYS",
+        "name": "OnIntent (GetExpertsByLocation)"
+      },
+      "intent": "GetExpertsByLocation",
+      "entities": [],
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "6Yd16Q"
+          }
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "DHZDW5"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "5ewWN6"
+          },
+          "condition": "=contains($options.implemented, \"GetExpertsByLocation\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "eQ0O3I"
+              },
+              "activity": "${SendActivity_eQ0O3I()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "3AGO6Q"
+              },
+              "activityProcessed": true,
+              "dialog": "GetExpertsByLocation",
+              "options": {
+                "skillEntity": "=$options.skill",
+                "locationEntity": "=$options.location"
+              }
+            }
+          ]
         }
       ]
     }
