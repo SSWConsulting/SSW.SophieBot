@@ -1,9 +1,8 @@
 ﻿using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 
-namespace SSWSophieBot.HttpClientComponents.Abstractions
+namespace SSWSophieBot.Components
 {
-    // TODO: extract to a base lib
     public static class DialogContextExtensions
     {
         public static T GetValue<T>(this DialogContext dialogContext, ExpressionProperty<T> expressionProperty)

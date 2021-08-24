@@ -2,13 +2,15 @@
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Bot.Builder.Dialogs;
 using Newtonsoft.Json;
+using SSWSophieBot.Components;
+using SSWSophieBot.Components.Actions;
 using System;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 
 namespace SSWSophieBot.HttpClientComponents.Abstractions
 {
-    public abstract class HttpClientActionBase<TClient, TResponse> : Dialog
+    public abstract class HttpClientActionBase<TClient, TResponse> : ActionBase
         where TClient : HttpClientBase<TResponse>
         where TResponse : class
     {
@@ -20,12 +22,9 @@ namespace SSWSophieBot.HttpClientComponents.Abstractions
 
         [JsonConstructor]
         public HttpClientActionBase([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
-            : base()
+            : base(sourceFilePath, sourceLineNumber)
         {
-            if (!string.IsNullOrWhiteSpace(sourceFilePath))
-            {
-                RegisterSourceLocation(sourceFilePath, sourceLineNumber);
-            }
+            
         }
 
         protected virtual TClient GetClient(DialogContext dc)

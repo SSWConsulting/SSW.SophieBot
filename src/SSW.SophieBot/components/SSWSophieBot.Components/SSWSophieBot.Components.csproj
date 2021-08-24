@@ -5,6 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SSWSophieBot.Components\SSWSophieBot.Components.csproj" />
+	<PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.13.2" />
   </ItemGroup>
 </Project>

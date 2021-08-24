@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "GetFirstNamesBySkillAndLocationRequest",
+  "description": "This will return the result of GetFirstNamesByLocationAndSkill query",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "skill": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Advanced Skill",
+      "description": "Employee's advanced Skill"
+    },
+    "currentLocation": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Current location",
+      "description": "Employee's current location"
+    },
+    "statusCodeProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Status code Property",
+      "description": "Target path of the memory variable storing the status code"
+    },
+    "reasonPhraseProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Reason phrase property",
+      "description": "Target path of the memory variable storing the reason phrase"
+    },
+    "firstNamesProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "First names property",
+      "description": "Target path of the memory variable storing the first names in array form"
+    }
+  }
+}
