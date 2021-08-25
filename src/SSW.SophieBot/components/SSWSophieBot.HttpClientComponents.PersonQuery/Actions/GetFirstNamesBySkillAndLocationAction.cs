@@ -7,6 +7,7 @@ using SSWSophieBot.HttpClientComponents.Abstractions;
 using SSWSophieBot.HttpClientComponents.PersonQuery.Clients;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -14,25 +15,25 @@ using System.Threading.Tasks;
 
 namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 {
-    public class GetProfileAction : HttpClientActionBase<GetProfileClient, HttpResponseMessage>
+    public class GetFirstNamesBySkillAndLocationAction : HttpClientActionBase<GetProfileClient, HttpResponseMessage>
     {
         [JsonProperty("$kind")]
-        public const string Kind = "GetProfileAction";
+        public const string Kind = "GetFirstNamesBySkillAndLocationAction";
 
-        public GetProfileAction([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
+        public GetFirstNamesBySkillAndLocationAction([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
             : base(sourceFilePath, sourceLineNumber)
         {
 
         }
 
-        [JsonProperty("firstName")]
-        public StringExpression FirstName { get; set; }
+        [JsonProperty("skill")]
+        public StringExpression Skill { get; set; }
 
-        [JsonProperty("location")]
-        public StringExpression Location { get; set; }
+        [JsonProperty("currentLocation")]
+        public StringExpression CurrentLocation { get; set; }
 
-        [JsonProperty("employeesProperty")]
-        public StringExpression EmployeesProperty { get; set; }
+        [JsonProperty("firstNamesProperty")]
+        public StringExpression FirstNamesProperty { get; set; }
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
@@ -50,10 +51,16 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 dc.State.SetValue(dc.GetValue(ReasonPhraseProperty), responseMessage.ReasonPhrase);
             }
 
-            if (EmployeesProperty != null)
+            if (FirstNamesProperty != null)
             {
+                var requiredSkill = dc.GetValue(Skill ?? throw new ArgumentNullException(nameof(Skill)));
                 var employees = await httpClient.GetContentAsync<List<GetEmployeeModel>>(responseMessage);
-                dc.State.SetValue(dc.GetValue(EmployeesProperty), employees);
+                var firstNames = employees
+                    .Where(e => e.Skills.Any(s => s.ExperienceLevel.ToLower() == "advanced" && s.Technology.Contains(requiredSkill, StringComparison.OrdinalIgnoreCase)))
+                    .Select(e => e.FirstName)
+                    .ToList();
+
+                dc.State.SetValue(dc.GetValue(FirstNamesProperty), firstNames);
             }
 
             return await dc.EndDialogAsync(result: responseMessage, cancellationToken: cancellationToken);
@@ -61,8 +68,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
         private string GetQuery(string uri, DialogContext dc)
         {
-            AddQueryString(ref uri, dc, FirstName, "firstName");
-            AddQueryString(ref uri, dc, Location, "location");
+            AddQueryString(ref uri, dc, CurrentLocation, "currentLocation");
             return uri;
         }
     }

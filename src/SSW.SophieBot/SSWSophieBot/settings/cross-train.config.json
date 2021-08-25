@@ -38,7 +38,10 @@
       "GetPeopleBasedOnLocation": [
         "GetPeopleBasedOnLocationDialog.en-us"
       ],
-      "Goodbye": ""
+      "Goodbye": "",
+      "GetExpertsByLocation": [
+        "GetExpertsByLocation.en-us"
+      ]
     }
   },
   "ListDialog.en-us": {
