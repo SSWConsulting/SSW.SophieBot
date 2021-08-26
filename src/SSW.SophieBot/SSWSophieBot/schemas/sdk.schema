@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "type": "object",
   "title": "Component kinds",
   "description": "These are all of the kinds that can be created by the loader.",
@@ -713,15 +713,32 @@
         }
       },
       "properties": {
+        "queryString": {
+          "type": "array",
+          "title": "Query strings",
+          "description": "Query strings to form the request URI",
+          "items": {
+            "type": "object",
+            "title": "Query string",
+            "description": "Query string",
+            "properties": {
+              "key": {
+                "$ref": "#/definitions/stringExpression",
+                "title": "Key",
+                "description": "Key"
+              },
+              "value": {
+                "$ref": "#/definitions/valueExpression",
+                "title": "Value",
+                "description": "Value"
+              }
+            }
+          }
+        },
         "skill": {
           "$ref": "#/definitions/stringExpression",
           "title": "Advanced Skill",
           "description": "Employee's advanced Skill"
-        },
-        "currentLocation": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Current location",
-          "description": "Employee's current location"
         },
         "statusCodeProperty": {
           "$ref": "#/definitions/stringExpression",
@@ -983,15 +1000,27 @@
         }
       },
       "properties": {
-        "firstName": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "First name",
-          "description": "Employee's first name"
-        },
-        "location": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Location",
-          "description": "Employee's location"
+        "queryString": {
+          "type": "array",
+          "title": "Query strings",
+          "description": "Query strings to form the request URI",
+          "items": {
+            "type": "object",
+            "title": "Query string",
+            "description": "Query string",
+            "properties": {
+              "key": {
+                "$ref": "#/definitions/stringExpression",
+                "title": "Key",
+                "description": "Key"
+              },
+              "value": {
+                "$ref": "#/definitions/valueExpression",
+                "title": "Value",
+                "description": "Value"
+              }
+            }
+          }
         },
         "statusCodeProperty": {
           "$ref": "#/definitions/stringExpression",
@@ -12721,7 +12750,7 @@
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
-          "title": "Employees property",
+          "title": "Result property",
           "description": "Target path of the memory variable storing the joined string"
         },
         "$kind": {
