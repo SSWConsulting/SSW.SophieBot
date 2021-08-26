@@ -1,4 +1,5 @@
 [import](common.lg)
+[Profile](profile.en-us.lg)
 
 # SendActivity_fAH1iZ_text()
 - Sorry, I couldn't find anyone in ${dialog.location}.
@@ -59,3 +60,16 @@
 [Activity
     Attachments = ${json(PeopleListCard(dialog.location, turn.employees))}
 ]
+
+# SendActivity_j1tmY1()
+[Activity
+    Attachments = ${json(ProfileCardWithSSWPeopleAPI(turn.employees[0]))}
+]
+
+# SendActivity_OesKIP()
+[Activity
+    Text = ${SendActivity_OesKIP_text()}
+]
+
+# SendActivity_OesKIP_text()
+- There is only **1** people in **${dialog.location}**.
