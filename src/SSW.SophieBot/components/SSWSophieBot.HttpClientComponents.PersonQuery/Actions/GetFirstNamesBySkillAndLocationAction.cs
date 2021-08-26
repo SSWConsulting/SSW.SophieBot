@@ -29,17 +29,13 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
         [JsonProperty("skill")]
         public StringExpression Skill { get; set; }
 
-        [JsonProperty("currentLocation")]
-        public StringExpression CurrentLocation { get; set; }
-
         [JsonProperty("firstNamesProperty")]
         public StringExpression FirstNamesProperty { get; set; }
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var httpClient = GetClient(dc);
-            var responseMessage = await httpClient.SendRequestAsync(request =>
-                request.RequestUri = new Uri(GetQuery(request.RequestUri.OriginalString, dc)));
+            var responseMessage = await httpClient.SendRequestAsync(request => AddQueryStrings(request, dc));
 
             if (StatusCodeProperty != null)
             {
@@ -64,12 +60,6 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             }
 
             return await dc.EndDialogAsync(result: responseMessage, cancellationToken: cancellationToken);
-        }
-
-        private string GetQuery(string uri, DialogContext dc)
-        {
-            AddQueryString(ref uri, dc, CurrentLocation, "currentLocation");
-            return uri;
         }
     }
 }

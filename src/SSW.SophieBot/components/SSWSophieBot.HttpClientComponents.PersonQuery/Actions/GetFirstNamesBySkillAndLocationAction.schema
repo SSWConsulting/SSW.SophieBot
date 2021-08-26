@@ -6,15 +6,32 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "queryString": {
+      "type": "array",
+      "title": "Query strings",
+      "description": "Query strings to form the request URI",
+      "items": {
+        "type": "object",
+        "title": "Query string",
+        "description": "Query string",
+        "properties": {
+          "key": {
+            "$ref": "schema:#/definitions/stringExpression",
+            "title": "Key",
+            "description": "Key"
+          },
+          "value": {
+            "$ref": "schema:#/definitions/valueExpression",
+            "title": "Value",
+            "description": "Value"
+          }
+        }
+      }
+    },
     "skill": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Advanced Skill",
       "description": "Employee's advanced Skill"
-    },
-    "currentLocation": {
-      "$ref": "schema:#/definitions/stringExpression",
-      "title": "Current location",
-      "description": "Employee's current location"
     },
     "statusCodeProperty": {
       "$ref": "schema:#/definitions/stringExpression",

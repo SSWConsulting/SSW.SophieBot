@@ -28,10 +28,15 @@
             "id": "thVudT"
           },
           "skill": "=dialog.skillEntity",
-          "currentLocation": "=dialog.locationEntity",
           "statusCodeProperty": "turn.statusCode",
           "reasonPhraseProperty": "turn.reasonPhrase",
-          "firstNamesProperty": "turn.firstNames"
+          "firstNamesProperty": "turn.firstNames",
+          "queryString": [
+            {
+              "key": "currentLocation",
+              "value": "=dialog.locationEntity"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.IfCondition",

@@ -29,10 +29,15 @@
           "$designer": {
             "id": "Kvyyed"
           },
-          "firstName": "=dialog.nameEntity",
           "statusCodeProperty": "turn.statusCode",
           "employeesProperty": "turn.employees",
-          "reasonPhraseProperty": "turn.reasonPhrase"
+          "reasonPhraseProperty": "turn.reasonPhrase",
+          "queryString": [
+            {
+              "key": "firstName",
+              "value": "=dialog.nameEntity"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.IfCondition",

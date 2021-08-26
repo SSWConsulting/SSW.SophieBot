@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 using SSWSophieBot.Components;
 using SSWSophieBot.Components.Actions;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 
@@ -14,6 +16,9 @@ namespace SSWSophieBot.HttpClientComponents.Abstractions
         where TClient : HttpClientBase<TResponse>
         where TResponse : class
     {
+        [JsonProperty("queryString")]
+        public List<QueryStringExpression> QueryString { get; set; }
+
         [JsonProperty("statusCodeProperty")]
         public StringExpression StatusCodeProperty { get; set; }
 
@@ -38,16 +43,10 @@ namespace SSWSophieBot.HttpClientComponents.Abstractions
             return client;
         }
 
-        protected virtual void AddQueryString(ref string uri, DialogContext dc, ExpressionProperty<string> expressionProperty, string queryKey)
+        protected virtual void AddQueryStrings(HttpRequestMessage requestMessage, DialogContext dc)
         {
-            if (expressionProperty != null)
-            {
-                var queryValue = dc.GetValue(expressionProperty);
-                if (!string.IsNullOrWhiteSpace(queryValue))
-                {
-                    uri = QueryHelpers.AddQueryString(uri, queryKey, queryValue);
-                }
-            }
+            var queryStrings = new Dictionary<string, string>(QueryString.Select(qs => qs.GetQueryStrings(dc)));
+            requestMessage.RequestUri = new Uri(QueryHelpers.AddQueryString(requestMessage.RequestUri.OriginalString, queryStrings));
         }
     }
 

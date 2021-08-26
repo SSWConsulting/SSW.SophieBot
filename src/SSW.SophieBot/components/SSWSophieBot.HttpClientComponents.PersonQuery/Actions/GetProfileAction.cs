@@ -1,4 +1,5 @@
 ﻿using AdaptiveExpressions.Properties;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Bot.Builder.Dialogs;
 using Newtonsoft.Json;
 using SSWSophieBot.Components;
@@ -7,6 +8,7 @@ using SSWSophieBot.HttpClientComponents.Abstractions;
 using SSWSophieBot.HttpClientComponents.PersonQuery.Clients;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -25,20 +27,14 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
         }
 
-        [JsonProperty("firstName")]
-        public StringExpression FirstName { get; set; }
-
-        [JsonProperty("location")]
-        public StringExpression Location { get; set; }
-
         [JsonProperty("employeesProperty")]
         public StringExpression EmployeesProperty { get; set; }
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var httpClient = GetClient(dc);
-            var responseMessage = await httpClient.SendRequestAsync(request =>
-                request.RequestUri = new Uri(GetQuery(request.RequestUri.OriginalString, dc)));
+
+            var responseMessage = await httpClient.SendRequestAsync(request => AddQueryStrings(request, dc));
 
             if (StatusCodeProperty != null)
             {
@@ -57,13 +53,6 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             }
 
             return await dc.EndDialogAsync(result: responseMessage, cancellationToken: cancellationToken);
-        }
-
-        private string GetQuery(string uri, DialogContext dc)
-        {
-            AddQueryString(ref uri, dc, FirstName, "firstName");
-            AddQueryString(ref uri, dc, Location, "location");
-            return uri;
         }
     }
 }
