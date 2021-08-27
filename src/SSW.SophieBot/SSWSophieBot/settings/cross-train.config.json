@@ -40,10 +40,7 @@
       ],
       "Goodbye": "",
       "GetExpertsByLocation": [
-        "GetExpertsByLocation.en-us"
-      ],
-      "GetEmployeesOnProject": [
-        "GetEmployeesByProjectDialog.en-us"
+        "GetExpertsByLocationDialog.en-us"
       ]
     }
   },
