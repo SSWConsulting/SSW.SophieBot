@@ -938,7 +938,7 @@
                 "id": "3AGO6Q"
               },
               "activityProcessed": true,
-              "dialog": "GetExpertsByLocation",
+              "dialog": "GetExpertsByLocationDialog",
               "options": {
                 "skillEntity": "=$options.skill",
                 "locationEntity": "=$options.location"
