@@ -94,6 +94,40 @@
               ],
               "actions": [
                 {
+                  "$kind": "Microsoft.SwitchCondition",
+                  "$designer": {
+                    "id": "sKDev7"
+                  },
+                  "condition": "turn.employees.count",
+                  "cases": [
+                    {
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "OesKIP"
+                          },
+                          "activity": "${SendActivity_OesKIP()}"
+                        },
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "j1tmY1"
+                          },
+                          "activity": "${SendActivity_j1tmY1()}"
+                        },
+                        {
+                          "$kind": "Microsoft.EndDialog",
+                          "$designer": {
+                            "id": "gkrVeH"
+                          }
+                        }
+                      ],
+                      "value": "1"
+                    }
+                  ]
+                },
+                {
                   "$kind": "Microsoft.Foreach",
                   "$designer": {
                     "id": "Qq0pTL"

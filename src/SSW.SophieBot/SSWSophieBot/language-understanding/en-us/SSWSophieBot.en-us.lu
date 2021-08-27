@@ -560,11 +560,14 @@
 
 
 # Goodbye
-- goodbye
-- bye
-- bye for now
-- you're very helpful
-- good bye
+- {@goodbye}
+
+@ list goodbye =
+	- goodbye :
+		- bye
+		- bye for now
+		- good bye
+		- you're very helpful
 
 # GetExpertsByLocation
 - I need to talk to a {skill = DevOps} expert in {location = Melbourne}
