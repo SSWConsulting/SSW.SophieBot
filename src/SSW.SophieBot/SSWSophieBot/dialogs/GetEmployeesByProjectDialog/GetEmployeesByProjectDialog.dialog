@@ -1,8 +1,8 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "id": "PRCvf9",
-    "name": "GetExpertsByLocationDialog",
+    "id": "isqXTa",
+    "name": "GetEmployeesByProjectDialog",
     "comment": ""
   },
   "autoEndDialog": true,
@@ -13,79 +13,86 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "aAox74"
+        "id": "UCJFMy"
       },
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "WBXxN0"
+            "id": "oI5PPH"
           }
         },
         {
-          "$kind": "GetFirstNamesBySkillAndLocationAction",
+          "$kind": "GetProfileAction",
           "$designer": {
-            "id": "thVudT"
+            "id": "COuGVF"
           },
-          "skill": "=dialog.skillEntity",
-          "statusCodeProperty": "turn.statusCode",
-          "reasonPhraseProperty": "turn.reasonPhrase",
-          "firstNamesProperty": "turn.firstNames",
           "queryString": [
             {
-              "key": "currentLocation",
-              "value": "=dialog.locationEntity"
+              "key": "project",
+              "value": "=dialog.projectEntity"
             }
-          ]
+          ],
+          "statusCodeProperty": "turn.statusCode",
+          "reasonPhraseProperty": "turn.reasonPhrase",
+          "employeesProperty": "turn.employees"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "JtN8iE"
+            "id": "PcFtCy"
           },
           "condition": "=turn.statusCode == 200",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "emJef2"
+                "id": "3tfngC"
               },
-              "activity": "${SendActivity_emJef2()}"
+              "activity": "${SendActivity_3tfngC()}"
             }
           ],
           "actions": [
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "9lOauV"
+                "id": "KgWstd"
               },
-              "condition": "=exists(turn.firstNames) && count(turn.firstNames) > 0",
+              "condition": "=exists(turn.employees) && count(turn.employees) > 0",
               "elseActions": [
                 {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "o4r1IC"
+                    "id": "lY9fbY"
                   },
-                  "activity": "${SendActivity_o4r1IC()}"
+                  "activity": "${SendActivity_lY9fbY()}"
                 }
               ],
               "actions": [
                 {
-                  "$kind": "StringJoinAction",
+                  "$kind": "GetEmployeesByProjectAction",
                   "$designer": {
-                    "id": "KLVsYE"
+                    "id": "2exfb2"
                   },
-                  "stringList": "=select(turn.firstNames, n, concat(\"**\", n, \"**\"))",
-                  "delimiter": ", ",
-                  "lastDelimiter": " and ",
-                  "resultProperty": "dialog.firstNames"
+                  "employees": "=turn.employees",
+                  "project": "=dialog.projectEntity",
+                  "workingEmployeesProperty": "turn.workingEmployees"
+                },
+                {
+                  "$kind": "Microsoft.LogAction",
+                  "$designer": {
+                    "id": "TErLJT"
+                  },
+                  "text": "${LogAction_Text_TErLJT()}",
+                  "label": "turn.workingEmployees",
+                  "traceActivity": true
                 },
                 {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "hAZAEe"
+                    "id": "xNmCGW"
                   },
-                  "activity": "${SendActivity_hAZAEe()}"
+                  "activity": "${SendActivity_xNmCGW()}"
                 }
               ]
             }
@@ -94,13 +101,13 @@
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "IclLWP"
+            "id": "HOXXZj"
           }
         }
       ]
     }
   ],
-  "generator": "GetExpertsByLocation.lg",
-  "recognizer": "GetExpertsByLocation.lu.qna",
-  "id": "GetExpertsByLocation"
+  "generator": "GetEmployeesByProjectDialog.lg",
+  "recognizer": "GetEmployeesByProjectDialog.lu.qna",
+  "id": "GetEmployeesByProjectDialog"
 }

@@ -1,0 +1,145 @@
+﻿# WorkingEmployeesList(workingEmployees)
+-```
+{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "TextBlock",
+            "size": "Large",
+            "weight": "Bolder",
+            "text": "${workingEmployees.project}",
+            "fontType": "Default"
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch"
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Name",
+                            "wrap": true,
+                            "weight": "Bolder",
+                            "color": "Light"
+                        }
+                    ],
+                    "verticalContentAlignment": "Center",
+                    "style": "accent"
+                },
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Billed Days",
+                            "weight": "Bolder",
+                            "color": "Light"
+                        }
+                    ],
+                    "verticalContentAlignment": "Center",
+                    "style": "accent"
+                },
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Last Seen",
+                            "wrap": true,
+                            "weight": "Bolder",
+                            "color": "Light"
+                        }
+                    ],
+                    "backgroundImage": {
+                        "verticalAlignment": "Center"
+                    },
+                    "verticalContentAlignment": "Center"
+                }
+            ],
+            "bleed": true,
+            "style": "accent",
+            "height": "stretch",
+            "spacing": "Small"
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "ColumnSet",
+					"$data": ${workingEmployees.employees},
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "Image",
+                                    "url": "${avatarUrl}",
+                                    "size": "Small"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "${displayName}",
+                                    "size": "Small"
+                                }
+                            ],
+                            "backgroundImage": {
+                                "verticalAlignment": "Center"
+                            },
+                            "verticalContentAlignment": "Center"
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "wrap": true,
+                                    "text": "${billedDays} Days",
+                                    "size": "Small"
+                                }
+                            ],
+                            "verticalContentAlignment": "Center"
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "wrap": true,
+                                    "text": "${lastSeen}",
+                                    "size": "Small"
+                                }
+                            ],
+                            "backgroundImage": {
+                                "verticalAlignment": "Center"
+                            },
+                            "verticalContentAlignment": "Center"
+                        }
+                    ],
+                    "bleed": true,
+                    "separator": true
+                }
+            ],
+            "bleed": true
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2"
+}
+```

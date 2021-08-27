@@ -691,6 +691,10 @@
               "value": "=@skill"
             },
             {
+              "property": "$options.project",
+              "value": "=@project"
+            },
+            {
               "property": "$options.implemented",
               "value": [
                 "GetEmailAddress",
@@ -698,7 +702,8 @@
                 "GetProfile",
                 "GetSkills",
                 "GetPeopleBasedOnLocation",
-                "GetExpertsByLocation"
+                "GetExpertsByLocation",
+                "GetEmployeesOnProject"
               ]
             }
           ]
@@ -942,6 +947,58 @@
               "options": {
                 "skillEntity": "=$options.skill",
                 "locationEntity": "=$options.location"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "yY8DAH",
+        "name": "OnIntent (GetEmployeesByProject)"
+      },
+      "intent": "GetEmployeesOnProject",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "I4Knmm"
+          }
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "08wYT4"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "X9givN"
+          },
+          "condition": "=contains($options.implemented, \"GetEmployeesOnProject\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "lPfvXI"
+              },
+              "activity": "${SendActivity_lPfvXI()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "XwUh1r"
+              },
+              "activityProcessed": true,
+              "dialog": "GetEmployeesByProjectDialog",
+              "options": {
+                "projectEntity": "=$options.project"
               }
             }
           ]

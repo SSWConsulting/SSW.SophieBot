@@ -1,14 +1,11 @@
 ﻿using AdaptiveExpressions.Properties;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Bot.Builder.Dialogs;
 using Newtonsoft.Json;
 using SSWSophieBot.Components;
 using SSWSophieBot.HttpClientAction.Models;
 using SSWSophieBot.HttpClientComponents.Abstractions;
 using SSWSophieBot.HttpClientComponents.PersonQuery.Clients;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;

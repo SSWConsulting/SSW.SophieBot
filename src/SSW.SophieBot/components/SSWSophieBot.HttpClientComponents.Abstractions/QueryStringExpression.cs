@@ -15,9 +15,19 @@ namespace SSWSophieBot.HttpClientComponents.Abstractions
         [JsonProperty("value")]
         public ValueExpression Value { get; set; }
 
-        public KeyValuePair<string, string> GetQueryStrings(DialogContext dc)
+        public KeyValuePair<string, string>? GetQueryStrings(DialogContext dc)
         {
-            return new KeyValuePair<string, string>(dc.GetValue(Key), Convert.ToString(dc.GetValue(Value)));
+            var key = dc.GetValue(Key);
+            var value = Convert.ToString(dc.GetValue(Value));
+
+            if (!string.IsNullOrWhiteSpace(key) && !string.IsNullOrWhiteSpace(value))
+            {
+                return new KeyValuePair<string, string>(dc.GetValue(Key), Convert.ToString(dc.GetValue(Value)));
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

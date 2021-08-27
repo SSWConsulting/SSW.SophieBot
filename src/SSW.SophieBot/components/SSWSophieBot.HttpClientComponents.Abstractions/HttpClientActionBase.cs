@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Bot.Builder.Dialogs;
 using Newtonsoft.Json;
-using SSWSophieBot.Components;
 using SSWSophieBot.Components.Actions;
 using System;
 using System.Collections.Generic;
@@ -29,7 +28,7 @@ namespace SSWSophieBot.HttpClientComponents.Abstractions
         public HttpClientActionBase([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
             : base(sourceFilePath, sourceLineNumber)
         {
-            
+
         }
 
         protected virtual TClient GetClient(DialogContext dc)
@@ -45,8 +44,12 @@ namespace SSWSophieBot.HttpClientComponents.Abstractions
 
         protected virtual void AddQueryStrings(HttpRequestMessage requestMessage, DialogContext dc)
         {
-            var queryStrings = new Dictionary<string, string>(QueryString.Select(qs => qs.GetQueryStrings(dc)));
-            requestMessage.RequestUri = new Uri(QueryHelpers.AddQueryString(requestMessage.RequestUri.OriginalString, queryStrings));
+            var queryStringPairs = QueryString?.Select(qs => qs.GetQueryStrings(dc)).Where(qs => qs.HasValue);
+            if (queryStringPairs != null && queryStringPairs.Any())
+            {
+                var queryStrings = new Dictionary<string, string>(queryStringPairs.Select(pair => pair.Value));
+                requestMessage.RequestUri = new Uri(QueryHelpers.AddQueryString(requestMessage.RequestUri.OriginalString, queryStrings));
+            }
         }
     }
 
