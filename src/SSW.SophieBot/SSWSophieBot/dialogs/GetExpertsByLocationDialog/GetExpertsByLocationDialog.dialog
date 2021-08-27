@@ -95,7 +95,7 @@
       ]
     }
   ],
-  "generator": "GetExpertsByLocation.lg",
-  "recognizer": "GetExpertsByLocation.lu.qna",
-  "id": "GetExpertsByLocation"
+  "generator": "GetExpertsByLocationDialog.lg",
+  "recognizer": "GetExpertsByLocationDialog.lu.qna",
+  "id": "GetExpertsByLocationDialog"
 }

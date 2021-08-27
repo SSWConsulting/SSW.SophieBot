@@ -1,5 +1,5 @@
 {
   "$kind": "Microsoft.MultiLanguageRecognizer",
-  "id": "LUIS_GetExpertsByLocation",
+  "id": "LUIS_GetExpertsByLocationDialog",
   "recognizers": {}
 }
