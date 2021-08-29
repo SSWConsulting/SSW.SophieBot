@@ -44,6 +44,48 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             var employees = dc.GetValue(Employees);
             var project = employees.FirstOrDefault()?.Projects?.FirstOrDefault(p => IsProjectNameEqual(queriedProject, p.ProjectName))?.ProjectName;
 
+            int BilledDays(GetEmployeeModel model)
+            {
+                return (int)Math.Ceiling(
+                    (decimal)model.Projects.FirstOrDefault(p => IsProjectNameEqual(project, p.ProjectName))?.BillableHours / 24
+                );
+            }
+
+            static string LastSeen(GetEmployeeModel model)
+            {
+                var lastSeenDateTime = model.LastSeenAt?.LastSeen.ToUniversalTime();
+
+                if (!lastSeenDateTime.HasValue)
+                {
+                    return string.Empty;
+                }
+
+                static int GetInteger(double value)
+                {
+                    return Math.Max(1, (int)Math.Floor(value));
+                }
+
+                var lastSeenDateTimeValue = lastSeenDateTime.Value;
+                var now = DateTimeOffset.UtcNow;
+
+                var timeOffset = now - lastSeenDateTimeValue;
+                if (timeOffset.TotalDays < 1)
+                {
+                    var hours = GetInteger(timeOffset.TotalHours);
+                    return $"{hours} {(hours == 1 ? "hr" : "hrs")} ago";
+                }
+                else if (timeOffset.TotalDays < 30)
+                {
+                    var days = GetInteger(timeOffset.TotalDays);
+                    return $"{days} {(days == 1 ? "d" : "ds")} ago";
+                }
+                else
+                {
+                    var months = GetInteger(timeOffset.TotalDays / 30);
+                    return $"{months} {(months == 1 ? "month" : "months")} ago";
+                }
+            }
+
             if (string.IsNullOrWhiteSpace(project))
             {
                 throw new ArgumentNullException(nameof(Project));
@@ -61,10 +103,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 {
                     AvatarUrl = e.AvatarUrl,
                     DisplayName = $"{e.FirstName} {e.LastName}",
-                    BilledDays = (int)Math.Ceiling(
-                        (decimal)e.Projects.FirstOrDefault(p => IsProjectNameEqual(project, p.ProjectName))?.BillableHours / 24
-                    ),
-                    LastSeen = "not implemented"
+                    BilledDays = BilledDays(e),
+                    LastSeen = LastSeen(e)
                 }).ToList()
             };
 

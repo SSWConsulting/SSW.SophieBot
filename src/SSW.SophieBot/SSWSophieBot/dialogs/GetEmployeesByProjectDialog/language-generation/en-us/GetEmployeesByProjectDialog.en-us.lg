@@ -17,7 +17,7 @@
 - Sorry, I couldn't find anyone working on **${dialog.projectEntity}** in your organization. Please try again.
 # SendActivity_xNmCGW()
 [Activity
-    Attachments = ${json(WorkingEmployeesList(json(turn.workingEmployees)))}
+    Attachments = ${json(WorkingEmployeesList(turn.workingEmployees))}
 ]
 
 # LogAction_Text_TErLJT()
