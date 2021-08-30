@@ -168,7 +168,7 @@
 - Getting available experts by location is still a work in progress.
 
 # SendActivity_FVjYof_text()
-- Checking availability is still working in progress.
+- Checking availability is still a work in progress.
 # SendActivity_FVjYof()
 [Activity
     Text = ${SendActivity_FVjYof_text()}
