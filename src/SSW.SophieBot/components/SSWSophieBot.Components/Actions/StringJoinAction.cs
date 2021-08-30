@@ -36,7 +36,7 @@ namespace SSWSophieBot.Components.Actions
             var resultString = string.Empty;
 
             var stringList = dc.GetValue(StringList);
-            if (stringList != null || stringList.Any() && ResultProperty != null)
+            if (stringList != null && stringList.Any() && ResultProperty != null)
             {
                 var delimiter = dc.GetValue(Delimiter) ?? string.Empty;
 

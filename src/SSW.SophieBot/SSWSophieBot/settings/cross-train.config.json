@@ -45,9 +45,15 @@
       "GetEmployeesOnProject": [
         "GetEmployeesByProjectDialog.en-us"
       ],
-      "GetPeopleBySkills": [
-        "GetPeopleBySkills.en-us"
-      ]
+      "GetAvailableExpertsByLocation": [
+        "GetAvailableExpertsByLocationDialog.en-us"
+      ],
+      "CheckAvailability": [
+        "CheckAvailabilityDialog.en-us"
+      ],
+			"GetPeopleBySkills": [
+				"GetPeopleBySkills.en-us"
+			]
     }
   },
   "ListDialog.en-us": {

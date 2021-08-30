@@ -1,0 +1,144 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "wh7Kmn",
+    "name": "CheckAvailabilityDialog",
+    "comment": "Check if a person is booked or free."
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "73YJAi"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "vvfECV"
+          },
+          "name": "SSWSophieBot.CheckAvailabilityDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "GetProfileAction",
+          "$designer": {
+            "id": "AujCoF"
+          },
+          "firstName": "=dialog.nameEntity",
+          "statusCodeProperty": "turn.responseCode",
+          "employeesProperty": "turn.employees",
+          "reasonPhraseProperty": "turn.reasonPhrase",
+          "queryString": [
+            {
+              "key": "firstName",
+              "value": "=dialog.nameEntity"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "joKFU1"
+          },
+          "condition": "=turn.responseCode == 200",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "yFDz4n"
+              },
+              "activity": "${SendActivity_yFDz4n()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "T8OQM0"
+              },
+              "condition": "=turn.employees.count != 0",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "RA2SOG"
+                  },
+                  "activity": "${SendActivity_RA2SOG()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.Foreach",
+                  "$designer": {
+                    "id": "MhZ00e"
+                  },
+                  "index": "dialog.profile.index",
+                  "value": "dialog.profile",
+                  "itemsProperty": "turn.employees",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.Foreach",
+                      "$designer": {
+                        "id": "64qTrE"
+                      },
+                      "index": "dialog.appointment.index",
+                      "value": "dialog.appointment",
+                      "itemsProperty": "dialog.profile.appointments",
+                      "actions": [
+                        {
+                          "$kind": "UtcConvertAction",
+                          "$designer": {
+                            "id": "BhMTg9"
+                          },
+                          "datetime": "=dialog.appointment.start",
+                          "resultProperty": "dialog.profile.appointments[dialog.appointment.index].convertedStart"
+                        },
+                        {
+                          "$kind": "UtcConvertAction",
+                          "$designer": {
+                            "id": "qbGfLA"
+                          },
+                          "datetime": "=dialog.appointment.end",
+                          "resultProperty": "dialog.profile.appointments[dialog.appointment.index].convertedEnd"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "STyc4R"
+                      },
+                      "value": "=where(dialog.profile.appointments, appointment => ticks(utcNow()) >= ticks(appointment.convertedStart) && ticks(utcNow()) <= ticks(appointment.convertedEnd))",
+                      "property": "turn.currentAppoinments"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "8hLWNo"
+                      },
+                      "activity": "${SendActivity_8hLWNo()}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "HndKmH"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "CheckAvailabilityDialog.lg",
+  "recognizer": "CheckAvailabilityDialog.lu.qna",
+  "id": "CheckAvailabilityDialog"
+}

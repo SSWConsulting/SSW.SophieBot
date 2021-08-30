@@ -1,8 +1,8 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "id": "PRCvf9",
-    "name": "GetExpertsByLocationDialog",
+    "id": "DLIumR",
+    "name": "GetAvailableExpertsByLocationDialog",
     "comment": ""
   },
   "autoEndDialog": true,
@@ -13,23 +13,31 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "aAox74"
+        "id": "whgYu3"
       },
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "WBXxN0"
+            "id": "TqUAsT"
           }
         },
         {
           "$kind": "GetProfileAction",
           "$designer": {
-            "id": "J1SiVn"
+            "id": "Ny2ohz"
           },
           "queryString": [
             {
-              "key": "currentLocation",
+              "key": "booked",
+              "value": false
+            },
+            {
+              "key": "fromDate",
+              "value": "=dialog.dateEntity.timex[0]"
+            },
+            {
+              "key": "location",
               "value": "=dialog.locationEntity"
             }
           ],
@@ -43,39 +51,48 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "JtN8iE"
+            "id": "7yX8TD"
           },
           "condition": "=turn.statusCode == 200",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "emJef2"
+                "id": "0L7CNj"
               },
-              "activity": "${SendActivity_emJef2()}"
+              "activity": "${SendActivity_0L7CNj()}"
             }
           ],
           "actions": [
             {
+              "$kind": "TimeFormatAction",
+              "$designer": {
+                "id": "7KxZvy"
+              },
+              "datetime": "=dialog.dateEntity.timex[0]",
+              "format": "dddd d MMMM",
+              "resultProperty": "turn.formatDate"
+            },
+            {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "9lOauV"
+                "id": "CytQto"
               },
               "condition": "=exists(turn.employees) && count(turn.employees) > 0",
               "elseActions": [
                 {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "o4r1IC"
+                    "id": "sftkhO"
                   },
-                  "activity": "${SendActivity_o4r1IC()}"
+                  "activity": "${SendActivity_sftkhO()}"
                 }
               ],
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
-                    "id": "YGFsBd"
+                    "id": "wIXxRd"
                   },
                   "value": "=select(turn.employees, e, e.firstName)",
                   "property": "turn.firstNames"
@@ -83,7 +100,7 @@
                 {
                   "$kind": "StringJoinAction",
                   "$designer": {
-                    "id": "KLVsYE"
+                    "id": "ie4Rpw"
                   },
                   "stringList": "=select(turn.firstNames, n, concat(\"**\", n, \"**\"))",
                   "delimiter": ", ",
@@ -93,9 +110,9 @@
                 {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "hAZAEe"
+                    "id": "U8Xbbw"
                   },
-                  "activity": "${SendActivity_hAZAEe()}"
+                  "activity": "${SendActivity_U8Xbbw()}"
                 }
               ]
             }
@@ -104,13 +121,13 @@
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "IclLWP"
+            "id": "7g17jJ"
           }
         }
       ]
     }
   ],
-  "generator": "GetExpertsByLocationDialog.lg",
-  "recognizer": "GetExpertsByLocationDialog.lu.qna",
-  "id": "GetExpertsByLocationDialog"
+  "generator": "GetAvailableExpertsByLocationDialog.lg",
+  "recognizer": "GetAvailableExpertsByLocationDialog.lu.qna",
+  "id": "GetAvailableExpertsByLocationDialog"
 }

@@ -695,6 +695,10 @@
               "value": "=@project"
             },
             {
+              "property": "$options.datetime",
+              "value": "=@datetime"
+            },
+            {
               "property": "$options.implemented",
               "value": [
                 "GetEmailAddress",
@@ -704,7 +708,8 @@
                 "GetPeopleBasedOnLocation",
                 "GetExpertsByLocation",
                 "GetEmployeesOnProject",
-                "GetPeopleBySkills"
+                "GetAvailableExpertsByLocation",
+                "CheckAvailability"
               ]
             }
           ]
@@ -1009,58 +1014,166 @@
     {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
-        "id": "qgPZNf",
-        "name": "OnIntent (GetPeopleBySkills)"
+        "id": "wDay2D",
+        "name": "OnIntent (GetAvailableExpertsByLocation)"
       },
-      "intent": "GetPeopleBySkills",
+      "intent": "GetAvailableExpertsByLocation",
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "QLyv73"
-          },
-          "name": "SSWSophieBot.OnIntent_GetPeopleBySkills",
-          "value": "=null"
+            "id": "TkSkT5"
+          }
         },
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "SeVrki"
+            "id": "Phb4f8"
           },
           "eventName": "SetOptions"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "5HgWi8"
+            "id": "HZcKlV"
           },
-          "condition": "=contains($options.implemented, \"GetPeopleBySkills\")",
+          "condition": "=contains($options.implemented, \"GetAvailableExpertsByLocation\")",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "8YrZa2"
+                "id": "r27Nrj"
               },
-              "activity": "${SendActivity_8YrZa2()}"
+              "activity": "${SendActivity_r27Nrj()}"
             }
           ],
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "GqlkbX"
+                "id": "2vgi8C"
               },
               "activityProcessed": true,
-              "dialog": "GetPeopleBySkills",
+              "dialog": "GetAvailableExpertsByLocationDialog",
               "options": {
-                "skillEntity": "=$options.skill"
+                "skillEntity": "=$options.skill",
+                "locationEntity": "=$options.location",
+                "dateEntity": "=$options.datetime"
               }
             }
           ]
         }
-      ],
-      "entities": []
-    }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "mm9uIt",
+        "name": "OnIntent (CheckAvailability)"
+      },
+      "intent": "CheckAvailability",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "3XS4I3"
+          },
+          "name": "SSWSophieBot.OnIntent_CheckAvailability",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "64qiAl"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "2z09U0"
+          },
+          "condition": "=contains($options.implemented, \"CheckAvailability\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "FVjYof"
+              },
+              "activity": "${SendActivity_FVjYof()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "52hOTH"
+              },
+              "activityProcessed": true,
+              "dialog": "CheckAvailabilityDialog",
+              "options": {
+                "nameEntity": "=$options.contactEntity"
+              }
+            }
+          ]
+        }
+      ]
+    },
+		{
+			"$kind": "Microsoft.OnIntent",
+			"$designer": {
+				"id": "qgPZNf",
+				"name": "OnIntent (GetPeopleBySkills)"
+			},
+			"intent": "GetPeopleBySkills",
+			"actions": [
+				{
+					"$kind": "Microsoft.TraceActivity",
+					"$designer": {
+						"id": "QLyv73"
+					},
+					"name": "SSWSophieBot.OnIntent_GetPeopleBySkills",
+					"value": "=null"
+				},
+				{
+					"$kind": "Microsoft.EmitEvent",
+					"$designer": {
+						"id": "SeVrki"
+					},
+					"eventName": "SetOptions"
+				},
+				{
+					"$kind": "Microsoft.IfCondition",
+					"$designer": {
+						"id": "5HgWi8"
+					},
+					"condition": "=contains($options.implemented, \"GetPeopleBySkills\")",
+					"elseActions": [
+						{
+							"$kind": "Microsoft.SendActivity",
+							"$designer": {
+								"id": "8YrZa2"
+							},
+							"activity": "${SendActivity_8YrZa2()}"
+						}
+					],
+					"actions": [
+						{
+							"$kind": "Microsoft.BeginDialog",
+							"$designer": {
+								"id": "GqlkbX"
+							},
+							"activityProcessed": true,
+							"dialog": "GetPeopleBySkills",
+							"options": {
+								"skillEntity": "=$options.skill"
+							}
+						}
+					]
+				}
+			],
+			"entities": []
+		}
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
   "generator": "SSWSophieBot.lg",

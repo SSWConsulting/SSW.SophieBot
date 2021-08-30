@@ -51,7 +51,7 @@ namespace SSWSophieBot.HttpClientAction.Models
 
             return Skills.Any(s =>
             {
-                if (!s.Technology.Contains(technology, StringComparison.OrdinalIgnoreCase))
+                if (string.IsNullOrWhiteSpace(s.Technology) || !s.Technology.Contains(technology, StringComparison.OrdinalIgnoreCase))
                 {
                     return false;
                 }

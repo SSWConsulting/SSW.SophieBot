@@ -6,21 +6,18 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SSWSophieBot.TimeComponents.Actions
+namespace SSWSophieBot.Components.Actions
 {
-    public class UtcConvertAction : Dialog
+    public class TimeFormatAction : ActionBase
     {
         [JsonProperty("$kind")]
-        public const string Kind = "UtcConvertAction";
+        public const string Kind = "TimeFormatAction";
 
         [JsonConstructor]
-        public UtcConvertAction([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
-            : base()
+        public TimeFormatAction([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
+            : base(sourceFilePath, sourceLineNumber)
         {
-            if (!string.IsNullOrWhiteSpace(sourceFilePath))
-            {
-                RegisterSourceLocation(sourceFilePath, sourceLineNumber);
-            }
+
         }
 
         [JsonProperty("datetime")]
@@ -34,18 +31,17 @@ namespace SSWSophieBot.TimeComponents.Actions
 
         public override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
-            var dateTime = DateTimeString?.GetValue(dc.State) ?? throw new ArgumentNullException(nameof(DateTimeString));
+            var dateTimeString = DateTimeString?.GetValue(dc.State) ?? throw new ArgumentNullException(nameof(DateTimeString));
             var targetFormat = TargetFormat?.GetValue(dc.State);
 
             string result;
-            if (DateTime.TryParse(dateTime, out var dateTimeLocal))
+            if (DateTime.TryParse(dateTimeString, out var dateTime))
             {
-                dateTimeLocal = TimeZoneInfo.ConvertTimeToUtc(dateTimeLocal);
-                result = dateTimeLocal.ToString(targetFormat ?? "yyyy-MM-ddTHH:mm:ss.fffZ");
+                result = dateTime.ToString(targetFormat ?? "yyyy-MM-ddTHH:mm:ss.fffZ");
             }
             else
             {
-                result = dateTime;
+                result = dateTimeString;
             }
 
             if (ResultProperty != null)

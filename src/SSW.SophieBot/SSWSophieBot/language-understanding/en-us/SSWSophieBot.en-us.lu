@@ -591,5 +591,22 @@
 @ ml project
 
 
+# GetAvailableExpertsByLocation
+- Who is free next Friday in {@location = Melbourne} with {@skill = Angular} skills?
+- Who is available next Thursday in {@location = Sydney} with {@skill = .NET Core} skills?
+- I need a {@skill = React} expert in {@location = NewCastle} next Wednesday
+- Show me {@skill = Vue} experts available next Wednesday in {@location = NewCastle}
+- Book an {@skill = Azure Devops} expert next Tuesday in {@location = China}
+
+@ prebuilt datetimeV2
+
+# CheckAvailability
+- Is {contact = Anthony} booked or free?
+- Is {contact = Anthony} free or booked?
+- Is {contact = Anthony} booked?
+- Is {contact = Anthony} free?
+- Is {contact = Anthony Nguyen} free?
+
+
 # GetPeopleBySkills
 - Who knows {skill = Azure}?

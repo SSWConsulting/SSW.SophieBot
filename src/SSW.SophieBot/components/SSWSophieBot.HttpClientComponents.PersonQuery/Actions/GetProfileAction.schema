@@ -29,9 +29,21 @@
       }
     },
     "skill": {
-      "$ref": "schema:#/definitions/stringExpression",
-      "title": "Advanced Skill",
-      "description": "Employee's advanced Skill"
+      "type": "object",
+      "title": "Skill",
+      "description": "Skill represented by technology and experienceLevel",
+      "properties": {
+        "technology": {
+          "$ref": "schema:#/definitions/stringExpression",
+          "title": "Technology",
+          "description": "Technology"
+        },
+        "experienceLevel": {
+          "$ref": "schema:#/definitions/stringExpression",
+          "title": "ExperienceLevel",
+          "description": "ExperienceLevel"
+        }
+      }
     },
     "statusCodeProperty": {
       "$ref": "schema:#/definitions/stringExpression",
