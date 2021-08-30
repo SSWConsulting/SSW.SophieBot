@@ -65,6 +65,15 @@
           ],
           "actions": [
             {
+              "$kind": "TimeFormatAction",
+              "$designer": {
+                "id": "7KxZvy"
+              },
+              "datetime": "=dialog.dateEntity.timex[0]",
+              "format": "dddd d MMMM",
+              "resultProperty": "turn.formatDate"
+            },
+            {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "CytQto"

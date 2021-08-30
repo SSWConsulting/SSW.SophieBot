@@ -13,11 +13,11 @@
 ]
 
 # SendActivity_sftkhO_text()
-- Sorry, I couldn't find anyone with **${dialog.skillEntity}** skill in **${dialog.locationEntity}** office **${dialog.dateEntity.timex[0]}**. Please try again.
+- Sorry, I couldn't find anyone with **${dialog.skillEntity}** skill in **${dialog.locationEntity}** office **${turn.formatDate}**. Please try again.
 # SendActivity_U8Xbbw()
 [Activity
     Text = ${SendActivity_U8Xbbw_text()}
 ]
 
 # SendActivity_U8Xbbw_text()
-- ${dialog.firstNames} are not on client work with ${dialog.skillEntity} skills in ${dialog.locationEntity} on ${dialog.dateEntity.timex[0]}
+- ${dialog.firstNames} are not on client work with ${dialog.skillEntity} skills in ${dialog.locationEntity} on ${turn.formatDate}
