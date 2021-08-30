@@ -5,6 +5,9 @@
   "description": "These are all of the kinds that can be created by the loader.",
   "oneOf": [
     {
+      "$ref": "#/definitions/GetAvailableExpertsByLocationDialog.dialog"
+    },
+    {
       "$ref": "#/definitions/GetEmailAddressDialog.dialog"
     },
     {
@@ -551,6 +554,85 @@
         "user.age > 13"
       ]
     },
+    "GetAvailableExpertsByLocationDialog.dialog": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetAvailableExpertsByLocationDialog",
+      "type": "object",
+      "$result": {
+        "type": "object",
+        "properties": {}
+      },
+      "definitions": {
+        "equalsExpression": {
+          "$role": "expression",
+          "type": "string",
+          "title": "Equals Expression",
+          "description": "Expression starting with =.",
+          "pattern": "^=.*\\S.*",
+          "examples": [
+            "=user.name"
+          ]
+        },
+        "stringExpression": {
+          "$role": "expression",
+          "title": "String or expression",
+          "description": "Interpolated string or expression to evaluate.",
+          "oneOf": [
+            {
+              "type": "string",
+              "title": "String",
+              "description": "Interpolated string",
+              "pattern": "^(?!(=)).*",
+              "examples": [
+                "Hello ${user.name}"
+              ]
+            },
+            {
+              "$ref": "#/definitions/GetAvailableExpertsByLocationDialog.dialog/definitions/equalsExpression",
+              "examples": [
+                "=concat('x','y','z')"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "skillEntity": {
+          "title": "Skill Entity",
+          "$ref": "#/definitions/GetAvailableExpertsByLocationDialog.dialog/definitions/stringExpression"
+        },
+        "locationEntity": {
+          "$ref": "#/definitions/GetAvailableExpertsByLocationDialog.dialog/definitions/stringExpression",
+          "title": "Location Entity"
+        },
+        "dateEntity": {
+          "$ref": "#/definitions/GetAvailableExpertsByLocationDialog.dialog/definitions/stringExpression",
+          "title": "Date Entity"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetAvailableExpertsByLocationDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "GetEmailAddressDialog.dialog": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "GetEmailAddressDialog",
@@ -1071,9 +1153,21 @@
           }
         },
         "skill": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Advanced Skill",
-          "description": "Employee's advanced Skill"
+          "type": "object",
+          "title": "Skill",
+          "description": "Skill represented by technology and experienceLevel",
+          "properties": {
+            "technology": {
+              "$ref": "#/definitions/stringExpression",
+              "title": "Technology",
+              "description": "Technology"
+            },
+            "experienceLevel": {
+              "$ref": "#/definitions/stringExpression",
+              "title": "ExperienceLevel",
+              "description": "ExperienceLevel"
+            }
+          }
         },
         "statusCodeProperty": {
           "$ref": "#/definitions/stringExpression",
@@ -7034,6 +7128,9 @@
       "description": "Components which derive from Dialog",
       "$role": "interface",
       "oneOf": [
+        {
+          "$ref": "#/definitions/GetAvailableExpertsByLocationDialog.dialog"
+        },
         {
           "$ref": "#/definitions/GetEmailAddressDialog.dialog"
         },
