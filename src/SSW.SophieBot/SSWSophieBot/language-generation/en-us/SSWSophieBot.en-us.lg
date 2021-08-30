@@ -173,3 +173,11 @@
 [Activity
     Text = ${SendActivity_FVjYof_text()}
 ]
+
+# SendActivity_Br9244()
+[Activity
+    Text = ${SendActivity_Br9244_text()}
+]
+
+# SendActivity_Br9244_text()
+- No worries, we can have a look at this for you. Please send an email with questions and screenshots to my friend <williamliebenberg@ssw.com.au>. He loves squashing bugs.
