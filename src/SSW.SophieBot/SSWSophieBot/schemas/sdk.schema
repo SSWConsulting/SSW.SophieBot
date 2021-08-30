@@ -449,6 +449,9 @@
       "$ref": "#/definitions/StringJoinAction"
     },
     {
+      "$ref": "#/definitions/TimeFormatAction"
+    },
+    {
       "$ref": "#/definitions/UtcConvertAction"
     }
   ],
@@ -7381,6 +7384,9 @@
           "$ref": "#/definitions/StringJoinAction"
         },
         {
+          "$ref": "#/definitions/TimeFormatAction"
+        },
+        {
           "$ref": "#/definitions/UtcConvertAction"
         },
         {
@@ -12912,6 +12918,51 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "StringJoinAction"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "TimeFormatAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "TimeFormat",
+      "description": "This will return the result of formatted datetime string",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "datetime": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Date time",
+          "description": "Original string representation of the date time"
+        },
+        "format": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Target format",
+          "description": "Target format"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result property",
+          "description": "Target path of the memory variable storing the result"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "TimeFormatAction"
         },
         "$designer": {
           "title": "Designer information",
