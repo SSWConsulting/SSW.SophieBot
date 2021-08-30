@@ -6,4 +6,10 @@
         public string ExperienceLevel { get; set; }
         public int SortOrder { get; set; }
     }
+
+    public enum ExperienceLevel
+    {
+        Intermediate,
+        Advanced
+    }
 }

@@ -13,7 +13,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Components
         {
             services.AddBotApplicationService<GetProfileClient>();
             services.AddDeclarativeType<GetProfileAction>(GetProfileAction.Kind);
-            services.AddDeclarativeType<GetFirstNamesBySkillAndLocationAction>(GetFirstNamesBySkillAndLocationAction.Kind);
+            services.AddDeclarativeType<GetEmployeesByProjectAction>(GetEmployeesByProjectAction.Kind);
         }
     }
 }

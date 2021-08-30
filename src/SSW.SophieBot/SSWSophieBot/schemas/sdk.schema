@@ -8,10 +8,13 @@
       "$ref": "#/definitions/GetEmailAddressDialog.dialog"
     },
     {
-      "$ref": "#/definitions/GetExpertsByLocation.dialog"
+      "$ref": "#/definitions/GetEmployeesByProjectAction"
     },
     {
-      "$ref": "#/definitions/GetFirstNamesBySkillAndLocationAction"
+      "$ref": "#/definitions/GetEmployeesByProjectDialog.dialog"
+    },
+    {
+      "$ref": "#/definitions/GetExpertsByLocationDialog.dialog"
     },
     {
       "$ref": "#/definitions/GetManagerDialog.dialog"
@@ -620,7 +623,124 @@
         }
       }
     },
-    "GetExpertsByLocation.dialog": {
+    "GetEmployeesByProjectAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetEmployeesByProject",
+      "description": "This will return the result of working employees on a project with a proper structure",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "project": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Project",
+          "description": "The project name"
+        },
+        "employees": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "Employees",
+          "description": "Working employees retrieved from HTTP request"
+        },
+        "workingEmployeesProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Working employees property",
+          "description": "The working employees on a project with a proper structure"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetEmployeesByProjectAction"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetEmployeesByProjectDialog.dialog": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetEmployeesByProjectDialog",
+      "type": "object",
+      "$result": {
+        "type": "object",
+        "properties": {}
+      },
+      "definitions": {
+        "equalsExpression": {
+          "$role": "expression",
+          "type": "string",
+          "title": "Equals Expression",
+          "description": "Expression starting with =.",
+          "pattern": "^=.*\\S.*",
+          "examples": [
+            "=user.name"
+          ]
+        },
+        "stringExpression": {
+          "$role": "expression",
+          "title": "String or expression",
+          "description": "Interpolated string or expression to evaluate.",
+          "oneOf": [
+            {
+              "type": "string",
+              "title": "String",
+              "description": "Interpolated string",
+              "pattern": "^(?!(=)).*",
+              "examples": [
+                "Hello ${user.name}"
+              ]
+            },
+            {
+              "$ref": "#/definitions/GetEmployeesByProjectDialog.dialog/definitions/equalsExpression",
+              "examples": [
+                "=concat('x','y','z')"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "projectEntity": {
+          "title": "Project Entity",
+          "description": "The project name employees are working on",
+          "$ref": "#/definitions/GetEmployeesByProjectDialog.dialog/definitions/stringExpression"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetEmployeesByProjectDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetExpertsByLocationDialog.dialog": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "GetExpertsByLocation",
       "type": "object",
@@ -654,7 +774,7 @@
               ]
             },
             {
-              "$ref": "#/definitions/GetExpertsByLocation.dialog/definitions/equalsExpression",
+              "$ref": "#/definitions/GetExpertsByLocationDialog.dialog/definitions/equalsExpression",
               "examples": [
                 "=concat('x','y','z')"
               ]
@@ -676,11 +796,11 @@
         "skillEntity": {
           "description": "The advanced skill of the experts",
           "title": "Skill Entity",
-          "$ref": "#/definitions/GetExpertsByLocation.dialog/definitions/stringExpression"
+          "$ref": "#/definitions/GetExpertsByLocationDialog.dialog/definitions/stringExpression"
         },
         "locationEntity": {
           "description": "The current location of the experts",
-          "$ref": "#/definitions/GetExpertsByLocation.dialog/definitions/stringExpression",
+          "$ref": "#/definitions/GetExpertsByLocationDialog.dialog/definitions/stringExpression",
           "title": "Location Entity"
         },
         "$kind": {
@@ -688,62 +808,7 @@
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "GetExpertsByLocation.dialog"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
-    "GetFirstNamesBySkillAndLocationAction": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "GetFirstNamesBySkillAndLocationRequest",
-      "description": "This will return the result of GetFirstNamesByLocationAndSkill query",
-      "type": "object",
-      "required": [
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "skill": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Advanced Skill",
-          "description": "Employee's advanced Skill"
-        },
-        "currentLocation": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Current location",
-          "description": "Employee's current location"
-        },
-        "statusCodeProperty": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Status code Property",
-          "description": "Target path of the memory variable storing the status code"
-        },
-        "reasonPhraseProperty": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Reason phrase property",
-          "description": "Target path of the memory variable storing the reason phrase"
-        },
-        "firstNamesProperty": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "First names property",
-          "description": "Target path of the memory variable storing the first names in array form"
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "GetFirstNamesBySkillAndLocationAction"
+          "const": "GetExpertsByLocationDialog.dialog"
         },
         "$designer": {
           "title": "Designer information",
@@ -983,15 +1048,32 @@
         }
       },
       "properties": {
-        "firstName": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "First name",
-          "description": "Employee's first name"
+        "queryString": {
+          "type": "array",
+          "title": "Query strings",
+          "description": "Query strings to form the request URI",
+          "items": {
+            "type": "object",
+            "title": "Query string",
+            "description": "Query string",
+            "properties": {
+              "key": {
+                "$ref": "#/definitions/stringExpression",
+                "title": "Key",
+                "description": "Key"
+              },
+              "value": {
+                "$ref": "#/definitions/valueExpression",
+                "title": "Value",
+                "description": "Value"
+              }
+            }
+          }
         },
-        "location": {
+        "skill": {
           "$ref": "#/definitions/stringExpression",
-          "title": "Location",
-          "description": "Employee's location"
+          "title": "Advanced Skill",
+          "description": "Employee's advanced Skill"
         },
         "statusCodeProperty": {
           "$ref": "#/definitions/stringExpression",
@@ -6956,10 +7038,13 @@
           "$ref": "#/definitions/GetEmailAddressDialog.dialog"
         },
         {
-          "$ref": "#/definitions/GetExpertsByLocation.dialog"
+          "$ref": "#/definitions/GetEmployeesByProjectAction"
         },
         {
-          "$ref": "#/definitions/GetFirstNamesBySkillAndLocationAction"
+          "$ref": "#/definitions/GetEmployeesByProjectDialog.dialog"
+        },
+        {
+          "$ref": "#/definitions/GetExpertsByLocationDialog.dialog"
         },
         {
           "$ref": "#/definitions/GetManagerDialog.dialog"
@@ -12721,7 +12806,7 @@
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
-          "title": "Employees property",
+          "title": "Result property",
           "description": "Target path of the memory variable storing the joined string"
         },
         "$kind": {

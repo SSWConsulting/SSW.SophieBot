@@ -51,10 +51,15 @@
           "$designer": {
             "id": "rHaphE"
           },
-          "location": "=dialog.location",
           "statusCodeProperty": "turn.statusCode",
           "reasonPhraseProperty": "turn.reasonPhrase",
-          "employeesProperty": "turn.employees"
+          "employeesProperty": "turn.employees",
+          "queryString": [
+            {
+              "key": "location",
+              "value": "=dialog.location"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.IfCondition",

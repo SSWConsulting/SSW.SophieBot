@@ -1,0 +1,29 @@
+[import](common.lg)
+[WorkingList](workingList.en-us.lg)
+
+# SendActivity_3tfngC()
+[Activity
+    Text = ${SendActivity_3tfngC_text()}
+]
+
+# SendActivity_3tfngC_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_lY9fbY()
+[Activity
+    Text = ${SendActivity_lY9fbY_text()}
+]
+
+# SendActivity_lY9fbY_text()
+- Sorry, I couldn't find anyone working on **${dialog.projectEntity}** in your organization. Please try again.
+# SendActivity_xNmCGW()
+[Activity
+    Attachments = ${json(WorkingEmployeesList(turn.workingEmployees))}
+]
+
+# LogAction_Text_TErLJT()
+[Activity
+    Text = ${LogAction_Text_TErLJT_text()}
+]
+
+# LogAction_Text_TErLJT_text()
+- ${turn.workingEmployees}

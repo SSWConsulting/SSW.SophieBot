@@ -581,3 +581,11 @@
 @ ml skill
 
 @ ml location
+
+# GetEmployeesOnProject
+- Who is working on {project = SugarLearning}
+- Who is on {project = SophieBot}
+- Show me the people working on {project = SophieHub}
+- Show me who are working on {project = NorthWind}
+
+@ ml project
