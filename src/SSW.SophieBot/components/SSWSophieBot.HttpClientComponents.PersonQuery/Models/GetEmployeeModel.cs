@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SSWSophieBot.HttpClientAction.Models
 {
@@ -40,5 +41,28 @@ namespace SSWSophieBot.HttpClientAction.Models
         public string PublicPhotoAlbumUrl { get; set; }
         public int? EmployeeCategory { get; set; }
         public string Title { get; set; }
+
+        public bool HasSkill(string technology, ExperienceLevel? experienceLevel = ExperienceLevel.Advanced)
+        {
+            if (Skills == null || !Skills.Any())
+            {
+                return false;
+            }
+
+            return Skills.Any(s =>
+            {
+                if (!s.Technology.Contains(technology, StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+
+                if (experienceLevel.HasValue && experienceLevel.Value.ToString().ToLower() != s.ExperienceLevel.ToLower())
+                {
+                    return false;
+                }
+
+                return true;
+            });
+        }
     }
 }

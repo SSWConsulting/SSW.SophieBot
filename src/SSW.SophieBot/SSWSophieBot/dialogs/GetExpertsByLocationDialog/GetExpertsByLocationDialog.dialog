@@ -23,20 +23,20 @@
           }
         },
         {
-          "$kind": "GetFirstNamesBySkillAndLocationAction",
+          "$kind": "GetProfileAction",
           "$designer": {
-            "id": "thVudT"
+            "id": "J1SiVn"
           },
-          "skill": "=dialog.skillEntity",
-          "statusCodeProperty": "turn.statusCode",
-          "reasonPhraseProperty": "turn.reasonPhrase",
-          "firstNamesProperty": "turn.firstNames",
           "queryString": [
             {
               "key": "currentLocation",
               "value": "=dialog.locationEntity"
             }
-          ]
+          ],
+          "skill": "=dialog.skillEntity",
+          "statusCodeProperty": "turn.statusCode",
+          "reasonPhraseProperty": "turn.reasonPhrase",
+          "employeesProperty": "turn.employees"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -54,6 +54,14 @@
             }
           ],
           "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "n1AOfx"
+              },
+              "property": "turn.firstNames",
+              "value": "=select(turn.employees, e, e.firstName)"
+            },
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {

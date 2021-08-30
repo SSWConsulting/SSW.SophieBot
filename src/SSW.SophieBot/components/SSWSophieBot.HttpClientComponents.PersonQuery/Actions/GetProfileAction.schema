@@ -28,6 +28,11 @@
         }
       }
     },
+    "skill": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Advanced Skill",
+      "description": "Employee's advanced Skill"
+    },
     "statusCodeProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Status code Property",

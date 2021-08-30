@@ -6,6 +6,7 @@ using SSWSophieBot.HttpClientAction.Models;
 using SSWSophieBot.HttpClientComponents.Abstractions;
 using SSWSophieBot.HttpClientComponents.PersonQuery.Clients;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -23,6 +24,9 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
         {
 
         }
+
+        [JsonProperty("skill")]
+        public StringExpression Skill { get; set; }
 
         [JsonProperty("employeesProperty")]
         public StringExpression EmployeesProperty { get; set; }
@@ -46,6 +50,13 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             if (EmployeesProperty != null)
             {
                 var employees = await httpClient.GetContentAsync<List<GetEmployeeModel>>(responseMessage);
+
+                var skill = dc.GetValue(Skill);
+                if (!string.IsNullOrWhiteSpace(skill))
+                {
+                    employees = employees.Where(e => e.HasSkill(skill)).ToList();
+                }
+
                 dc.State.SetValue(dc.GetValue(EmployeesProperty), employees);
             }
 
