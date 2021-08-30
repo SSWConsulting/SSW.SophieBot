@@ -703,7 +703,8 @@
                 "GetSkills",
                 "GetPeopleBasedOnLocation",
                 "GetExpertsByLocation",
-                "GetEmployeesOnProject"
+                "GetEmployeesOnProject",
+                "GetPeopleBySkills"
               ]
             }
           ]
@@ -1004,6 +1005,61 @@
           ]
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "qgPZNf",
+        "name": "OnIntent (GetPeopleBySkills)"
+      },
+      "intent": "GetPeopleBySkills",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "QLyv73"
+          },
+          "name": "SSWSophieBot.OnIntent_GetPeopleBySkills",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "SeVrki"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "5HgWi8"
+          },
+          "condition": "=contains($options.implemented, \"GetPeopleBySkills\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "8YrZa2"
+              },
+              "activity": "${SendActivity_8YrZa2()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "GqlkbX"
+              },
+              "activityProcessed": true,
+              "dialog": "GetPeopleBySkills",
+              "options": {
+                "skillEntity": "=$options.skill"
+              }
+            }
+          ]
+        }
+      ],
+      "entities": []
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",

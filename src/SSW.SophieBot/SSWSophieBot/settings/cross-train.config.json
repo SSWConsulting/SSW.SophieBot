@@ -44,6 +44,9 @@
       ],
       "GetEmployeesOnProject": [
         "GetEmployeesByProjectDialog.en-us"
+      ],
+      "GetPeopleBySkills": [
+        "GetPeopleBySkills.en-us"
       ]
     }
   },

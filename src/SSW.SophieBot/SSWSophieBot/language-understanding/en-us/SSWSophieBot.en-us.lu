@@ -589,3 +589,7 @@
 - Show me who are working on {project = NorthWind}
 
 @ ml project
+
+
+# GetPeopleBySkills
+- Who knows {skill = Azure}?

@@ -1,0 +1,16 @@
+[import](common.lg)
+
+# SendActivity_52UMzl_text()
+- ```I couldn't find anyone who knows **${dialog.skillEntity}**. I'm not very good at hide and seek.
+```
+# SendActivity_52UMzl()
+[Activity
+    Text = ${SendActivity_52UMzl_text()}
+]
+
+# SendActivity_CObFyQ_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_CObFyQ()
+[Activity
+    Text = ${SendActivity_CObFyQ_text()}
+]
