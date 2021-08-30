@@ -47,6 +47,9 @@
       ],
       "GetAvailableExpertsByLocation": [
         "GetAvailableExpertsByLocationDialog.en-us"
+      ],
+      "CheckAvailability": [
+        "CheckAvailabilityDialog.en-us"
       ]
     }
   },
