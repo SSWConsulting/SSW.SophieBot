@@ -26,7 +26,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
         }
 
         [JsonProperty("skill")]
-        public StringExpression Skill { get; set; }
+        public SkillExpression Skill { get; set; }
 
         [JsonProperty("employeesProperty")]
         public StringExpression EmployeesProperty { get; set; }
@@ -51,10 +51,11 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             {
                 var employees = await httpClient.GetContentAsync<List<GetEmployeeModel>>(responseMessage);
 
-                var skill = dc.GetValue(Skill);
-                if (!string.IsNullOrWhiteSpace(skill))
+                var technology = dc.GetValue(Skill?.Technology);
+                if (!string.IsNullOrWhiteSpace(technology))
                 {
-                    employees = employees.Where(e => e.HasSkill(skill)).ToList();
+                    var experienceLevel = Skill?.GetExperienceLevel(dc);
+                    employees = employees.Where(e => e.HasSkill(technology, experienceLevel)).ToList();
                 }
 
                 dc.State.SetValue(dc.GetValue(EmployeesProperty), employees);

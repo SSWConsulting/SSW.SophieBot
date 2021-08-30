@@ -21,6 +21,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\components\SSWSophieBot.HttpClientComponents.PersonQuery\SSWSophieBot.HttpClientComponents.PersonQuery.csproj" />
-    <ProjectReference Include="..\components\SSWSophieBot.TimeComponents\SSWSophieBot.TimeComponents.csproj" />
   </ItemGroup>
 </Project>

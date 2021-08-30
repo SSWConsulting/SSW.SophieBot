@@ -159,3 +159,10 @@
 
 # SendActivity_lPfvXI_text()
 - Getting employees on project is still a work in progress.
+# SendActivity_r27Nrj()
+[Activity
+    Text = ${SendActivity_r27Nrj_text()}
+]
+
+# SendActivity_r27Nrj_text()
+- Getting available experts by location is still a work in progress.

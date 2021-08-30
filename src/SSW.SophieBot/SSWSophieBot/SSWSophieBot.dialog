@@ -695,6 +695,10 @@
               "value": "=@project"
             },
             {
+              "property": "$options.datetime",
+              "value": "=@datetime"
+            },
+            {
               "property": "$options.implemented",
               "value": [
                 "GetEmailAddress",
@@ -703,7 +707,8 @@
                 "GetSkills",
                 "GetPeopleBasedOnLocation",
                 "GetExpertsByLocation",
-                "GetEmployeesOnProject"
+                "GetEmployeesOnProject",
+                "GetAvailableExpertsByLocation"
               ]
             }
           ]
@@ -999,6 +1004,60 @@
               "dialog": "GetEmployeesByProjectDialog",
               "options": {
                 "projectEntity": "=$options.project"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "wDay2D",
+        "name": "OnIntent (GetAvailableExpertsByLocation)"
+      },
+      "intent": "GetAvailableExpertsByLocation",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "TkSkT5"
+          }
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "Phb4f8"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "HZcKlV"
+          },
+          "condition": "=contains($options.implemented, \"GetAvailableExpertsByLocation\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "r27Nrj"
+              },
+              "activity": "${SendActivity_r27Nrj()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "2vgi8C"
+              },
+              "activityProcessed": true,
+              "dialog": "GetAvailableExpertsByLocationDialog",
+              "options": {
+                "skillEntity": "=$options.skill",
+                "locationEntity": "=$options.location",
+                "dateEntity": "=$options.datetime"
               }
             }
           ]

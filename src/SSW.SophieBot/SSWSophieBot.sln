@@ -4,15 +4,13 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSWSophieBot", "SSWSophieBot\SSWSophieBot.csproj", "{A442AB9C-1784-4921-BC56-A58F3AFB9392}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSWSophieBot.TimeComponents", "components\SSWSophieBot.TimeComponents\SSWSophieBot.TimeComponents.csproj", "{326C4E02-EA18-450B-B851-4F71AE7B1A89}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSWSophieBot.HttpClientComponents.Abstractions", "components\SSWSophieBot.HttpClientComponents.Abstractions\SSWSophieBot.HttpClientComponents.Abstractions.csproj", "{077DD229-D364-4E0D-9A7A-E15FEFAA0913}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{4FA0EEF4-3736-4A13-8FB0-CB3B1F62EFBB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSWSophieBot.HttpClientComponents.PersonQuery", "components\SSWSophieBot.HttpClientComponents.PersonQuery\SSWSophieBot.HttpClientComponents.PersonQuery.csproj", "{34F6A627-166C-4188-95F5-A10BCB8FC7FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSWSophieBot.Components", "components\SSWSophieBot.Components\SSWSophieBot.Components.csproj", "{B5AAF070-CD91-40BE-91AC-D2E71B37E9C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSWSophieBot.Components", "components\SSWSophieBot.Components\SSWSophieBot.Components.csproj", "{B5AAF070-CD91-40BE-91AC-D2E71B37E9C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,10 +22,6 @@ Global
 		{A442AB9C-1784-4921-BC56-A58F3AFB9392}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A442AB9C-1784-4921-BC56-A58F3AFB9392}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A442AB9C-1784-4921-BC56-A58F3AFB9392}.Release|Any CPU.Build.0 = Release|Any CPU
-		{326C4E02-EA18-450B-B851-4F71AE7B1A89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{326C4E02-EA18-450B-B851-4F71AE7B1A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{326C4E02-EA18-450B-B851-4F71AE7B1A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{326C4E02-EA18-450B-B851-4F71AE7B1A89}.Release|Any CPU.Build.0 = Release|Any CPU
 		{077DD229-D364-4E0D-9A7A-E15FEFAA0913}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{077DD229-D364-4E0D-9A7A-E15FEFAA0913}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{077DD229-D364-4E0D-9A7A-E15FEFAA0913}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,7 +39,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{326C4E02-EA18-450B-B851-4F71AE7B1A89} = {4FA0EEF4-3736-4A13-8FB0-CB3B1F62EFBB}
 		{077DD229-D364-4E0D-9A7A-E15FEFAA0913} = {4FA0EEF4-3736-4A13-8FB0-CB3B1F62EFBB}
 		{34F6A627-166C-4188-95F5-A10BCB8FC7FE} = {4FA0EEF4-3736-4A13-8FB0-CB3B1F62EFBB}
 		{B5AAF070-CD91-40BE-91AC-D2E71B37E9C0} = {4FA0EEF4-3736-4A13-8FB0-CB3B1F62EFBB}
