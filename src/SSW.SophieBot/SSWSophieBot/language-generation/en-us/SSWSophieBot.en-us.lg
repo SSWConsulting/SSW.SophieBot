@@ -152,3 +152,9 @@
 
 # SendActivity_eQ0O3I_text()
 - Getting experts from location is still working in progress.
+# SendActivity_FVjYof_text()
+- Checking availability is still working in progress.
+# SendActivity_FVjYof()
+[Activity
+    Text = ${SendActivity_FVjYof_text()}
+]

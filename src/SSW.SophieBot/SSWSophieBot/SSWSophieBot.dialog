@@ -698,7 +698,8 @@
                 "GetProfile",
                 "GetSkills",
                 "GetPeopleBasedOnLocation",
-                "GetExpertsByLocation"
+                "GetExpertsByLocation",
+                "CheckAvailability"
               ]
             }
           ]
@@ -942,6 +943,60 @@
               "options": {
                 "skillEntity": "=$options.skill",
                 "locationEntity": "=$options.location"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "mm9uIt",
+        "name": "OnIntent (CheckAvailability)"
+      },
+      "intent": "CheckAvailability",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "3XS4I3"
+          },
+          "name": "SSWSophieBot.OnIntent_CheckAvailability",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "64qiAl"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "2z09U0"
+          },
+          "condition": "=contains($options.implemented, \"CheckAvailability\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "FVjYof"
+              },
+              "activity": "${SendActivity_FVjYof()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "52hOTH"
+              },
+              "activityProcessed": true,
+              "dialog": "CheckAvailabilityDialog",
+              "options": {
+                "nameEntity": "=$options.contactEntity"
               }
             }
           ]

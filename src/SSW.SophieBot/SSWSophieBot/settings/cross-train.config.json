@@ -41,6 +41,9 @@
       "Goodbye": "",
       "GetExpertsByLocation": [
         "GetExpertsByLocationDialog.en-us"
+      ],
+      "CheckAvailability": [
+        "CheckAvailabilityDialog.en-us"
       ]
     }
   },

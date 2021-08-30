@@ -581,3 +581,10 @@
 @ ml skill
 
 @ ml location
+
+# CheckAvailability
+- Is {contact = Anthony} booked or free?
+- Is {contact = Anthony} free or booked?
+- Is {contact = Anthony} booked?
+- Is {contact = Anthony} free?
+- Is {contact = Anthony Nguyen} free?
