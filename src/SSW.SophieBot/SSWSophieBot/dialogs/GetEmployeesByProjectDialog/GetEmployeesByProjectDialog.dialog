@@ -20,7 +20,9 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "oI5PPH"
-          }
+          },
+          "name": "SSWSophieBot.GetEmployeesByProject.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "GetProfileAction",

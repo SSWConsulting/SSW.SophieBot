@@ -20,7 +20,9 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "WBXxN0"
-          }
+          },
+          "name": "SSWSophieBot.GetExpertsByLocation.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "GetProfileAction",
