@@ -14,3 +14,70 @@
 [Activity
     Text = ${SendActivity_CObFyQ_text()}
 ]
+
+# SendActivity_R5w2vq()
+[Activity
+    Attachments = ${json(SendActivity_R5w2vq_attachment_ukytYp(turn.firstNameString, dialog.skillEntity))}
+]
+
+# SendActivity_R5w2vq_attachment_ukytYp(firstNameString, skill)
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "I have ${firstNameString} with **${skill}** skills.\n",
+            "wrap": true
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.OpenUrl",
+                    "title": "Click to view the details on SSW People",
+                    "url": "https://www.ssw.com.au/people/?skill=${skill}"
+                }
+            ]
+        }
+    ]
+}
+```
+
+# SendActivity_5zC4a2()
+[Activity
+    Attachments = ${json(SendActivity_X1CF9d_attachment_v9gcuo(turn.employees, turn.firstNameString, dialog.skillEntity))}
+]
+
+# SendActivity_X1CF9d_attachment_v9gcuo(employees, firstNameString, skill)
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "I have ${firstNameString} and **${employees.count - 3} others** with ${skill} skills.\n",
+            "wrap": true
+        },
+        {
+            "type": "TextBlock",
+            "text": "You can narrow your search by specifying an office location.\n",
+            "wrap": true
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.OpenUrl",
+                    "title": "Click to view the details on SSW People",
+                    "url": "https://www.ssw.com.au/people/?skill=${skill}"
+                }
+            ]
+        }
+    ]
+}
+```

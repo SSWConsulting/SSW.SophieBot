@@ -70,9 +70,77 @@
                   "activity": "${SendActivity_52UMzl()}"
                 }
               ],
-              "actions": []
+              "actions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "GEPlwI"
+                  },
+                  "condition": "turn.employees.count <= 4",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "8vSUuD"
+                      },
+                      "property": "turn.firstNames",
+                      "value": "=select(turn.employees, employee => employee.firstName)"
+                    },
+                    {
+                      "$kind": "StringJoinAction",
+                      "$designer": {
+                        "id": "vnrx0F"
+                      },
+                      "stringList": "=select(turn.firstNames, n, concat(\"**\", n, \"**\"))",
+                      "delimiter": ", ",
+                      "lastDelimiter": " and ",
+                      "resultProperty": "turn.firstNameString"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "R5w2vq"
+                      },
+                      "activity": "${SendActivity_R5w2vq()}"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "vBnXa2"
+                      },
+                      "property": "turn.firstNames",
+                      "value": "=select(take(turn.employees, 3), employee => employee.firstName)"
+                    },
+                    {
+                      "$kind": "StringJoinAction",
+                      "$designer": {
+                        "id": "QIkts6"
+                      },
+                      "stringList": "=select(turn.firstNames, n, concat(\"**\", n, \"**\"))",
+                      "delimiter": ", ",
+                      "lastDelimiter": ", ",
+                      "resultProperty": "turn.firstNameString"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "5zC4a2"
+                      },
+                      "activity": "${SendActivity_5zC4a2()}"
+                    }
+                  ]
+                }
+              ]
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "Vh4vwp"
+          }
         }
       ]
     }
