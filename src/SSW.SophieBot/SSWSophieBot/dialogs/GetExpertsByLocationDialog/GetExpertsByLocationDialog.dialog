@@ -29,7 +29,11 @@
           },
           "queryString": [
             {
-              "key": "currentLocation",
+              "key": "skills",
+              "value": "=dialog.skillEntity"
+            },
+            {
+              "key": "location",
               "value": "=dialog.locationEntity"
             }
           ],
