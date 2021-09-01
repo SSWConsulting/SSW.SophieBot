@@ -16,7 +16,7 @@
 - Sorry, I couldn't find anyone with **${dialog.skillEntity}** skill in **${dialog.locationEntity}** office. Please try again.
 # SendActivity_8xoYzY()
 [Activity
-    Attachments = ${json(WorkingEmployeesList(dialog.skillEntity, dialog.locationEntity, turn.employees))}
+    Attachments = ${json(WorkingEmployeesList(dialog.skillEntity, dialog.locationEntity, turn.sortedEmployees))}
 ]
 
 # WorkingEmployeesList(skill, location, employees)
@@ -28,45 +28,50 @@
     "body": [
         {
             "type": "TextBlock",
-            "text": "${location}",
+            "text": "${location} (by skill level)",
             "wrap": true,
             "size": "Large"
         },
+        ${EmployeeList(employees, skill)}
+    ]
+}
+```
+
+# EmployeeList(employees, skill)
+-```
+{
+    "type": "ColumnSet",
+    "columns": [
         {
-            "type": "ColumnSet",
-            "columns": [
+            "type": "Column",
+            "width": "stretch",
+            "items": [
                 {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "Name",
-                            "wrap": true,
-                            "weight": "Bolder"
-                        }
-                    ]
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "Level",
-                            "wrap": true,
-                            "weight": "Bolder"
-                        }
-                    ]
+                    "type": "TextBlock",
+                    "text": "Name",
+                    "wrap": true,
+                    "weight": "Bolder"
                 }
-            ],
-            "style": "accent"
+            ]
         },
         {
-            "type": "Container",
-            "items": [${join(select(employees, e, EmployeeRow(skill, e)), ',')}],
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Level",
+                    "wrap": true,
+                    "weight": "Bolder"
+                }
+            ]
         }
-    ]
+    ],
+    "style": "accent"
+},
+{
+    "type": "Container",
+    "items": [${join(select(employees, e, EmployeeRow(skill, e)), ',')}],
 }
 ```
 
@@ -118,7 +123,7 @@
                 {
                     "type": "TextBlock",
                     "wrap": true,
-                    "text": "${where(employee.skills, x => x.technology == skill)[0].experienceLevel}"
+                    "text": "${employee.skillLevel}"
                 }
             ],
             "verticalContentAlignment": "Center"
