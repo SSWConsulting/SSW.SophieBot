@@ -46,7 +46,7 @@
 }
 ```
 
-# SendActivity_5zC4a2()
+# SendActivity_lQMjCh()
 [Activity
     Attachments = ${json(SendActivity_X1CF9d_attachment_v9gcuo(turn.employees, turn.firstNameString, dialog.skillEntity))}
 ]
@@ -67,17 +67,34 @@
             "type": "TextBlock",
             "text": "You can narrow your search by specifying an office location.\n",
             "wrap": true
+        }
+    ],
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Show All",
+            "data": {
+                "intent": "GetExpertsByLocation",
+                "Skill": "${skill}"
+            }
         },
         {
-            "type": "ActionSet",
-            "actions": [
-                {
-                    "type": "Action.OpenUrl",
-                    "title": "Click to view the details on SSW People",
-                    "url": "https://www.ssw.com.au/people/?skill=${skill}"
-                }
-            ]
+            "type": "Action.Submit",
+            "title": "Sydney",
+            "data": {
+                "intent": "GetExpertsByLocation",
+                "Skill": "${skill}",
+                "location": "Sydney"
+            }
         }
     ]
 }
 ```
+
+# LogAction_Text_VeUd19()
+[Activity
+    Text = ${LogAction_Text_VeUd19_text()}
+]
+
+# LogAction_Text_VeUd19_text()
+- ${turn}

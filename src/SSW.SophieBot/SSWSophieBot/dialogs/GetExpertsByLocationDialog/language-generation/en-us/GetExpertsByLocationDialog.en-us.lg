@@ -14,10 +14,117 @@
 
 # SendActivity_o4r1IC_text()
 - Sorry, I couldn't find anyone with **${dialog.skillEntity}** skill in **${dialog.locationEntity}** office. Please try again.
-# SendActivity_hAZAEe()
+# SendActivity_8xoYzY()
 [Activity
-    Text = ${SendActivity_hAZAEe_text()}
+    Attachments = ${json(WorkingEmployeesList(dialog.skillEntity, dialog.locationEntity, turn.employees))}
 ]
 
-# SendActivity_hAZAEe_text()
-- I have ${dialog.firstNames} with ${dialog.skillEntity} skills in the ${dialog.locationEntity} office
+# WorkingEmployeesList(skill, location, employees)
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "${location} (by skill level):",
+            "wrap": true,
+            "size": "Large"
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Name",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Level",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        }
+                    ]
+                }
+            ],
+            "style": "accent"
+        },
+        {
+            "type": "Container",
+            "items": [${join(select(employees, e, EmployeeRow(skill, e)), ',')}],
+        }
+    ]
+}
+```
+
+# EmployeeRow(skill, employee)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "items": [
+                                {
+                                    "type": "Image",
+                                    "url": "${employee.avatarUrl}",
+                                    "width": "40px",
+                                    "height": "40px",
+                                    "style": "Person"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "${employee.firstName} ${employee.lastName}",
+                                    "wrap": true
+                                }
+                            ],
+                            "verticalContentAlignment": "Center"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "text": "${where(employee.skills, x => x.technology == skill)[0].experienceLevel}"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        }
+    ],
+    "height": "stretch",
+    "separator": true
+}
+```

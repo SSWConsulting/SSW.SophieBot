@@ -106,12 +106,20 @@
                   ],
                   "elseActions": [
                     {
-                      "$kind": "Microsoft.SetProperty",
+                      "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "vBnXa2"
+                        "id": "uVhQVX"
                       },
-                      "property": "turn.firstNames",
-                      "value": "=select(take(turn.employees, 3), employee => employee.firstName)"
+                      "assignments": [
+                        {
+                          "property": "turn.firstNames",
+                          "value": "=select(take(turn.employees, 3), employee => employee.firstName)"
+                        },
+                        {
+                          "property": "turn.locations",
+                          "value": "=unique( select(turn.employees, employee => employee.defaultSite.name))"
+                        }
+                      ]
                     },
                     {
                       "$kind": "StringJoinAction",
@@ -126,21 +134,15 @@
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "5zC4a2"
+                        "id": "lQMjCh"
                       },
-                      "activity": "${SendActivity_5zC4a2()}"
+                      "activity": "${SendActivity_lQMjCh()}"
                     }
                   ]
                 }
               ]
             }
           ]
-        },
-        {
-          "$kind": "Microsoft.EndDialog",
-          "$designer": {
-            "id": "Vh4vwp"
-          }
         }
       ]
     }

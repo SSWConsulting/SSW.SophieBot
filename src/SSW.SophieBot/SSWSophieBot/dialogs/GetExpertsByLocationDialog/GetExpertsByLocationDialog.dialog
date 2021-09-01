@@ -73,29 +73,11 @@
               ],
               "actions": [
                 {
-                  "$kind": "Microsoft.SetProperty",
-                  "$designer": {
-                    "id": "YGFsBd"
-                  },
-                  "value": "=select(turn.employees, e, e.firstName)",
-                  "property": "turn.firstNames"
-                },
-                {
-                  "$kind": "StringJoinAction",
-                  "$designer": {
-                    "id": "KLVsYE"
-                  },
-                  "stringList": "=select(turn.firstNames, n, concat(\"**\", n, \"**\"))",
-                  "delimiter": ", ",
-                  "lastDelimiter": " and ",
-                  "resultProperty": "dialog.firstNames"
-                },
-                {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "hAZAEe"
+                    "id": "8xoYzY"
                   },
-                  "activity": "${SendActivity_hAZAEe()}"
+                  "activity": "${SendActivity_8xoYzY()}"
                 }
               ]
             }

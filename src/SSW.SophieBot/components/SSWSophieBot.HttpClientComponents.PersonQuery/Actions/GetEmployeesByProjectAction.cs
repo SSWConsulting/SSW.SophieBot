@@ -47,7 +47,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             int BilledDays(GetEmployeeModel model)
             {
                 return (int)Math.Ceiling(
-                    (decimal)model.Projects.FirstOrDefault(p => IsProjectNameEqual(project, p.ProjectName))?.BillableHours / 24
+                    (decimal)model.Projects.FirstOrDefault(p => IsProjectNameEqual(project, p.ProjectName))?.BillableHours / 8
                 );
             }
 
