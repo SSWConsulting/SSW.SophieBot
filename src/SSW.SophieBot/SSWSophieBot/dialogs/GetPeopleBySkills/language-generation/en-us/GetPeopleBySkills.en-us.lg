@@ -48,10 +48,10 @@
 
 # SendActivity_lQMjCh()
 [Activity
-    Attachments = ${json(SendActivity_X1CF9d_attachment_v9gcuo(turn.employees, turn.firstNameString, dialog.skillEntity))}
+    Attachments = ${json(SendActivity_X1CF9d_attachment_v9gcuo(turn.firstNameString, turn.employees, dialog.skillEntity, turn.locations))}
 ]
 
-# SendActivity_X1CF9d_attachment_v9gcuo(employees, firstNameString, skill)
+# SendActivity_X1CF9d_attachment_v9gcuo(firstNameString, employees, skill, locations)
 -```
 {
     "type": "AdaptiveCard",
@@ -67,34 +67,43 @@
             "type": "TextBlock",
             "text": "You can narrow your search by specifying an office location.\n",
             "wrap": true
-        }
-    ],
-    "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "Show All",
-            "data": {
-                "intent": "GetExpertsByLocation",
-                "Skill": "${skill}"
-            }
         },
         {
-            "type": "Action.Submit",
-            "title": "Sydney",
-            "data": {
-                "intent": "GetExpertsByLocation",
-                "Skill": "${skill}",
-                "location": "Sydney"
-            }
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.Submit",
+                    "title": "Show All [${employees.count}]",
+                    "data": {
+                        "intent": "GetExpertsByLocation",
+                        "Skill": "${skill}"
+                    }
+                },
+                ${join(select(subArray(locations, 0, 5), location => LocationButton(skill, location, employees)), ',')}
+            ]
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                ${join(select(subArray(locations, 5, count(locations)), location => LocationButton(skill, location, employees)), ',')}
+            ]
         }
     ]
 }
 ```
 
-# LogAction_Text_VeUd19()
-[Activity
-    Text = ${LogAction_Text_VeUd19_text()}
-]
+# LocationButton(skill, location, employees)
+-``` 
+{
+    "type": "Action.Submit",
+    "title": "${location} [${Count(location, employees)}]",
+    "data": {
+        "intent": "GetExpertsByLocation",
+        "Skill": "${skill}",
+        "location": "${location}"
+    }
+}
+```
 
-# LogAction_Text_VeUd19_text()
-- ${turn}
+# Count(location, employees)
+- ${count(where(employees, employee => employee.defaultSite.name == location))}

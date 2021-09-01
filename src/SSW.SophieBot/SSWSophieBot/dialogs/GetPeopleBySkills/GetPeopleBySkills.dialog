@@ -143,6 +143,12 @@
               ]
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "FXPELC"
+          }
         }
       ]
     }
