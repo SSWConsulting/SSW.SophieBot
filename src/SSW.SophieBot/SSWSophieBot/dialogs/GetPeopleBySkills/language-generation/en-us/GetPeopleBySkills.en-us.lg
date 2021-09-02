@@ -1,0 +1,96 @@
+[import](common.lg)
+[GetExpertsByLocationDialog](GetExpertsByLocationDialog.en-us.lg)
+
+# SendActivity_52UMzl_text()
+- ```I couldn't find anyone who knows **${dialog.skillEntity}**. I'm not very good at hide and seek.
+```
+# SendActivity_52UMzl()
+[Activity
+    Text = ${SendActivity_52UMzl_text()}
+]
+
+# SendActivity_CObFyQ_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_CObFyQ()
+[Activity
+    Text = ${SendActivity_CObFyQ_text()}
+]
+
+# SendActivity_R5w2vq()
+[Activity
+    Attachments = ${json(SendActivity_R5w2vq_attachment_ukytYp(turn.sortedEmployees, dialog.skillEntity))}
+]
+
+# SendActivity_R5w2vq_attachment_ukytYp(employees, skill)
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        ${EmployeeList(employees, skill)}
+    ]
+}
+```
+
+# SendActivity_lQMjCh()
+[Activity
+    Attachments = ${json(SendActivity_X1CF9d_attachment_v9gcuo(turn.firstNameString, turn.sortedEmployees, dialog.skillEntity, turn.locations))}
+]
+
+# SendActivity_X1CF9d_attachment_v9gcuo(firstNameString, employees, skill, locations)
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "I have ${firstNameString} and **${employees.count - 3} others** with ${skill} skills.\n",
+            "wrap": true
+        },
+        {
+            "type": "TextBlock",
+            "text": "You can narrow your search by specifying an office location.\n",
+            "wrap": true
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.Submit",
+                    "title": "Show All [${employees.count}]",
+                    "data": {
+                        "intent": "GetExpertsByLocation",
+                        "Skill": "${skill}"
+                    }
+                },
+                ${join(select(subArray(locations, 0, 5), location => LocationButton(skill, location, employees)), ',')}
+            ]
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                ${join(select(subArray(locations, 5, count(locations)), location => LocationButton(skill, location, employees)), ',')}
+            ]
+        }
+    ]
+}
+```
+
+# LocationButton(skill, location, employees)
+-``` 
+{
+    "type": "Action.Submit",
+    "title": "${location} [${Count(location, employees)}]",
+    "data": {
+        "intent": "GetExpertsByLocation",
+        "Skill": "${skill}",
+        "location": "${location}"
+    }
+}
+```
+
+# Count(location, employees)
+- ${count(where(employees, employee => employee.defaultSite.name == location))}

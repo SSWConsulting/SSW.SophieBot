@@ -29,7 +29,11 @@
           },
           "queryString": [
             {
-              "key": "currentLocation",
+              "key": "skills",
+              "value": "=dialog.skillEntity"
+            },
+            {
+              "key": "location",
               "value": "=dialog.locationEntity"
             }
           ],
@@ -57,11 +61,38 @@
           ],
           "actions": [
             {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "uZUI1J"
+              },
+              "index": "dialog.foreach.index",
+              "value": "dialog.foreach.value",
+              "itemsProperty": "turn.employees",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "sSkr26"
+                  },
+                  "property": "turn.employees[dialog.foreach.index].skillLevel",
+                  "value": "=where(dialog.foreach.value.skills, x => toLower(x.technology) == toLower(dialog.skillEntity))[0].experienceLevel"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "s1P4OK"
+              },
+              "property": "turn.sortedEmployees",
+              "value": "=sortBy(turn.employees, 'skillLevel')"
+            },
+            {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "9lOauV"
               },
-              "condition": "=exists(turn.employees) && count(turn.employees) > 0",
+              "condition": "=exists(turn.sortedEmployees) && count(turn.sortedEmployees) > 0",
               "elseActions": [
                 {
                   "$kind": "Microsoft.SendActivity",
@@ -73,29 +104,11 @@
               ],
               "actions": [
                 {
-                  "$kind": "Microsoft.SetProperty",
-                  "$designer": {
-                    "id": "YGFsBd"
-                  },
-                  "value": "=select(turn.employees, e, e.firstName)",
-                  "property": "turn.firstNames"
-                },
-                {
-                  "$kind": "StringJoinAction",
-                  "$designer": {
-                    "id": "KLVsYE"
-                  },
-                  "stringList": "=select(turn.firstNames, n, concat(\"**\", n, \"**\"))",
-                  "delimiter": ", ",
-                  "lastDelimiter": " and ",
-                  "resultProperty": "dialog.firstNames"
-                },
-                {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "hAZAEe"
+                    "id": "8xoYzY"
                   },
-                  "activity": "${SendActivity_hAZAEe()}"
+                  "activity": "${SendActivity_8xoYzY()}"
                 }
               ]
             }

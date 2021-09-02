@@ -50,6 +50,9 @@
       ],
       "CheckAvailability": [
         "CheckAvailabilityDialog.en-us"
+      ],
+      "GetPeopleBySkills": [
+        "GetPeopleBySkills.en-us"
       ]
     }
   },

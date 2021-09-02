@@ -159,6 +159,12 @@
 
 # SendActivity_lPfvXI_text()
 - Getting employees on project is still a work in progress.
+# SendActivity_8YrZa2_text()
+- Getting people by skills is still a work in progress.
+# SendActivity_8YrZa2()
+[Activity
+    Text = ${SendActivity_8YrZa2_text()}
+]
 # SendActivity_r27Nrj()
 [Activity
     Text = ${SendActivity_r27Nrj_text()}
