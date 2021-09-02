@@ -50,3 +50,10 @@
 
 # LogAction_Text_F2eG4B_text()
 - ${dialog.foreach.value.lastSeenSite}
+# SendActivity_H4LLV0()
+[Activity
+    Text = ${SendActivity_H4LLV0_text()}
+]
+
+# SendActivity_H4LLV0_text()
+- Please specify a person name to query.
