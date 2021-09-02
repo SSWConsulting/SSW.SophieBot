@@ -1,12 +1,18 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime.Extensions;
+using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using SSWSophieBot.Adapters;
 using SSWSophieBot.HttpClientComponents.Abstractions;
 using SSWSophieBot.HttpClientComponents.PersonQuery;
+using SSWSophieBot.Integration;
 
 namespace SSWSophieBot
 {
@@ -24,6 +30,12 @@ namespace SSWSophieBot
 		{
 			services.AddControllers().AddNewtonsoftJson();
 			services.AddBotRuntime(Configuration);
+
+			services.AddSingleton<SSWSophieBotAdapter>();
+			services.Replace(ServiceDescriptor.Singleton<IBotFrameworkHttpAdapter>(sp => sp.GetRequiredService<SSWSophieBotAdapter>()));
+			services.Replace(ServiceDescriptor.Singleton<BotAdapter>(sp => sp.GetRequiredService<SSWSophieBotAdapter>()));
+
+			services.AddSingleton<ITelemetryInitializer, SSWSophieBotTelemetryInitializer>();
 
 			services.ConfigureSophieBotHttpClient()
 				.AddPersonQueryClient();
