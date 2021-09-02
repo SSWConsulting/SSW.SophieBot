@@ -31,12 +31,12 @@
           },
           "queryString": [
             {
-              "key": "free",
-              "value": "false"
+              "key": "booked",
+              "value": "true"
             },
             {
               "value": "=dialog.dateEntity.timex[0]",
-              "key": "date"
+              "key": "fromDate"
             },
             {
               "key": "location",
