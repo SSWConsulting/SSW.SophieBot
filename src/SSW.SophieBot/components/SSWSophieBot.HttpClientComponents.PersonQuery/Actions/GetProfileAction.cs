@@ -5,6 +5,7 @@ using SSWSophieBot.Components;
 using SSWSophieBot.HttpClientAction.Models;
 using SSWSophieBot.HttpClientComponents.Abstractions;
 using SSWSophieBot.HttpClientComponents.PersonQuery.Clients;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -35,7 +36,14 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
         {
             var httpClient = GetClient(dc);
 
-            var responseMessage = await httpClient.SendRequestAsync(request => AddQueryStrings(request, dc));
+            var responseMessage = await httpClient.SendRequestAsync(request =>
+            {
+                AddQueryStrings(request, dc);
+                if (string.IsNullOrWhiteSpace(request.RequestUri.Query))
+                {
+                    throw new ArgumentNullException(nameof(QueryString), $"GetProfile request must have {nameof(QueryString)} input");
+                }
+            });
 
             if (StatusCodeProperty != null)
             {
