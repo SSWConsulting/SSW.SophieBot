@@ -919,7 +919,9 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "6Yd16Q"
-          }
+          },
+          "name": "SSWSophieBot.OnIntent_GetExpertsByLocation",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -972,7 +974,9 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "I4Knmm"
-          }
+          },
+          "name": "SSWSophieBot.OnIntent_GetEmployeesByProject",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1024,7 +1028,9 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "TkSkT5"
-          }
+          },
+          "name": "SSWSophieBot.OnIntent_GetAvailableExpertsByLocation",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1174,6 +1180,31 @@
         }
       ],
       "entities": []
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Xjv7aN",
+        "name": "OnIntent (BugReport)"
+      },
+      "intent": "BugReport",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "YjwNu9"
+          },
+          "name": "SSWSophieBot.OnIntent_BugReport",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "Br9244"
+          },
+          "activity": "${SendActivity_Br9244()}"
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",

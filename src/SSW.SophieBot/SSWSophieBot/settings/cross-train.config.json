@@ -53,7 +53,8 @@
       ],
       "GetPeopleBySkills": [
         "GetPeopleBySkills.en-us"
-      ]
+      ],
+      "BugReport": ""
     }
   },
   "ListDialog.en-us": {
