@@ -72,4 +72,18 @@
 ]
 
 # SendActivity_OesKIP_text()
-- There is only **1** people in **${dialog.location}**.
+- In **${dialog.location}**, there is **1** person (${if(turn.employees[0].inOffice, '', 'not')} in the office today).
+# SendActivity_jjbbfU()
+[Activity
+    Text = ${SendActivity_jjbbfU_text()}
+]
+
+# SendActivity_jjbbfU_text()
+- In **${dialog.location}**, there are **${turn.employees.count}** people (${count(where(turn.employees, e, e.inOffice))} in the office today).
+# SendActivity_XrCaCp()
+[Activity
+    Text = ${SendActivity_XrCaCp_text()}
+]
+
+# SendActivity_XrCaCp_text()
+- You can narrow your search by specifying a particular skill, such as React or Angualr.

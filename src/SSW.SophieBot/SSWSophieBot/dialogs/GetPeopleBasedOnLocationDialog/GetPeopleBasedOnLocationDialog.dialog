@@ -125,6 +125,22 @@
                       ],
                       "value": "1"
                     }
+                  ],
+                  "default": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "jjbbfU"
+                      },
+                      "activity": "${SendActivity_jjbbfU()}"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "XrCaCp"
+                      },
+                      "activity": "${SendActivity_XrCaCp()}"
+                    }
                   ]
                 },
                 {
