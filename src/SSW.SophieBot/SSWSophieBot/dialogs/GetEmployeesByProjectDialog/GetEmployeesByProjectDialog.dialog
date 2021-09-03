@@ -81,15 +81,6 @@
                   "workingEmployeesProperty": "turn.workingEmployees"
                 },
                 {
-                  "$kind": "Microsoft.LogAction",
-                  "$designer": {
-                    "id": "TErLJT"
-                  },
-                  "text": "${LogAction_Text_TErLJT()}",
-                  "label": "turn.workingEmployees",
-                  "traceActivity": true
-                },
-                {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
                     "id": "xNmCGW"

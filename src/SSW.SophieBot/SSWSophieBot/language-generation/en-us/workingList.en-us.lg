@@ -14,7 +14,8 @@
             "columns": [
                 {
                     "type": "Column",
-                    "width": "50px"
+                    "width": "50px",
+					"items": []
                 },
                 {
                     "type": "Column",
@@ -56,7 +57,7 @@
                 }
             ],
             "bleed": true,
-            "style": "accent",
+            "style": "default",
             "height": "stretch",
             "spacing": "Medium"
         },
@@ -98,9 +99,6 @@
                     "size": "Small"
                 }
             ],
-            "backgroundImage": {
-                "verticalAlignment": "Center"
-            },
             "verticalContentAlignment": "Center"
         },
         {
@@ -127,9 +125,6 @@
                     "size": "Small"
                 }
             ],
-            "backgroundImage": {
-                "verticalAlignment": "Center"
-            },
             "verticalContentAlignment": "Center"
         }
     ],

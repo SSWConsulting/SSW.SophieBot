@@ -584,8 +584,8 @@
 
 # GetEmployeesOnProject
 - Who is working on {project = SugarLearning}
-- Who is on {project = SophieBot}
-- Show me the people working on {project = SophieHub}
+- Who is on {project = Sophie Bot}
+- Show me the people working on {project = Sophie Hub}
 - Show me who are working on {project = NorthWind}
 
 @ ml project
