@@ -54,7 +54,10 @@
       "GetPeopleBySkills": [
         "GetPeopleBySkills.en-us"
       ],
-      "BugReport": ""
+      "BugReport": "",
+      "GetPeopleOnClientWork": [
+        "GetPeopleOnClientWorkDialog.en-us"
+      ]
     }
   },
   "ListDialog.en-us": {

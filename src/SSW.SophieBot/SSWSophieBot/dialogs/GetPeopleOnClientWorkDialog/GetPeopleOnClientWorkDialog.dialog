@@ -1,0 +1,168 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "bv7sZU",
+    "name": "GetPeopleOnClientWorkDialog",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "2WTH3E"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "4kaiSh"
+          },
+          "name": "SSWSophieBot.GetPeopleOnClientWorkDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "GetProfileAction",
+          "$designer": {
+            "id": "KaK4v1"
+          },
+          "queryString": [
+            {
+              "key": "booked",
+              "value": "true"
+            },
+            {
+              "value": "=dialog.dateEntity.timex[0]",
+              "key": "fromDate"
+            },
+            {
+              "key": "location",
+              "value": "=dialog.locationEntity"
+            }
+          ],
+          "statusCodeProperty": "turn.statusCode",
+          "reasonPhraseProperty": "turn.reasonPhrase",
+          "employeesProperty": "turn.employees",
+          "skill": {}
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "g63YTy"
+          },
+          "condition": "=turn.statusCode == 200",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "jZGZUb"
+              },
+              "activity": "${SendActivity_jZGZUb()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "NZz62n"
+              },
+              "condition": "dialog.dateEntity != null",
+              "actions": [
+                {
+                  "$kind": "TimeFormatAction",
+                  "$designer": {
+                    "id": "D6HuU2"
+                  },
+                  "datetime": "=dialog.dateEntity.timex[0]",
+                  "format": "dddd d MMMM",
+                  "resultProperty": "turn.formatDate"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "MyxatT"
+              },
+              "condition": "=exists(turn.employees) && count(turn.employees) > 0",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "pArEiW"
+                  },
+                  "activity": "${SendActivity_pArEiW()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "vjhrqb"
+                  },
+                  "condition": "dialog.locationEntity != null",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "AMPsi6"
+                      },
+                      "activity": "${SendActivity_AMPsi6()}"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "YHESg1"
+                      },
+                      "assignments": [
+                        {
+                          "property": "turn.firstNames",
+                          "value": "=select(turn.employees, e, e.firstName)"
+                        },
+                        {
+                          "property": "turn.locations",
+                          "value": "=unique( select(turn.employees, employee => employee.defaultSite.name))"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "StringJoinAction",
+                      "$designer": {
+                        "id": "nNPmm3"
+                      },
+                      "resultProperty": "dialog.firstNames",
+                      "stringList": "=select(take(turn.firstNames, 3), n, concat(\"**\", n, \"**\"))",
+                      "delimiter": ", ",
+                      "lastDelimiter": ", "
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "7cnUNi"
+                      },
+                      "activity": "${SendActivity_7cnUNi()}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "9qNmAW"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "GetPeopleOnClientWorkDialog.lg",
+  "recognizer": "GetPeopleOnClientWorkDialog.lu.qna",
+  "id": "GetPeopleOnClientWorkDialog"
+}

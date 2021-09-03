@@ -710,7 +710,8 @@
                 "GetEmployeesOnProject",
                 "GetAvailableExpertsByLocation",
                 "CheckAvailability",
-                "GetPeopleBySkills"
+                "GetPeopleBySkills",
+                "GetPeopleOnClientWork"
               ]
             }
           ]
@@ -1203,6 +1204,61 @@
             "id": "Br9244"
           },
           "activity": "${SendActivity_Br9244()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "7pKAin",
+        "name": "OnIntent (GetPeopleOnClientWork)"
+      },
+      "intent": "GetPeopleOnClientWork",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "iGkelH"
+          },
+          "name": "SSWSophieBot.OnIntent_GetPeopleOnClientWork",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "z7EoN3"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ZJy5KL"
+          },
+          "condition": "=contains($options.implemented, \"GetPeopleOnClientWork\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "yCiUft"
+              },
+              "activity": "${SendActivity_yCiUft()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "oI8v1M"
+              },
+              "activityProcessed": true,
+              "dialog": "GetPeopleOnClientWorkDialog",
+              "options": {
+                "dateEntity": "=$options.datetime",
+                "locationEntity": "=$options.location"
+              }
+            }
+          ]
         }
       ]
     }
