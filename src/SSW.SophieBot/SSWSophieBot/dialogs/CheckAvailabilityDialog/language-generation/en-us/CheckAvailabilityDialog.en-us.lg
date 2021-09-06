@@ -20,12 +20,24 @@
 ]
 
 # SendActivity_8hLWNo_text(profile, currentAppoinments)
-- **${profile.firstName} ${profile.lastName}** ${getStatus(currentAppoinments)}
+- **${profile.firstName} ${profile.lastName}** ${getStatus(profile, currentAppoinments)}
 
-# getStatus(appointments)
+# getStatus(profile, appointments)
 - IF: ${appointments.count == 0}
-    - is **free**.
+    - is **free**.${LastSeen(profile.lastSeenInfo)}
 - ELSEIF: ${ appointments[0].Regarding == "SSW" }:
-    - is busy(internal) working for **SSW** on **${split(appointments[0].subject, ' -')[0]}**.
+    - is **free**. Working on internal work - **${split(appointments[0].subject, ' -')[0]}**.${LastSeen(profile.lastSeenInfo)}
 - ELSE:
-    - is busy working for **${appointments[0].Regarding}** on **${split(appointments[0].subject, ' -')[0]}**.
+    - is on client work. Working for **${appointments[0].Regarding}** on **${split(appointments[0].subject, ' -')[0]}**.${LastSeen(profile.lastSeenInfo)}
+
+# LastSeen(lastSeenInfo)
+- ${if(location != null || time != null, LastSeenInfo(lastSeenInfo.location, lastSeenInfo.time), '')}
+
+# LastSeenInfo(location, time)
+- ``` Last seen${LocationInfo(location)}${TimeInfo(time)}.```
+
+# LocationInfo(location)
+- ``` in ${location} ```
+
+# TimeInfo(time)
+- ``` ${time} ago```
