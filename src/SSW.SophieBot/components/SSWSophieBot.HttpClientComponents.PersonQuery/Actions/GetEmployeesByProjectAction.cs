@@ -8,6 +8,7 @@ using SSWSophieBot.HttpClientComponents.PersonQuery.Models;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -37,12 +38,25 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
         {
             static bool IsProjectNameEqual(string sourceProjectName, string originalProjectName)
             {
-                return originalProjectName.Contains(sourceProjectName, StringComparison.OrdinalIgnoreCase);
+                if (string.IsNullOrWhiteSpace(originalProjectName) || string.IsNullOrWhiteSpace(sourceProjectName))
+                {
+                    return false;
+                }
+
+                var _rgx = new Regex("[^a-zA-Z0-9]", RegexOptions.Compiled);
+                var prjName = _rgx.Replace(sourceProjectName, string.Empty);
+                return _rgx.Replace(originalProjectName, string.Empty).IndexOf(prjName, StringComparison.OrdinalIgnoreCase) >= 0;
             }
 
             var queriedProject = dc.GetValue(Project);
+
+            if (string.IsNullOrWhiteSpace(queriedProject))
+            {
+                throw new ArgumentNullException(nameof(Project));
+            }
+
             var employees = dc.GetValue(Employees);
-            var project = employees.FirstOrDefault()?.Projects?.FirstOrDefault(p => IsProjectNameEqual(queriedProject, p.ProjectName))?.ProjectName;
+            var project = employees?.FirstOrDefault()?.Projects?.FirstOrDefault(p => IsProjectNameEqual(queriedProject, p.ProjectName))?.ProjectName;
 
             int BilledDays(GetEmployeeModel model)
             {

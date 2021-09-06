@@ -584,8 +584,8 @@
 
 # GetEmployeesOnProject
 - Who is working on {project = SugarLearning}
-- Who is on {project = SophieBot}
-- Show me the people working on {project = SophieHub}
+- Who is on {project = Sophie Bot}
+- Show me the people working on {project = Sophie Hub}
 - Show me who are working on {project = NorthWind}
 
 @ ml project
@@ -634,3 +634,12 @@
 - I want to report a bug
 - You have a bug
 - This is a bug
+
+
+# GetPeopleOnClientWork
+- Who is on client work?
+- Who is on client work in {location = Sydney}?
+- Who is on client work next Friday?
+- Who is on client work in {location = Sydney} next Friday?
+
+@ prebuilt datetimeV2

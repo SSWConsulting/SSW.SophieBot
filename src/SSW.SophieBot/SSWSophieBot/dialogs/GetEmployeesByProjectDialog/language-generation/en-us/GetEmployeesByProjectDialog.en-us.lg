@@ -19,11 +19,3 @@
 [Activity
     Attachments = ${json(WorkingEmployeesList(turn.workingEmployees))}
 ]
-
-# LogAction_Text_TErLJT()
-[Activity
-    Text = ${LogAction_Text_TErLJT_text()}
-]
-
-# LogAction_Text_TErLJT_text()
-- ${turn.workingEmployees}
