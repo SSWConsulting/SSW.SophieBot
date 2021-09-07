@@ -30,6 +30,7 @@
                     "title": "Show All [${employees.count}]",
                     "data": {
                         "intent": "GetPeopleOnClientWork",
+                        "location": "All"
                     }
                 },
                 ${join(select(subArray(locations, 0, 5), location => LocationButton(skill, location, employees)), ',')}
@@ -84,7 +85,7 @@
 
 # SendActivity_AMPsi6()
 [Activity
-    Attachments = ${json(WorkingEmployeesList(turn.locationEntity, turn.employees))}
+    Attachments = ${json(WorkingEmployeesList(dialog.locationEntity, turn.employees))}
 ]
 
 # WorkingEmployeesList(location, employees)

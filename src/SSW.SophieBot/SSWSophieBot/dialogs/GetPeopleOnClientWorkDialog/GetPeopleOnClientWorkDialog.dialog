@@ -25,6 +25,14 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "ru0L4u"
+          },
+          "value": "=if(dialog.locationEntity == 'All', '', dialog.locationEntity)",
+          "property": "dialog.locationEntity"
+        },
+        {
           "$kind": "GetProfileAction",
           "$designer": {
             "id": "KaK4v1"
