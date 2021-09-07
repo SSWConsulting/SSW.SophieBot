@@ -56,7 +56,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             }
 
             var groupKey = dc.GetValue(GroupOptions.GroupKey);
-            if (!Enum.TryParse<EmployeesGroupKey>(groupKey, out var groupKeyEnum))
+            if (!Enum.TryParse<EmployeesGroupKey>(groupKey, true, out var groupKeyEnum))
             {
                 groupKeyEnum = EmployeesGroupKey.None;
             }
