@@ -5,6 +5,9 @@
   "description": "These are all of the kinds that can be created by the loader.",
   "oneOf": [
     {
+      "$ref": "#/definitions/CheckAvailabilityDialog.dialog"
+    },
+    {
       "$ref": "#/definitions/GetAvailableExpertsByLocationDialog.dialog"
     },
     {
@@ -20,10 +23,19 @@
       "$ref": "#/definitions/GetExpertsByLocationDialog.dialog"
     },
     {
+      "$ref": "#/definitions/GetGroupedEmployeesAction"
+    },
+    {
       "$ref": "#/definitions/GetManagerDialog.dialog"
     },
     {
       "$ref": "#/definitions/GetPeopleBasedOnLocationDialog.dialog"
+    },
+    {
+      "$ref": "#/definitions/GetPeopleBySkills.dialog"
+    },
+    {
+      "$ref": "#/definitions/GetPeopleOnClientWorkDialog.dialog"
     },
     {
       "$ref": "#/definitions/GetPhoneNumberDialog.dialog"
@@ -493,6 +505,77 @@
         }
       ]
     },
+    "CheckAvailabilityDialog.dialog": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "CheckAvailabilityDialog",
+      "type": "object",
+      "$result": {
+        "type": "object",
+        "properties": {}
+      },
+      "definitions": {
+        "equalsExpression": {
+          "$role": "expression",
+          "type": "string",
+          "title": "Equals Expression",
+          "description": "Expression starting with =.",
+          "pattern": "^=.*\\S.*",
+          "examples": [
+            "=user.name"
+          ]
+        },
+        "stringExpression": {
+          "$role": "expression",
+          "title": "String or expression",
+          "description": "Interpolated string or expression to evaluate.",
+          "oneOf": [
+            {
+              "type": "string",
+              "title": "String",
+              "description": "Interpolated string",
+              "pattern": "^(?!(=)).*",
+              "examples": [
+                "Hello ${user.name}"
+              ]
+            },
+            {
+              "$ref": "#/definitions/CheckAvailabilityDialog.dialog/definitions/equalsExpression",
+              "examples": [
+                "=concat('x','y','z')"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "nameEntity": {
+          "$ref": "#/definitions/CheckAvailabilityDialog.dialog/definitions/stringExpression",
+          "title": "Name Entity"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "CheckAvailabilityDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "component": {
       "required": [
         "$kind"
@@ -902,6 +985,73 @@
         }
       }
     },
+    "GetGroupedEmployeesAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetGroupedEmployees",
+      "description": "This will return the result of grouped employees with a proper structure",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "groupOptions": {
+          "type": "object",
+          "title": "Group options",
+          "description": "Options to group employees",
+          "properties": {
+            "showAll": {
+              "$ref": "#/definitions/booleanExpression",
+              "title": "Show all",
+              "description": "If set to true, result set contains a show-all group"
+            },
+            "groupKey": {
+              "$ref": "#/definitions/stringExpression",
+              "title": "Group key",
+              "description": "Employees group in a set"
+            },
+            "countPerSet": {
+              "$ref": "#/definitions/integerExpression",
+              "title": "Count per set",
+              "description": "Employees group count per set"
+            },
+            "maxGroupCount": {
+              "$ref": "#/definitions/integerExpression",
+              "title": "Max group count",
+              "description": "Maximum amount of employees group"
+            }
+          }
+        },
+        "employees": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "Employees",
+          "description": "Original employees data retrieved from HTTP request"
+        },
+        "groupedEmployeesProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Grouped employees property",
+          "description": "The property to store grouped employees"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetGroupedEmployeesAction"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "GetManagerDialog.dialog": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "GetManagerDialog",
@@ -1037,6 +1187,152 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "GetPeopleBasedOnLocationDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetPeopleBySkills.dialog": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetPeopleBySkills",
+      "type": "object",
+      "$result": {
+        "type": "object",
+        "properties": {}
+      },
+      "definitions": {
+        "equalsExpression": {
+          "$role": "expression",
+          "type": "string",
+          "title": "Equals Expression",
+          "description": "Expression starting with =.",
+          "pattern": "^=.*\\S.*",
+          "examples": [
+            "=user.name"
+          ]
+        },
+        "stringExpression": {
+          "$role": "expression",
+          "title": "String or expression",
+          "description": "Interpolated string or expression to evaluate.",
+          "oneOf": [
+            {
+              "type": "string",
+              "title": "String",
+              "description": "Interpolated string",
+              "pattern": "^(?!(=)).*",
+              "examples": [
+                "Hello ${user.name}"
+              ]
+            },
+            {
+              "$ref": "#/definitions/GetPeopleBySkills.dialog/definitions/equalsExpression",
+              "examples": [
+                "=concat('x','y','z')"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "skillEntity": {
+          "$ref": "#/definitions/GetPeopleBySkills.dialog/definitions/stringExpression",
+          "title": "Skill Entity"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetPeopleBySkills.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetPeopleOnClientWorkDialog.dialog": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetPeopleOnClientWorkDialog",
+      "type": "object",
+      "$result": {
+        "type": "object",
+        "properties": {}
+      },
+      "definitions": {
+        "equalsExpression": {
+          "$role": "expression",
+          "type": "string",
+          "title": "Equals Expression",
+          "description": "Expression starting with =.",
+          "pattern": "^=.*\\S.*",
+          "examples": [
+            "=user.name"
+          ]
+        },
+        "stringExpression": {
+          "$role": "expression",
+          "title": "String or expression",
+          "description": "Interpolated string or expression to evaluate.",
+          "oneOf": [
+            {
+              "type": "string",
+              "title": "String",
+              "description": "Interpolated string",
+              "pattern": "^(?!(=)).*",
+              "examples": [
+                "Hello ${user.name}"
+              ]
+            },
+            {
+              "$ref": "#/definitions/GetPeopleOnClientWorkDialog.dialog/definitions/equalsExpression",
+              "examples": [
+                "=concat('x','y','z')"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "dateEntity": {
+          "$ref": "#/definitions/GetPeopleOnClientWorkDialog.dialog/definitions/stringExpression",
+          "title": "Date Entity"
+        },
+        "locationEntity": {
+          "$ref": "#/definitions/GetPeopleOnClientWorkDialog.dialog/definitions/stringExpression",
+          "title": "Location Entity"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetPeopleOnClientWorkDialog.dialog"
         },
         "$designer": {
           "title": "Designer information",
@@ -7132,6 +7428,9 @@
       "$role": "interface",
       "oneOf": [
         {
+          "$ref": "#/definitions/CheckAvailabilityDialog.dialog"
+        },
+        {
           "$ref": "#/definitions/GetAvailableExpertsByLocationDialog.dialog"
         },
         {
@@ -7147,10 +7446,19 @@
           "$ref": "#/definitions/GetExpertsByLocationDialog.dialog"
         },
         {
+          "$ref": "#/definitions/GetGroupedEmployeesAction"
+        },
+        {
           "$ref": "#/definitions/GetManagerDialog.dialog"
         },
         {
           "$ref": "#/definitions/GetPeopleBasedOnLocationDialog.dialog"
+        },
+        {
+          "$ref": "#/definitions/GetPeopleBySkills.dialog"
+        },
+        {
+          "$ref": "#/definitions/GetPeopleOnClientWorkDialog.dialog"
         },
         {
           "$ref": "#/definitions/GetPhoneNumberDialog.dialog"
