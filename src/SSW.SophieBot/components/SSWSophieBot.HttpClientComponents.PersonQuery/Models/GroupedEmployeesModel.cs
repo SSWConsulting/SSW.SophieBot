@@ -60,6 +60,9 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Models
 
     public class GroupedEmployeesItem
     {
+        [JsonProperty("title")]
+        public string Title { get; set; }
+
         [JsonProperty("key")]
         public string Key { get; set; }
 

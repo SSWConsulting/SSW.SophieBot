@@ -14,7 +14,7 @@
       "$ref": "#/definitions/GetEmailAddressDialog.dialog"
     },
     {
-      "$ref": "#/definitions/GetEmployeesByProjectAction"
+      "$ref": "#/definitions/GetEmployeesByBillableAction"
     },
     {
       "$ref": "#/definitions/GetEmployeesByProjectDialog.dialog"
@@ -791,10 +791,10 @@
         }
       }
     },
-    "GetEmployeesByProjectAction": {
+    "GetEmployeesByBillableAction": {
       "$role": "implements(Microsoft.IDialog)",
-      "title": "GetEmployeesByProject",
-      "description": "This will return the result of working employees on a project with a proper structure",
+      "title": "GetEmployeesByBillable",
+      "description": "This will return the result of working employees by billable with a proper structure",
       "type": "object",
       "required": [
         "$kind"
@@ -820,14 +820,14 @@
         "workingEmployeesProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Working employees property",
-          "description": "The working employees on a project with a proper structure"
+          "description": "The working employees by billable with a proper structure"
         },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "GetEmployeesByProjectAction"
+          "const": "GetEmployeesByBillableAction"
         },
         "$designer": {
           "title": "Designer information",
@@ -970,6 +970,11 @@
           "description": "The current location of the experts",
           "$ref": "#/definitions/GetExpertsByLocationDialog.dialog/definitions/stringExpression",
           "title": "Location Entity"
+        },
+        "title": {
+          "description": "If specified, the response card will be a billable list card with this title",
+          "$ref": "#/definitions/GetExpertsByLocationDialog.dialog/definitions/stringExpression",
+          "title": "Title"
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -7437,7 +7442,7 @@
           "$ref": "#/definitions/GetEmailAddressDialog.dialog"
         },
         {
-          "$ref": "#/definitions/GetEmployeesByProjectAction"
+          "$ref": "#/definitions/GetEmployeesByBillableAction"
         },
         {
           "$ref": "#/definitions/GetEmployeesByProjectDialog.dialog"

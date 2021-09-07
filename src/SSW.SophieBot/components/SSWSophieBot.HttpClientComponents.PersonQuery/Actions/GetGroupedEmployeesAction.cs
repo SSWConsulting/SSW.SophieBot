@@ -50,7 +50,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             {
                 groupedEmployees.AddItem(new GroupedEmployeesItem
                 {
-                    Key = $"Show All [{employees.Count}]",
+                    Title = $"Show All [{employees.Count}]",
+                    Key = string.Empty,
                     Count = employees.Count
                 });
             }
@@ -61,7 +62,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 groupKeyEnum = EmployeesGroupKey.None;
             }
 
-            var maxGroupCount = dc.GetValue(GroupOptions.MaxGroupCount) - 1;
+            var maxGroupCount = dc.GetValue(GroupOptions.MaxGroupCount) - (showAll ? 1 : 0);
 
             switch (groupKeyEnum)
             {
@@ -74,16 +75,16 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
                     Func<GetEmployeeModel, string, bool> countFunc = (e, s) => e.Skills.Any(es => es.ExperienceLevel == "Advanced" && es.Technology == s);
 
-                    skills.OrderByDescending(s => 
-                        employees.Count(e => countFunc(e, s))
-                    )
-                    .Take(maxGroupCount)
-                    .ToList()
-                    .ForEach(s => groupedEmployees.AddItem(new GroupedEmployeesItem
-                    {
-                        Key = s,
-                        Count = employees.Count(e => countFunc(e, s))
-                    }));
+                    skills.ToDictionary(s => s, s => employees.Count(e => countFunc(e, s)))
+                        .OrderByDescending(p => p.Value)
+                        .Take(maxGroupCount)
+                        .ToList()
+                        .ForEach(s => groupedEmployees.AddItem(new GroupedEmployeesItem
+                        {
+                            Title = $"{s.Key} [{s.Value}]",
+                            Key = s.Key,
+                            Count = s.Value
+                        }));
                     break;
                 case EmployeesGroupKey.Location:
                     var locations = employees
@@ -91,11 +92,17 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                         .Where(s => !string.IsNullOrWhiteSpace(s))
                         .Distinct()
                         .ToList();
-                    locations.ForEach(l => groupedEmployees.AddItem(new GroupedEmployeesItem
-                    {
-                        Key = l,
-                        Count = employees.Count(e => e.DefaultSite?.Name == l)
-                    }));
+
+                    locations.ToDictionary(l => l, l => employees.Count(e => e.DefaultSite?.Name == l))
+                        .OrderByDescending(p => p.Value)
+                        .Take(maxGroupCount)
+                        .ToList()
+                        .ForEach(l => groupedEmployees.AddItem(new GroupedEmployeesItem
+                        {
+                            Title = $"{l.Key} [{l.Value}]",
+                            Key = l.Key,
+                            Count = l.Value
+                        }));
                     break;
                 case EmployeesGroupKey.None:
                 default:

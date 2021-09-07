@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 {
-    public class GetEmployeesByProjectAction : ActionBase
+    public class GetEmployeesByBillableAction : ActionBase
     {
         [JsonProperty("$kind")]
-        public const string Kind = "GetEmployeesByProjectAction";
+        public const string Kind = "GetEmployeesByBillableAction";
 
-        public GetEmployeesByProjectAction([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
+        public GetEmployeesByBillableAction([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
             : base(sourceFilePath, sourceLineNumber)
         {
 
@@ -37,24 +37,13 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
         {
             var queriedProject = dc.GetValue(Project);
 
-            if (string.IsNullOrWhiteSpace(queriedProject))
-            {
-                throw new ArgumentNullException(nameof(Project));
-            }
-
             var employees = dc.GetValue(Employees);
-
             if (employees == null || !employees.Any())
             {
                 throw new ArgumentNullException(nameof(Employees));
             }
 
             var billableEmployees = EmployeesHelper.GetBillableEmployees(employees, queriedProject, out var projectName);
-
-            if (string.IsNullOrWhiteSpace(projectName))
-            {
-                throw new ArgumentNullException(nameof(Project));
-            }
 
             var workingEmployees = new EmployeesByProjectListModel
             {

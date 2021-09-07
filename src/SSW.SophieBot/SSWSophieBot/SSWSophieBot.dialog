@@ -956,7 +956,9 @@
               "dialog": "GetExpertsByLocationDialog",
               "options": {
                 "skillEntity": "=$options.skill",
-                "locationEntity": "=$options.location"
+                "locationEntity": "=$options.location",
+                "title": "=@title",
+                "byBillable": "=@byBillable"
               }
             }
           ]

@@ -20,13 +20,13 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             var experienceLevel = dc?.GetValue(ExperienceLevelString);
             if (!string.IsNullOrWhiteSpace(experienceLevel))
             {
-                if (experienceLevel.Equals(ExperienceLevel.Advanced.ToString(), StringComparison.OrdinalIgnoreCase))
+                if (Enum.TryParse<ExperienceLevel>(experienceLevel, true, out var levelEnum))
                 {
-                    return ExperienceLevel.Advanced;
+                    return levelEnum;
                 }
-                else if (experienceLevel.Equals(ExperienceLevel.Intermediate.ToString(), StringComparison.OrdinalIgnoreCase))
+                else
                 {
-                    return ExperienceLevel.Intermediate;
+                    return null;
                 }
             }
 

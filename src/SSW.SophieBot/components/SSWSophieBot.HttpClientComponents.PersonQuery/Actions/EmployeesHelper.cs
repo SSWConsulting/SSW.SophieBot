@@ -11,7 +11,15 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
     {
         public static List<EmployeeBillableItemModel> GetBillableEmployees(IEnumerable<GetEmployeeModel> employees, string queriedProjectName, out string projectName)
         {
-            var project = employees?.FirstOrDefault()?.Projects?.FirstOrDefault(p => IsProjectNameEqual(queriedProjectName, p.ProjectName));
+            GetEmployeeProjectModel project;
+            if (string.IsNullOrWhiteSpace(queriedProjectName))
+            {
+                project = null;
+            }
+            else
+            {
+                project = employees?.FirstOrDefault()?.Projects?.FirstOrDefault(p => IsProjectNameEqual(queriedProjectName, p.ProjectName));
+            }
             projectName = project?.ProjectName;
 
             return employees.Select(e => new EmployeeBillableItemModel
