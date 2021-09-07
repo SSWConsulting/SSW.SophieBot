@@ -1,4 +1,4 @@
-[import](common.lg)
+    [import](common.lg)
 
 # SendActivity_RA2SOG_text()
 - Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
@@ -16,28 +16,26 @@
 
 # SendActivity_8hLWNo()
 [Activity
-    Text = ${SendActivity_8hLWNo_text(dialog.profile, turn.currentAppoinments)}
+    Text = ${SendActivity_8hLWNo_text(turn.currentAppoinments, dialog.profile)}
 ]
 
-# SendActivity_8hLWNo_text(profile, currentAppoinments)
-- **${profile.firstName} ${profile.lastName}** ${getStatus(profile, currentAppoinments)}
+# SendActivity_8hLWNo_text(currentAppoinments, profile)
+- **${profile.firstName} ${profile.lastName}** ${getStatus(currentAppoinments)} ${if(profile.lastSeenAt != null, LastSeenText(profile.lastSeenAt.siteId, profile.lastSeenAt.time), '')}
 
-# getStatus(profile, appointments)
+# getStatus(appointments)
 - IF: ${appointments.count == 0}
-    - is **free**.${LastSeen(profile.lastSeenInfo)}
+    - is **free**.
 - ELSEIF: ${ appointments[0].Regarding == "SSW" }:
-    - is **free**. Working on internal work - **${split(appointments[0].subject, ' -')[0]}**.${LastSeen(profile.lastSeenInfo)}
+    - is **free**. Working on internal work - **${split(appointments[0].subject, ' -')[0]}**.
 - ELSE:
-    - is on client work. Working for **${appointments[0].Regarding}** on **${split(appointments[0].subject, ' -')[0]}**.${LastSeen(profile.lastSeenInfo)}
+    - is on client work. Working for **${appointments[0].Regarding}** on **${split(appointments[0].subject, ' -')[0]}**.
 
-# LastSeen(lastSeenInfo)
-- ${if(location != null || time != null, LastSeenInfo(lastSeenInfo.location, lastSeenInfo.time), '')}
-
-# LastSeenInfo(location, time)
-- ``` Last seen${LocationInfo(location)}${TimeInfo(time)}.```
-
-# LocationInfo(location)
-- ``` in ${location} ```
-
-# TimeInfo(time)
-- ``` ${time} ago```
+# LastSeenText(location, time)
+- IF: ${ location != null && time != null }
+    - ```Last seen in ${location} ${time}.```
+- ELSEIF: ${ location == null }
+    - ```Last seen ${time}.```
+- ELSEIF ${ time == null }:
+    - ```Last seen in ${location}.```
+- ELSE:
+    - ``````
