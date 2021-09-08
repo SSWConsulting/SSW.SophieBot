@@ -51,12 +51,12 @@ namespace SSWSophieBot.HttpClientAction.Models
 
             return Skills.Any(s =>
             {
-                if (string.IsNullOrWhiteSpace(s.Technology) || !s.Technology.Contains(technology, StringComparison.OrdinalIgnoreCase))
+                if (string.IsNullOrWhiteSpace(s.Technology) || !s.Technology.Equals(technology, StringComparison.OrdinalIgnoreCase))
                 {
                     return false;
                 }
 
-                if (experienceLevel.HasValue && experienceLevel.Value.ToString().ToLower() != s.ExperienceLevel.ToLower())
+                if (experienceLevel.HasValue && !experienceLevel.Value.ToString().Equals(s.ExperienceLevel, StringComparison.OrdinalIgnoreCase))
                 {
                     return false;
                 }
