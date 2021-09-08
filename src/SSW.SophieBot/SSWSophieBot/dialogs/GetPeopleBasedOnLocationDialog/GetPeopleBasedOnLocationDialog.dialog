@@ -115,43 +115,48 @@
                             "id": "j1tmY1"
                           },
                           "activity": "${SendActivity_j1tmY1()}"
-                        },
-                        {
-                          "$kind": "Microsoft.EndDialog",
-                          "$designer": {
-                            "id": "gkrVeH"
-                          }
                         }
                       ],
                       "value": "1"
                     }
-                  ]
-                },
-                {
-                  "$kind": "Microsoft.Foreach",
-                  "$designer": {
-                    "id": "Qq0pTL"
-                  },
-                  "index": "dialog.foreach.index",
-                  "value": "dialog.foreach.value",
-                  "itemsProperty": "turn.employees",
-                  "actions": [
+                  ],
+                  "default": [
                     {
-                      "$kind": "Microsoft.SetProperty",
+                      "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "ovDZyU"
+                        "id": "jjbbfU"
                       },
-                      "property": "turn.employees[dialog.foreach.index].index",
-                      "value": "=dialog.foreach.index+1"
+                      "activity": "${SendActivity_jjbbfU()}"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "XrCaCp"
+                      },
+                      "activity": "${SendActivity_XrCaCp()}"
+                    },
+                    {
+                      "$kind": "GetGroupedEmployeesAction",
+                      "$designer": {
+                        "id": "VodMEg"
+                      },
+                      "groupOptions": {
+                        "showAll": true,
+                        "groupKey": "Skill",
+                        "countPerSet": 3,
+                        "maxGroupCount": 6
+                      },
+                      "employees": "=turn.employees",
+                      "groupedEmployeesProperty": "turn.groupedEmployees"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "Jcjj19"
+                      },
+                      "activity": "${SendActivity_Jcjj19()}"
                     }
                   ]
-                },
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "Grcpla"
-                  },
-                  "activity": "${SendActivity_Grcpla()}"
                 }
               ]
             }

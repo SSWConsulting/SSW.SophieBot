@@ -14,13 +14,16 @@
       "$ref": "#/definitions/GetEmailAddressDialog.dialog"
     },
     {
-      "$ref": "#/definitions/GetEmployeesByProjectAction"
+      "$ref": "#/definitions/GetEmployeesByBillableAction"
     },
     {
       "$ref": "#/definitions/GetEmployeesByProjectDialog.dialog"
     },
     {
       "$ref": "#/definitions/GetExpertsByLocationDialog.dialog"
+    },
+    {
+      "$ref": "#/definitions/GetGroupedEmployeesAction"
     },
     {
       "$ref": "#/definitions/GetManagerDialog.dialog"
@@ -791,10 +794,10 @@
         }
       }
     },
-    "GetEmployeesByProjectAction": {
+    "GetEmployeesByBillableAction": {
       "$role": "implements(Microsoft.IDialog)",
-      "title": "GetEmployeesByProject",
-      "description": "This will return the result of working employees on a project with a proper structure",
+      "title": "GetEmployeesByBillable",
+      "description": "This will return the result of working employees by billable with a proper structure",
       "type": "object",
       "required": [
         "$kind"
@@ -820,14 +823,14 @@
         "workingEmployeesProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Working employees property",
-          "description": "The working employees on a project with a proper structure"
+          "description": "The working employees by billable with a proper structure"
         },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "GetEmployeesByProjectAction"
+          "const": "GetEmployeesByBillableAction"
         },
         "$designer": {
           "title": "Designer information",
@@ -971,12 +974,84 @@
           "$ref": "#/definitions/GetExpertsByLocationDialog.dialog/definitions/stringExpression",
           "title": "Location Entity"
         },
+        "title": {
+          "description": "If specified, the response card will be a billable list card with this title",
+          "$ref": "#/definitions/GetExpertsByLocationDialog.dialog/definitions/stringExpression",
+          "title": "Title"
+        },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "GetExpertsByLocationDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetGroupedEmployeesAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetGroupedEmployees",
+      "description": "This will return the result of grouped employees with a proper structure",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "groupOptions": {
+          "type": "object",
+          "title": "Group options",
+          "description": "Options to group employees",
+          "properties": {
+            "showAll": {
+              "$ref": "#/definitions/booleanExpression",
+              "title": "Show all",
+              "description": "If set to true, result set contains a show-all group"
+            },
+            "groupKey": {
+              "$ref": "#/definitions/stringExpression",
+              "title": "Group key",
+              "description": "Employees group in a set"
+            },
+            "countPerSet": {
+              "$ref": "#/definitions/integerExpression",
+              "title": "Count per set",
+              "description": "Employees group count per set"
+            },
+            "maxGroupCount": {
+              "$ref": "#/definitions/integerExpression",
+              "title": "Max group count",
+              "description": "Maximum amount of employees group"
+            }
+          }
+        },
+        "employees": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "Employees",
+          "description": "Original employees data retrieved from HTTP request"
+        },
+        "groupedEmployeesProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Grouped employees property",
+          "description": "The property to store grouped employees"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetGroupedEmployeesAction"
         },
         "$designer": {
           "title": "Designer information",
@@ -7370,13 +7445,16 @@
           "$ref": "#/definitions/GetEmailAddressDialog.dialog"
         },
         {
-          "$ref": "#/definitions/GetEmployeesByProjectAction"
+          "$ref": "#/definitions/GetEmployeesByBillableAction"
         },
         {
           "$ref": "#/definitions/GetEmployeesByProjectDialog.dialog"
         },
         {
           "$ref": "#/definitions/GetExpertsByLocationDialog.dialog"
+        },
+        {
+          "$ref": "#/definitions/GetGroupedEmployeesAction"
         },
         {
           "$ref": "#/definitions/GetManagerDialog.dialog"

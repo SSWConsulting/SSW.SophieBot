@@ -56,11 +56,6 @@
 -```${people.index}. **${people.firstName} ${people.lastName}**  
 ```
 
-# SendActivity_Grcpla()
-[Activity
-    Attachments = ${json(PeopleListCard(dialog.location, turn.employees))}
-]
-
 # SendActivity_j1tmY1()
 [Activity
     Attachments = ${json(ProfileCardWithSSWPeopleAPI(turn.employees[0]))}
@@ -72,4 +67,68 @@
 ]
 
 # SendActivity_OesKIP_text()
-- There is only **1** people in **${dialog.location}**.
+- In **${dialog.location}**, there is **1** person (${if(turn.employees[0].inOffice, '', 'not')} in the office today).
+# SendActivity_jjbbfU()
+[Activity
+    Text = ${SendActivity_jjbbfU_text()}
+]
+
+# SendActivity_jjbbfU_text()
+- In **${dialog.location}**, there are **${turn.employees.count}** people (${count(where(turn.employees, e, e.inOffice))} in the office today).
+# SendActivity_XrCaCp()
+[Activity
+    Text = ${SendActivity_XrCaCp_text()}
+]
+
+# SendActivity_XrCaCp_text()
+- You can narrow your search by specifying a particular skill, such as React or Angular.
+# SendActivity_Jcjj19()
+[Activity
+    Attachments = ${json(EmployeesGroupActionCard(turn.groupedEmployees, dialog.location))}
+]
+
+# EmployeesGroupActionCard(groupedEmployees, location)
+- ```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "size": "Medium",
+            "weight": "Bolder",
+            "text": "Choose an item"
+        },
+		${join(select(groupedEmployees.sets, set => GetActionSet(set, location)), ',')}
+    ]
+}
+```
+
+# GetActionSet(groupSet, location)
+- ```
+{
+    "type": "ActionSet",
+    "actions": [${join(select(groupSet.groups, group => GetAction(group, location)), ',')}],
+    "height": "stretch"
+}
+```
+
+# GetAction(group, location)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${group.title}",
+    "data": 
+    {
+        "intent": "GetExpertsByLocation",
+        "skill" : "${group.key}",
+        "location": "${location}",
+		"byBillable": true,
+        "msteams": {
+            "type": "messageBack",
+			"displayText": "${group.title}"
+        }
+    }
+}
+```

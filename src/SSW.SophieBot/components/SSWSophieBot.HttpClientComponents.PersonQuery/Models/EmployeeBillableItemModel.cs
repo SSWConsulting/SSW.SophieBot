@@ -1,18 +1,8 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace SSWSophieBot.HttpClientComponents.PersonQuery.Models
 {
-    public class WorkingEmployeesModel
-    {
-        [JsonProperty("project")]
-        public string Project { get; set; }
-
-        [JsonProperty("employees")]
-        public List<WorkingEmployeeItem> Employees { get; set; }
-    }
-
-    public class WorkingEmployeeItem
+    public class EmployeeBillableItemModel
     {
         [JsonProperty("avatarUrl")]
         public string AvatarUrl { get; set; }
