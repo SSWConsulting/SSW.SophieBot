@@ -15,7 +15,7 @@
     "body": [
         {
             "type": "TextBlock",
-            "text": "${firstNames} and **${count(employees) - 3} others** are on client work${DateInfo(turn.formatDate)}.",
+            "text": "${NameList(firstNames, count(employees))} are on client work${DateInfo(turn.formatDate)}.",
             "wrap": true
         },
         {
@@ -40,6 +40,12 @@
     ]
 }
 ```
+
+# NameList(firstNames, peopleCount)
+- IF: ${ peopleCount <= 4 }
+    - ${firstNames}
+- ELSE:
+    - ${firstNames} and **${peopleCount - 3} others**
 
 # DateInfo(date)
 - ${if(date != null, DateText(date), '')}
