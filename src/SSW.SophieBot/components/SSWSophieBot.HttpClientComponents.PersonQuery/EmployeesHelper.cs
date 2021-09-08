@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
+namespace SSWSophieBot.HttpClientComponents.PersonQuery
 {
     public static class EmployeesHelper
     {
@@ -28,7 +28,9 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 DisplayName = $"{e.FirstName} {e.LastName}",
                 BilledDays = GetBilledDays(e, project),
                 LastSeen = GetLastSeen(e)
-            }).ToList();
+            })
+            .OrderByDescending(i => i.BilledDays)
+            .ToList();
         }
 
         private static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project)

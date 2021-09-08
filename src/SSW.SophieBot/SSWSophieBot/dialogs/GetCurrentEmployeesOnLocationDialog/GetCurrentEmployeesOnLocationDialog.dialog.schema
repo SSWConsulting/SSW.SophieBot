@@ -1,28 +1,13 @@
 {
   "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "$role": "implements(Microsoft.IDialog)",
-  "title": "GetExpertsByLocation",
+  "title": "GetCurrentEmployeesOnLocationDialog",
   "type": "object",
   "properties": {
-    "skillEntity": {
-      "description": "The advanced skill of the experts",
-      "title": "Skill Entity",
-      "$ref": "#/definitions/stringExpression"
-    },
     "locationEntity": {
-      "description": "The current location of the experts",
+      "description": "Location where employees are currently in",
       "$ref": "#/definitions/stringExpression",
       "title": "Location Entity"
-    },
-    "byBillable": {
-      "description": "If set true, the response will be a billable list card",
-      "$ref": "#/definitions/booleanExpression",
-      "title": "By Billable"
-    },
-    "isCurrentLocation": {
-      "description": "If set to true, look for experts in the specified current location",
-      "$ref": "#/definitions/booleanExpression",
-      "title": "Is Current Location"
     }
   },
   "$result": {
@@ -58,28 +43,6 @@
           "$ref": "#/definitions/equalsExpression",
           "examples": [
             "=concat('x','y','z')"
-          ]
-        }
-      ]
-    },
-    "booleanExpression": {
-      "$role": "expression",
-      "title": "Boolean or expression",
-      "description": "Boolean constant or expression to evaluate.",
-      "oneOf": [
-        {
-          "type": "boolean",
-          "title": "Boolean",
-          "description": "Boolean constant.",
-          "default": false,
-          "examples": [
-            false
-          ]
-        },
-        {
-          "$ref": "#/definitions/equalsExpression",
-          "examples": [
-            "=user.isVip"
           ]
         }
       ]

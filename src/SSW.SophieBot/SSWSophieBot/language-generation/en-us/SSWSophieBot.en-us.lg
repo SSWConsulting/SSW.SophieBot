@@ -199,3 +199,11 @@
 [Activity
     Text = ${SendActivity_yCiUft_text()}
 ]
+
+# SendActivity_e0PYdC()
+[Activity
+    Text = ${SendActivity_e0PYdC_text()}
+]
+
+# SendActivity_e0PYdC_text()
+- Getting current employees on location is still a work in progress.

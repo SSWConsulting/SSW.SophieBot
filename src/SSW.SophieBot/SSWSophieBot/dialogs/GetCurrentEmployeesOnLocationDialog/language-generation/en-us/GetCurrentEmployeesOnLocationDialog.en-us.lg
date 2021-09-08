@@ -1,0 +1,46 @@
+[import](common.lg)
+[Profile](profile.en-us.lg)
+[GroupList](groupList.en-us.lg)
+
+# SendActivity_5SdoY2()
+[Activity
+    Text = ${SendActivity_5SdoY2_text()}
+]
+
+# SendActivity_5SdoY2_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_MfjfA1()
+[Activity
+    Text = ${SendActivity_MfjfA1_text()}
+]
+
+# SendActivity_MfjfA1_text()
+- Sorry, I couldn't find anyone in the **${dialog.locationEntity}** office right now. Please try again.
+# SendActivity_kMTNPl()
+[Activity
+    Text = ${SendActivity_kMTNPl_text()}
+]
+
+# SendActivity_kMTNPl_text()
+- ${join([turn.names, if(count(turn.employees) == 1, "is", "are"), "in", dialog.locationEntity],  ' ')}
+# SendActivity_3rWq3M()
+[Activity
+    Text = ${SendActivity_3rWq3M_text()}
+]
+
+# SendActivity_3rWq3M_text()
+- You can narrow your search by specifying a particular skill, such as React or Angular.
+# SendActivity_AlWbJq()
+[Activity
+    Attachments = ${json(EmployeesGroupActionCard(turn.groupedEmployees, dialog.locationEntity, GetEntities()))}
+]
+
+# GetEntities()
+- ```
+"byBillable": true,
+"isCurrentLocation": true
+```
+# SendActivity_qW6PDt()
+[Activity
+    Attachments = ${json(ProfileCardWithSSWPeopleAPI(turn.employees[0]))}
+]

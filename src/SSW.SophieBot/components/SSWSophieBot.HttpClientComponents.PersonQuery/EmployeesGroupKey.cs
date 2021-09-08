@@ -1,4 +1,4 @@
-﻿namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
+﻿namespace SSWSophieBot.HttpClientComponents.PersonQuery
 {
     public enum EmployeesGroupKey
     {
