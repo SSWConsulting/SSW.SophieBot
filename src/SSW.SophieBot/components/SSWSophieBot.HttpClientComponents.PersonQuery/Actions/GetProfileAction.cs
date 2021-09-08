@@ -35,6 +35,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var httpClient = GetClient(dc);
+            var avatarManager = dc.Services.Get<IAvatarManager>();
 
             var responseMessage = await httpClient.SendRequestAsync(request =>
             {
@@ -64,6 +65,11 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 {
                     var experienceLevel = Skill?.GetExperienceLevel(dc);
                     employees = employees.Where(e => e.HasSkill(technology, experienceLevel)).ToList();
+                }
+
+                if (avatarManager != null)
+                {
+                    employees = await avatarManager.GetAvatarUrlsAsync(employees);
                 }
 
                 dc.State.SetValue(dc.GetValue(EmployeesProperty), employees);
