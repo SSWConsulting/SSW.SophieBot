@@ -699,6 +699,10 @@
               "value": "=@datetime"
             },
             {
+              "property": "$options.booked",
+              "value": "=@available"
+            },
+            {
               "property": "$options.implemented",
               "value": [
                 "GetEmailAddress",
@@ -1255,7 +1259,9 @@
               "dialog": "GetPeopleOnClientWorkDialog",
               "options": {
                 "dateEntity": "=$options.datetime",
-                "locationEntity": "=$options.location"
+                "locationEntity": "=$options.location",
+                "bookedEntity": "=$options.booked",
+                "availableEntity": "=$options.available"
               }
             }
           ]

@@ -642,4 +642,7 @@
 - Who is on client work next Friday?
 - Who is on client work in {location = Sydney} next Friday?
 
+- Who is {available = free}?
+- Who is {available = free} next Friday?
+
 @ prebuilt datetimeV2

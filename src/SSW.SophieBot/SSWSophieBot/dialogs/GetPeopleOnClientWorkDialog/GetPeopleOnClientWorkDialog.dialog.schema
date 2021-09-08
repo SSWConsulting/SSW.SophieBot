@@ -11,6 +11,10 @@
     "locationEntity": {
       "$ref": "#/definitions/stringExpression",
       "title": "Location Entity"
+    },
+    "availableEntity": {
+      "$ref": "#/definitions/stringExpression",
+      "title": "Available Entity"
     }
   },
   "$result": {

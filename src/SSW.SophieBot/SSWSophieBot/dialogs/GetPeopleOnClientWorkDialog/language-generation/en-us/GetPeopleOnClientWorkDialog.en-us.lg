@@ -15,7 +15,7 @@
     "body": [
         {
             "type": "TextBlock",
-            "text": "${NameList(firstNames, count(employees))} are on client work${DateInfo(turn.formatDate)}.",
+            "text": "${NameList(firstNames, count(employees))} ${StatusInfo()}${DateInfo(turn.formatDate)}.",
             "wrap": true
         },
         {
@@ -53,6 +53,12 @@
 - ELSE:
     - ${firstNames} and **${peopleCount - 3} others**
 
+# StatusInfo()
+- IF: ${ dialog.booked }
+    - are on client work
+- ELSE:
+    - are free
+
 # DateInfo(date)
 - ${if(date != null, DateText(date), '')}
 
@@ -69,11 +75,12 @@
     "title": "${location} [${number}]",
     "data": {
         "intent": "GetPeopleOnClientWork",
+        "available": "${dialog.availableEntity}",
         "location": "${location}",
         "datetime": [
             {
             "timex": [
-                "${dialog.dateEntity.timex[0]}"
+                "${dialog.fromDate}"
             ],
             "type": "date"
             }
@@ -135,7 +142,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "Client",
+                    "text": "${if(dialog.booked, 'Client', 'Title')}",
                     "wrap": true,
                     "weight": "Bolder"
                 }
@@ -197,7 +204,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "${if(count(employee.currentAppointments) != 0, employee.currentAppointments[0].Regarding, '')}",
+                    "text": "${InfoColumnText(employee)}",
                     "wrap": true
                 }
             ],
@@ -208,6 +215,12 @@
     "separator": true
 }
 ```
+
+# InfoColumnText(employee)
+- IF: ${ dialog.booked }
+    - ${if(count(employee.currentAppointments) != 0, employee.currentAppointments[0].Regarding, '')}
+- ELSE:
+    - ${employee.title}
 
 # SendActivity_pArEiW()
 [Activity

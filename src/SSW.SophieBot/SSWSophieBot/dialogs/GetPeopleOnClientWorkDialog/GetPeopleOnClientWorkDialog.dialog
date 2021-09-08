@@ -31,8 +31,16 @@
           },
           "assignments": [
             {
+              "property": "dialog.booked",
+              "value": "=!(dialog.availableEntity !=true)"
+            },
+            {
+              "property": "dialog.fromDate",
+              "value": "=dialog.dateEntity.timex[0]"
+            },
+            {
               "value": "=if(dialog.locationEntity == 'All', '', dialog.locationEntity)",
-              "property": "dialog.locationEntity"
+              "property": "dialog.location"
             }
           ]
         },
@@ -44,15 +52,15 @@
           "queryString": [
             {
               "key": "booked",
-              "value": "true"
+              "value": "=dialog.booked"
             },
             {
-              "value": "=dialog.dateEntity.timex[0]",
+              "value": "=dialog.fromDate",
               "key": "fromDate"
             },
             {
               "key": "location",
-              "value": "=dialog.locationEntity"
+              "value": "=dialog.location"
             }
           ],
           "statusCodeProperty": "turn.statusCode",
