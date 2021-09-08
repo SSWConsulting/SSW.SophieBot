@@ -28,6 +28,9 @@ namespace SSWSophieBot.Components.Actions
         [JsonProperty("lastDelimiter")]
         public StringExpression LastDelimiter { get; set; }
 
+        [JsonProperty("wrapCount")]
+        public IntExpression WrapCount { get; set; }
+
         [JsonProperty("resultProperty")]
         public StringExpression ResultProperty { get; set; }
 
@@ -39,6 +42,12 @@ namespace SSWSophieBot.Components.Actions
             if (stringList != null && stringList.Any() && ResultProperty != null)
             {
                 var delimiter = dc.GetValue(Delimiter) ?? string.Empty;
+                var wrapCount = dc.GetValue(WrapCount);
+
+                if (wrapCount > 0 && stringList.Count > wrapCount)
+                {
+                    stringList = stringList.Take(wrapCount - 1).Append($"{stringList.Count - wrapCount + 1} others").ToList();
+                }
 
                 if (LastDelimiter != null && stringList.Count > 1)
                 {
