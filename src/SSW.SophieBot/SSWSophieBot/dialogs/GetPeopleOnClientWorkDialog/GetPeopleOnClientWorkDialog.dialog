@@ -32,7 +32,7 @@
           "assignments": [
             {
               "property": "dialog.booked",
-              "value": "=dialog.availableEntity==null"
+              "value": "=dialog.availableEntity == null || dialog.availableEntity == ''"
             },
             {
               "property": "dialog.fromDate",
@@ -43,6 +43,15 @@
               "property": "dialog.location"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.LogAction",
+          "$designer": {
+            "id": "7liyco"
+          },
+          "text": "${LogAction_Text_7liyco()}",
+          "traceActivity": true,
+          "label": "dialog.booked"
         },
         {
           "$kind": "GetProfileAction",
@@ -119,66 +128,37 @@
               ],
               "actions": [
                 {
+                  "$kind": "GetEmployeesByDateAction",
+                  "$designer": {
+                    "id": "uAYDng"
+                  },
+                  "employees": "=turn.employees",
+                  "result": "turn.employees"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "OCscRi"
+                  },
+                  "condition": "dialog.booked == True",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "Dz0gh9"
+                      },
+                      "property": "turn.employees",
+                      "value": "=where(turn.employees, e => e.currentAppointment.Regarding != 'SSW')"
+                    }
+                  ]
+                },
+                {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
                     "id": "vjhrqb"
                   },
                   "condition": "dialog.locationEntity != null",
                   "actions": [
-                    {
-                      "$kind": "Microsoft.Foreach",
-                      "$designer": {
-                        "id": "eHfAlW"
-                      },
-                      "index": "dialog.profile.index",
-                      "itemsProperty": "turn.employees",
-                      "value": "dialog.profile",
-                      "actions": [
-                        {
-                          "$kind": "Microsoft.Foreach",
-                          "$designer": {
-                            "id": "dNntOX"
-                          },
-                          "index": "dialog.appointment.index",
-                          "value": "dialog.appointment",
-                          "itemsProperty": "dialog.profile.appointments",
-                          "actions": [
-                            {
-                              "$kind": "UtcConvertAction",
-                              "$designer": {
-                                "id": "QwjfvU"
-                              },
-                              "datetime": "=dialog.appointment.start",
-                              "resultProperty": "dialog.profile.appointments[dialog.appointment.index].convertedStart"
-                            },
-                            {
-                              "$kind": "UtcConvertAction",
-                              "$designer": {
-                                "id": "gLlXS2"
-                              },
-                              "resultProperty": "dialog.profile.appointments[dialog.appointment.index].convertedEnd",
-                              "datetime": "=dialog.appointment.end"
-                            }
-                          ]
-                        },
-                        {
-                          "$kind": "Microsoft.TraceActivity",
-                          "$designer": {
-                            "id": "My4PoS"
-                          },
-                          "name": "SSWSophieBot.GetPeopleOnClientWorkDialog.SetCurrentAppointments",
-                          "value": "=null"
-                        },
-                        {
-                          "$kind": "Microsoft.SetProperty",
-                          "$designer": {
-                            "id": "DN4aeX"
-                          },
-                          "property": "turn.employees[dialog.profile.index].currentAppointments",
-                          "value": "=where(dialog.profile.appointments, appointment => ticks(utcNow()) >= ticks(appointment.convertedStart) && ticks(utcNow()) <= ticks(appointment.convertedEnd))"
-                        }
-                      ]
-                    },
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
