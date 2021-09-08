@@ -34,7 +34,13 @@
                         "location": "All"
                     }
                 },
-                ${join(select(locations, location => LocationButton(location, Number(location, employees))), ',')}
+                ${join(select(subArray(locations, 0, count(locations) <= 5 ? count(locations) : 5), location => LocationButton(location, Number(location, employees))), ',')}
+            ]
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                ${join(select(if(subArray(locations, 5, count(locations)) != null, subArray(locations, 5, count(locations)), createArray()), location => LocationButton(location, Number(location, employees))), ',')}
             ]
         }
     ]
@@ -63,7 +69,15 @@
     "title": "${location} [${number}]",
     "data": {
         "intent": "GetPeopleOnClientWork",
-        "location": "${location}"
+        "location": "${location}",
+        "datetime": [
+            {
+            "timex": [
+                "${dialog.dateEntity.timex[0]}"
+            ],
+            "type": "date"
+            }
+        ]
     }
 }
 ```
