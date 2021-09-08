@@ -25,12 +25,16 @@
           "value": "=null"
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "ru0L4u"
+            "id": "XBTmsk"
           },
-          "value": "=if(dialog.locationEntity == 'All', '', dialog.locationEntity)",
-          "property": "dialog.locationEntity"
+          "assignments": [
+            {
+              "value": "=if(dialog.locationEntity == 'All', '', dialog.locationEntity)",
+              "property": "dialog.locationEntity"
+            }
+          ]
         },
         {
           "$kind": "GetProfileAction",
@@ -114,6 +118,60 @@
                   "condition": "dialog.locationEntity != null",
                   "actions": [
                     {
+                      "$kind": "Microsoft.Foreach",
+                      "$designer": {
+                        "id": "eHfAlW"
+                      },
+                      "index": "dialog.profile.index",
+                      "itemsProperty": "turn.employees",
+                      "value": "dialog.profile",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.Foreach",
+                          "$designer": {
+                            "id": "dNntOX"
+                          },
+                          "index": "dialog.appointment.index",
+                          "value": "dialog.appointment",
+                          "itemsProperty": "dialog.profile.appointments",
+                          "actions": [
+                            {
+                              "$kind": "UtcConvertAction",
+                              "$designer": {
+                                "id": "QwjfvU"
+                              },
+                              "datetime": "=dialog.appointment.start",
+                              "resultProperty": "dialog.profile.appointments[dialog.appointment.index].convertedStart"
+                            },
+                            {
+                              "$kind": "UtcConvertAction",
+                              "$designer": {
+                                "id": "gLlXS2"
+                              },
+                              "resultProperty": "dialog.profile.appointments[dialog.appointment.index].convertedEnd",
+                              "datetime": "=dialog.appointment.end"
+                            }
+                          ]
+                        },
+                        {
+                          "$kind": "Microsoft.TraceActivity",
+                          "$designer": {
+                            "id": "My4PoS"
+                          },
+                          "name": "SSWSophieBot.GetPeopleOnClientWorkDialog.SetCurrentAppointments",
+                          "value": "=null"
+                        },
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "DN4aeX"
+                          },
+                          "property": "turn.employees[dialog.profile.index].currentAppointments",
+                          "value": "=where(dialog.profile.appointments, appointment => ticks(utcNow()) >= ticks(appointment.convertedStart) && ticks(utcNow()) <= ticks(appointment.convertedEnd))"
+                        }
+                      ]
+                    },
+                    {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
                         "id": "AMPsi6"
@@ -143,7 +201,7 @@
                       "$designer": {
                         "id": "nNPmm3"
                       },
-                      "resultProperty": "dialog.firstNames",
+                      "resultProperty": "turn.firstNames",
                       "stringList": "=select(take(turn.firstNames, 3), n, concat(\"**\", n, \"**\"))",
                       "delimiter": ", ",
                       "lastDelimiter": ", "

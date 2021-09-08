@@ -3,10 +3,10 @@
 
 # SendActivity_7cnUNi()
 [Activity
-    Attachments = ${json(ListCard(dialog.firstNames, turn.employees, turn.locations))}
+    Attachments = ${json(ListCard(turn.firstNames, turn.employees, turn.locations))}
 ]
 
-# ListCard(firstNameString, employees, locations)
+# ListCard(firstNames, employees, locations)
 -```
 {
     "type": "AdaptiveCard",
@@ -15,7 +15,7 @@
     "body": [
         {
             "type": "TextBlock",
-            "text": "${firstNameString} and **${employees.count - 3} others** are on client work${TimeInfo(turn.formatDate)}.",
+            "text": "${firstNames} and **${count(employees) - 3} others** are on client work${DateInfo(turn.formatDate)}.",
             "wrap": true
         },
         {
@@ -28,54 +28,39 @@
             "actions": [
                 {
                     "type": "Action.Submit",
-                    "title": "Show All [${employees.count}]",
+                    "title": "Show All [${count(employees)}]",
                     "data": {
                         "intent": "GetPeopleOnClientWork",
                         "location": "All"
                     }
                 },
-                ${join(select(subArray(locations, 0, 5), location => LocationButton(skill, location, employees)), ',')}
-            ]
-        },
-        {
-            "type": "ActionSet",
-            "actions": [
-                ${join(select(subArray(locations, 5, count(locations)), location => LocationButton(skill, location, employees)), ',')}
+                ${join(select(locations, location => LocationButton(location, Number(location, employees))), ',')}
             ]
         }
     ]
 }
 ```
 
-# TimeInfo(date)
-- ${if(date != null, TimeString(date), '')}
+# DateInfo(date)
+- ${if(date != null, DateText(date), '')}
 
-# TimeString(date)
+# DateText(date)
 -``` on ${date}```
 
-# LocationButton(skill, location, employees)
+# Number(location, employees)
+- ${count(where(employees, employee => employee.defaultSite.name == location))}
+
+# LocationButton(location, number)
 -``` 
 {
     "type": "Action.Submit",
-    "title": "${location} [${Count(location, employees)}]",
+    "title": "${location} [${number}]",
     "data": {
         "intent": "GetPeopleOnClientWork",
         "location": "${location}"
     }
 }
 ```
-
-# Count(location, employees)
-- ${count(where(employees, employee => employee.defaultSite.name == location))}
-
-
-# SendActivity_pArEiW()
-[Activity
-    Text = ${SendActivity_pArEiW_text()}
-]
-
-# SendActivity_pArEiW_text()
-- Sorry, I couldn't find anyone on Client${TimeInfo(turn.formatDate)}. Please try again.
 
 # SendActivity_jZGZUb()
 [Activity
@@ -86,10 +71,10 @@
 
 # SendActivity_AMPsi6()
 [Activity
-    Attachments = ${json(WorkingEmployeesList(dialog.locationEntity, turn.employees))}
+    Attachments = ${json(EmployeesListCard(dialog.locationEntity, turn.employees))}
 ]
 
-# WorkingEmployeesList(location, employees)
+# EmployeesListCard(location, employees)
 -```
 {
     "type": "AdaptiveCard",
@@ -123,13 +108,25 @@
                     "weight": "Bolder"
                 }
             ]
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Client",
+                    "wrap": true,
+                    "weight": "Bolder"
+                }
+            ]
         }
     ],
     "style": "accent"
 },
 {
     "type": "Container",
-    "items": [${join(select(employees, e, EmployeeRow(e)), ',')}]
+    "items": [${join(select(employees, employee => EmployeeRow(employee)), ',')}]
 }
 ```
 
@@ -173,9 +170,37 @@
                     ]
                 }
             ]
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${if(count(employee.currentAppointments) != 0, employee.currentAppointments[0].Regarding, '')}",
+                    "wrap": true
+                }
+            ],
+            "verticalContentAlignment": "Center"
         }
     ],
     "height": "stretch",
     "separator": true
 }
 ```
+
+# SendActivity_pArEiW()
+[Activity
+    Text = ${SendActivity_pArEiW_text()}
+]
+
+# SendActivity_pArEiW_text()
+- Sorry, I couldn't find anyone on Client${DateInfo(turn.formatDate)}. Please try again.
+
+# LogAction_Text_8gWL4n()
+[Activity
+    Text = ${LogAction_Text_8gWL4n_text()}
+]
+
+# LogAction_Text_8gWL4n_text()
+- ${turn.employees[dialog.profile.index].currentAppointments}
