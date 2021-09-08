@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "type": "object",
   "title": "Component kinds",
   "description": "These are all of the kinds that can be created by the loader.",
@@ -9,6 +9,9 @@
     },
     {
       "$ref": "#/definitions/GetAvailableExpertsByLocationDialog.dialog"
+    },
+    {
+      "$ref": "#/definitions/GetCurrentEmployeesOnLocationDialog.dialog"
     },
     {
       "$ref": "#/definitions/GetEmailAddressDialog.dialog"
@@ -719,6 +722,78 @@
         }
       }
     },
+    "GetCurrentEmployeesOnLocationDialog.dialog": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetCurrentEmployeesOnLocationDialog",
+      "type": "object",
+      "$result": {
+        "type": "object",
+        "properties": {}
+      },
+      "definitions": {
+        "equalsExpression": {
+          "$role": "expression",
+          "type": "string",
+          "title": "Equals Expression",
+          "description": "Expression starting with =.",
+          "pattern": "^=.*\\S.*",
+          "examples": [
+            "=user.name"
+          ]
+        },
+        "stringExpression": {
+          "$role": "expression",
+          "title": "String or expression",
+          "description": "Interpolated string or expression to evaluate.",
+          "oneOf": [
+            {
+              "type": "string",
+              "title": "String",
+              "description": "Interpolated string",
+              "pattern": "^(?!(=)).*",
+              "examples": [
+                "Hello ${user.name}"
+              ]
+            },
+            {
+              "$ref": "#/definitions/GetCurrentEmployeesOnLocationDialog.dialog/definitions/equalsExpression",
+              "examples": [
+                "=concat('x','y','z')"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "locationEntity": {
+          "description": "Location where employees are currently in",
+          "$ref": "#/definitions/GetCurrentEmployeesOnLocationDialog.dialog/definitions/stringExpression",
+          "title": "Location Entity"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetCurrentEmployeesOnLocationDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "GetEmailAddressDialog.dialog": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "GetEmailAddressDialog",
@@ -948,6 +1023,28 @@
               ]
             }
           ]
+        },
+        "booleanExpression": {
+          "$role": "expression",
+          "title": "Boolean or expression",
+          "description": "Boolean constant or expression to evaluate.",
+          "oneOf": [
+            {
+              "type": "boolean",
+              "title": "Boolean",
+              "description": "Boolean constant.",
+              "default": false,
+              "examples": [
+                false
+              ]
+            },
+            {
+              "$ref": "#/definitions/GetExpertsByLocationDialog.dialog/definitions/equalsExpression",
+              "examples": [
+                "=user.isVip"
+              ]
+            }
+          ]
         }
       },
       "required": [
@@ -971,10 +1068,10 @@
           "$ref": "#/definitions/GetExpertsByLocationDialog.dialog/definitions/stringExpression",
           "title": "Location Entity"
         },
-        "title": {
-          "description": "If specified, the response card will be a billable list card with this title",
-          "$ref": "#/definitions/GetExpertsByLocationDialog.dialog/definitions/stringExpression",
-          "title": "Title"
+        "byBillable": {
+          "description": "If set true, the response will be a billable list card",
+          "$ref": "#/definitions/GetExpertsByLocationDialog.dialog/definitions/booleanExpression",
+          "title": "By Billable"
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -7439,6 +7536,9 @@
           "$ref": "#/definitions/GetAvailableExpertsByLocationDialog.dialog"
         },
         {
+          "$ref": "#/definitions/GetCurrentEmployeesOnLocationDialog.dialog"
+        },
+        {
           "$ref": "#/definitions/GetEmailAddressDialog.dialog"
         },
         {
@@ -13219,6 +13319,11 @@
           "$ref": "#/definitions/stringExpression",
           "title": "Last delimiter",
           "description": "Delimiter used to concat the last element from the string list"
+        },
+        "wrapCount": {
+          "$ref": "#/definitions/integerExpression",
+          "title": "Wrap count",
+          "description": "Number threshold when rest of the items should be wrapped"
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
