@@ -35,8 +35,8 @@
               "value": "=dialog.skillEntity"
             },
             {
-              "key": "location",
-              "value": "=dialog.locationEntity"
+              "value": "=dialog.locationEntity",
+              "key": "=if(exists(dialog.isCurrentLocation) && dialog.isCurrentLocation == true, \"currentLocation\", \"location\")"
             }
           ],
           "statusCodeProperty": "turn.statusCode",

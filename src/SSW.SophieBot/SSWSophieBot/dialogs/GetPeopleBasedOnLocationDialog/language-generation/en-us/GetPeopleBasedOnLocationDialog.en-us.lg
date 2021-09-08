@@ -1,5 +1,6 @@
 [import](common.lg)
 [Profile](profile.en-us.lg)
+[GroupList](groupList.en-us.lg)
 
 # SendActivity_fAH1iZ_text()
 - Sorry, I couldn't find anyone in ${dialog.location}.
@@ -23,38 +24,6 @@
 
 # SendActivity_CR9ta7_text()
 - Sorry, I don't know the place you are talking about.
-
-# PeopleListCard(location, peopleList)
-- ```
-{
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "type": "AdaptiveCard",
-    "version": "1.1",
-    "body": [
-        {
-            "type": "Container",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "text": "There are **${peopleList.count}** people in **${location}**:"
-                }
-            ]
-        },
-        {
-            "type": "TextBlock",
-            "text": "${generateList(peopleList)}",
-            "wrap": true
-        }
-    ]
-}
-```
-
-# generateList(peopleList)
-- ${join(foreach(peopleList, people, readout(people)), '')}
-
-# readout(people)
--```${people.index}. **${people.firstName} ${people.lastName}**  
-```
 
 # SendActivity_j1tmY1()
 [Activity
@@ -84,51 +53,10 @@
 - You can narrow your search by specifying a particular skill, such as React or Angular.
 # SendActivity_Jcjj19()
 [Activity
-    Attachments = ${json(EmployeesGroupActionCard(turn.groupedEmployees, dialog.location))}
+    Attachments = ${json(EmployeesGroupActionCard(turn.groupedEmployees, dialog.location, GetEntities()))}
 ]
 
-# EmployeesGroupActionCard(groupedEmployees, location)
+# GetEntities()
 - ```
-{
-    "type": "AdaptiveCard",
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "version": "1.2",
-    "body": [
-        {
-            "type": "TextBlock",
-            "size": "Medium",
-            "weight": "Bolder",
-            "text": "Choose an item"
-        },
-		${join(select(groupedEmployees.sets, set => GetActionSet(set, location)), ',')}
-    ]
-}
-```
-
-# GetActionSet(groupSet, location)
-- ```
-{
-    "type": "ActionSet",
-    "actions": [${join(select(groupSet.groups, group => GetAction(group, location)), ',')}],
-    "height": "stretch"
-}
-```
-
-# GetAction(group, location)
-- ```
-{
-    "type": "Action.Submit",
-    "title": "${group.title}",
-    "data": 
-    {
-        "intent": "GetExpertsByLocation",
-        "skill" : "${group.key}",
-        "location": "${location}",
-		"byBillable": true,
-        "msteams": {
-            "type": "messageBack",
-			"displayText": "${group.title}"
-        }
-    }
-}
+"byBillable": true
 ```

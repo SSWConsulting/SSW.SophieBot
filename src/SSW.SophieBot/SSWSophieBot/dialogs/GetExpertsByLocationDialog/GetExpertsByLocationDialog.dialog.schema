@@ -18,6 +18,11 @@
       "description": "If set true, the response will be a billable list card",
       "$ref": "#/definitions/booleanExpression",
       "title": "By Billable"
+    },
+    "isCurrentLocation": {
+      "description": "If set to true, look for experts in the specified current location",
+      "$ref": "#/definitions/booleanExpression",
+      "title": "Is Current Location"
     }
   },
   "$result": {
