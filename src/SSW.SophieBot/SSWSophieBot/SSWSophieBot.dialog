@@ -703,6 +703,10 @@
               "value": "=@available"
             },
             {
+              "property": "$options.internal",
+              "value": "=@internal"
+            },
+            {
               "property": "$options.implemented",
               "value": [
                 "GetEmailAddress",
@@ -1261,7 +1265,9 @@
                 "dateEntity": "=$options.datetime",
                 "locationEntity": "=$options.location",
                 "bookedEntity": "=$options.booked",
-                "availableEntity": "=$options.booked"
+                "availableEntity": "=$options.booked",
+                "internal": "=$options.internal",
+                "internalEntity": "=$options.internal"
               }
             }
           ]

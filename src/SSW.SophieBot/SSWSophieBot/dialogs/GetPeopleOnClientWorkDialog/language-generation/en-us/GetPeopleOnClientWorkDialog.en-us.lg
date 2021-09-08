@@ -31,7 +31,17 @@
                     "title": "Show All [${count(employees)}]",
                     "data": {
                         "intent": "GetPeopleOnClientWork",
-                        "location": "All"
+                        "available": "${dialog.availableEntity}",
+                        "internal": "${dialog.internalEntity}",
+                        "location": "${location}",
+                        "datetime": [
+                            {
+                            "timex": [
+                                "${dialog.fromDate}"
+                            ],
+                            "type": "date"
+                            }
+                        ]
                     }
                 },
                 ${join(select(subArray(locations, 0, count(locations) <= 5 ? count(locations) : 5), location => LocationButton(location, Number(location, employees))), ',')}
@@ -54,9 +64,11 @@
     - ${firstNames} and **${peopleCount - 3} others**
 
 # StatusInfo()
-- IF: ${ dialog.booked }
+- IF: ${ dialog.onInternal }
+    - are on internal work
+- ELSEIF: ${ dialog.booked }
     - are on client work
-- ELSE:
+-ELSE:
     - are free
 
 # DateInfo(date)
@@ -76,6 +88,7 @@
     "data": {
         "intent": "GetPeopleOnClientWork",
         "available": "${dialog.availableEntity}",
+        "internal": "${dialog.internalEntity}",
         "location": "${location}",
         "datetime": [
             {
@@ -251,5 +264,6 @@ dialog.booked \- ${dialog.booked}```
 ]
 
 # LogAction_Text_7liyco_text()
-- ```dialog.availableEntity \- ${dialog.availableEntity}
-dialog.booked \- ${dialog.booked}```
+- ```dialog.availableEntity: ${dialog.availableEntity}
+dialog.booked: ${dialog.booked}
+dialog.onInternal: ${dialog.onInternal}```

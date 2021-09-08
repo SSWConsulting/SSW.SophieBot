@@ -35,6 +35,10 @@
               "value": "=dialog.availableEntity == null || dialog.availableEntity == ''"
             },
             {
+              "property": "dialog.onInternal",
+              "value": "=dialog.internalEntity != null && dialog.internalEntity != ''"
+            },
+            {
               "property": "dialog.fromDate",
               "value": "=dialog.dateEntity.timex[0]"
             },
@@ -140,7 +144,7 @@
                   "$designer": {
                     "id": "OCscRi"
                   },
-                  "condition": "dialog.booked == True",
+                  "condition": "dialog.onInternal == True",
                   "actions": [
                     {
                       "$kind": "Microsoft.SetProperty",
@@ -148,7 +152,26 @@
                         "id": "Dz0gh9"
                       },
                       "property": "turn.employees",
-                      "value": "=where(turn.employees, e => e.currentAppointment.Regarding != 'SSW')"
+                      "value": "=where(turn.employees, e => e.currentAppointment.Regarding == 'SSW')"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "Hif4Gq"
+                      },
+                      "condition": "dialog.booked == True",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "6QD15y"
+                          },
+                          "property": "turn.employees",
+                          "value": "=where(turn.employees, e => e.currentAppointment.Regarding != 'SSW')"
+                        }
+                      ]
                     }
                   ]
                 },
