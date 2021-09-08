@@ -32,7 +32,7 @@
           "assignments": [
             {
               "property": "dialog.booked",
-              "value": "=!(dialog.availableEntity !=true)"
+              "value": "=dialog.availableEntity==null"
             },
             {
               "property": "dialog.fromDate",

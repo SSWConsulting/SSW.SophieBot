@@ -1261,7 +1261,7 @@
                 "dateEntity": "=$options.datetime",
                 "locationEntity": "=$options.location",
                 "bookedEntity": "=$options.booked",
-                "availableEntity": "=$options.available"
+                "availableEntity": "=$options.booked"
               }
             }
           ]
