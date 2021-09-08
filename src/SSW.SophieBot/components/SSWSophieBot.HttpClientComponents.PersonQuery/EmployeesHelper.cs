@@ -28,7 +28,9 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                 DisplayName = $"{e.FirstName} {e.LastName}",
                 BilledDays = GetBilledDays(e, project),
                 LastSeen = GetLastSeen(e)
-            }).ToList();
+            })
+            .OrderByDescending(i => i.BilledDays)
+            .ToList();
         }
 
         private static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project)
