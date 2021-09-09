@@ -162,7 +162,7 @@
             ]
         }
     ],
-    "style": "accent"
+    "style": "default"
 },
 {
     "type": "Container",
