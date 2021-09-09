@@ -107,7 +107,8 @@
                   "stringList": "=select(turn.firstNames, n, concat(\"**\", n, \"**\"))",
                   "delimiter": ", ",
                   "lastDelimiter": " and ",
-                  "resultProperty": "dialog.firstNames"
+                  "resultProperty": "dialog.firstNames",
+                  "wrapCount": 4
                 },
                 {
                   "$kind": "Microsoft.SendActivity",

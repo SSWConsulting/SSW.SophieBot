@@ -601,9 +601,10 @@
 
 # GetAvailableExpertsByLocation
 - Who is free next Friday in {@location = Melbourne} with {@skill = Angular} skills?
+- Who is not booked tomorrow in {@location = Remote} with {@skill = .NET} skills?
 - Who is available next Thursday in {@location = Sydney} with {@skill = .NET Core} skills?
 - I need a {@skill = React} expert in {@location = NewCastle} next Wednesday
-- Show me {@skill = Vue} experts available next Wednesday in {@location = NewCastle}
+- Show me {@skill = Vue} experts available next Wednesday in {@location = Brisbane}
 - Book an {@skill = Azure Devops} expert next Tuesday in {@location = China}
 
 @ prebuilt datetimeV2

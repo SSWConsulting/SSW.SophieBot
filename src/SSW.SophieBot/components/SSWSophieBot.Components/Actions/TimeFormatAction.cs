@@ -31,11 +31,16 @@ namespace SSWSophieBot.Components.Actions
 
         public override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
-            var dateTimeString = DateTimeString?.GetValue(dc.State) ?? throw new ArgumentNullException(nameof(DateTimeString));
+            var dateTimeString = DateTimeString?.GetValue(dc.State);
             var targetFormat = TargetFormat?.GetValue(dc.State);
 
             string result;
-            if (DateTime.TryParse(dateTimeString, out var dateTime))
+
+            if (string.IsNullOrWhiteSpace(dateTimeString))
+            {
+                result = DateTime.Now.ToString(targetFormat);
+            }
+            else if (DateTime.TryParse(dateTimeString, out var dateTime))
             {
                 result = dateTime.ToString(targetFormat ?? "yyyy-MM-ddTHH:mm:ss.fffZ");
             }

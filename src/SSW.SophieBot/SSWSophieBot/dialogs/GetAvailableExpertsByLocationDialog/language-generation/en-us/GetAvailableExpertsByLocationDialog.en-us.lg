@@ -13,11 +13,11 @@
 ]
 
 # SendActivity_sftkhO_text()
-- Sorry, I couldn't find anyone with **${dialog.skillEntity}** skill in **${dialog.locationEntity}** office **${turn.formatDate}**. Please try again.
+- Sorry, I couldn't find anyone with **${dialog.skillEntity}** skill in **${dialog.locationEntity}** on **${turn.formatDate}**. Please try again.
 # SendActivity_U8Xbbw()
 [Activity
     Text = ${SendActivity_U8Xbbw_text()}
 ]
 
 # SendActivity_U8Xbbw_text()
-- ${dialog.firstNames} ${if(count(turn.firstNames) > 1, "are", "is")} not on client work with ${dialog.skillEntity} skills in ${dialog.locationEntity} on ${turn.formatDate}
+- ${dialog.firstNames} ${if(count(turn.firstNames) > 1, "are", "is")} not on client work with **${dialog.skillEntity}** skills in **${dialog.locationEntity}** on ${turn.formatDate}
