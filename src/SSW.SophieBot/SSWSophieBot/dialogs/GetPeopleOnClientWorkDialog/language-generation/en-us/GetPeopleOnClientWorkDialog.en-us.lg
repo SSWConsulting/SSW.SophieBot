@@ -41,7 +41,12 @@
                             ],
                             "type": "date"
                             }
-                        ]
+                        ],
+                        "msteams": {
+                            "type": "messageBack",
+			    "displayText": "Show All [${count(employees)}]"
+                        }
+
                     }
                 },
                 ${join(select(subArray(locations, 0, count(locations) <= 5 ? count(locations) : 5), location => LocationButton(location, Number(location, employees))), ',')}
@@ -97,7 +102,12 @@
             ],
             "type": "date"
             }
-        ]
+        ],
+        "msteams": {
+            "type": "messageBack",
+	    "displayText": "${location} [${number}]"
+        }
+
     }
 }
 ```
