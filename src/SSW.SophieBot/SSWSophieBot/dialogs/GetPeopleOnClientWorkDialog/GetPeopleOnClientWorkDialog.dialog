@@ -137,7 +137,8 @@
                     "id": "uAYDng"
                   },
                   "employees": "=turn.employees",
-                  "result": "turn.employees"
+                  "result": "turn.employees",
+                  "date": "=dialog.fromDate"
                 },
                 {
                   "$kind": "Microsoft.LogAction",
