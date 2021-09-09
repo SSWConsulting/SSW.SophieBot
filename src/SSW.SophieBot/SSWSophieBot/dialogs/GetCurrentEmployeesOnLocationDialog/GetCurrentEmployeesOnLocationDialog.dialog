@@ -78,7 +78,7 @@
                   "lastDelimiter": " and ",
                   "delimiter": ", ",
                   "resultProperty": "turn.names",
-                  "stringList": "=select(turn.employees, e, e.firstName)"
+                  "stringList": "=select(turn.employees, e, concat(\"**\", e.firstName, \"**\"))"
                 },
                 {
                   "$kind": "Microsoft.SendActivity",
@@ -86,14 +86,6 @@
                     "id": "kMTNPl"
                   },
                   "activity": "${SendActivity_kMTNPl()}"
-                },
-                {
-                  "$kind": "Microsoft.SetProperty",
-                  "$designer": {
-                    "id": "4dJpXP"
-                  },
-                  "property": "turn.employees",
-                  "value": "=take(turn.employees, 1)"
                 },
                 {
                   "$kind": "Microsoft.IfCondition",
@@ -137,20 +129,20 @@
                       "$designer": {
                         "id": "jNkwsV"
                       },
-											"assignments": [
-												{
-													"property": "turn.employees[0].displayName",
-													"value": "=concat(turn.employees[0].firstName, \" \", turn.employees[0].lastName)"
-												},
-												{
-													"property": "turn.employees[0].skillsInfo",
-													"value": "=concat(join(take(select(turn.employees[0].skills, s, s.technology), max(count(turn.employees[0].skills) - 1, 0)), \", \"), \" and \", last(turn.employees[0].skills).technology)"
-												},
-												{
-													"property": "turn.employees[0].lastSeenInfo",
-													"value": "Last seen in ${turn.employees[0].lastSeenAt.siteId}."
-												}
-											]
+                      "assignments": [
+                        {
+                          "property": "turn.employees[0].displayName",
+                          "value": "=concat(turn.employees[0].firstName, \" \", turn.employees[0].lastName)"
+                        },
+                        {
+                          "property": "turn.employees[0].skillsInfo",
+                          "value": "=concat(join(take(select(turn.employees[0].skills, s, s.technology), max(count(turn.employees[0].skills) - 1, 0)), \", \"), \" and \", last(turn.employees[0].skills).technology)"
+                        },
+                        {
+                          "property": "turn.employees[0].lastSeenInfo",
+                          "value": "Last seen in ${turn.employees[0].lastSeenAt.siteId}."
+                        }
+                      ]
                     },
                     {
                       "$kind": "Microsoft.SendActivity",
