@@ -53,7 +53,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
         
 
-            var date = dateString != null ? DateTime.Parse(dateString) : DateTime.Now;
+            var date = dateString != null ? DateTime.Parse(dateString).ToUniversalTime() : DateTime.Now.ToUniversalTime();
 
             var result = employees.Select(e => new EmployeeByDateModel{
                 FirstName = e.FirstName,
