@@ -11,9 +11,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Remove="language-generation\en-us\workingList.en-us.lg" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
     <PackageReference Include="Microsoft.Bot.Builder.AI.Luis" Version="4.13.2" />
     <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.13.2" />

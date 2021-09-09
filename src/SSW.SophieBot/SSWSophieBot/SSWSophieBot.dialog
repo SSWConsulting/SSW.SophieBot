@@ -719,7 +719,8 @@
                 "GetAvailableExpertsByLocation",
                 "CheckAvailability",
                 "GetPeopleBySkills",
-                "GetPeopleOnClientWork"
+                "GetPeopleOnClientWork",
+                "GetCurrentEmployeesOnLocation"
               ]
             }
           ]
@@ -964,7 +965,10 @@
               "dialog": "GetExpertsByLocationDialog",
               "options": {
                 "skillEntity": "=$options.skill",
-                "locationEntity": "=$options.location"
+                "locationEntity": "=$options.location",
+                "title": "=@title",
+                "byBillable": "=@byBillable",
+                "isCurrentLocation": "=@isCurrentLocation"
               }
             }
           ]
@@ -1268,6 +1272,58 @@
                 "availableEntity": "=$options.booked",
                 "internal": "=$options.internal",
                 "internalEntity": "=$options.internal"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "m57GCB",
+        "name": "OnIntent (GetCurrentEmployeesOnLocation)"
+      },
+      "intent": "GetCurrentEmployeesOnLocation",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "CnGhT5"
+          }
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "SJQiup"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "6yXkzc"
+          },
+          "condition": "=contains($options.implemented, \"GetCurrentEmployeesOnLocation\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "e0PYdC"
+              },
+              "activity": "${SendActivity_e0PYdC()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "amDi9C"
+              },
+              "activityProcessed": true,
+              "dialog": "GetCurrentEmployeesOnLocationDialog",
+              "options": {
+                "locationEntity": "=$options.location"
               }
             }
           ]

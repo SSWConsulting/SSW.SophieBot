@@ -57,6 +57,9 @@
       "BugReport": "",
       "GetPeopleOnClientWork": [
         "GetPeopleOnClientWorkDialog.en-us"
+      ],
+      "GetCurrentEmployeesOnLocation": [
+        "GetCurrentEmployeesOnLocationDialog.en-us"
       ]
     }
   },

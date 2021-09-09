@@ -649,3 +649,14 @@
 - Who is {internal = working for SSW} Today?
 
 @ prebuilt datetimeV2
+
+
+# GetCurrentEmployeesOnLocation
+- Who is in the {location = Sydney} office right now?
+- Who is currently in the {location = Melbourne} office?
+- Show me who are in {location = Newcastle} now
+
+@ phraseList CurrentLocation(interchangeable) =
+    - currently
+    - right now
+    - now

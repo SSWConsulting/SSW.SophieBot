@@ -144,7 +144,7 @@
 ]
 
 # SendActivity_JcLjcy_text()
-- You're welcome, please give us feedback at feedback@sswSophie.com.au
+- Thanks for using SophieBot. Please give us feedback at SSWSophieBotDevs@ssw.com.au
 # SendActivity_eQ0O3I()
 [Activity
     Text = ${SendActivity_eQ0O3I_text()}
@@ -199,3 +199,11 @@
 [Activity
     Text = ${SendActivity_yCiUft_text()}
 ]
+
+# SendActivity_e0PYdC()
+[Activity
+    Text = ${SendActivity_e0PYdC_text()}
+]
+
+# SendActivity_e0PYdC_text()
+- Getting current employees on location is still a work in progress.

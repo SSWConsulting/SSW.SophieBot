@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "GetGroupedEmployees",
+  "description": "This will return the result of grouped employees with a proper structure",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "groupOptions": {
+      "type": "object",
+      "title": "Group options",
+      "description": "Options to group employees",
+      "properties": {
+        "showAll": {
+          "$ref": "schema:#/definitions/booleanExpression",
+          "title": "Show all",
+          "description": "If set to true, result set contains a show-all group"
+        },
+        "groupKey": {
+          "$ref": "schema:#/definitions/stringExpression",
+          "title": "Group key",
+          "description": "Employees group in a set"
+        },
+        "countPerSet": {
+          "$ref": "schema:#/definitions/integerExpression",
+          "title": "Count per set",
+          "description": "Employees group count per set"
+        },
+        "maxGroupCount": {
+          "$ref": "schema:#/definitions/integerExpression",
+          "title": "Max group count",
+          "description": "Maximum amount of employees group"
+        }
+      }
+    },
+    "employees": {
+      "$ref": "schema:#/definitions/arrayExpression",
+      "title": "Employees",
+      "description": "Original employees data retrieved from HTTP request"
+    },
+    "groupedEmployeesProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Grouped employees property",
+      "description": "The property to store grouped employees"
+    }
+  }
+}

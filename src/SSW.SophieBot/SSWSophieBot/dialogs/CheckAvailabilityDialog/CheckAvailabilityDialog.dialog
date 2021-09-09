@@ -109,6 +109,23 @@
                       ]
                     },
                     {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "ASznx6"
+                      },
+                      "condition": "=dialog.profile.lastSeenAt != null",
+                      "actions": [
+                        {
+                          "$kind": "TimeDifferenceAction",
+                          "$designer": {
+                            "id": "LmYoYh"
+                          },
+                          "date": "=dialog.profile.lastSeenAt.lastSeen",
+                          "result": "dialog.profile.lastSeenAt.time"
+                        }
+                      ]
+                    },
+                    {
                       "$kind": "Microsoft.SetProperty",
                       "$designer": {
                         "id": "STyc4R"

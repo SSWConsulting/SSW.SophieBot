@@ -72,9 +72,9 @@
               ],
               "actions": [
                 {
-                  "$kind": "GetEmployeesByProjectAction",
+                  "$kind": "GetEmployeesByBillableAction",
                   "$designer": {
-                    "id": "2exfb2"
+                    "id": "DxTUuD"
                   },
                   "employees": "=turn.employees",
                   "project": "=dialog.projectEntity",
