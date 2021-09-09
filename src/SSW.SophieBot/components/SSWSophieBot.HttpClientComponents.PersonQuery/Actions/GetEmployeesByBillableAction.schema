@@ -1,8 +1,8 @@
 {
   "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "$role": "implements(Microsoft.IDialog)",
-  "title": "GetEmployeesByProject",
-  "description": "This will return the result of working employees on a project with a proper structure",
+  "title": "GetEmployeesByBillable",
+  "description": "This will return the result of working employees by billable with a proper structure",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -19,7 +19,7 @@
     "workingEmployeesProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Working employees property",
-      "description": "The working employees on a project with a proper structure"
+      "description": "The working employees by billable with a proper structure"
     }
   }
 }

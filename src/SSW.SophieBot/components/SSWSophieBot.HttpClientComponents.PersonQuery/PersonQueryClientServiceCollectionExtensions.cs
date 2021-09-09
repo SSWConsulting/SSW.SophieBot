@@ -9,6 +9,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
     {
         public static IServiceCollection AddPersonQueryClient(this IServiceCollection services, Action<HttpClient> action = null)
         {
+            services.AddSingleton<IAvatarManager, GravatarManager>();
             return services.AddGetProfileClient(action);
         }
 

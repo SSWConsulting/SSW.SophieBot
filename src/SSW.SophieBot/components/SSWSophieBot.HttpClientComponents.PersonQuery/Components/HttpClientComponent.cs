@@ -11,9 +11,14 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Components
     {
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddBotApplicationService<GetProfileClient>();
+            services
+                .AddBotApplicationService<GetProfileClient>()
+                .AddBotApplicationService<IAvatarManager>();
+
             services.AddDeclarativeType<GetProfileAction>(GetProfileAction.Kind);
-            services.AddDeclarativeType<GetEmployeesByProjectAction>(GetEmployeesByProjectAction.Kind);
+            services.AddDeclarativeType<GetEmployeesByDateAction>(GetEmployeesByDateAction.Kind);
+            services.AddDeclarativeType<GetEmployeesByBillableAction>(GetEmployeesByBillableAction.Kind);
+            services.AddDeclarativeType<GetGroupedEmployeesAction>(GetGroupedEmployeesAction.Kind);
         }
     }
 }

@@ -1,0 +1,172 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "nJ8YL5",
+    "name": "GetCurrentEmployeesOnLocationDialog",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "oHdYPe"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "IMIzT4"
+          }
+        },
+        {
+          "$kind": "GetProfileAction",
+          "$designer": {
+            "id": "H3FuOa"
+          },
+          "queryString": [
+            {
+              "key": "currentLocation",
+              "value": "=dialog.locationEntity"
+            }
+          ],
+          "statusCodeProperty": "turn.statusCode",
+          "reasonPhraseProperty": "turn.reasonPhrase",
+          "employeesProperty": "turn.employees"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "PxzoJn"
+          },
+          "condition": "=turn.statusCode == 200",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "5SdoY2"
+              },
+              "activity": "${SendActivity_5SdoY2()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "DRQtOv"
+              },
+              "condition": "=exists(turn.employees) && count(turn.employees) > 0",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "MfjfA1"
+                  },
+                  "activity": "${SendActivity_MfjfA1()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "StringJoinAction",
+                  "$designer": {
+                    "id": "RyIoln"
+                  },
+                  "wrapCount": 4,
+                  "lastDelimiter": " and ",
+                  "delimiter": ", ",
+                  "resultProperty": "turn.names",
+                  "stringList": "=select(turn.employees, e, concat(\"**\", e.firstName, \"**\"))"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "kMTNPl"
+                  },
+                  "activity": "${SendActivity_kMTNPl()}"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "zL333s"
+                  },
+                  "condition": "=count(turn.employees) > 1",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "3rWq3M"
+                      },
+                      "activity": "${SendActivity_3rWq3M()}"
+                    },
+                    {
+                      "$kind": "GetGroupedEmployeesAction",
+                      "$designer": {
+                        "id": "7YrxD9"
+                      },
+                      "groupOptions": {
+                        "showAll": true,
+                        "groupKey": "Skill",
+                        "countPerSet": 3,
+                        "maxGroupCount": 6
+                      },
+                      "employees": "=turn.employees",
+                      "groupedEmployeesProperty": "turn.groupedEmployees"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "AlWbJq"
+                      },
+                      "activity": "${SendActivity_AlWbJq()}"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "jNkwsV"
+                      },
+                      "assignments": [
+                        {
+                          "property": "turn.employees[0].displayName",
+                          "value": "=concat(turn.employees[0].firstName, \" \", turn.employees[0].lastName)"
+                        },
+                        {
+                          "property": "turn.employees[0].skillsInfo",
+                          "value": "=concat(join(take(select(turn.employees[0].skills, s, s.technology), max(count(turn.employees[0].skills) - 1, 0)), \", \"), \" and \", last(turn.employees[0].skills).technology)"
+                        },
+                        {
+                          "property": "turn.employees[0].lastSeenInfo",
+                          "value": "Last seen in ${turn.employees[0].lastSeenAt.siteId}."
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "qW6PDt"
+                      },
+                      "activity": "${SendActivity_qW6PDt()}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "pHHQtB"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "GetCurrentEmployeesOnLocationDialog.lg",
+  "recognizer": "GetCurrentEmployeesOnLocationDialog.lu.qna",
+  "id": "GetCurrentEmployeesOnLocationDialog"
+}

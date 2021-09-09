@@ -35,15 +35,16 @@
               "value": "=dialog.skillEntity"
             },
             {
-              "key": "location",
-              "value": "=dialog.locationEntity"
+              "value": "=dialog.locationEntity",
+              "key": "=if(exists(dialog.isCurrentLocation) && dialog.isCurrentLocation == true, \"currentLocation\", \"location\")"
             }
           ],
           "statusCodeProperty": "turn.statusCode",
           "reasonPhraseProperty": "turn.reasonPhrase",
           "employeesProperty": "turn.employees",
           "skill": {
-            "technology": "=dialog.skillEntity"
+            "technology": "=dialog.skillEntity",
+            "experienceLevel": "advanced"
           }
         },
         {
@@ -106,11 +107,45 @@
               ],
               "actions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "8xoYzY"
+                    "id": "4Ays01"
                   },
-                  "activity": "${SendActivity_8xoYzY()}"
+                  "condition": "=exists(dialog.byBillable) && dialog.byBillable == true",
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "tzr9Na"
+                      },
+                      "activity": "${SendActivity_tzr9Na()}"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "GetEmployeesByBillableAction",
+                      "$designer": {
+                        "id": "YGPHlR"
+                      },
+                      "employees": "=turn.employees",
+                      "workingEmployeesProperty": "turn.billableEmployees"
+                    },
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "JkGEqi"
+                      },
+                      "property": "dialog.billableTitle",
+                      "value": "=join([dialog.locationEntity, \"(by billable days)\"], \" \")"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "ZVrWLX"
+                      },
+                      "activity": "${SendActivity_ZVrWLX()}"
+                    }
+                  ]
                 }
               ]
             }

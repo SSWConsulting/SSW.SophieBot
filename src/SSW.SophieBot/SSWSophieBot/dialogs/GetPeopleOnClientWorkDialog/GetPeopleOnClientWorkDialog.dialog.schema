@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "title": "GetPeopleOnClientWorkDialog",
   "type": "object",
@@ -11,6 +11,14 @@
     "locationEntity": {
       "$ref": "#/definitions/stringExpression",
       "title": "Location Entity"
+    },
+    "availableEntity": {
+      "$ref": "#/definitions/stringExpression",
+      "title": "Available Entity"
+    },
+    "internalEntity": {
+      "$ref": "#/definitions/stringExpression",
+      "title": "Internal Entity"
     }
   },
   "$result": {

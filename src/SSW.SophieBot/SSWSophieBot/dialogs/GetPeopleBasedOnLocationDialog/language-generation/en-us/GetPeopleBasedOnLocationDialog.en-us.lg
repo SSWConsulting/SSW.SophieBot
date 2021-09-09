@@ -1,5 +1,6 @@
 [import](common.lg)
 [Profile](profile.en-us.lg)
+[GroupList](groupList.en-us.lg)
 
 # SendActivity_fAH1iZ_text()
 - Sorry, I couldn't find anyone in ${dialog.location}.
@@ -24,43 +25,6 @@
 # SendActivity_CR9ta7_text()
 - Sorry, I don't know the place you are talking about.
 
-# PeopleListCard(location, peopleList)
-- ```
-{
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "type": "AdaptiveCard",
-    "version": "1.1",
-    "body": [
-        {
-            "type": "Container",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "text": "There are **${peopleList.count}** people in **${location}**:"
-                }
-            ]
-        },
-        {
-            "type": "TextBlock",
-            "text": "${generateList(peopleList)}",
-            "wrap": true
-        }
-    ]
-}
-```
-
-# generateList(peopleList)
-- ${join(foreach(peopleList, people, readout(people)), '')}
-
-# readout(people)
--```${people.index}. **${people.firstName} ${people.lastName}**  
-```
-
-# SendActivity_Grcpla()
-[Activity
-    Attachments = ${json(PeopleListCard(dialog.location, turn.employees))}
-]
-
 # SendActivity_j1tmY1()
 [Activity
     Attachments = ${json(ProfileCardWithSSWPeopleAPI(turn.employees[0]))}
@@ -72,4 +36,27 @@
 ]
 
 # SendActivity_OesKIP_text()
-- There is only **1** people in **${dialog.location}**.
+- In **${dialog.location}**, there is **1** person (${if(turn.employees[0].inOffice, '', 'not')} in the office today).
+# SendActivity_jjbbfU()
+[Activity
+    Text = ${SendActivity_jjbbfU_text()}
+]
+
+# SendActivity_jjbbfU_text()
+- In **${dialog.location}**, there are **${turn.employees.count}** people (${count(where(turn.employees, e, e.inOffice))} in the office today).
+# SendActivity_XrCaCp()
+[Activity
+    Text = ${SendActivity_XrCaCp_text()}
+]
+
+# SendActivity_XrCaCp_text()
+- You can narrow your search by specifying a particular skill, such as React or Angular.
+# SendActivity_Jcjj19()
+[Activity
+    Attachments = ${json(EmployeesGroupActionCard(turn.groupedEmployees, dialog.location, GetEntities()))}
+]
+
+# GetEntities()
+- ```
+"byBillable": true
+```
