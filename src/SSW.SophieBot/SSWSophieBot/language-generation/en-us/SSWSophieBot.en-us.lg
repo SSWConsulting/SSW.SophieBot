@@ -144,7 +144,7 @@
 ]
 
 # SendActivity_JcLjcy_text()
-- Thanks for using SophieBot. Please give us feedback at SSWSophieBotDevs@ssw.com.au
+- Thanks for using SophieBot. Please give us feedback at <SSWSophieBotDevs@ssw.com.au>
 # SendActivity_eQ0O3I()
 [Activity
     Text = ${SendActivity_eQ0O3I_text()}
