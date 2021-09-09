@@ -44,7 +44,7 @@
                         ],
                         "msteams": {
                             "type": "messageBack",
-                            "displayText": "Show All"
+                            "displayText": "Show All [${count(employees)}]"
                         }
                     }
                 },
@@ -104,7 +104,7 @@
         ],
         "msteams": {
             "type": "messageBack",
-	        "displayText": "${location}"
+	        "displayText": "${location} [${number}]"
         }
     }
 }
