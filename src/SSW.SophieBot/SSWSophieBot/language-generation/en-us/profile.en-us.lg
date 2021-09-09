@@ -194,7 +194,7 @@
                             "size": "Small",
                             "width": "60px",
                             "height": "60px",
-                            "url": "${if(employee.avatarUrl != null, employee.avatarUrl, BlankAvatar())}",
+                            "url": "${if(profile.avatarUrl != null, profile.avatarUrl, BlankAvatar())}",
                             "altText": "avatar"
                         }
                     ],
