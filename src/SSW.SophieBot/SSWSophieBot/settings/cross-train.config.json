@@ -2,6 +2,9 @@
   "SSWSophieBot.en-us": {
     "rootDialog": true,
     "triggers": {
+      "": [
+        "GreetingDialog.en-us"
+      ],
       "GetCollaborators": [
         "GetCollaboratorsDialog.en-us"
       ],
@@ -60,6 +63,9 @@
       ],
       "GetCurrentEmployeesOnLocation": [
         "GetCurrentEmployeesOnLocationDialog.en-us"
+      ],
+      "Greeting": [
+        "GreetingDialog.en-us"
       ]
     }
   },
