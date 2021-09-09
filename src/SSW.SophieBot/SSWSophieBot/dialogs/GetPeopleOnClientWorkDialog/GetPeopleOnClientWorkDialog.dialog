@@ -222,9 +222,10 @@
                         "id": "nNPmm3"
                       },
                       "resultProperty": "turn.firstNames",
-                      "stringList": "=select(take(turn.firstNames, 3), n, concat(\"**\", n, \"**\"))",
+                      "stringList": "=select(turn.firstNames, n, concat(\"**\", n, \"**\"))",
                       "delimiter": ", ",
-                      "lastDelimiter": ", "
+                      "wrapCount": 4,
+                      "lastDelimiter": " and "
                     },
                     {
                       "$kind": "Microsoft.SendActivity",
