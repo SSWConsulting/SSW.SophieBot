@@ -78,7 +78,7 @@
                   "lastDelimiter": " and ",
                   "delimiter": ", ",
                   "resultProperty": "turn.names",
-                  "stringList": "=select(turn.employees, e, e.firstName)"
+                  "stringList": "=select(turn.employees, e, concat(\"**\", e.firstName, \"**\"))"
                 },
                 {
                   "$kind": "Microsoft.SendActivity",
