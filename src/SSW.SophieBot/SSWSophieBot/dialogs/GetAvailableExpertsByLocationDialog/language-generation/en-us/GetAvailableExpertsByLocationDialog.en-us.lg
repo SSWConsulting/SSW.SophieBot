@@ -20,4 +20,4 @@
 ]
 
 # SendActivity_U8Xbbw_text()
-- ${dialog.firstNames} ${if(count(turn.firstNames) > 1, "are", "is")} not on client work with **${dialog.skillEntity}** skills in **${dialog.locationEntity}** on ${turn.formatDate}
+- ${dialog.firstNames} ${if(count(turn.firstNames) > 1, "are", "is")} not on client work with **${dialog.skillEntity}** skills ${if(exists(dialog.locationEntity) && length(dialog.locationEntity) > 0, concat("in", " **", dialog.locationEntity, "**"), "")} on ${turn.formatDate}
