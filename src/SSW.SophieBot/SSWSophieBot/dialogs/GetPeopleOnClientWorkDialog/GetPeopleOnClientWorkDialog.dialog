@@ -25,6 +25,39 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "XBTmsk"
+          },
+          "assignments": [
+            {
+              "property": "dialog.booked",
+              "value": "=dialog.availableEntity == null || dialog.availableEntity == ''"
+            },
+            {
+              "property": "dialog.onInternal",
+              "value": "=dialog.internalEntity != null && dialog.internalEntity != ''"
+            },
+            {
+              "property": "dialog.fromDate",
+              "value": "=dialog.dateEntity.timex[0]"
+            },
+            {
+              "value": "=if(dialog.locationEntity == 'All', '', dialog.locationEntity)",
+              "property": "dialog.location"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.LogAction",
+          "$designer": {
+            "id": "7liyco"
+          },
+          "text": "${LogAction_Text_7liyco()}",
+          "traceActivity": true,
+          "label": "query strings"
+        },
+        {
           "$kind": "GetProfileAction",
           "$designer": {
             "id": "KaK4v1"
@@ -32,15 +65,15 @@
           "queryString": [
             {
               "key": "booked",
-              "value": "true"
+              "value": "=dialog.booked"
             },
             {
-              "value": "=dialog.dateEntity.timex[0]",
+              "value": "=dialog.fromDate",
               "key": "fromDate"
             },
             {
               "key": "location",
-              "value": "=dialog.locationEntity"
+              "value": "=dialog.location"
             }
           ],
           "statusCodeProperty": "turn.statusCode",
@@ -99,6 +132,59 @@
               ],
               "actions": [
                 {
+                  "$kind": "GetEmployeesByDateAction",
+                  "$designer": {
+                    "id": "uAYDng"
+                  },
+                  "employees": "=turn.employees",
+                  "result": "turn.employees"
+                },
+                {
+                  "$kind": "Microsoft.LogAction",
+                  "$designer": {
+                    "id": "nn9UF5"
+                  },
+                  "text": "${LogAction_Text_nn9UF5()}",
+                  "label": "turn.employees",
+                  "traceActivity": true
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "OCscRi"
+                  },
+                  "condition": "dialog.onInternal == True",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "Dz0gh9"
+                      },
+                      "property": "turn.employees",
+                      "value": "=where(turn.employees, e => e.currentAppointment.Regarding == 'SSW')"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "Hif4Gq"
+                      },
+                      "condition": "dialog.booked == True",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "6QD15y"
+                          },
+                          "property": "turn.employees",
+                          "value": "=where(turn.employees, e => e.currentAppointment.Regarding != 'SSW')"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
                     "id": "vjhrqb"
@@ -135,7 +221,7 @@
                       "$designer": {
                         "id": "nNPmm3"
                       },
-                      "resultProperty": "dialog.firstNames",
+                      "resultProperty": "turn.firstNames",
                       "stringList": "=select(take(turn.firstNames, 3), n, concat(\"**\", n, \"**\"))",
                       "delimiter": ", ",
                       "lastDelimiter": ", "

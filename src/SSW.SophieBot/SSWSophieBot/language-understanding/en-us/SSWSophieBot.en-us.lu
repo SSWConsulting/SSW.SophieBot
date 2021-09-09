@@ -646,12 +646,29 @@
 
 # GetPeopleOnClientWork
 - Who is on client work?
-- Who is on client work in {location = Sydney}?
 - Who is on client work next Friday?
+- Who is on client work in {location = Sydney}?
 - Who is on client work in {location = Sydney} next Friday?
 
-@ prebuilt datetimeV2
+- People {available = not on client work}?
+- Who {available = is not on client work}?
+- Who {available = is not on client work} tomorrow?
+- Who {available = is not on client work} in {location = China}?
+- Who {available = is not on client work} in {location = China} next Monday?
+- Who is {available = free}?
+- Who is {available = free} next Friday?
+- Who is {available = free} in {location = Sydney}?
+- Who is {available = free} in {location = Sydney} next Friday?
 
+- Who's {internal = internal}?
+- Who is {internal = internal} today?
+- Who is {internal = on internal} work?
+- Who is {internal = working for SSW}?
+- Who is {internal = working for SSW} Today?
+- Who is {internal = working for SSW} in {location = China}?
+- Who is {internal = working for SSW} in {location = China} next Friday?
+
+@ prebuilt datetimeV2
 
 # GetCurrentEmployeesOnLocation
 - Who is in the {location = Sydney} office right now?
