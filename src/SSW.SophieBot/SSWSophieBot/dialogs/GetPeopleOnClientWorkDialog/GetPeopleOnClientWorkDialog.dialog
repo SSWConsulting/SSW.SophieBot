@@ -55,7 +55,7 @@
           },
           "text": "${LogAction_Text_7liyco()}",
           "traceActivity": true,
-          "label": "dialog.booked"
+          "label": "query strings"
         },
         {
           "$kind": "GetProfileAction",
@@ -138,6 +138,15 @@
                   },
                   "employees": "=turn.employees",
                   "result": "turn.employees"
+                },
+                {
+                  "$kind": "Microsoft.LogAction",
+                  "$designer": {
+                    "id": "nn9UF5"
+                  },
+                  "text": "${LogAction_Text_nn9UF5()}",
+                  "label": "turn.employees",
+                  "traceActivity": true
                 },
                 {
                   "$kind": "Microsoft.IfCondition",
