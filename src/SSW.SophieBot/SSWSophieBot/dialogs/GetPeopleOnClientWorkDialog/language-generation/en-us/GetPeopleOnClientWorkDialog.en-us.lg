@@ -41,7 +41,11 @@
                             ],
                             "type": "date"
                             }
-                        ]
+                        ],
+                        "msteams": {
+                            "type": "messageBack",
+                            "displayText": "Show All"
+                        }
                     }
                 },
                 ${join(select(subArray(locations, 0, count(locations) <= 5 ? count(locations) : 5), location => LocationButton(location, Number(location, employees))), ',')}
@@ -97,7 +101,11 @@
             ],
             "type": "date"
             }
-        ]
+        ],
+        "msteams": {
+            "type": "messageBack",
+	        "displayText": "${location}"
+        }
     }
 }
 ```
@@ -155,7 +163,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "${if(dialog.booked, 'Client', 'Title')}",
+                    "text": "${InfoColumnTitle()}",
                     "wrap": true,
                     "weight": "Bolder"
                 }
@@ -169,6 +177,14 @@
     "items": [${join(select(employees, employee => EmployeeRow(employee)), ',')}]
 }
 ```
+
+# InfoColumnTitle
+- IF: ${ dialog.onInternal }
+    - Subject
+- ELSEIF: ${ dialog.booked }
+    - Client
+- ELSE:
+    - Title
 
 # EmployeeRow(employee)
 - ```
@@ -230,7 +246,9 @@
 ```
 
 # InfoColumnText(employee)
-- IF: ${ dialog.booked }
+- IF: ${ dialog.onInternal }
+    - ${if(employee.currentAppointment != null, employee.currentAppointment.subject, '')}
+- ELSEIF: ${ dialog.booked }
     - ${if(employee.currentAppointment != null, employee.currentAppointment.Regarding, '')}
 - ELSE:
     - ${employee.title}
