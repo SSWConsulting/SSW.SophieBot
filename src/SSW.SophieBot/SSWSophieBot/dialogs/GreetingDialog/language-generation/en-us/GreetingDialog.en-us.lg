@@ -1,0 +1,12 @@
+[import](common.lg)
+[SSWSophieBot](SSWSophieBot.en-us.lg)
+
+# SendActivity_WelcomeUser()
+[Activity
+    Text = ${WelcomeUser()}
+]
+
+# SendActivity_WelcomeAttachment()
+[Activity
+    Attachments = ${SendActivity_W4IWlO_attachment_EvFkJ1()}
+]

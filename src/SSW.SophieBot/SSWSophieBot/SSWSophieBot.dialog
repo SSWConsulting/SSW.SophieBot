@@ -25,29 +25,12 @@
           "value": "=null"
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "2Szxt3"
+            "id": "Lkj14X"
           },
-          "condition": "= turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType != 'personal'",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "DP3pJu"
-              },
-              "activity": "${SendActivity_DP3pJu()}"
-            }
-          ],
-          "actions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "W4IWlO"
-              },
-              "activity": "${SendActivity_W4IWlO()}"
-            }
-          ]
+          "activityProcessed": true,
+          "dialog": "GreetingDialog"
         }
       ]
     },
@@ -1327,6 +1310,30 @@
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Qu86q3",
+        "name": "OnIntent (Greeting)"
+      },
+      "intent": "Greeting",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "SUZSpA"
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "v1WCKm"
+          },
+          "activityProcessed": true,
+          "dialog": "GreetingDialog"
         }
       ]
     }

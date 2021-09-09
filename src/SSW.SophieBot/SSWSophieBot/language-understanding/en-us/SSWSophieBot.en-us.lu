@@ -503,14 +503,12 @@
 - what's your favorite color
 - what's your name
 - i have a problem
-- hello
-- hi
 - i need help
 - test
 - what can you do
-- good morning
-- nice to meet you
 - what time is it
+- login
+- what do you know
 
 > # Entity definitions
 
@@ -684,3 +682,12 @@
     - currently
     - right now
     - now
+
+# Greeting
+- hello
+- hi
+- nice to meet you
+- how are you
+- good morning
+- how do you do
+- what's up
