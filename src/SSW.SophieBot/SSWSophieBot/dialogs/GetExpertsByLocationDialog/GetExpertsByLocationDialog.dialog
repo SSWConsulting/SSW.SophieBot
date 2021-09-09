@@ -133,18 +133,10 @@
                     {
                       "$kind": "Microsoft.SetProperty",
                       "$designer": {
-                        "id": "EzrcUF"
-                      },
-                      "property": "dialog.billableSkill",
-                      "value": "=if(exists(dialog.skillEntity) && length(dialog.skillEntity) > 0, concat(\"with \", dialog.skillEntity, \" skills\"), \"\")"
-                    },
-                    {
-                      "$kind": "Microsoft.SetProperty",
-                      "$designer": {
                         "id": "JkGEqi"
                       },
                       "property": "dialog.billableTitle",
-                      "value": "=join([dialog.locationEntity, dialog.billableSkill, \"(by billable days)\"], \" \")"
+                      "value": "=join([dialog.locationEntity, \"(by billable days)\"], \" \")"
                     },
                     {
                       "$kind": "Microsoft.SendActivity",
