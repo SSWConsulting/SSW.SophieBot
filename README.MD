@@ -20,4 +20,4 @@ Contributions to SSW.SophieBot are welcome. Here is how you can contribute to SS
 
 # License
 
-[MIT License](TODO:)
+[MIT License](LICENSE)
