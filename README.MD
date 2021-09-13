@@ -8,7 +8,8 @@ SSW.SophieBot is an Enterprise People Bot build with Bot Framework Composer.
 
 # Getting Started
 
-1. [Run with Bot Framework Composer](_docs/Instructions-Compile.md)
+1. [Run bot with Bot Framework Composer](_docs/Instructions-Compile.md)
+2. [Deploy the bot](_docs/Instructions-Deployment.md)
 
 # Contribute
 

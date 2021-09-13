@@ -1,3 +1,5 @@
+# Run with Bot Framework Composer
+
 ## Prerequisites
 
 In order to get set up to work with SSW.SophieBot, you will need the following:
@@ -16,7 +18,7 @@ In order to get set up to work with SSW.SophieBot, you will need the following:
 ### Step 1. Clone the repo
 
 Go to [SSW.SophieBot](https://github.com/SSWConsulting/SSW.SophieBot) and clone the repo.
-![azure-devops-clone-repo](images/github-devops-clone-repo.png)
+![github-clone-repo](images/github-clone-repo.png)
 **Figure: Click Copy to get download link**
 
 ### Step 2. Open the repo with Composer
