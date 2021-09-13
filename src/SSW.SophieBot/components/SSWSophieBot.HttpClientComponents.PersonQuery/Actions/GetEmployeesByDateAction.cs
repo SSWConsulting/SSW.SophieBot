@@ -52,9 +52,17 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 return date.UtcDateTime.Ticks;
             }
 
+            DateTime ToUserLocalTime(DateTime dateTime)
+            {
+                var serverLocalTime = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+                var utcOffset = dc.Context.Activity.LocalTimestamp.GetValueOrDefault().Offset;
+                return serverLocalTime.Subtract(utcOffset);
+            }
+
             var employees = dc.GetValue(Employees);
             var dateString = dc.GetValue(Date);
-            var date = dateString != null && dateString != "" ? DateTime.Parse(dateString).ToUniversalTime().AddHours(9) : DateTime.Now.ToUniversalTime();
+
+            var date = dateString != null && dateString != "" ? ToUserLocalTime(DateTime.Parse(dateString)).AddHours(9) : ToUserLocalTime(DateTime.Now).ToUniversalTime();
 
             var result = employees.Select(e => new EmployeeByDateModel{
                 FirstName = e.FirstName,
