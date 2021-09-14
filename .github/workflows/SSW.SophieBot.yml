@@ -13,7 +13,10 @@ on:
       - .github/workflows/PublishUtils.ps1
       - .github/workflows/Publish-WebApp.ps1
 
-# TODO: concurrency
+concurrency:
+  group: bot_build_and_deploy
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy:
     name: Build and deploy
