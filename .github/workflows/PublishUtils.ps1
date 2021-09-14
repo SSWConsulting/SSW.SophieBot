@@ -41,6 +41,8 @@ function Merge-AppSettings {
     
     Merge-LUIS -settings $appSettings -publishConfig $publishConfig -generatedFolder $generatedFolder
     Merge-CosmosDb -settings $appSettings -publishConfig $publishConfig
+    Merge-BlobStorage -settings $appSettings -publishConfig $publishConfig
+    Merge-ApplicationInsights -settings $appSettings -publishConfig $publishConfig
     Merge-ScmHostDomain -settings $appSettings -publishConfig $publishConfig
     Merge-MicrosoftApp -settings $appSettings -publishConfig $publishConfig
 }
@@ -79,6 +81,8 @@ function Merge-LUIS {
     foreach ($key in $luisConfig.Keys) { $settings.luis | Add-Member -Type NoteProperty -Name $key -Value $luisConfig[$key] -Force }
 }
 
+# TODO: Merge-Qna
+
 function Merge-CosmosDb {
     param(
         $settings,
@@ -88,6 +92,49 @@ function Merge-CosmosDb {
     $cosmosDbConfig = $publishConfig.settings.cosmosDb
     if ($cosmosDbConfig) {
         $settings | Add-Member -Type NoteProperty -Name CosmosDbPartitionedStorage -Value $cosmosDbConfig -Force
+
+        $runtimeSettings = $settings.runtimeSettings
+        if ($runtimeSettings) {
+            $runtimeSettings | Add-Member -Type NoteProperty -Name storage -Value CosmosDbPartitionedStorage -Force
+        }
+    }
+}
+
+function Merge-BlobStorage {
+    param(
+        $settings,
+        $publishConfig
+    )
+
+    $blobConfig = $publishConfig.settings.blobStorage
+    if ($blobConfig.connectionString -And $blobConfig.container) {
+        $blobSettings = [PSCustomObject]@{
+            connectionString = $blobConfig.connectionString;
+            containerName    = $blobConfig.container
+        }
+
+        $featuresConfig = $settings.runtimeSettings.features
+
+        if ($featuresConfig) {
+            $featuresConfig | Add-Member -Type NoteProperty -Name blobTranscript -Value $blobSettings -Force
+        }
+    }
+}
+
+function Merge-ApplicationInsights {
+    param(
+        $settings,
+        $publishConfig
+    )
+
+    $appInsightsConfig = $publishConfig.settings.applicationInsights
+    if ($appInsightsConfig) {
+        $telemetryOptions = $settings.runtimeSettings.telemetry.options
+        
+        if ($telemetryOptions) {
+            $telemetryOptions | Add-Member -Type NoteProperty -Name connectionString -Value $appInsightsConfig.connectionString -Force
+            $telemetryOptions | Add-Member -Type NoteProperty -Name instrumentationKey -Value $appInsightsConfig.InstrumentationKey -Force
+        }
     }
 }
 
@@ -109,3 +156,6 @@ function Merge-MicrosoftApp {
     $settings | Add-Member -Type NoteProperty -Name MicrosoftAppId -Value $publishConfig.settings.MicrosoftAppId -Force
     $settings | Add-Member -Type NoteProperty -Name MicrosoftAppPassword -Value $publishConfig.settings.MicrosoftAppPassword -Force
 }
+
+# TODO: Merge-LuResources
+# TODO: Merge-QnaResources

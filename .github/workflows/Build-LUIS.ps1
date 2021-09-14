@@ -49,4 +49,5 @@ New-LuConfigFile -luConfig $luConfigFile -luModels $models -path "."
 Get-Content $luConfigFile
 
 # Publish and tain LUIS models
+# TODO: make suffix a parameter
 bf luis:build --out $outputDirectory --authoringKey $authoringKey --botName $botName --suffix composer --force --log --luConfig $luConfigFile --endpoint $endpoint --region $region
