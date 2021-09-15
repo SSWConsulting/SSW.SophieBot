@@ -20,7 +20,7 @@
         },
         {
             "type": "TextBlock",
-            "text": "You can narrow your search by specifying an office location.\n",
+            "text": "Narrow your search...",
             "wrap": true
         },
         {
@@ -73,7 +73,7 @@
 - ${if(date != null, DateText(date), '')}
 
 # DateText(date)
--``` on ${date}```
+-``` on **${date}**```
 
 # Number(location, employees)
 - ${count(where(employees, employee => employee.defaultSite.name == location))}
@@ -125,7 +125,7 @@
     "body": [
         {
             "type": "TextBlock",
-            "text": "${if(location == '', 'All', location)}",
+            "text": "${PeopleType()} - ${if(location == '', 'All', location)}",
             "wrap": true,
             "size": "Large"
         },
@@ -133,6 +133,14 @@
     ]
 }
 ```
+
+# PeopleType()
+- IF: ${ dialog.onInternal }
+    - On internal work
+- ELSEIF: ${ dialog.booked }
+    - On client work
+- ELSE:
+    - Free
 
 # EmployeeList(employees)
 -```
@@ -174,7 +182,7 @@
 
 # InfoColumnTitle
 - IF: ${ dialog.onInternal }
-    - Subject
+    - Appointment
 - ELSEIF: ${ dialog.booked }
     - Client
 - ELSE:
