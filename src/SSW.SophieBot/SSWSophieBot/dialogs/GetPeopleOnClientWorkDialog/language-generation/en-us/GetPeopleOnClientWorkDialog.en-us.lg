@@ -159,18 +159,7 @@
                 }
             ]
         },
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "text": "${InfoColumnTitle()}",
-                    "wrap": true,
-                    "weight": "Bolder"
-                }
-            ]
-        }
+        ${HeaderColumns()}
     ],
     "style": "default"
 },
@@ -180,13 +169,29 @@
 }
 ```
 
-# InfoColumnTitle
+# HeaderColumns
 - IF: ${ dialog.onInternal }
-    - Appointment
+    - ${HeaderColumn('Appointment')}
 - ELSEIF: ${ dialog.booked }
-    - Client
+    - ${HeaderColumn('Client')}
 - ELSE:
-    - Title
+    - ${join(select(createArray('Next Client'), text => HeaderColumn(text)), ',')}
+
+# HeaderColumn(text)
+-```
+{
+    "type": "Column",
+    "width": "stretch",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${text}",
+            "wrap": true,
+            "weight": "Bolder"
+        }
+    ]
+}
+```
 
 # EmployeeRow(employee)
 - ```
@@ -211,7 +216,8 @@
                                     "height": "40px",
                                     "style": "Person"
                                 }
-                            ]
+                            ],
+                            "verticalContentAlignment": "Center"
                         },
                         {
                             "type": "Column",
@@ -227,33 +233,45 @@
                         }
                     ]
                 }
-            ]
-        },
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "text": "${InfoColumnText(employee)}",
-                    "wrap": true
-                }
             ],
             "verticalContentAlignment": "Center"
-        }
+        },
+        ${BodyColumns(employee)}
     ],
     "height": "stretch",
     "separator": true
 }
 ```
 
-# InfoColumnText(employee)
+# BodyColumns(employee)
 - IF: ${ dialog.onInternal }
-    - ${if(employee.currentAppointment != null, employee.currentAppointment.subject, '')}
+    - ${BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.subject, ''))}
 - ELSEIF: ${ dialog.booked }
-    - ${if(employee.currentAppointment != null, employee.currentAppointment.Regarding, '')}
+    - ${BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.Regarding, ''))}
 - ELSE:
-    - ${employee.title}
+    - ${join(select(createArray(if(employee.NextClient != null, NextClient(employee.NextClient), '')), text => BodyColumn(text)), ',')}
+
+# BodyColumn(text)
+-```
+{
+    "type": "Column",
+    "width": "stretch",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${text}",
+            "wrap": true
+        }
+    ],
+    "verticalContentAlignment": "Center"
+}
+```
+
+# NextClient(client)
+-```
+Free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}  
+${client.Name} - ${client.Date}
+```
 
 # SendActivity_pArEiW()
 [Activity
