@@ -21,7 +21,14 @@ Go to [SSW.SophieBot](https://github.com/SSWConsulting/SSW.SophieBot) and clone 
 ![github-clone-repo](images/github-clone-repo.png)
 **Figure: Click Copy to get download link**
 
-### Step 2. Open the repo with Composer
+### Step 2. Create appsettings.json
+
+1. From the cloned repo, go to "{your cloned repo}/src/SSW.SophieBot/SSWSophieBot/settings" folder
+2. Make a copy of the file `appsettings.example.json` and rename it to `appsettings.json`. 
+3. Add necessary configurations to `appsettings.json`. 
+> Note: For `adapters` and `components` sections in `runtimeSettings`, do not modify the initial settings from `appsettings.example.json` as they are needed for the test run.
+
+### Step 3. Open the repo with Composer
 
 Open the Bot Framework Composer.
 
@@ -31,11 +38,17 @@ Open the Bot Framework Composer.
 ![composer-select-solution](images/composer-select-solution.png)
 **Figure: Select repo directory**
 
-### Step 3. Configure your bot
+### Step 4. Configure your bot
 
-In Bot Framework Composer, go to Configure | Development resources.
+In Bot Framework Composer, go to Publish | Publishing profile
 
-1. Set up Language Understanding.
+1. Add your publishing profile as per [Microsoft Doc](https://docs.microsoft.com/en-au/composer/how-to-publish-bot)
+
+![create-publishing-profile](images/create_publishing_profile.png)
+
+Then go to Configure | Development resources.
+
+2. Set up Language Understanding.
 
 ![composer-set-up-luis](images/composer-set-up-luis.png)
 **Figure: Click Set up Language Understanding**
@@ -46,7 +59,7 @@ In Bot Framework Composer, go to Configure | Development resources.
 ![composer-select-subscription-and-luis-resource](images/composer-select-subscription-and-luis-resource.png)
 **Figure: Select the subscription and luis resource and click next**
 
-2. Set up App ID. Still in the Configure | Development resources, scroll to the bottom.
+3. Set up App ID. Still in the Configure | Development resources, scroll to the bottom.
 
 ![composer-retrieve-app-id](images/composer-retrieve-app-id.png)
 **Figure: Click Retrieve App ID**
@@ -54,7 +67,7 @@ In Bot Framework Composer, go to Configure | Development resources.
 ![composer-select-publishing-profile](images/composer-select-publishing-profile.png)
 **Figure: Select publishing profile**
 
-### Step 4. Test run
+### Step 5. Test run
 
 ![composer-start-bot](images/composer-start-bot.png)
 **Figure: Click Start bot**
