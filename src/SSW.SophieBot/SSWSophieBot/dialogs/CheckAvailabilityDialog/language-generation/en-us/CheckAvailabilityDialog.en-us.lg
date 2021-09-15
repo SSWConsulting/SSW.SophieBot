@@ -1,7 +1,7 @@
     [import](common.lg)
 
 # SendActivity_RA2SOG_text()
-- Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
 # SendActivity_RA2SOG()
 [Activity
     Text = ${SendActivity_RA2SOG_text()}
@@ -39,3 +39,11 @@
     - ```Last seen in ${location}.```
 - ELSE:
     - ``````
+
+# SendActivity_5SDlSO()
+[Activity
+    Text = ${SendActivity_5SDlSO_text()}
+]
+
+# SendActivity_5SDlSO_text()
+- Please specify a person name to query.
