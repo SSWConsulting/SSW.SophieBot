@@ -295,3 +295,10 @@ dialog.locationEntity: ${dialog.locationEntity}```
 
 # LogAction_Text_nn9UF5_text()
 - ${turn.employees}
+# LogAction_Text_hadTDt()
+[Activity
+    Text = ${LogAction_Text_hadTDt_text()}
+]
+
+# LogAction_Text_hadTDt_text()
+- ${turn.employees}
