@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -64,7 +63,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
             var date = dateString != null && dateString != "" ? ToUserLocalTime(DateTime.Parse(dateString)).AddHours(9) : DateTime.Now.ToUniversalTime();
 
-            var result = employees.Select(e => new EmployeeByDateModel{
+            var result = employees.Select(e => new EmployeeByDateModel
+            {
                 FirstName = e.FirstName,
                 DisplayName = $"{e.FirstName} {e.LastName}",
                 DefaultSite = e.DefaultSite,
