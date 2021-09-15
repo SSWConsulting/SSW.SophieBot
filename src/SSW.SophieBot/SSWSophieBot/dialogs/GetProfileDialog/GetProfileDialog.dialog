@@ -29,7 +29,7 @@
           "$designer": {
             "id": "cgxszW"
           },
-          "condition": "=exists(dialog.nameEntity) && length(dialog.nameEntity) > 0",
+          "condition": "=exists(dialog.nameEntity) && (exists(dialog.nameEntity.firstname) || exists(dialog.nameEntity.lastname))",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -47,6 +47,14 @@
           ]
         },
         {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "poFNti"
+          },
+          "property": "turn.userInputName",
+          "value": "=concat(if(exists(dialog.nameEntity.firstname), dialog.nameEntity.firstname[0], \"Mr.\"), if(exists(dialog.nameEntity.lastname), concat(\" \", dialog.nameEntity.lastname[0]), \"\"))"
+        },
+        {
           "$kind": "GetProfileAction",
           "$designer": {
             "id": "OYbloR"
@@ -57,7 +65,11 @@
           "queryString": [
             {
               "key": "firstName",
-              "value": "=dialog.nameEntity"
+              "value": "=dialog.nameEntity.firstname[0]"
+            },
+            {
+              "key": "lastName",
+              "value": "=dialog.nameEntity.lastname[0]"
             }
           ]
         },

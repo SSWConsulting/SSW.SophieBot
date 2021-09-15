@@ -13,7 +13,7 @@
 ]
 
 # SendActivity_USdQMN_text()
-- Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
 # SendActivity_oMFRZo()
 [Activity
     Text = ${SendActivity_oMFRZo_text()}
@@ -27,3 +27,10 @@
 He also knows:
 <br/>
 ${turn.intermediateSkills}```
+# SendActivity_Ist81Z()
+[Activity
+    Text = ${SendActivity_Ist81Z_text()}
+]
+
+# SendActivity_Ist81Z_text()
+- Please specify a person name to query.
