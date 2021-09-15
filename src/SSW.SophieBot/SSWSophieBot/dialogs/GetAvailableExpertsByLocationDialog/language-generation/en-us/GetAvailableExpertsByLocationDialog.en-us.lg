@@ -22,4 +22,4 @@
 # SendActivity_U8Xbbw_text()
 - ```> 🛠${dialog.skillEntity} ${if(exists(dialog.locationEntity) && length(dialog.locationEntity) > 0, concat("| 📍", dialog.locationEntity), "")} | 📅${turn.formatDate}  <br/>
 
-We have ${dialog.firstNames}```
+We have ${dialog.firstNames} available.```
