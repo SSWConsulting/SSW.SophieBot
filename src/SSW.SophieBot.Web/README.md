@@ -5,7 +5,7 @@ This is the web version of the SSW SophieBot. Connect to our bot using Direct Li
 ## Run Locally
 
 ```
-yarn dev
+yarn install && yarn dev
 ```
 
 ## Build

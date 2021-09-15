@@ -1,16 +1,23 @@
 # SSW.SophieBot
 
-## Resource Provisioning
+An Enterprise People Bot.
 
-We deploy SophieBot fully on Azure
+# Introduction
 
-Bot Framework Composer resource provisioning - Refer to [Provisioning Steps](src/BotProvisionScripts/README.MD)
+SSW.SophieBot is an Enterprise People Bot build with Bot Framework Composer.
 
-## Web Version
+# Getting Started
 
-This is the web version SophieBot. Refer to [SSW SophieBot Web](src/SSW.SophieBot.Web/README.md)
+1. [Run bot with Bot Framework Composer](_docs/Instructions-Compile.md)
+2. [Deploy the bot](_docs/Instructions-Deployment.md)
 
-## Additional Resources
+# Contribute
 
--   Azure KeyVault
--   Azure storage account for static website hosting
+Contributions to SSW.SophieBot are welcome. Here is how you can contribute to SSW.SophieBot:
+
+-   [Submit bugs](https://github.com/SSWConsulting/SSW.SophieBot/issues) and help us verify fixes.
+-   [Submit pull requests](https://github.com/SSWConsulting/SSW.SophieBot/pulls) for bug fixes and features and discuss existing proposals
+
+# License
+
+[MIT License](LICENSE)
