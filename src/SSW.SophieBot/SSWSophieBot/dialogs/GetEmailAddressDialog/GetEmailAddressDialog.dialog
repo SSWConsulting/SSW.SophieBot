@@ -25,6 +25,36 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "eRIqeW"
+          },
+          "condition": "=exists(dialog.nameEntity) && (exists(dialog.nameEntity.firstname) || exists(dialog.nameEntity.lastname))",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "N0ap4L"
+              },
+              "activity": "${SendActivity_N0ap4L()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "ankIP2"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "0I7C0G"
+          },
+          "value": "=concat(if(exists(dialog.nameEntity.firstname), dialog.nameEntity.firstname[0], \"Mr.\"), if(exists(dialog.nameEntity.lastname), concat(\" \", dialog.nameEntity.lastname[0]), \"\"))",
+          "property": "turn.userInputName"
+        },
+        {
           "$kind": "GetProfileAction",
           "$designer": {
             "id": "YWDVK0"
@@ -35,7 +65,11 @@
           "queryString": [
             {
               "key": "firstName",
-              "value": "=dialog.nameEntity"
+              "value": "=dialog.nameEntity.firstname[0]"
+            },
+            {
+              "value": "=dialog.nameEntity.lastname[0]",
+              "key": "lastName"
             }
           ]
         },

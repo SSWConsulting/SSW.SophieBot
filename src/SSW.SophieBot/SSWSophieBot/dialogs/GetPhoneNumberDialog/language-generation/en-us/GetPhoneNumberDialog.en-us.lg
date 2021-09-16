@@ -13,7 +13,7 @@
 ]
 
 # SendActivity_AOE7pz_text()
-- Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
 # LogAction_Text_IxMRSi()
 [Activity
     Text = ${LogAction_Text_IxMRSi_text()}
@@ -35,3 +35,10 @@
 
 # LogAction_Text_uysiOu_text()
 - ${turn}
+# SendActivity_erv9tP()
+[Activity
+    Text = ${SendActivity_erv9tP_text()}
+]
+
+# SendActivity_erv9tP_text()
+- Please specify a person name to query.

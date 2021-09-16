@@ -439,4 +439,4 @@
 }
 ```
 # notFound()
--Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
+-Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.

@@ -25,6 +25,28 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "aCU2ER"
+          },
+          "condition": "=dialog.dateEntity.type == 'date'",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "BBvwQA"
+              },
+              "activity": "${SendActivity_BBvwQA()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "W6RCrH"
+              }
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "XBTmsk"

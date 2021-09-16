@@ -307,3 +307,10 @@ dialog.locationEntity: ${dialog.locationEntity}```
 
 # LogAction_Text_hadTDt_text()
 - ${turn.employees}
+# SendActivity_BBvwQA()
+[Activity
+    Text = ${SendActivity_BBvwQA_text()}
+]
+
+# SendActivity_BBvwQA_text()
+- Please specify a specific date to query.

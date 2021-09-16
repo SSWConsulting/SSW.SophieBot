@@ -23,7 +23,7 @@
 ]
 
 # SendActivity_pkRvWS_text()
-- There seems to be more than one **${dialog.nameEntity}**. Here are all the **${dialog.nameEntity}**'s I could find.
+- There seems to be more than one **${turn.userInputName}**. Here are all the **${turn.userInputName}**'s I could find.
 # SendActivity_D9w7zc()
 [Activity
     Attachments = ${json(ProfileCardWithSSWPeopleAPI(dialog.foreach.value))}
