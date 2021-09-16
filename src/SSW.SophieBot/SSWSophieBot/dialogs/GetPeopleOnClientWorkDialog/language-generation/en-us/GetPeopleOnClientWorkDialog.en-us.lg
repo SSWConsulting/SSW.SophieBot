@@ -125,7 +125,7 @@
     "body": [
         {
             "type": "TextBlock",
-            "text": "${PeopleType()} - ${if(location == '', 'All', location)}",
+            "text": "${PeopleType()} - ${if(location == '', 'All', location)} ${if(dialog.booked == False, '(by billed days)', '')}",
             "wrap": true,
             "size": "Large"
         },
@@ -147,18 +147,6 @@
 {
     "type": "ColumnSet",
     "columns": [
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "text": "Name",
-                    "wrap": true,
-                    "weight": "Bolder"
-                }
-            ]
-        },
         ${HeaderColumns()}
     ],
     "style": "default"
@@ -171,22 +159,23 @@
 
 # HeaderColumns
 - IF: ${ dialog.onInternal }
-    - ${HeaderColumn('Appointment')}
+    - ${join(createArray(HeaderColumn('', '30px'), HeaderColumn('Name', '125px'), HeaderColumn('Appointment', 'stretch')), ',')}
 - ELSEIF: ${ dialog.booked }
-    - ${HeaderColumn('Client')}
+    - ${join(createArray(HeaderColumn('', '30px'), HeaderColumn('Name', '125px'), HeaderColumn('Client', 'stretch')), ',')}
 - ELSE:
-    - ${join(select(createArray('Next Client'), text => HeaderColumn(text)), ',')}
+    - ${join(createArray(HeaderColumn('', '30px'), HeaderColumn('Name', '55px'), HeaderColumn('Billed Days', '67px'), HeaderColumn('In Office', '53px'), HeaderColumn('Last Seen', '80px'), HeaderColumn('Next Client', 'stretch')), ',')}
 
-# HeaderColumn(text)
+# HeaderColumn(text, width)
 -```
 {
     "type": "Column",
-    "width": "stretch",
+    "width": "${width}",
     "items": [
         {
             "type": "TextBlock",
             "text": "${text}",
             "wrap": true,
+            "size": "Small",
             "weight": "Bolder"
         }
     ]
@@ -198,44 +187,6 @@
 {
     "type": "ColumnSet",
     "columns": [
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "ColumnSet",
-                    "columns": [
-                        {
-                            "type": "Column",
-                            "width": "auto",
-                            "items": [
-                                {
-                                    "type": "Image",
-                                    "url": "${if(employee.avatarUrl != null, employee.avatarUrl, BlankAvatar())}",
-                                    "width": "40px",
-                                    "height": "40px",
-                                    "style": "Person"
-                                }
-                            ],
-                            "verticalContentAlignment": "Center"
-                        },
-                        {
-                            "type": "Column",
-                            "width": "stretch",
-                            "items": [
-                                {
-                                    "type": "TextBlock",
-                                    "text": "${employee.displayName}",
-                                    "wrap": true
-                                }
-                            ],
-                            "verticalContentAlignment": "Center"
-                        }
-                    ]
-                }
-            ],
-            "verticalContentAlignment": "Center"
-        },
         ${BodyColumns(employee)}
     ],
     "height": "stretch",
@@ -245,22 +196,57 @@
 
 # BodyColumns(employee)
 - IF: ${ dialog.onInternal }
-    - ${BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.subject, ''))}
+    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '125px'), BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.subject, ''), 'stretch')), ',')}
 - ELSEIF: ${ dialog.booked }
-    - ${BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.Regarding, ''))}
+    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '125px'), BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.Regarding, ''), 'stretch')), ',')}
 - ELSE:
-    - ${join(select(createArray(if(employee.NextClient != null, NextClient(employee.NextClient), '')), text => BodyColumn(text)), ',')}
+    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.firstName, '55px'), BodyColumn(concat(employee.BilledDays, if(employee.BilledDays != 0, ' Days', '')), '67px'), ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), BodyColumn(employee.LastSeen, '80px'), BodyColumn(if(employee.NextClient != null, NextClient(employee.NextClient), ''), 'stretch')), ',')}
 
-# BodyColumn(text)
+# AvatarColumn(avatarUrl)
 -```
 {
     "type": "Column",
-    "width": "stretch",
+    "width": "auto",
+    "items": [
+        {
+            "type": "Image",
+            "width": "30px",
+            "height": "30px",
+            "url": "${if(avatarUrl != null, avatarUrl, BlankAvatar())}",
+            "style": "Person"
+        }
+    ]
+}
+```
+
+# BodyColumn(text, width)
+-```
+{
+    "type": "Column",
+    "width": "${width}",
     "items": [
         {
             "type": "TextBlock",
             "text": "${text}",
-            "wrap": true
+            "wrap": true,
+            "size": "Small"
+        }
+    ],
+    "verticalContentAlignment": "Center"
+}
+```
+
+# ImageColumn(url)
+-```
+{
+    "type": "Column",
+    "width": "53px",
+    "items": [
+        {
+            "type": "Image",
+            "url": "${url}",
+            "width": "17px",
+            "height": "17px"
         }
     ],
     "verticalContentAlignment": "Center"
