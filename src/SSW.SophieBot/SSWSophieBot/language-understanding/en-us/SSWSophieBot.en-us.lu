@@ -675,6 +675,9 @@
 - Who is {internal = working for SSW} in {location = China}?
 - Who is {internal = working for SSW} in {location = China} next Friday?
 
+
+@ ml available
+@ ml internal
 @ prebuilt datetimeV2
 
 # GetCurrentEmployeesOnLocation
