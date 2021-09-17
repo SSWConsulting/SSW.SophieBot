@@ -134,7 +134,17 @@
             "wrap": true,
             "size": "Large"
         },
-        ${EmployeeList(employees)}
+        ${EmployeeList(employees)},
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.OpenUrl",
+                    "title": "More booking info",
+                    "url": "https://app.powerbi.com/groups/me/reports/a4069dc4-86c1-4cba-bf81-161bb108c5c2/ReportSection"
+                }
+            ]
+        }
     ]
 }
 ```
@@ -168,7 +178,7 @@
 - ELSEIF: ${ dialog.booked }
     - ${join(createArray(HeaderColumn('', '30px'), HeaderColumn('Name', '125px'), HeaderColumn('Client', 'stretch')), ',')}
 - ELSE:
-    - ${join(createArray(HeaderColumn('', '30px'), HeaderColumn('Name', '55px'), HeaderColumn('Billed Days', '67px'), HeaderColumn('In Office', '53px'), HeaderColumn('Last Seen', '80px'), HeaderColumn('Next Client', 'stretch')), ',')}
+    - ${join(createArray(HeaderColumn('', '30px'), HeaderColumn('Name', '55px'), HeaderColumn('Billed', '67px'), HeaderColumn('In Office', '53px'), HeaderColumn('Last Seen', '80px'), HeaderColumn('Next Client', 'stretch')), ',')}
 
 # HeaderColumn(text, width)
 -```
