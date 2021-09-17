@@ -50,7 +50,7 @@
 ]
 
 # SendActivity_XrCaCp_text()
-- You can narrow your search by specifying a particular skill, such as React or Angular.
+- Narrow your search...
 # SendActivity_Jcjj19()
 [Activity
     Attachments = ${json(EmployeesGroupActionCard(turn.groupedEmployees, dialog.location, GetEntities()))}
