@@ -38,7 +38,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
         {
             static GetAppointmentModel GetAppointmentBy(DateTime date, List<GetAppointmentModel> appointments)
             {
-                var leavePhrases = new string[] { "annual leave", "non-working", "leave", "holiday", "time in lieu", "hour leave", "hours leave", "day off", "days off" };
+                var leavePhrases = new string[] { "annual leave", "non working", "non-working", "leave", "holiday", "time in lieu", "hour leave", "hours leave", "day off", "days off" };
                 var results = appointments
                     .Where(appointment => date.Ticks >= GetTicksFrom(appointment.Start) && date.Ticks <= GetTicksFrom(appointment.End))
                     .Where(appointment => !leavePhrases.Any(appointment.Subject.ToLower().Contains))
