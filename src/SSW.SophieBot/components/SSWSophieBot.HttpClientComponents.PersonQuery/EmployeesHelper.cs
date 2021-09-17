@@ -33,7 +33,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             .ToList();
         }
 
-        private static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project)
+        public static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project)
         {
             double billableHours = 0;
             if (project != null)
@@ -48,7 +48,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             return billableHours == 0 ? 0 : (int)Math.Ceiling(billableHours / 8);
         }
 
-        private static string GetLastSeen(GetEmployeeModel model)
+        public static string GetLastSeen(GetEmployeeModel model)
         {
             var lastSeenDateTime = model.LastSeenAt?.LastSeen.ToUniversalTime();
 
@@ -80,6 +80,39 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             {
                 var months = GetInteger(timeOffset.TotalDays / 30);
                 return $"{months} {(months == 1 ? "month" : "months")} ago";
+            }
+        }
+
+        public static NextClientModel GetNextClient(GetEmployeeModel employee)
+        {
+            var now = DateTime.Now.ToUniversalTime();
+            var appointments = employee.Appointments
+                .Where(appointment => appointment.Start.UtcDateTime.Ticks > now.Ticks && appointment.Regarding.ToLower() != "ssw")
+                .ToList();
+
+            if (appointments.Count == 0)
+            {
+                return null;
+            }
+
+            var appointment = appointments.LastOrDefault();
+            return new NextClientModel
+            {
+                FreeDays = GetBusinessDays(DateTime.Now.ToUniversalTime(), appointment.Start.UtcDateTime),
+                Name = appointment.Regarding,
+                Date = appointment.Start.ToString("'ddd', dd/MM/yyyy")
+            };
+
+            static int GetBusinessDays(DateTime start, DateTime end)
+            {
+                double result =
+                    1 + ((end - start).TotalDays * 5 -
+                    (start.DayOfWeek - end.DayOfWeek) * 2) / 7;
+
+                if (end.DayOfWeek == DayOfWeek.Saturday) result--;
+                if (start.DayOfWeek == DayOfWeek.Sunday) result--;
+
+                return (int)Math.Round(result);
             }
         }
 

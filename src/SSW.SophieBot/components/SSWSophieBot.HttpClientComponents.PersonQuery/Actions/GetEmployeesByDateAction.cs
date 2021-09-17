@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -39,7 +38,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
         {
             static GetAppointmentModel GetAppointmentBy(DateTime date, List<GetAppointmentModel> appointments)
             {
-                var leavePhrases = new string[] { "annual leave", "non-working", "leave" };
+                var leavePhrases = new string[] { "annual leave", "non-working", "leave", "holiday", "time in lieu", "hour leave", "hours leave", "day off", "days off" };
                 var results = appointments
                     .Where(appointment => date.Ticks >= GetTicksFrom(appointment.Start) && date.Ticks <= GetTicksFrom(appointment.End))
                     .Where(appointment => !leavePhrases.Any(appointment.Subject.ToLower().Contains))
@@ -62,9 +61,10 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             var employees = dc.GetValue(Employees);
             var dateString = dc.GetValue(Date);
 
-            var date = dateString != null && dateString != "" ? ToUserLocalTime(DateTime.Parse(dateString)).AddHours(9) : ToUserLocalTime(DateTime.Now).ToUniversalTime();
+            var date = dateString != null && dateString != "" ? ToUserLocalTime(DateTime.Parse(dateString)).AddHours(9) : DateTime.Now.ToUniversalTime();
 
-            var result = employees.Select(e => new EmployeeByDateModel{
+            var result = employees.Select(e => new EmployeeByDateModel
+            {
                 FirstName = e.FirstName,
                 DisplayName = $"{e.FirstName} {e.LastName}",
                 DefaultSite = e.DefaultSite,

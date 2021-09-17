@@ -27,21 +27,21 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "aCU2ER"
+            "id": "cDHzU3"
           },
-          "condition": "=dialog.dateEntity.type == 'date'",
-          "elseActions": [
+          "condition": "=dialog.dateEntity != null && dialog.dateEntity.type != 'date'",
+          "actions": [
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "BBvwQA"
+                "id": "T25WLi"
               },
-              "activity": "${SendActivity_BBvwQA()}"
+              "activity": "${SendActivity_T25WLi()}"
             },
             {
               "$kind": "Microsoft.EndDialog",
               "$designer": {
-                "id": "W6RCrH"
+                "id": "EkOXsE"
               }
             }
           ]
@@ -154,30 +154,21 @@
               ],
               "actions": [
                 {
-                  "$kind": "GetEmployeesByDateAction",
-                  "$designer": {
-                    "id": "uAYDng"
-                  },
-                  "employees": "=turn.employees",
-                  "result": "turn.employees",
-                  "date": "=dialog.fromDate"
-                },
-                {
-                  "$kind": "Microsoft.LogAction",
-                  "$designer": {
-                    "id": "nn9UF5"
-                  },
-                  "text": "${LogAction_Text_nn9UF5()}",
-                  "label": "turn.employees",
-                  "traceActivity": true
-                },
-                {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
                     "id": "OCscRi"
                   },
                   "condition": "dialog.onInternal == True",
                   "actions": [
+                    {
+                      "$kind": "GetEmployeesByDateAction",
+                      "$designer": {
+                        "id": "pdhATR"
+                      },
+                      "employees": "=turn.employees",
+                      "date": "=dialog.fromDate",
+                      "result": "turn.employees"
+                    },
                     {
                       "$kind": "Microsoft.SetProperty",
                       "$designer": {
@@ -196,6 +187,15 @@
                       "condition": "dialog.booked == True",
                       "actions": [
                         {
+                          "$kind": "GetEmployeesByDateAction",
+                          "$designer": {
+                            "id": "UyDnoK"
+                          },
+                          "employees": "=turn.employees",
+                          "result": "turn.employees",
+                          "date": "=dialog.fromDate"
+                        },
+                        {
                           "$kind": "Microsoft.SetProperty",
                           "$designer": {
                             "id": "6QD15y"
@@ -203,9 +203,28 @@
                           "property": "turn.employees",
                           "value": "=where(turn.employees, e => e.currentAppointment.Regarding != 'SSW')"
                         }
+                      ],
+                      "elseActions": [
+                        {
+                          "$kind": "GetFreeEmployeesAction",
+                          "$designer": {
+                            "id": "HWxzqw"
+                          },
+                          "employees": "=turn.employees",
+                          "result": "turn.employees"
+                        }
                       ]
                     }
                   ]
+                },
+                {
+                  "$kind": "Microsoft.LogAction",
+                  "$designer": {
+                    "id": "hadTDt"
+                  },
+                  "text": "${LogAction_Text_hadTDt()}",
+                  "label": "turn.employees",
+                  "traceActivity": true
                 },
                 {
                   "$kind": "Microsoft.IfCondition",

@@ -20,7 +20,7 @@
         },
         {
             "type": "TextBlock",
-            "text": "You can narrow your search by specifying an office location.\n",
+            "text": "Narrow your search...",
             "wrap": true
         },
         {
@@ -73,7 +73,7 @@
 - ${if(date != null, DateText(date), '')}
 
 # DateText(date)
--``` on ${date}```
+-``` on **${date}**```
 
 # Number(location, employees)
 - ${count(where(employees, employee => employee.defaultSite.name == location))}
@@ -125,7 +125,7 @@
     "body": [
         {
             "type": "TextBlock",
-            "text": "${if(location == '', 'All', location)}",
+            "text": "${PeopleType()} - ${if(location == '', 'All', location)} ${if(dialog.booked == False, '(by billed days)', '')}",
             "wrap": true,
             "size": "Large"
         },
@@ -134,35 +134,20 @@
 }
 ```
 
+# PeopleType()
+- IF: ${ dialog.onInternal }
+    - On internal work
+- ELSEIF: ${ dialog.booked }
+    - On client work
+- ELSE:
+    - Free
+
 # EmployeeList(employees)
 -```
 {
     "type": "ColumnSet",
     "columns": [
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "text": "Name",
-                    "wrap": true,
-                    "weight": "Bolder"
-                }
-            ]
-        },
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "text": "${InfoColumnTitle()}",
-                    "wrap": true,
-                    "weight": "Bolder"
-                }
-            ]
-        }
+        ${HeaderColumns()}
     ],
     "style": "default"
 },
@@ -172,80 +157,108 @@
 }
 ```
 
-# InfoColumnTitle
+# HeaderColumns
 - IF: ${ dialog.onInternal }
-    - Subject
+    - ${join(createArray(HeaderColumn('', '30px'), HeaderColumn('Name', '125px'), HeaderColumn('Appointment', 'stretch')), ',')}
 - ELSEIF: ${ dialog.booked }
-    - Client
+    - ${join(createArray(HeaderColumn('', '30px'), HeaderColumn('Name', '125px'), HeaderColumn('Client', 'stretch')), ',')}
 - ELSE:
-    - Title
+    - ${join(createArray(HeaderColumn('', '30px'), HeaderColumn('Name', '55px'), HeaderColumn('Billed Days', '67px'), HeaderColumn('In Office', '53px'), HeaderColumn('Last Seen', '80px'), HeaderColumn('Next Client', 'stretch')), ',')}
+
+# HeaderColumn(text, width)
+-```
+{
+    "type": "Column",
+    "width": "${width}",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${text}",
+            "wrap": true,
+            "size": "Small",
+            "weight": "Bolder"
+        }
+    ]
+}
+```
 
 # EmployeeRow(employee)
 - ```
 {
     "type": "ColumnSet",
     "columns": [
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "ColumnSet",
-                    "columns": [
-                        {
-                            "type": "Column",
-                            "width": "auto",
-                            "items": [
-                                {
-                                    "type": "Image",
-                                    "url": "${if(employee.avatarUrl != null, employee.avatarUrl, BlankAvatar())}",
-                                    "width": "40px",
-                                    "height": "40px",
-                                    "style": "Person"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "Column",
-                            "width": "stretch",
-                            "items": [
-                                {
-                                    "type": "TextBlock",
-                                    "text": "${employee.displayName}",
-                                    "wrap": true
-                                }
-                            ],
-                            "verticalContentAlignment": "Center"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "text": "${InfoColumnText(employee)}",
-                    "wrap": true
-                }
-            ],
-            "verticalContentAlignment": "Center"
-        }
+        ${BodyColumns(employee)}
     ],
     "height": "stretch",
     "separator": true
 }
 ```
 
-# InfoColumnText(employee)
+# BodyColumns(employee)
 - IF: ${ dialog.onInternal }
-    - ${if(employee.currentAppointment != null, employee.currentAppointment.subject, '')}
+    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '125px'), BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.subject, ''), 'stretch')), ',')}
 - ELSEIF: ${ dialog.booked }
-    - ${if(employee.currentAppointment != null, employee.currentAppointment.Regarding, '')}
+    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '125px'), BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.Regarding, ''), 'stretch')), ',')}
 - ELSE:
-    - ${employee.title}
+    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.firstName, '55px'), BodyColumn(concat(employee.BilledDays, if(employee.BilledDays != 0, ' Days', '')), '67px'), ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), BodyColumn(employee.LastSeen, '80px'), BodyColumn(if(employee.NextClient != null, NextClient(employee.NextClient), ''), 'stretch')), ',')}
+
+# AvatarColumn(avatarUrl)
+-```
+{
+    "type": "Column",
+    "width": "auto",
+    "items": [
+        {
+            "type": "Image",
+            "width": "30px",
+            "height": "30px",
+            "url": "${if(avatarUrl != null, avatarUrl, BlankAvatar())}",
+            "style": "Person"
+        }
+    ],
+    "verticalContentAlignment": "Center"
+}
+```
+
+# BodyColumn(text, width)
+-```
+{
+    "type": "Column",
+    "width": "${width}",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${text}",
+            "wrap": true,
+            "size": "Small"
+        }
+    ],
+    "verticalContentAlignment": "Center"
+}
+```
+
+# ImageColumn(url)
+-```
+{
+    "type": "Column",
+    "width": "53px",
+    "items": [
+        {
+            "type": "Image",
+            "url": "${url}",
+            "width": "17px",
+            "height": "17px"
+        }
+    ],
+    "verticalContentAlignment": "Center"
+}
+```
+
+# NextClient(client)
+-```
+Free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}  
+${client.Name} - ${client.Date}
+```
 
 # SendActivity_pArEiW()
 [Activity
@@ -287,10 +300,17 @@ dialog.locationEntity: ${dialog.locationEntity}```
 
 # LogAction_Text_nn9UF5_text()
 - ${turn.employees}
-# SendActivity_BBvwQA()
+# LogAction_Text_hadTDt()
 [Activity
-    Text = ${SendActivity_BBvwQA_text()}
+    Text = ${LogAction_Text_hadTDt_text()}
 ]
 
-# SendActivity_BBvwQA_text()
+# LogAction_Text_hadTDt_text()
+- ${turn.employees}
+# SendActivity_T25WLi()
+[Activity
+    Text = ${SendActivity_T25WLi_text()}
+]
+
+# SendActivity_T25WLi_text()
 - Please specify a specific date to query.
