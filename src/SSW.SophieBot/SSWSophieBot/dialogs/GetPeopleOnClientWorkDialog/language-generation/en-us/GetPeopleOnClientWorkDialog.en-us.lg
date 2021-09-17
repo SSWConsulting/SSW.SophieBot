@@ -15,7 +15,12 @@
     "body": [
         {
             "type": "TextBlock",
-            "text": "${firstNames} ${StatusInfo()}${DateInfo(turn.formatDate)}.",
+            "text": "${DateInfo(turn.formatDate)}",
+            "wrap": true
+        },
+        {
+            "type": "TextBlock",
+            "text": "${firstNames} ${StatusInfo()}",
             "wrap": true
         },
         {
@@ -63,17 +68,17 @@
 
 # StatusInfo()
 - IF: ${ dialog.onInternal }
-    - are on internal work
+    - are on internal work.
 - ELSEIF: ${ dialog.booked }
-    - are on client work
+    - are on client work.
 -ELSE:
-    - are free
+    - are free.
 
 # DateInfo(date)
 - ${if(date != null, DateText(date), '')}
 
 # DateText(date)
--``` on **${date}**```
+-```On **${date}** we have```
 
 # Number(location, employees)
 - ${count(where(employees, employee => employee.defaultSite.name == location))}
