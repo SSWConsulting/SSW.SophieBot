@@ -66,6 +66,12 @@
 }
 ```
 
+# DateInfo(date)
+- IF: ${ turn.formatDate != null }
+    - On **${turn.formatDate}** we have
+- ELSE:
+    - ``````
+
 # StatusInfo()
 - IF: ${ dialog.onInternal }
     - are on internal work.
@@ -73,15 +79,6 @@
     - are on client work.
 -ELSE:
     - are free.
-
-# DateInfo(date)
-- ${if(date != null, DateText(date), '')}
-
-# DateText(date)
--```On **${date}** we have```
-
-# Number(location, employees)
-- ${count(where(employees, employee => employee.defaultSite.name == location))}
 
 # LocationButton(location, number)
 -``` 
@@ -108,6 +105,9 @@
     }
 }
 ```
+
+# Number(location, employees)
+- ${count(where(employees, employee => employee.defaultSite.name == location))}
 
 # SendActivity_jZGZUb()
 [Activity
@@ -267,51 +267,9 @@ ${client.Name} - ${client.Date}
 
 # SendActivity_pArEiW()
 [Activity
-    Text = ${SendActivity_pArEiW_text()}
+    Text = ${PeopleNotFound()}
 ]
 
-# SendActivity_pArEiW_text()
-- Sorry, I couldn't find anyone on Client${DateInfo(turn.formatDate)}. Please try again.
-
-# LogAction_Text_PbR9G5()
-[Activity
-    Text = ${LogAction_Text_PbR9G5_text()}
-]
-
-# LogAction_Text_PbR9G5_text()
-- ${turn.employees}
-# LogAction_Text_REKjJP()
-[Activity
-    Text = ${LogAction_Text_REKjJP_text()}
-]
-
-# LogAction_Text_REKjJP_text()
-- ```dialog.availableEntity \- ${dialog.availableEntity}
-dialog.booked \- ${dialog.booked}```
-# LogAction_Text_7liyco()
-[Activity
-    Text = ${LogAction_Text_7liyco_text()}
-]
-
-# LogAction_Text_7liyco_text()
-- ```dialog.availableEntity: ${dialog.availableEntity}
-dialog.booked: ${dialog.booked}
-dialog.onInternal: ${dialog.onInternal}
-dialog.locationEntity: ${dialog.locationEntity}```
-# LogAction_Text_nn9UF5()
-[Activity
-    Text = ${LogAction_Text_nn9UF5_text()}
-]
-
-# LogAction_Text_nn9UF5_text()
-- ${turn.employees}
-# LogAction_Text_hadTDt()
-[Activity
-    Text = ${LogAction_Text_hadTDt_text()}
-]
-
-# LogAction_Text_hadTDt_text()
-- ${turn.employees}
 # SendActivity_T25WLi()
 [Activity
     Text = ${SendActivity_T25WLi_text()}
@@ -319,3 +277,64 @@ dialog.locationEntity: ${dialog.locationEntity}```
 
 # SendActivity_T25WLi_text()
 - Please specify a specific date to query.
+
+# SendActivity_x5sCo7()
+[Activity
+    Text = ${PeopleNotFound()}
+]
+
+# PeopleNotFound
+- Sorry, I couldn't find anyone ${Status()}${Date()}.
+
+# Status()
+- IF: ${ dialog.onInternal }
+    - on internal work
+- ELSEIF: ${ dialog.booked }
+    - on client work
+- ELSE:
+    - who is free
+
+# Date()
+- IF: ${ turn.formatDate != null }
+    - ``` on ${turn.formatDate}```
+- ELSE:
+    - ``````
+
+# LogAction_Text_PbR9G5()
+[Activity
+    Text = ${LogAction_Text_PbR9G5_text()}
+]
+# LogAction_Text_PbR9G5_text()
+- ${turn.employees}
+
+# LogAction_Text_REKjJP()
+[Activity
+    Text = ${LogAction_Text_REKjJP_text()}
+]
+# LogAction_Text_REKjJP_text()
+-```dialog.availableEntity \- ${dialog.availableEntity}
+dialog.booked \- ${dialog.booked}```
+
+# LogAction_Text_7liyco()
+[Activity
+    Text = ${LogAction_Text_7liyco_text()}
+]
+# LogAction_Text_7liyco_text()
+- ```dialog.availableEntity: ${dialog.availableEntity}
+dialog.booked: ${dialog.booked}
+dialog.onInternal: ${dialog.onInternal}
+dialog.locationEntity: ${dialog.locationEntity}```
+
+# LogAction_Text_nn9UF5()
+[Activity
+    Text = ${LogAction_Text_nn9UF5_text()}
+]
+# LogAction_Text_nn9UF5_text()
+- ${turn.employees}
+
+# LogAction_Text_hadTDt()
+[Activity
+    Text = ${LogAction_Text_hadTDt_text()}
+]
+# LogAction_Text_hadTDt_text()
+- ${turn.employees}
