@@ -83,11 +83,11 @@
 
 # LastSeenText(location, time)
 - IF: ${ location != null && time != null }
-    - ```Last seen in ${location} ${time}.```
+    - ```Last seen at SSW ${location} ${time}.```
 - ELSEIF: ${ location == null }
     - ```Last seen ${time}.```
 - ELSEIF ${ time == null }:
-    - ```Last seen in ${location}.```
+    - ```Last seen at SSW ${location}.```
 - ELSE:
     - ``````
 
