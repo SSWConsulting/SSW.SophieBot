@@ -27,21 +27,21 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "aCU2ER"
+            "id": "cDHzU3"
           },
-          "condition": "=dialog.dateEntity.type == 'date'",
-          "elseActions": [
+          "condition": "=dialog.dateEntity != null && dialog.dateEntity.type != 'date'",
+          "actions": [
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "BBvwQA"
+                "id": "T25WLi"
               },
-              "activity": "${SendActivity_BBvwQA()}"
+              "activity": "${SendActivity_T25WLi()}"
             },
             {
               "$kind": "Microsoft.EndDialog",
               "$designer": {
-                "id": "W6RCrH"
+                "id": "EkOXsE"
               }
             }
           ]
