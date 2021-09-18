@@ -178,7 +178,7 @@
 - ELSEIF: ${ dialog.booked }
     - ${join(createArray(HeaderColumn('', '30px'), HeaderColumn('Name', '125px'), HeaderColumn('Client', 'stretch')), ',')}
 - ELSE:
-    - ${join(createArray(HeaderColumn('', '30px'), HeaderColumn('Name', '55px'), HeaderColumn('Billed', '67px'), HeaderColumn('In Office', '53px'), HeaderColumn('Last Seen', '80px'), HeaderColumn('Next Client', 'stretch')), ',')}
+    - ${join(createArray(HeaderColumn('', '30px'), HeaderColumn('Name', '110px'), HeaderColumn('Billed', '67px'), HeaderColumn('In Office', '53px'), HeaderColumn('Last Seen', '80px')), ',')}
 
 # HeaderColumn(text, width)
 -```
@@ -206,6 +206,12 @@
     ],
     "height": "stretch",
     "separator": true
+},
+{
+    "type": "TextBlock",
+    "text": "${if(employee.NextClient != null, NextClient(employee.NextClient), '')}",
+    "wrap": true,
+    "size": "Small"
 }
 ```
 
@@ -215,7 +221,7 @@
 - ELSEIF: ${ dialog.booked }
     - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '125px'), BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.Regarding, ''), 'stretch')), ',')}
 - ELSE:
-    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.firstName, '55px'), BodyColumn(concat(employee.BilledDays, if(employee.BilledDays != 0, ' Days', '')), '67px'), ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), BodyColumn(employee.LastSeen, '80px'), BodyColumn(if(employee.NextClient != null, NextClient(employee.NextClient), ''), 'stretch')), ',')}
+    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '110px'), BodyColumn(concat(employee.BilledDays, if(employee.BilledDays != 0, ' Days', '')), '67px'), ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), BodyColumn(employee.LastSeen, '80px')), ',')}
 
 # AvatarColumn(avatarUrl)
 -```
@@ -271,8 +277,7 @@
 
 # NextClient(client)
 -```
-Free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}  
-${client.Name} - ${client.Date}
+Free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}. Working for ${client.Name} - ${client.Date}.
 ```
 
 # SendActivity_pArEiW()
