@@ -2,7 +2,7 @@
 
 # SendActivity_HTkwlL()
 [Activity
-    Text = Sorry I didn't understand your phrase. Can you please try again?
+    Text = ${SendActivity_HTkwlL_text()}
 ]
 
 # SendActivity_DP3pJu()
@@ -209,3 +209,5 @@ We love squashing bugs 🥰```
 
 # SendActivity_e0PYdC_text()
 - Getting current employees on location is still a work in progress.
+# SendActivity_HTkwlL_text()
+- Sorry I didn't understand. Can you please try again?
