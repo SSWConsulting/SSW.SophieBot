@@ -23,6 +23,28 @@
           }
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "iRae1n"
+          },
+          "condition": "=exists(dialog.locationEntity) && length(dialog.locationEntity) > 0",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "0iZBft"
+              },
+              "activity": "${SendActivity_0iZBft()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "Cg630n"
+              }
+            }
+          ]
+        },
+        {
           "$kind": "GetProfileAction",
           "$designer": {
             "id": "H3FuOa"

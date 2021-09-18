@@ -29,7 +29,7 @@
 ]
 
 # SendActivity_3rWq3M_text()
-- You can narrow your search by specifying a particular skill, such as React or Angular.
+- Narrow your search...
 # SendActivity_AlWbJq()
 [Activity
     Attachments = ${json(EmployeesGroupActionCard(turn.groupedEmployees, dialog.locationEntity, GetEntities()))}
@@ -44,3 +44,10 @@
 [Activity
     Attachments = ${json(ProfileCardWithSSWPeopleAPI(turn.employees[0]))}
 ]
+# SendActivity_0iZBft()
+[Activity
+    Text = ${SendActivity_0iZBft_text()}
+]
+
+# SendActivity_0iZBft_text()
+- Please specify a valid location to query.

@@ -17,16 +17,19 @@
       "$ref": "#/definitions/GetEmailAddressDialog.dialog"
     },
     {
-      "$ref": "#/definitions/GetEmployeesByDateAction"
+      "$ref": "#/definitions/GetEmployeesByBillableAction"
     },
     {
-      "$ref": "#/definitions/GetEmployeesByBillableAction"
+      "$ref": "#/definitions/GetEmployeesByDateAction"
     },
     {
       "$ref": "#/definitions/GetEmployeesByProjectDialog.dialog"
     },
     {
       "$ref": "#/definitions/GetExpertsByLocationDialog.dialog"
+    },
+    {
+      "$ref": "#/definitions/GetFreeEmployeesAction"
     },
     {
       "$ref": "#/definitions/GetGroupedEmployeesAction"
@@ -872,51 +875,6 @@
         }
       }
     },
-    "GetEmployeesByDateAction": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "GetEmployeesByDate",
-      "description": "This will return a list of employees by date with a proper structure",
-      "type": "object",
-      "required": [
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "employees": {
-          "$ref": "#/definitions/arrayExpression",
-          "title": "Employees",
-          "description": "Employees retrieved from HTTP request"
-        },
-        "date": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Date",
-          "description": "Used to filter appointments. Default value is current date"
-        },
-        "result": {
-          "$ref": "#/definitions/stringExpression",
-          "title": "Result",
-          "description": "The property that result is assign to"
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "GetEmployeesByDateAction"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
     "GetEmployeesByBillableAction": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "GetEmployeesByBillable",
@@ -954,6 +912,51 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "GetEmployeesByBillableAction"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetEmployeesByDateAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetEmployeesByDate",
+      "description": "This will return a list of employees by date with a proper structure",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "employees": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "Employees",
+          "description": "Employees retrieved from HTTP request"
+        },
+        "date": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Date",
+          "description": "Used to filter appointments. Default value is current date"
+        },
+        "result": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result",
+          "description": "The property that result is assign to"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetEmployeesByDateAction"
         },
         "$designer": {
           "title": "Designer information",
@@ -1124,12 +1127,57 @@
           "$ref": "#/definitions/GetExpertsByLocationDialog.dialog/definitions/booleanExpression",
           "title": "By Billable"
         },
+        "isCurrentLocation": {
+          "description": "If set to true, look for experts in the specified current location",
+          "$ref": "#/definitions/GetExpertsByLocationDialog.dialog/definitions/booleanExpression",
+          "title": "Is Current Location"
+        },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "GetExpertsByLocationDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetFreeEmployeesAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetFreeEmployees",
+      "description": "This will return the a list of employees who is free with a proper structure",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "employees": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "Employees",
+          "description": "Raw employees"
+        },
+        "result": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result",
+          "description": "Enter the property that you want the result set to"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetFreeEmployeesAction"
         },
         "$designer": {
           "title": "Designer information",
@@ -1483,6 +1531,10 @@
         "availableEntity": {
           "$ref": "#/definitions/GetPeopleOnClientWorkDialog.dialog/definitions/stringExpression",
           "title": "Available Entity"
+        },
+        "internalEntity": {
+          "$ref": "#/definitions/GetPeopleOnClientWorkDialog.dialog/definitions/stringExpression",
+          "title": "Internal Entity"
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -7597,16 +7649,19 @@
           "$ref": "#/definitions/GetEmailAddressDialog.dialog"
         },
         {
-          "$ref": "#/definitions/GetEmployeesByDateAction"
+          "$ref": "#/definitions/GetEmployeesByBillableAction"
         },
         {
-          "$ref": "#/definitions/GetEmployeesByBillableAction"
+          "$ref": "#/definitions/GetEmployeesByDateAction"
         },
         {
           "$ref": "#/definitions/GetEmployeesByProjectDialog.dialog"
         },
         {
           "$ref": "#/definitions/GetExpertsByLocationDialog.dialog"
+        },
+        {
+          "$ref": "#/definitions/GetFreeEmployeesAction"
         },
         {
           "$ref": "#/definitions/GetGroupedEmployeesAction"

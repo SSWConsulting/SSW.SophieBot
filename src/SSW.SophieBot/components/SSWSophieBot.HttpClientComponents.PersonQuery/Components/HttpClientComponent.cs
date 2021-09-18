@@ -19,6 +19,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Components
             services.AddDeclarativeType<GetEmployeesByDateAction>(GetEmployeesByDateAction.Kind);
             services.AddDeclarativeType<GetEmployeesByBillableAction>(GetEmployeesByBillableAction.Kind);
             services.AddDeclarativeType<GetGroupedEmployeesAction>(GetGroupedEmployeesAction.Kind);
+            services.AddDeclarativeType<GetFreeEmployeesAction>(GetFreeEmployeesAction.Kind);
         }
     }
 }
