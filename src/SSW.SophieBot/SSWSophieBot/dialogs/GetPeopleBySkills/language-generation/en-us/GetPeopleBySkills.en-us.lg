@@ -52,7 +52,7 @@
         },
         {
             "type": "TextBlock",
-            "text": "You can narrow your search by specifying an office location.\n",
+            "text": "Narrow your search...",
             "wrap": true
         },
         {

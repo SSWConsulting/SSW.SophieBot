@@ -111,11 +111,23 @@
                   "condition": "=exists(dialog.byBillable) && dialog.byBillable == true",
                   "elseActions": [
                     {
-                      "$kind": "Microsoft.SendActivity",
+                      "$kind": "Microsoft.ForeachPage",
                       "$designer": {
-                        "id": "tzr9Na"
+                        "id": "P938cg"
                       },
-                      "activity": "${SendActivity_tzr9Na()}"
+                      "pageIndex": "dialog.foreach.pageindex",
+                      "page": "dialog.foreach.page",
+                      "pageSize": 15,
+                      "itemsProperty": "turn.sortedEmployees",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "LcKuck"
+                          },
+                          "activity": "${SendActivity_LcKuck()}"
+                        }
+                      ]
                     }
                   ],
                   "actions": [

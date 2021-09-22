@@ -17,9 +17,9 @@
 # SendActivity_o4r1IC_text()
 - Sorry, I couldn't find anyone with **${dialog.skillEntity}** skill in **${dialog.locationEntity}** office. Please try again.
 
-# SendActivity_tzr9Na()
+# SendActivity_LcKuck()
 [Activity
-    Attachments = ${json(WorkingEmployeesList(dialog.skillEntity, dialog.locationEntity, turn.sortedEmployees))}
+    Attachments = ${json(WorkingEmployeesList(dialog.skillEntity, dialog.locationEntity, dialog.foreach.page))}
 ]
 
 # SendActivity_ZVrWLX()
@@ -34,16 +34,23 @@
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2",
     "body": [
-        {
-            "type": "TextBlock",
-            "text": "${dialog.skillEntity} - ${if(location != null, location, 'All')} (by skill level)",
-            "wrap": true,
-            "size": "Large"
-        },
-        ${EmployeeList(employees, skill)}
+        ${join(where(createArray(Header(location), EmployeeList(employees, skill)), item => item != ''), ',')}
     ]
 }
 ```
+
+# Header(location)
+- IF: ${ dialog.foreach.pageindex == 1 }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${dialog.skillEntity} - ${if(location != null, location, 'All')} (by skill level)",
+        "wrap": true,
+        "size": "Large"
+    }
+    ```
+- ELSE:
+    - ``````
 
 # EmployeeList(employees, skill)
 -```
@@ -141,3 +148,4 @@
     "separator": true
 }
 ```
+
