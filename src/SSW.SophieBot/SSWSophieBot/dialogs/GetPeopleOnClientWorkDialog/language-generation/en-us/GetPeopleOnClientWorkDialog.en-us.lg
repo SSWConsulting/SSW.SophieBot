@@ -140,8 +140,8 @@
             "actions": [
                 {
                     "type": "Action.OpenUrl",
-                    "title": "More booking info",
-                    "url": "https://app.powerbi.com/groups/me/reports/a4069dc4-86c1-4cba-bf81-161bb108c5c2/ReportSection"
+                    "title": "More Booking Info",
+                    "url": "${settings.CRMBookingEndpoint}"
                 }
             ]
         }
