@@ -81,11 +81,23 @@
                   "workingEmployeesProperty": "turn.workingEmployees"
                 },
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.ForeachPage",
                   "$designer": {
-                    "id": "xNmCGW"
+                    "id": "TDWb7H"
                   },
-                  "activity": "${SendActivity_xNmCGW()}"
+                  "pageIndex": "dialog.foreach.pageindex",
+                  "page": "dialog.foreach.page",
+                  "pageSize": 15,
+                  "itemsProperty": "turn.workingEmployees.employees",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "OeOolV"
+                      },
+                      "activity": "${SendActivity_OeOolV()}"
+                    }
+                  ]
                 }
               ]
             }
