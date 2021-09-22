@@ -256,11 +256,23 @@
                   "condition": "dialog.locationEntity != null",
                   "actions": [
                     {
-                      "$kind": "Microsoft.SendActivity",
+                      "$kind": "Microsoft.ForeachPage",
                       "$designer": {
-                        "id": "AMPsi6"
+                        "id": "WcUcKx"
                       },
-                      "activity": "${SendActivity_AMPsi6()}"
+                      "pageIndex": "dialog.foreach.pageindex",
+                      "page": "dialog.foreach.page",
+                      "pageSize": 15,
+                      "itemsProperty": "turn.employees",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "8Km7yc"
+                          },
+                          "activity": "${SendActivity_8Km7yc()}"
+                        }
+                      ]
                     }
                   ],
                   "elseActions": [
