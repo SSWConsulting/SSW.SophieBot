@@ -42,10 +42,7 @@
           "statusCodeProperty": "turn.statusCode",
           "reasonPhraseProperty": "turn.reasonPhrase",
           "employeesProperty": "turn.employees",
-          "skill": {
-            "technology": "=dialog.skillEntity",
-            "experienceLevel": "advanced"
-          }
+          "skill": {}
         },
         {
           "$kind": "Microsoft.IfCondition",
