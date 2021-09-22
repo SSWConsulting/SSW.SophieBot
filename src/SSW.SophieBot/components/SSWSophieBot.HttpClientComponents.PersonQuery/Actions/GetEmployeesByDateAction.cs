@@ -66,12 +66,14 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             var result = employees.Select(e => new EmployeeByDateModel
             {
                 FirstName = e.FirstName,
-                DisplayName = $"{e.FirstName} {e.LastName}",
                 DefaultSite = e.DefaultSite,
                 AvatarUrl = e.AvatarUrl,
+                DisplayName = $"{e.FirstName} {e.LastName}",
                 CurrentAppointment = GetAppointmentBy(date, e.Appointments),
                 Title = e.Title,
-            }).ToList();
+            })
+                .Where(e => e.CurrentAppointment != null)
+                .ToList();
 
 
             if (Result != null)
