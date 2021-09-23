@@ -163,7 +163,7 @@
                         },
                         {
                           "property": "dialog.foreach.value.lastSeenInfo",
-                          "value": "Last seen in ${dialog.foreach.value.lastSeenAt.siteId}."
+                          "value": "='Last seen in ${dialog.foreach.value.lastSeenAt.siteId}.'"
                         }
                       ]
                     },
