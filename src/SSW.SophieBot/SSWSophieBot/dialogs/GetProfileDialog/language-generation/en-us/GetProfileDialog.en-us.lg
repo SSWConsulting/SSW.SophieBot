@@ -34,20 +34,7 @@
 
 # SendActivity_E1qghn_text()
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
-# LogAction_Text_Y3HX7q()
-[Activity
-    Text = ${LogAction_Text_Y3HX7q_text()}
-]
 
-# LogAction_Text_Y3HX7q_text()
-- ${dialog.foreach.value.lastSeenAt.siteId}
-# LogAction_Text_F2eG4B()
-[Activity
-    Text = ${LogAction_Text_F2eG4B_text()}
-]
-
-# LogAction_Text_F2eG4B_text()
-- ${dialog.foreach.value.lastSeenSite}
 # SendActivity_H4LLV0()
 [Activity
     Text = ${SendActivity_H4LLV0_text()}

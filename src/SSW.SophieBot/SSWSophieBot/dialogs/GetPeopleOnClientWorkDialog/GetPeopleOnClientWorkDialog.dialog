@@ -71,15 +71,6 @@
           ]
         },
         {
-          "$kind": "Microsoft.LogAction",
-          "$designer": {
-            "id": "7liyco"
-          },
-          "text": "${LogAction_Text_7liyco()}",
-          "traceActivity": true,
-          "label": "query strings"
-        },
-        {
           "$kind": "GetProfileAction",
           "$designer": {
             "id": "KaK4v1"
@@ -216,15 +207,6 @@
                       ]
                     }
                   ]
-                },
-                {
-                  "$kind": "Microsoft.LogAction",
-                  "$designer": {
-                    "id": "hadTDt"
-                  },
-                  "text": "${LogAction_Text_hadTDt()}",
-                  "label": "turn.employees",
-                  "traceActivity": true
                 },
                 {
                   "$kind": "Microsoft.IfCondition",
