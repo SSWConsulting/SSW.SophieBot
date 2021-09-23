@@ -139,11 +139,41 @@
                       "value": "=dialog.locationEntity"
                     },
                     {
-                      "$kind": "Microsoft.SendActivity",
+                      "$kind": "Microsoft.LogAction",
                       "$designer": {
-                        "id": "ZVrWLX"
+                        "id": "d1IzJD"
                       },
-                      "activity": "${SendActivity_ZVrWLX()}"
+                      "text": "${LogAction_Text_d1IzJD()}",
+                      "label": "turn.billableEmployees.employees",
+                      "traceActivity": true
+                    },
+                    {
+                      "$kind": "Microsoft.ForeachPage",
+                      "$designer": {
+                        "id": "haPEIU"
+                      },
+                      "pageIndex": "dialog.foreach.pageindex",
+                      "page": "dialog.foreach.page",
+                      "pageSize": 15,
+                      "itemsProperty": "turn.billableEmployees.employees",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.LogAction",
+                          "$designer": {
+                            "id": "k12mps"
+                          },
+                          "text": "${LogAction_Text_k12mps()}",
+                          "label": "dialog.foreach.page",
+                          "traceActivity": true
+                        },
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "WXSOyK"
+                          },
+                          "activity": "${SendActivity_WXSOyK()}"
+                        }
+                      ]
                     }
                   ]
                 }

@@ -22,9 +22,9 @@
     Attachments = ${json(WorkingEmployeesList(dialog.skillEntity, dialog.locationEntity, turn.sortedEmployees))}
 ]
 
-# SendActivity_ZVrWLX()
+# SendActivity_WXSOyK()
 [Activity
-    Attachments = ${json(BillableEmployeesList(dialog.billableTitle, turn.billableEmployees))}
+    Attachments = ${json(BillableEmployeesList(if(dialog.foreach.pageindex == 1, dialog.billableTitle, ''), dialog.foreach.page))}
 ]
 
 # WorkingEmployeesList(skill, location, employees)
@@ -141,3 +141,17 @@
     "separator": true
 }
 ```
+# LogAction_Text_d1IzJD()
+[Activity
+    Text = ${LogAction_Text_d1IzJD_text()}
+]
+
+# LogAction_Text_d1IzJD_text()
+- ${turn.billableEmployees.employees}
+# LogAction_Text_k12mps()
+[Activity
+    Text = ${LogAction_Text_k12mps_text()}
+]
+
+# LogAction_Text_k12mps_text()
+- ${dialog.foreach.page}

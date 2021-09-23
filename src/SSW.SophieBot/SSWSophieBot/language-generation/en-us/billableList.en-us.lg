@@ -1,6 +1,6 @@
 ﻿[Icons](icons.en-us.lg)
 
-# BillableEmployeesList(title, workingEmployees)
+# BillableEmployeesList(title, employees)
 -```
 {
     "type": "AdaptiveCard",
@@ -60,7 +60,8 @@
                             "type": "TextBlock",
                             "text": "Last Seen",
                             "wrap": true,
-                            "weight": "Bolder"
+                            "weight": "Bolder",
+                            "horizontalAlignment": "Center"
                         }
                     ],
                     "verticalContentAlignment": "Center"
@@ -73,7 +74,7 @@
         },
         {
             "type": "Container",
-            "items": [${join(select(workingEmployees.employees, e, BillableEmployeeRow(e)), ',')}],
+            "items": [${join(select(employees, e, BillableEmployeeRow(e)), ',')}],
             "bleed": true
         }
     ],
@@ -162,7 +163,8 @@
                     "type": "TextBlock",
                     "wrap": true,
                     "text": "${if(exists(employee.lastSeen) && length(employee.lastSeen) > 0, employee.lastSeen, '—')}",
-                    "size": "Small"
+                    "size": "Small",
+                    "horizontalAlignment": "Center"
                 }
             ],
             "verticalContentAlignment": "Center"
