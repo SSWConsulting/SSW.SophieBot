@@ -116,9 +116,9 @@
 # SendActivity_jZGZUb_text()
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
 
-# SendActivity_AMPsi6()
+# SendActivity_8Km7yc()
 [Activity
-    Attachments = ${json(EmployeesListCard(dialog.locationEntity, turn.employees))}
+    Attachments = ${json(EmployeesListCard(dialog.locationEntity, dialog.foreach.page))}
 ]
 
 # EmployeesListCard(location, employees)
@@ -128,26 +128,40 @@
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2",
     "body": [
-        {
-            "type": "TextBlock",
-            "text": "${PeopleType()} - ${if(location == '', 'All', location)} ${if(dialog.booked == False, '(by billed days)', '')}",
-            "wrap": true,
-            "size": "Large"
-        },
-        ${EmployeeList(employees)},
-        {
-            "type": "ActionSet",
-            "actions": [
-                {
-                    "type": "Action.OpenUrl",
-                    "title": "More Booking Info",
-                    "url": "${settings.CRMBookingEndpoint}"
-                }
-            ]
-        }
+        ${join(where(createArray(Header(location), EmployeeList(employees), Footer()), item => item != ''), ',')}
     ]
 }
 ```
+
+# Header(location)
+- IF: ${ dialog.foreach.pageindex == 1 }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${PeopleType()} - ${if(location == '', 'All', location)} ${if(dialog.booked == False, '(by billed days)', '')}",
+        "wrap": true,
+        "size": "Large"
+    }
+    ```
+- ELSE:
+    - ``````
+
+# Footer()
+- IF: ${ dialog.foreach.pageindex == ceiling(div(count(turn.employees), float('15.0'))) }
+    - ```
+    {
+        "type": "ActionSet",
+        "actions": [
+            {
+                "type": "Action.OpenUrl",
+                "title": "More Booking Info",
+                "url": "${settings.CRMBookingEndpoint}"
+            }
+        ]
+    }
+    ```
+- ELSE:
+    - ``````
 
 # PeopleType()
 - IF: ${ dialog.onInternal }

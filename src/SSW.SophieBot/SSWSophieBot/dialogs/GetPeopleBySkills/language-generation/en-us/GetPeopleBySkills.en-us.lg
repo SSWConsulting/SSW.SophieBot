@@ -52,7 +52,7 @@
         },
         {
             "type": "TextBlock",
-            "text": "You can narrow your search by specifying an office location.\n",
+            "text": "Narrow your search...",
             "wrap": true
         },
         {
@@ -86,7 +86,7 @@
     "title": "${location} [${Count(location, employees)}]",
     "data": {
         "intent": "GetExpertsByLocation",
-        "Skill": "${skill}",
+        "skill": "${skill}",
         "location": "${location}"
     }
 }

@@ -1,76 +1,92 @@
-﻿[Icons](icons.en-us.lg)
+[Icons](icons.en-us.lg)
 
-# BillableEmployeesList(title, workingEmployees)
+# BillableEmployeesList(title, employees)
 -```
 {
     "type": "AdaptiveCard",
     "body": [
-        {
-            "type": "TextBlock",
-            "size": "Large",
-            "text": "${title}",
-            "fontType": "Default"
-        },
-        {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "width": "50px",
-					"items": []
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "Name",
-                            "wrap": true,
-                            "weight": "Bolder"
-                        }
-                    ],
-                    "verticalContentAlignment": "Center"
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "Billed Days",
-                            "weight": "Bolder"
-                        }
-                    ],
-                    "verticalContentAlignment": "Center"
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "Last Seen",
-                            "wrap": true,
-                            "weight": "Bolder"
-                        }
-                    ],
-                    "verticalContentAlignment": "Center"
-                }
-            ],
-            "bleed": true,
-            "style": "default",
-            "height": "stretch",
-            "spacing": "Medium"
-        },
-        {
-            "type": "Container",
-            "items": [${join(select(workingEmployees.employees, e, BillableEmployeeRow(e)), ',')}],
-            "bleed": true
-        }
+        ${join(where(createArray(Title(title), Header(), EmployeeRows(employees)), item => item != ''), ',')}
     ],
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2"
+}
+```
+
+# Title(title)
+- IF: ${ dialog.foreach.pageindex == 1 }
+    - ```
+    {
+        "type": "TextBlock",
+        "size": "Large",
+        "text": "${title}",
+        "fontType": "Default"
+    }
+    ```
+- ELSE:
+    - ``````
+
+# Header()
+-```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "50px",
+            "items": []
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Name",
+                    "wrap": true,
+                    "weight": "Bolder"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Billed Days",
+                    "weight": "Bolder"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Last Seen",
+                    "wrap": true,
+                    "weight": "Bolder"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        }
+    ],
+    "bleed": true,
+    "style": "default",
+    "height": "stretch",
+    "spacing": "Medium"
+}
+```
+
+# EmployeeRows(employees)
+-```
+{
+    "type": "Container",
+    "items": [${join(select(employees, e, BillableEmployeeRow(e)), ',')}],
+    "bleed": true
 }
 ```
 
