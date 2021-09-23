@@ -22,6 +22,11 @@
     Attachments = ${json(WorkingEmployeesList(dialog.skillEntity, dialog.locationEntity, dialog.foreach.page))}
 ]
 
+# SendActivity_WXSOyK()
+[Activity
+    Attachments = ${json(BillableEmployeesList(if(dialog.foreach.pageindex == 1, dialog.billableTitle, ''), dialog.foreach.page))}
+]
+
 # WorkingEmployeesList(skill, location, employees)
 -```
 {

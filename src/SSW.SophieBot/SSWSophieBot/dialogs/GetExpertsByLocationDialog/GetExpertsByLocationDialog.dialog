@@ -150,7 +150,7 @@
                     {
                       "$kind": "Microsoft.ForeachPage",
                       "$designer": {
-                        "id": "O5yJBw"
+                        "id": "haPEIU"
                       },
                       "pageIndex": "dialog.foreach.pageindex",
                       "page": "dialog.foreach.page",
@@ -160,9 +160,9 @@
                         {
                           "$kind": "Microsoft.SendActivity",
                           "$designer": {
-                            "id": "CPxQF4"
+                            "id": "WXSOyK"
                           },
-                          "activity": "${SendActivity_CPxQF4()}"
+                          "activity": "${SendActivity_WXSOyK()}"
                         }
                       ]
                     }
