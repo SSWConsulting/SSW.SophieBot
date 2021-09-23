@@ -75,7 +75,9 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                         .ToList();
 
                     Func<GetEmployeeModel, string, bool> countFunc = (e, s) 
-                        => e.Skills.Any(es => es.ExperienceLevel == "Advanced" && es.Technology.Equals(s, StringComparison.OrdinalIgnoreCase));
+                        => e.Skills.Any(es => es.ExperienceLevel == "Advanced" 
+                            && !string.IsNullOrWhiteSpace(es.Technology) 
+                            && es.Technology.Equals(s, StringComparison.OrdinalIgnoreCase));
 
                     skills.ToDictionary(s => s, s => employees.Count(e => countFunc(e, s)))
                         .OrderByDescending(p => p.Value)
