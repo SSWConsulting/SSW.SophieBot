@@ -1,8 +1,6 @@
 [Common](common.en-us.lg)
 [Profile](profile.en-us.lg)
 
-
-
 # SendActivity_Ut9mVe()
 [Activity
     Text = ${SendActivity_Ut9mVe_text()}
