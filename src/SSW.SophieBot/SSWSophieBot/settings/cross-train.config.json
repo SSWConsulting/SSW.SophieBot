@@ -5,29 +5,8 @@
       "": [
         "GreetingDialog.en-us"
       ],
-      "GetCollaborators": [
-        "GetCollaboratorsDialog.en-us"
-      ],
-      "GetDepartment": [
-        "GetProfileDialog.en-us"
-      ],
-      "GetDirectReports": [
-        "GetDirectReportsDialog.en-us"
-      ],
       "GetEmailAddress": [
         "GetEmailAddressDialog.en-us"
-      ],
-      "GetJobTitle": [
-        "GetProfileDialog.en-us"
-      ],
-      "GetLocation": [
-        "GetProfileDialog.en-us"
-      ],
-      "GetManager": [
-        "GetManagerDialog.en-us"
-      ],
-      "GetPeers": [
-        "GetPeersDialog.en-us"
       ],
       "GetPhoneNumber": [
         "GetPhoneNumberDialog.en-us"
@@ -67,15 +46,6 @@
       "Greeting": [
         "GreetingDialog.en-us"
       ]
-    }
-  },
-  "ListDialog.en-us": {
-    "rootDialog": false,
-    "triggers": {
-      "Next": "",
-      "Previous": "",
-      "Skip": "",
-      "Cancel": ""
     }
   }
 }
