@@ -111,6 +111,21 @@
                   "wrapCount": 4
                 },
                 {
+                  "$kind": "GetFreeEmployeesAction",
+                  "$designer": {
+                    "id": "x6JX6d"
+                  },
+                  "employees": "=turn.employees",
+                  "result": "turn.employees"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "UhaM70"
+                  },
+                  "activity": "${SendActivity_UhaM70()}"
+                },
+                {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
                     "id": "U8Xbbw"

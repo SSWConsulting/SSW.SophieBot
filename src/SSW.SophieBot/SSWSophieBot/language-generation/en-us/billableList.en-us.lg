@@ -101,7 +101,7 @@
             "items": [
                 {
                     "type": "Image",
-                    "url": "${if(employee.avatarUrl != null, employee.avatarUrl, BlankAvatar())}",
+                    "url": "${if(exists(employee.avatarUrl) && length(employee.avatarUrl) > 0, employee.avatarUrl, BlankAvatar())}",
                     "size": "Small",
                     "style": "Person",
                     "height": "35px",
