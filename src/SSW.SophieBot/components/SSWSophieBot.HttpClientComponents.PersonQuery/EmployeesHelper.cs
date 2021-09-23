@@ -1,4 +1,5 @@
-﻿using SSWSophieBot.HttpClientAction.Models;
+﻿using Microsoft.Bot.Builder.Dialogs;
+using SSWSophieBot.HttpClientAction.Models;
 using SSWSophieBot.HttpClientComponents.PersonQuery.Models;
 using System;
 using System.Collections.Generic;
@@ -22,12 +23,20 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             }
             projectName = project?.ProjectName;
 
-            return employees.Select(e => new EmployeeBillableItemModel
+            var date = DateTime.Now.ToUniversalTime();
+            return employees
+            .Select(e =>
             {
-                AvatarUrl = e.AvatarUrl,
-                DisplayName = $"{e.FirstName} {e.LastName}",
-                BilledDays = GetBilledDays(e, project),
-                LastSeen = GetLastSeen(e)
+                var currentAppointment = GetAppointmentBy(date, e.Appointments);
+                var onClientWork = currentAppointment != null && !currentAppointment.Regarding.Equals("ssw", StringComparison.OrdinalIgnoreCase);
+                return new EmployeeBillableItemModel
+                {
+                    AvatarUrl = e.AvatarUrl,
+                    DisplayName = $"{e.FirstName} {e.LastName}",
+                    BilledDays = GetBilledDays(e, project),
+                    OnClientWork = onClientWork,
+                    LastSeen = GetLastSeen(e)
+                };
             })
             .OrderByDescending(i => i.BilledDays)
             .ToList();
@@ -69,12 +78,12 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             if (timeOffset.TotalDays < 1)
             {
                 var hours = GetInteger(timeOffset.TotalHours);
-                return $"{hours} {(hours == 1 ? "hr" : "hrs")} ago";
+                return $"{hours} {(hours == 1 ? "hour" : "hours")} ago";
             }
             else if (timeOffset.TotalDays < 30)
             {
                 var days = GetInteger(timeOffset.TotalDays);
-                return $"{days} {(days == 1 ? "d" : "ds")} ago";
+                return $"{days} {(days == 1 ? "day" : "days")} ago";
             }
             else
             {
@@ -114,6 +123,28 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 
                 return (int)Math.Round(result);
             }
+        }
+
+        public static GetAppointmentModel GetAppointmentBy(DateTime date, List<GetAppointmentModel> appointments)
+        {
+            var leavePhrases = new string[] { "annual leave", "non working", "non-working", "leave", "holiday", "time in lieu", "hour leave", "hours leave", "day off", "days off" };
+            var results = appointments
+                .Where(appointment => date.Ticks >= GetTicksFrom(appointment.Start) && date.Ticks <= GetTicksFrom(appointment.End))
+                .Where(appointment => !leavePhrases.Any(appointment.Subject.ToLower().Contains))
+                .ToList();
+            return results.Count != 0 ? results[0] : null;
+        }
+
+        public static DateTime ToUserLocalTime(DialogContext dc, DateTime dateTime)
+        {
+            var serverLocalTime = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+            var utcOffset = dc.Context.Activity.LocalTimestamp.GetValueOrDefault().Offset;
+            return serverLocalTime.Subtract(utcOffset);
+        }
+
+        private static long GetTicksFrom(DateTimeOffset date)
+        {
+            return date.UtcDateTime.Ticks;
         }
 
         private static bool IsProjectNameEqual(string sourceProjectName, string originalProjectName)

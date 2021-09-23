@@ -9,7 +9,7 @@
             "type": "TextBlock",
             "size": "Medium",
             "weight": "Bolder",
-            "text": "Choose an item"
+            "text": "Narrow your search..."
         },
 		${join(select(groupedEmployees.sets, set => GetActionSet(set, location, entities)), ',')}
     ]

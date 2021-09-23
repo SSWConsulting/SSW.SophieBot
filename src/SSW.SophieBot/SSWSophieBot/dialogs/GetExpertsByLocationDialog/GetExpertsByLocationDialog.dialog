@@ -136,7 +136,7 @@
                         "id": "JkGEqi"
                       },
                       "property": "dialog.billableTitle",
-                      "value": "=join([dialog.locationEntity, \"(by billable days)\"], \" \")"
+                      "value": "=dialog.locationEntity"
                     },
                     {
                       "$kind": "Microsoft.SendActivity",

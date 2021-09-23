@@ -44,13 +44,6 @@
 
 # SendActivity_jjbbfU_text()
 - In **${dialog.location}**, there are **${turn.employees.count}** people (${count(where(turn.employees, e, e.inOffice))} in the office today).
-# SendActivity_XrCaCp()
-[Activity
-    Text = ${SendActivity_XrCaCp_text()}
-]
-
-# SendActivity_XrCaCp_text()
-- Narrow your search...
 # SendActivity_Jcjj19()
 [Activity
     Attachments = ${json(EmployeesGroupActionCard(turn.groupedEmployees, dialog.location, GetEntities()))}

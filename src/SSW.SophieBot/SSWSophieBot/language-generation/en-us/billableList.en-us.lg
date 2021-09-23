@@ -5,12 +5,7 @@
 {
     "type": "AdaptiveCard",
     "body": [
-        {
-            "type": "TextBlock",
-            "size": "Large",
-            "text": "${title}",
-            "fontType": "Default"
-        },
+        ${ListTitle(title)}
         {
             "type": "ColumnSet",
             "columns": [
@@ -38,7 +33,20 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "Billed Days",
+                            "text": "Billed ↓",
+                            "weight": "Bolder",
+                            "horizontalAlignment": "Center"
+                        }
+                    ],
+                    "verticalContentAlignment": "Center"
+                },
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Booking Status",
                             "weight": "Bolder"
                         }
                     ],
@@ -74,6 +82,19 @@
 }
 ```
 
+# ListTitle(title)
+- IF: ${exists(title) && length(title) > 0}
+    - ```
+    {
+        "type": "TextBlock",
+        "size": "Large",
+        "text": "${title}",
+        "fontType": "Default"
+    },
+    ```
+- ELSE: 
+    - 
+
 # BillableEmployeeRow(employee)
 - ```
 {
@@ -100,6 +121,34 @@
                 {
                     "type": "TextBlock",
                     "text": "${employee.displayName}",
+                    "size": "Small",
+                    "wrap": true
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "text": "${if(employee.billedDays > 0, concat(employee.billedDays, ' ', if(employee.billedDays > 1, 'Days', 'Day ')), '—')}",
+                    "size": "Small",
+                    "horizontalAlignment": "Center"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "text": "${if(employee.onClientWork, 'Client Work', 'Internal Work')}",
                     "size": "Small"
                 }
             ],
@@ -112,20 +161,7 @@
                 {
                     "type": "TextBlock",
                     "wrap": true,
-                    "text": "${employee.billedDays} ${if(employee.billedDays > 1, 'Days', 'Day')}",
-                    "size": "Small"
-                }
-            ],
-            "verticalContentAlignment": "Center"
-        },
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "wrap": true,
-                    "text": "${employee.lastSeen}",
+                    "text": "${if(exists(employee.lastSeen) && length(employee.lastSeen) > 0, employee.lastSeen, '—')}",
                     "size": "Small"
                 }
             ],
