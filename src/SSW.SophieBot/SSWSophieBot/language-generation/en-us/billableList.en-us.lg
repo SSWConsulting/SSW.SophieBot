@@ -1,4 +1,4 @@
-﻿[Icons](icons.en-us.lg)
+[Icons](icons.en-us.lg)
 
 # BillableEmployeesList(title, employees)
 -```
@@ -149,8 +149,9 @@
                 {
                     "type": "TextBlock",
                     "wrap": true,
-                    "text": "${if(employee.onClientWork, 'Client Work', 'Internal Work')}",
-                    "size": "Small"
+                    "text": "${if(exists(employee.onClientWork), if(employee.onClientWork, 'Client Work', 'Internal Work'), 'None')}",
+                    "size": "Small",
+                    "horizontalAlignment": "Center"
                 }
             ],
             "verticalContentAlignment": "Center"

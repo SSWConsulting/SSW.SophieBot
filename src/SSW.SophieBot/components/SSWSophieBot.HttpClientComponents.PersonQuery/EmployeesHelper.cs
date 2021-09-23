@@ -25,21 +25,21 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 
             var date = DateTime.Now.ToUniversalTime();
             return employees
-            .Select(e =>
-            {
-                var currentAppointment = GetAppointmentBy(date, e.Appointments);
-                var onClientWork = currentAppointment != null && !currentAppointment.Regarding.Equals("ssw", StringComparison.OrdinalIgnoreCase);
-                return new EmployeeBillableItemModel
+                .Select(e =>
                 {
-                    AvatarUrl = e.AvatarUrl,
-                    DisplayName = $"{e.FirstName} {e.LastName}",
-                    BilledDays = GetBilledDays(e, project),
-                    OnClientWork = onClientWork,
-                    LastSeen = GetLastSeen(e)
-                };
-            })
-            .OrderByDescending(i => i.BilledDays)
-            .ToList();
+                    var currentAppointment = GetAppointmentBy(date, e.Appointments);
+                    var onClientWork = !currentAppointment?.Regarding?.Equals("ssw", StringComparison.OrdinalIgnoreCase);
+                    return new EmployeeBillableItemModel
+                    {
+                        AvatarUrl = e.AvatarUrl,
+                        DisplayName = $"{e.FirstName} {e.LastName}",
+                        BilledDays = GetBilledDays(e, project),
+                        OnClientWork = onClientWork,
+                        LastSeen = GetLastSeen(e)
+                    };
+                })
+                .OrderByDescending(i => i.BilledDays)
+                .ToList();
         }
 
         public static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project)

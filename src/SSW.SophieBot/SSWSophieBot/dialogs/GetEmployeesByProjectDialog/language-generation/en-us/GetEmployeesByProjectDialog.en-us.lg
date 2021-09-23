@@ -15,7 +15,7 @@
 
 # SendActivity_lY9fbY_text()
 - Sorry, I couldn't find anyone working on **${dialog.projectEntity}** in your organization. Please try again.
-# SendActivity_xNmCGW()
+# SendActivity_OeOolV()
 [Activity
-    Attachments = ${json(BillableEmployeesList(turn.workingEmployees.project, turn.workingEmployees.employees))}
+    Attachments = ${json(BillableEmployeesList(turn.workingEmployees.project, dialog.foreach.page))}
 ]

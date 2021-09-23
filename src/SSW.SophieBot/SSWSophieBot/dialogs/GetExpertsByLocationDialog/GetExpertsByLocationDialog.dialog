@@ -42,10 +42,7 @@
           "statusCodeProperty": "turn.statusCode",
           "reasonPhraseProperty": "turn.reasonPhrase",
           "employeesProperty": "turn.employees",
-          "skill": {
-            "technology": "=dialog.skillEntity",
-            "experienceLevel": "advanced"
-          }
+          "skill": {}
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -114,11 +111,23 @@
                   "condition": "=exists(dialog.byBillable) && dialog.byBillable == true",
                   "elseActions": [
                     {
-                      "$kind": "Microsoft.SendActivity",
+                      "$kind": "Microsoft.ForeachPage",
                       "$designer": {
-                        "id": "tzr9Na"
+                        "id": "P938cg"
                       },
-                      "activity": "${SendActivity_tzr9Na()}"
+                      "pageIndex": "dialog.foreach.pageindex",
+                      "page": "dialog.foreach.page",
+                      "pageSize": 15,
+                      "itemsProperty": "turn.sortedEmployees",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "LcKuck"
+                          },
+                          "activity": "${SendActivity_LcKuck()}"
+                        }
+                      ]
                     }
                   ],
                   "actions": [
@@ -139,15 +148,6 @@
                       "value": "=dialog.locationEntity"
                     },
                     {
-                      "$kind": "Microsoft.LogAction",
-                      "$designer": {
-                        "id": "d1IzJD"
-                      },
-                      "text": "${LogAction_Text_d1IzJD()}",
-                      "label": "turn.billableEmployees.employees",
-                      "traceActivity": true
-                    },
-                    {
                       "$kind": "Microsoft.ForeachPage",
                       "$designer": {
                         "id": "haPEIU"
@@ -157,15 +157,6 @@
                       "pageSize": 15,
                       "itemsProperty": "turn.billableEmployees.employees",
                       "actions": [
-                        {
-                          "$kind": "Microsoft.LogAction",
-                          "$designer": {
-                            "id": "k12mps"
-                          },
-                          "text": "${LogAction_Text_k12mps()}",
-                          "label": "dialog.foreach.page",
-                          "traceActivity": true
-                        },
                         {
                           "$kind": "Microsoft.SendActivity",
                           "$designer": {

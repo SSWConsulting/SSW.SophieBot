@@ -14,7 +14,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Models
         public int BilledDays { get; set; }
 
         [JsonProperty("onClientWork")]
-        public bool OnClientWork { get; set; }
+        public bool? OnClientWork { get; set; }
 
         [JsonProperty("lastSeen")]
         public string LastSeen { get; set; }
