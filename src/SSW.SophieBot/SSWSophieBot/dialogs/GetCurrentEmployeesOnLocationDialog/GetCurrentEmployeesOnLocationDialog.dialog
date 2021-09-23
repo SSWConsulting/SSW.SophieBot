@@ -117,13 +117,6 @@
                   "condition": "=count(turn.employees) > 1",
                   "actions": [
                     {
-                      "$kind": "Microsoft.SendActivity",
-                      "$designer": {
-                        "id": "3rWq3M"
-                      },
-                      "activity": "${SendActivity_3rWq3M()}"
-                    },
-                    {
                       "$kind": "GetGroupedEmployeesAction",
                       "$designer": {
                         "id": "7YrxD9"

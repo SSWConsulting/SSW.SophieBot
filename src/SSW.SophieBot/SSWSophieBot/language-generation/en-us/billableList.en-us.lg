@@ -54,7 +54,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "Billed Days",
+                    "text": "Billed ↓",
                     "weight": "Bolder"
                 }
             ],

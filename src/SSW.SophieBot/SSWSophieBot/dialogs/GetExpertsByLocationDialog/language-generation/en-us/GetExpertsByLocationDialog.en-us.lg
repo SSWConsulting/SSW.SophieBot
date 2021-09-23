@@ -22,11 +22,6 @@
     Attachments = ${json(WorkingEmployeesList(dialog.skillEntity, dialog.locationEntity, dialog.foreach.page))}
 ]
 
-# SendActivity_ZVrWLX()
-[Activity
-    Attachments = ${json(BillableEmployeesList(dialog.billableTitle, turn.billableEmployees))}
-]
-
 # WorkingEmployeesList(skill, location, employees)
 -```
 {
@@ -109,8 +104,8 @@
                                 {
                                     "type": "Image",
                                     "url": "${if(employee.avatarUrl != null, employee.avatarUrl, BlankAvatar())}",
-                                    "width": "40px",
-                                    "height": "40px",
+                                    "width": "35px",
+                                    "height": "35px",
                                     "style": "Person"
                                 }
                             ]
@@ -149,3 +144,7 @@
 }
 ```
 
+# SendActivity_CPxQF4()
+[Activity
+    Attachments = ${json(BillableEmployeesList(dialog.billableTitle, dialog.foreach.page))}
+]
