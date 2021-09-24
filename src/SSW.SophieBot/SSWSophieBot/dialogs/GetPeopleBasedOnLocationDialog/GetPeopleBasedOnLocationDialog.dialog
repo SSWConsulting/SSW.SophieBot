@@ -129,13 +129,6 @@
                       "activity": "${SendActivity_jjbbfU()}"
                     },
                     {
-                      "$kind": "Microsoft.SendActivity",
-                      "$designer": {
-                        "id": "XrCaCp"
-                      },
-                      "activity": "${SendActivity_XrCaCp()}"
-                    },
-                    {
                       "$kind": "GetGroupedEmployeesAction",
                       "$designer": {
                         "id": "VodMEg"

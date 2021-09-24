@@ -22,9 +22,9 @@
     Attachments = ${json(WorkingEmployeesList(dialog.skillEntity, dialog.locationEntity, dialog.foreach.page))}
 ]
 
-# SendActivity_ZVrWLX()
+# SendActivity_WXSOyK()
 [Activity
-    Attachments = ${json(BillableEmployeesList(dialog.billableTitle, turn.billableEmployees))}
+    Attachments = ${json(BillableEmployeesList(if(dialog.foreach.pageindex == 1, dialog.billableTitle, ''), dialog.foreach.page))}
 ]
 
 # WorkingEmployeesList(skill, location, employees)
@@ -144,3 +144,7 @@
 }
 ```
 
+# SendActivity_CPxQF4()
+[Activity
+    Attachments = ${json(BillableEmployeesList(dialog.billableTitle, dialog.foreach.page))}
+]

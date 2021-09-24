@@ -136,7 +136,7 @@
                       "$designer": {
                         "id": "YGPHlR"
                       },
-                      "employees": "=turn.employees",
+                      "employees": "=turn.sortedEmployees",
                       "workingEmployeesProperty": "turn.billableEmployees"
                     },
                     {
@@ -145,14 +145,26 @@
                         "id": "JkGEqi"
                       },
                       "property": "dialog.billableTitle",
-                      "value": "=join([dialog.locationEntity, \"(by billable days)\"], \" \")"
+                      "value": "=dialog.locationEntity"
                     },
                     {
-                      "$kind": "Microsoft.SendActivity",
+                      "$kind": "Microsoft.ForeachPage",
                       "$designer": {
-                        "id": "ZVrWLX"
+                        "id": "haPEIU"
                       },
-                      "activity": "${SendActivity_ZVrWLX()}"
+                      "pageIndex": "dialog.foreach.pageindex",
+                      "page": "dialog.foreach.page",
+                      "pageSize": 15,
+                      "itemsProperty": "turn.billableEmployees.employees",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "WXSOyK"
+                          },
+                          "activity": "${SendActivity_WXSOyK()}"
+                        }
+                      ]
                     }
                   ]
                 }
