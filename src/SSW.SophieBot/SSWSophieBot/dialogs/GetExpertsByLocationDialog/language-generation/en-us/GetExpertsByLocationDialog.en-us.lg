@@ -59,6 +59,11 @@
     "columns": [
         {
             "type": "Column",
+            "width": "40px",
+            "items": []
+        },
+        {
+            "type": "Column",
             "width": "stretch",
             "items": [
                 {
@@ -97,39 +102,29 @@
     "columns": [
         {
             "type": "Column",
+            "width": "auto",
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "${if(employee.avatarUrl != null, employee.avatarUrl, BlankAvatar())}",
+                    "width": "40px",
+                    "height": "40px",
+                    "style": "Person"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
             "width": "stretch",
             "items": [
                 {
-                    "type": "ColumnSet",
-                    "columns": [
-                        {
-                            "type": "Column",
-                            "width": "auto",
-                            "items": [
-                                {
-                                    "type": "Image",
-                                    "url": "${if(employee.avatarUrl != null, employee.avatarUrl, BlankAvatar())}",
-                                    "width": "35px",
-                                    "height": "35px",
-                                    "style": "Person"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "Column",
-                            "width": "stretch",
-                            "items": [
-                                {
-                                    "type": "TextBlock",
-                                    "text": "${employee.firstName} ${employee.lastName}",
-                                    "wrap": true
-                                }
-                            ],
-                            "verticalContentAlignment": "Center"
-                        }
-                    ]
+                    "type": "TextBlock",
+                    "text": "${employee.firstName} ${employee.lastName}",
+                    "wrap": true
                 }
-            ]
+            ],
+            "verticalContentAlignment": "Center"
         },
         {
             "type": "Column",

@@ -54,27 +54,6 @@
 - I can help you search for people in your organization.
 - I'm ready to help answer questions about people in your organization.
 - I'm here to help you find people in your organization.
-# SendActivity_ZLLvJg()
-[Activity
-    Text = ${SendActivity_ZLLvJg_text()}
-]
-
-# SendActivity_ZLLvJg_text()
-- Getting collaborators is still a work in progress.
-# SendActivity_Fqfm3K()
-[Activity
-    Text = ${SendActivity_Fqfm3K_text()}
-]
-
-# SendActivity_Fqfm3K_text()
-- Getting department is still a work in progress.
-# SendActivity_1vF7d8()
-[Activity
-    Text = ${SendActivity_1vF7d8_text()}
-]
-
-# SendActivity_1vF7d8_text()
-- Getting direct reports is still a work in progress.
 # SendActivity_Z0VDAj()
 [Activity
     Text = ${SendActivity_Z0VDAj_text()}
@@ -82,34 +61,6 @@
 
 # SendActivity_Z0VDAj_text()
 - Getting email address is still a work in progress.
-# SendActivity_zDgeTJ()
-[Activity
-    Text = ${SendActivity_zDgeTJ_text()}
-]
-
-# SendActivity_zDgeTJ_text()
-- Getting job title is still a work in progress.
-# SendActivity_IBib22()
-[Activity
-    Text = ${SendActivity_IBib22_text()}
-]
-
-# SendActivity_IBib22_text()
-- Getting location is still a work in progress.
-# SendActivity_AL5aNe()
-[Activity
-    Text = ${SendActivity_AL5aNe_text()}
-]
-
-# SendActivity_AL5aNe_text()
-- Getting manager is still a work in progress.
-# SendActivity_SVlVLv()
-[Activity
-    Text = ${SendActivity_SVlVLv_text()}
-]
-
-# SendActivity_SVlVLv_text()
-- Getting peers is still a work in progress.
 # SendActivity_RXwe62()
 [Activity
     Text = ${SendActivity_RXwe62_text()}

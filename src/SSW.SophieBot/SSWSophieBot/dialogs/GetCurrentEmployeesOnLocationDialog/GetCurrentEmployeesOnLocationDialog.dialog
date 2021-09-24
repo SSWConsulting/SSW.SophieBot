@@ -155,7 +155,7 @@
                         },
                         {
                           "property": "turn.employees[0].lastSeenInfo",
-                          "value": "Last seen in ${turn.employees[0].lastSeenAt.siteId}."
+                          "value": "='Last seen in ${turn.employees[0].lastSeenAt.siteId}.'"
                         }
                       ]
                     },

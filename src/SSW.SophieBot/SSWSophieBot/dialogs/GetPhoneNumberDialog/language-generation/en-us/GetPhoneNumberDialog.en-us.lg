@@ -14,13 +14,7 @@
 
 # SendActivity_AOE7pz_text()
 - Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
-# LogAction_Text_IxMRSi()
-[Activity
-    Text = ${LogAction_Text_IxMRSi_text()}
-]
 
-# LogAction_Text_IxMRSi_text()
-- ${dialog}
 # SendActivity_CoOTZW()
 [Activity
     Text = ${SendActivity_CoOTZW_text()}
@@ -28,13 +22,7 @@
 
 # SendActivity_CoOTZW_text()
 - **${dialog.displayName}**'s mobile number is: **${dialog.mobilePhone}**
-# LogAction_Text_uysiOu()
-[Activity
-    Text = ${LogAction_Text_uysiOu_text()}
-]
 
-# LogAction_Text_uysiOu_text()
-- ${turn}
 # SendActivity_erv9tP()
 [Activity
     Text = ${SendActivity_erv9tP_text()}
