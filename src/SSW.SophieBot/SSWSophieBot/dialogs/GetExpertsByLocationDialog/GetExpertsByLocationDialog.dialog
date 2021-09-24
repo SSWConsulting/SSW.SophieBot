@@ -136,7 +136,7 @@
                       "$designer": {
                         "id": "YGPHlR"
                       },
-                      "employees": "=turn.employees",
+                      "employees": "=turn.sortedEmployees",
                       "workingEmployeesProperty": "turn.billableEmployees"
                     },
                     {

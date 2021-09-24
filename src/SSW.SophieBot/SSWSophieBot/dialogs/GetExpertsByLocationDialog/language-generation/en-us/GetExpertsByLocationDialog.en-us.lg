@@ -144,3 +144,7 @@
 }
 ```
 
+# SendActivity_CPxQF4()
+[Activity
+    Attachments = ${json(BillableEmployeesList(dialog.billableTitle, dialog.foreach.page))}
+]

@@ -37,7 +37,7 @@
         "location": "${location}",
 		${entities},
         "msteams": {
-            "type": "messageBack",
+            "type": "imBack",
 			"displayText": "${group.title}"
         }
     }

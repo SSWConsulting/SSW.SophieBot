@@ -23,13 +23,6 @@
 
 # SendActivity_kMTNPl_text()
 - ${join([turn.names, if(count(turn.employees) == 1, "is", "are"), "in", concat("**", dialog.locationEntity, "**")],  ' ')} right now
-# SendActivity_3rWq3M()
-[Activity
-    Text = ${SendActivity_3rWq3M_text()}
-]
-
-# SendActivity_3rWq3M_text()
-- Narrow your search...
 # SendActivity_AlWbJq()
 [Activity
     Attachments = ${json(EmployeesGroupActionCard(turn.groupedEmployees, dialog.locationEntity, GetEntities()))}
