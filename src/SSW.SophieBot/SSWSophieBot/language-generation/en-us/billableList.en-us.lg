@@ -88,9 +88,51 @@
     - ```
     {
         "type": "TextBlock",
-        "size": "Large",
+        "size": "ExtraLarge",
         "text": "${title}",
-        "fontType": "Default"
+        "weight": "Bolder"
+    },
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "width": "stretch",
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "Legend",
+                        "wrap": true,
+                        "spacing": "None",
+                        "isSubtle": true
+                    },
+                    {
+                        "type": "TextBlock",
+                        "text": "🟢 Client work",
+                        "spacing": "Small",
+                        "wrap": true,
+                        "isSubtle": true,
+                        "weight": "Lighter"
+                    },
+                    {
+                        "type": "TextBlock",
+                        "text": "⚫ Internal work",
+                        "wrap": true,
+                        "spacing": "None",
+                        "isSubtle": true,
+                        "weight": "Lighter"
+                    },
+                    {
+                        "type": "TextBlock",
+                        "text": "🔴 Leave",
+                        "wrap": true,
+                        "spacing": "None",
+                        "weight": "Lighter",
+                        "isSubtle": true
+                    }
+                ]
+            }
+        ]
     },
     ```
 - ELSE: 
@@ -149,7 +191,7 @@
                 {
                     "type": "TextBlock",
                     "wrap": true,
-                    "text": "${if(exists(employee.onClientWork), if(employee.onClientWork, 'Client Work', 'Internal Work'), 'None')}",
+                    "text": "${if(exists(employee.onClientWork), if(employee.onClientWork, '🟢', '⚫'), '🔴')}",
                     "size": "Small",
                     "horizontalAlignment": "Center"
                 }
