@@ -140,7 +140,8 @@
         "type": "TextBlock",
         "text": "${PeopleType()} - ${if(location == '', 'All', location)}",
         "wrap": true,
-        "size": "Large"
+        "size": "ExtraLarge",
+        "weight": "Bolder"
     }
     ```
 - ELSE:
@@ -192,7 +193,7 @@
 - ELSEIF: ${ dialog.booked }
     - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '125px'), HeaderColumn('Client', 'stretch')), ',')}
 - ELSE:
-    - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '110px'), HeaderColumn('Billed ↓', '67px'), HeaderColumn('In Office', '53px'), HeaderColumn('Last Seen', '80px')), ',')}
+    - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '110px'), HeaderColumn('Billed ↓', '67px'), HeaderColumn('In Office', '58px'), HeaderColumn('Last Seen', '80px')), ',')}
 
 # HeaderColumn(text, width)
 -```
@@ -204,7 +205,6 @@
             "type": "TextBlock",
             "text": "${text}",
             "wrap": true,
-            "size": "Small",
             "weight": "Bolder"
         }
     ]
@@ -276,7 +276,7 @@
 -```
 {
     "type": "Column",
-    "width": "53px",
+    "width": "58px",
     "items": [
         {
             "type": "Image",
