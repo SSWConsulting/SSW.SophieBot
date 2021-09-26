@@ -103,13 +103,6 @@
                   "stringList": "=select(turn.employees, e, concat(\"**\", e.firstName, \"**\"))"
                 },
                 {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "kMTNPl"
-                  },
-                  "activity": "${SendActivity_kMTNPl()}"
-                },
-                {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
                     "id": "zL333s"
