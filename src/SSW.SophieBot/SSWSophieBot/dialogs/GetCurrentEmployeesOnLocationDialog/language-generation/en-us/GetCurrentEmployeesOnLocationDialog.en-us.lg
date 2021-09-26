@@ -31,7 +31,8 @@
 # GetEntities()
 - ```
 "byBillable": true,
-"isCurrentLocation": true
+"isCurrentLocation": true,
+"experienceLevel": "Advanced, Intermediate"
 ```
 # SendActivity_qW6PDt()
 [Activity
