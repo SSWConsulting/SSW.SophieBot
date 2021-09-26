@@ -17,9 +17,9 @@
 - Sorry, I couldn't find anyone with **${dialog.skillEntity}** skill in **${dialog.locationEntity}** on **${turn.formatDate}**. Please try again.
 
 
-# SendActivity_U8Xbbw()
+# SendActivity_6uyLeH()
 [Activity
-    Attachments = ${json(EmployeesListCard(turn.formatDate, dialog.skillEntity, dialog.locationEntity, turn.employees))}
+    Attachments = ${json(EmployeesListCard(turn.formatDate, dialog.skillEntity, dialog.locationEntity, dialog.foreach.page))}
 ]
 
 # EmployeesListCard(date, skill, location, employees)
@@ -29,43 +29,57 @@
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2",
     "body": [
-        {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "${date}",
-                            "wrap": true,
-                            "size": "Large"
-                        },
-                        {
-                            "type": "TextBlock",
-                            "text": "${skill} | ${location}",
-                            "wrap": true,
-                            "isSubtle": true
-                        }
-                    ],
-                    "width": "stretch"
-                }
-            ]
-        },
-        ${EmployeesList(employees)},
-        {
-            "type": "ActionSet",
-            "actions": [
-                {
-                    "type": "Action.OpenUrl",
-                    "title": "More Booking Info",
-                    "url": "${settings.CRMBookingEndpoint}"
-                }
-            ]
-        }
+        ${join(where(createArray(Title(date, skill, location), EmployeesList(employees), Footer()), item => item != ''), ',')}
     ]
 }
 ```
+
+# Title(date, skill, location)
+- IF: ${ dialog.foreach.pageindex == 1 }
+    - ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "${date}",
+                        "wrap": true,
+                        "size": "Large"
+                    },
+                    {
+                        "type": "TextBlock",
+                        "text": "${skill} | ${location}",
+                        "wrap": true,
+                        "isSubtle": true
+                    }
+                ],
+                "width": "stretch"
+            }
+        ]
+    },
+    ```
+- ELSE:
+    -
+
+# Footer()
+- IF: ${ dialog.foreach.pageindex == ceiling(div(count(turn.employees), float('15.0'))) }
+    - ```
+    {
+        "type": "ActionSet",
+        "actions": [
+            {
+                "type": "Action.OpenUrl",
+                "title": "More Booking Info",
+                "url": "${settings.CRMBookingEndpoint}"
+            }
+        ]
+    }
+    ```
+- ELSE:
+    -
 
 # EmployeesList(employees)
 - ```

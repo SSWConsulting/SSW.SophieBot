@@ -126,11 +126,23 @@
                   "activity": "${SendActivity_UhaM70()}"
                 },
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.ForeachPage",
                   "$designer": {
-                    "id": "U8Xbbw"
+                    "id": "OZCZuQ"
                   },
-                  "activity": "${SendActivity_U8Xbbw()}"
+                  "pageIndex": "dialog.foreach.pageindex",
+                  "page": "dialog.foreach.page",
+                  "pageSize": 15,
+                  "itemsProperty": "turn.employees",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "6uyLeH"
+                      },
+                      "activity": "${SendActivity_6uyLeH()}"
+                    }
+                  ]
                 }
               ]
             }
