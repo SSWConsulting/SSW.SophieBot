@@ -23,6 +23,11 @@
       "description": "If set to true, look for experts in the specified current location",
       "$ref": "#/definitions/booleanExpression",
       "title": "Is Current Location"
+    },
+    "experienceLevel": {
+      "description": "Used for filtering employees with specified experience level on a particular skill",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Experience Level"
     }
   },
   "$result": {

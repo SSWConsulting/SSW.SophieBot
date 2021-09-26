@@ -42,7 +42,7 @@ namespace SSWSophieBot.HttpClientAction.Models
         public int? EmployeeCategory { get; set; }
         public string Title { get; set; }
 
-        public bool HasSkill(string technology, ExperienceLevel? experienceLevel = ExperienceLevel.Advanced)
+        public bool HasSkill(string technology, ExperienceLevel? experienceLevel = ExperienceLevel.Advanced | ExperienceLevel.Intermediate)
         {
             if (Skills == null || !Skills.Any())
             {
@@ -56,9 +56,16 @@ namespace SSWSophieBot.HttpClientAction.Models
                     return false;
                 }
 
-                if (experienceLevel.HasValue && !experienceLevel.Value.ToString().Equals(s.ExperienceLevel, StringComparison.OrdinalIgnoreCase))
+                if (experienceLevel.HasValue)
                 {
-                    return false;
+                    if (Enum.TryParse<ExperienceLevel>(s.ExperienceLevel, true, out var levelEnum))
+                    {
+                        return experienceLevel.Value.HasFlag(levelEnum);
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
 
                 return true;

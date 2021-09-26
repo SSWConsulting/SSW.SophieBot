@@ -68,18 +68,12 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             {
                 case EmployeesGroupKey.Skill:
                     var skills = employees
-                        .SelectMany(e => e.Skills.Where(s => s.ExperienceLevel == "Advanced")
-                        .Select(s => s.Technology))
+                        .SelectMany(e => e.Skills.Select(s => s.Technology))
                         .Where(s => !string.IsNullOrWhiteSpace(s))
                         .Distinct()
                         .ToList();
 
-                    Func<GetEmployeeModel, string, bool> countFunc = (e, s) 
-                        => e.Skills.Any(es => es.ExperienceLevel == "Advanced" 
-                            && !string.IsNullOrWhiteSpace(es.Technology) 
-                            && es.Technology.Equals(s, StringComparison.OrdinalIgnoreCase));
-
-                    skills.ToDictionary(s => s, s => employees.Count(e => countFunc(e, s)))
+                    skills.ToDictionary(s => s, s => employees.Count(e => e.HasSkill(s)))
                         .OrderByDescending(p => p.Value)
                         .Take(maxGroupCount)
                         .ToList()

@@ -40,7 +40,7 @@
           "employeesProperty": "turn.employees",
           "skill": {
             "technology": "=dialog.skillEntity",
-            "experienceLevel": "Advanced"
+            "experienceLevel": "=dialog.experienceLevel"
           }
         },
         {
