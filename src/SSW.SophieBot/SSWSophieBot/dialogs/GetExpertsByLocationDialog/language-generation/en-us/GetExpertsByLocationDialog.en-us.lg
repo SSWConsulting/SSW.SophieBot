@@ -81,7 +81,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "Level↓",
+                    "text": "Level ↓",
                     "wrap": true,
                     "weight": "Bolder"
                 }
