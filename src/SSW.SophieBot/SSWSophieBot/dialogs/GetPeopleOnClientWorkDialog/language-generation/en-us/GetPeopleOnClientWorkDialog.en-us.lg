@@ -138,9 +138,10 @@
     - ```
     {
         "type": "TextBlock",
-        "text": "${PeopleType()} - ${if(location == '', 'All', location)} ${if(dialog.booked == False, '(by billed days)', '')}",
+        "text": "${PeopleType()} - ${if(location == '', 'All', location)}",
         "wrap": true,
-        "size": "Large"
+        "size": "ExtraLarge",
+        "weight": "Bolder"
     }
     ```
 - ELSE:
@@ -188,11 +189,11 @@
 
 # HeaderColumns
 - IF: ${ dialog.onInternal }
-    - ${join(createArray(HeaderColumn('', '30px'), HeaderColumn('Name', '125px'), HeaderColumn('Appointment', 'stretch')), ',')}
+    - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '125px'), HeaderColumn('Appointment', 'stretch')), ',')}
 - ELSEIF: ${ dialog.booked }
-    - ${join(createArray(HeaderColumn('', '30px'), HeaderColumn('Name', '125px'), HeaderColumn('Client', 'stretch')), ',')}
+    - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '125px'), HeaderColumn('Client', 'stretch')), ',')}
 - ELSE:
-    - ${join(createArray(HeaderColumn('', '30px'), HeaderColumn('Name', '110px'), HeaderColumn('Billed', '67px'), HeaderColumn('In Office', '53px'), HeaderColumn('Last Seen', '80px')), ',')}
+    - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '110px'), HeaderColumn('Billed ↓', '67px'), HeaderColumn('In Office', '58px'), HeaderColumn('Last Seen', '80px')), ',')}
 
 # HeaderColumn(text, width)
 -```
@@ -204,7 +205,6 @@
             "type": "TextBlock",
             "text": "${text}",
             "wrap": true,
-            "size": "Small",
             "weight": "Bolder"
         }
     ]
@@ -245,8 +245,8 @@
     "items": [
         {
             "type": "Image",
-            "width": "30px",
-            "height": "30px",
+            "width": "35px",
+            "height": "35px",
             "url": "${if(avatarUrl != null, avatarUrl, BlankAvatar())}",
             "style": "Person"
         }
@@ -263,7 +263,7 @@
     "items": [
         {
             "type": "TextBlock",
-            "text": "${text}",
+            "text": "${if(text != null && text != '', text, '—')}",
             "wrap": true,
             "size": "Small"
         }
@@ -276,7 +276,7 @@
 -```
 {
     "type": "Column",
-    "width": "53px",
+    "width": "58px",
     "items": [
         {
             "type": "Image",

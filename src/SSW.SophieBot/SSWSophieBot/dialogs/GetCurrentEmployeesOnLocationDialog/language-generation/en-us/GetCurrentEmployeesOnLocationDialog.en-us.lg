@@ -16,17 +16,13 @@
 
 # SendActivity_MfjfA1_text()
 - Sorry, I couldn't find anyone in the **${dialog.locationEntity}** office right now. Please try again.
-# SendActivity_kMTNPl()
-[Activity
-    Text = ${SendActivity_kMTNPl_text()}
-]
-
-# SendActivity_kMTNPl_text()
-- ${join([turn.names, if(count(turn.employees) == 1, "is", "are"), "in", concat("**", dialog.locationEntity, "**")],  ' ')} right now
 # SendActivity_AlWbJq()
 [Activity
-    Attachments = ${json(EmployeesGroupActionCard(turn.groupedEmployees, dialog.locationEntity, GetEntities()))}
+    Attachments = ${json(EmployeesGroupActionCard(TextInfo(), turn.groupedEmployees, dialog.locationEntity, GetEntities()))}
 ]
+
+# TextInfo()
+- ${join([turn.names, if(count(turn.employees) == 1, "is", "are"), "in", concat("**", dialog.locationEntity, "**")],  ' ')} right now
 
 # GetEntities()
 - ```

@@ -40,9 +40,9 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             var responseMessage = await httpClient.SendRequestAsync(request =>
             {
                 AddQueryStrings(request, dc);
-                if (string.IsNullOrWhiteSpace(request.RequestUri.Query))
+                if (string.IsNullOrWhiteSpace(request.RequestUri.Query) && string.IsNullOrWhiteSpace(dc.GetValue(Skill?.Technology)))
                 {
-                    throw new ArgumentNullException(nameof(QueryString), $"GetProfile request must have {nameof(QueryString)} input");
+                    throw new ArgumentNullException(nameof(QueryString), $"GetProfile request must have {nameof(QueryString)} or {nameof(Skill)} input");
                 }
             });
 

@@ -44,9 +44,10 @@
     - ```
     {
         "type": "TextBlock",
-        "text": "${dialog.skillEntity} - ${if(location != null, location, 'All')} (by skill level)",
+        "text": "${dialog.skillEntity} - ${if(location != null, location, 'All')}",
         "wrap": true,
-        "size": "Large"
+        "size": "ExtraLarge",
+        "weight": "Bolder"
     }
     ```
 - ELSE:
@@ -59,7 +60,7 @@
     "columns": [
         {
             "type": "Column",
-            "width": "40px",
+            "width": "35px",
             "items": []
         },
         {
@@ -80,7 +81,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "Level",
+                    "text": "Level ↓",
                     "wrap": true,
                     "weight": "Bolder"
                 }
@@ -107,8 +108,8 @@
                 {
                     "type": "Image",
                     "url": "${if(employee.avatarUrl != null, employee.avatarUrl, BlankAvatar())}",
-                    "width": "40px",
-                    "height": "40px",
+                    "width": "35px",
+                    "height": "35px",
                     "style": "Person"
                 }
             ],
@@ -121,6 +122,7 @@
                 {
                     "type": "TextBlock",
                     "text": "${employee.firstName} ${employee.lastName}",
+                    "size": "Small",
                     "wrap": true
                 }
             ],
@@ -133,7 +135,8 @@
                 {
                     "type": "TextBlock",
                     "wrap": true,
-                    "text": "${employee.skillLevel}"
+                    "text": "${employee.skillLevel}",
+                    "size": "Small"
                 }
             ],
             "verticalContentAlignment": "Center"
