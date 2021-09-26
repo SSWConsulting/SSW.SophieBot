@@ -63,7 +63,7 @@
                     "title": "Show All [${employees.count}]",
                     "data": {
                         "intent": "GetExpertsByLocation",
-                        "Skill": "${skill}"
+                        "skill": "${skill}"
                     }
                 },
                 ${join(select(subArray(locations, 0, 5), location => LocationButton(skill, location, employees)), ',')}
