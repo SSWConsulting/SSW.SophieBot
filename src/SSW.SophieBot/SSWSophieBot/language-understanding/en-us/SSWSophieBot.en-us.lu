@@ -347,6 +347,7 @@
 - Who is {available = free}?
 - who is {available = free} tomorrow
 - Who is {available = free} next Friday?
+- Who is {available = free} next Monday?
 - Who is {available = free} in {location = Sydney}?
 - Who is {available = free} in {location = Sydney} next Friday?
 
