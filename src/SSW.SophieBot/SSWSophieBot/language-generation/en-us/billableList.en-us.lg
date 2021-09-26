@@ -11,7 +11,7 @@
             "columns": [
                 {
                     "type": "Column",
-                    "width": "35px",
+                    "width": "50px",
 					"items": []
                 },
                 {
@@ -145,7 +145,7 @@
     "columns": [
         {
             "type": "Column",
-            "width": "auto",
+            "width": "50px",
             "items": [
                 {
                     "type": "Image",
