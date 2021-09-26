@@ -1,4 +1,6 @@
-﻿namespace SSWSophieBot.HttpClientAction.Models
+﻿using System;
+
+namespace SSWSophieBot.HttpClientAction.Models
 {
     public class GetSkillModel
     {
@@ -7,9 +9,10 @@
         public int SortOrder { get; set; }
     }
 
+    [Flags]
     public enum ExperienceLevel
     {
-        Intermediate,
-        Advanced
+        Intermediate = 1,
+        Advanced = 2
     }
 }

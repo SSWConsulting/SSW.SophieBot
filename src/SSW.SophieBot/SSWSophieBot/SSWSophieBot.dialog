@@ -381,7 +381,8 @@
                 "locationEntity": "=$options.location",
                 "title": "=@title",
                 "byBillable": "=@byBillable",
-                "isCurrentLocation": "=@isCurrentLocation"
+                "isCurrentLocation": "=@isCurrentLocation",
+                "experienceLevel": "=coalesce(@experienceLevel, 'Advanced, Intermediate')"
               }
             }
           ]
