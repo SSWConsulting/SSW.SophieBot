@@ -59,10 +59,10 @@
                 "width": "stretch"
             }
         ]
-    },
+    }
     ```
 - ELSE:
-    -
+    - ``````
 
 # Footer()
 - IF: ${ dialog.foreach.pageindex == ceiling(div(count(turn.employees), float('15.0'))) }
