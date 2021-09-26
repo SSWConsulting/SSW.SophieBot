@@ -1,4 +1,4 @@
-﻿# EmployeesGroupActionCard(groupedEmployees, location, entities)
+# EmployeesGroupActionCard(groupedEmployees, location, entities)
 - ```
 {
     "type": "AdaptiveCard",
@@ -7,8 +7,10 @@
     "body": [
         {
             "type": "TextBlock",
-            "size": "Medium",
-            "weight": "Bolder",
+            "text": "In **${dialog.location}**, there are **${turn.employees.count}** people (${count(where(turn.employees, e, e.inOffice))} in the office today)."
+        },
+        {
+            "type": "TextBlock",
             "text": "Narrow your search..."
         },
 		${join(select(groupedEmployees.sets, set => GetActionSet(set, location, entities)), ',')}
