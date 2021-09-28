@@ -35,9 +35,6 @@
       "$ref": "#/definitions/GetGroupedEmployeesAction"
     },
     {
-      "$ref": "#/definitions/GetManagerDialog.dialog"
-    },
-    {
       "$ref": "#/definitions/GetPeopleBasedOnLocationDialog.dialog"
     },
     {
@@ -462,9 +459,6 @@
     },
     {
       "$ref": "#/definitions/Microsoft.UrlEntityRecognizer"
-    },
-    {
-      "$ref": "#/definitions/ResolveUserDialog.dialog"
     },
     {
       "$ref": "#/definitions/StringJoinAction"
@@ -1132,6 +1126,11 @@
           "$ref": "#/definitions/GetExpertsByLocationDialog.dialog/definitions/booleanExpression",
           "title": "Is Current Location"
         },
+        "experienceLevel": {
+          "description": "Used for filtering employees with specified experience level on a particular skill",
+          "$ref": "#/definitions/stringExpression",
+          "title": "Experience Level"
+        },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
@@ -1166,6 +1165,11 @@
           "$ref": "#/definitions/arrayExpression",
           "title": "Employees",
           "description": "Raw employees"
+        },
+        "date": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Date",
+          "description": "Used to filter appointments. Default value is current date"
         },
         "result": {
           "$ref": "#/definitions/stringExpression",
@@ -1245,78 +1249,6 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "GetGroupedEmployeesAction"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
-    "GetManagerDialog.dialog": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "GetManagerDialog",
-      "type": "object",
-      "$result": {
-        "type": "object",
-        "properties": {}
-      },
-      "definitions": {
-        "equalsExpression": {
-          "$role": "expression",
-          "type": "string",
-          "title": "Equals Expression",
-          "description": "Expression starting with =.",
-          "pattern": "^=.*\\S.*",
-          "examples": [
-            "=user.name"
-          ]
-        },
-        "stringExpression": {
-          "$role": "expression",
-          "title": "String or expression",
-          "description": "Interpolated string or expression to evaluate.",
-          "oneOf": [
-            {
-              "type": "string",
-              "title": "String",
-              "description": "Interpolated string",
-              "pattern": "^(?!(=)).*",
-              "examples": [
-                "Hello ${user.name}"
-              ]
-            },
-            {
-              "$ref": "#/definitions/GetManagerDialog.dialog/definitions/equalsExpression",
-              "examples": [
-                "=concat('x','y','z')"
-              ]
-            }
-          ]
-        }
-      },
-      "required": [
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "nameEntity": {
-          "description": "Name of the entity to search",
-          "$ref": "#/definitions/GetManagerDialog.dialog/definitions/stringExpression",
-          "title": "Name Entity"
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "GetManagerDialog.dialog"
         },
         "$designer": {
           "title": "Designer information",
@@ -7667,9 +7599,6 @@
           "$ref": "#/definitions/GetGroupedEmployeesAction"
         },
         {
-          "$ref": "#/definitions/GetManagerDialog.dialog"
-        },
-        {
           "$ref": "#/definitions/GetPeopleBasedOnLocationDialog.dialog"
         },
         {
@@ -7902,9 +7831,6 @@
         },
         {
           "$ref": "#/definitions/Microsoft.UpdateActivity"
-        },
-        {
-          "$ref": "#/definitions/ResolveUserDialog.dialog"
         },
         {
           "$ref": "#/definitions/StringJoinAction"
@@ -13304,78 +13230,6 @@
           "$ref": "#/definitions/equalsExpression"
         }
       ]
-    },
-    "ResolveUserDialog.dialog": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "ResolveUserDialog",
-      "type": "object",
-      "$result": {
-        "type": "object",
-        "properties": {}
-      },
-      "definitions": {
-        "equalsExpression": {
-          "$role": "expression",
-          "type": "string",
-          "title": "Equals Expression",
-          "description": "Expression starting with =.",
-          "pattern": "^=.*\\S.*",
-          "examples": [
-            "=user.name"
-          ]
-        },
-        "stringExpression": {
-          "$role": "expression",
-          "title": "String or expression",
-          "description": "Interpolated string or expression to evaluate.",
-          "oneOf": [
-            {
-              "type": "string",
-              "title": "String",
-              "description": "Interpolated string",
-              "pattern": "^(?!(=)).*",
-              "examples": [
-                "Hello ${user.name}"
-              ]
-            },
-            {
-              "$ref": "#/definitions/ResolveUserDialog.dialog/definitions/equalsExpression",
-              "examples": [
-                "=concat('x','y','z')"
-              ]
-            }
-          ]
-        }
-      },
-      "required": [
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "UserIdFound": {
-          "title": "User Id Found",
-          "description": "Id of the user to look for",
-          "$ref": "#/definitions/ResolveUserDialog.dialog/definitions/stringExpression"
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "ResolveUserDialog.dialog"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
     },
     "role": {
       "title": "$role",

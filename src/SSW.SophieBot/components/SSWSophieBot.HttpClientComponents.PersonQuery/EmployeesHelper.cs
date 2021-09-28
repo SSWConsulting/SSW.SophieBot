@@ -10,6 +10,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 {
     public static class EmployeesHelper
     {
+        private static string[] leavePhrases = new string[] { "annual leave", "non working", "non-working", "leave", "holiday", "time in lieu", "hour leave", "hours leave", "day off", "days off" };
+
         public static List<EmployeeBillableItemModel> GetBillableEmployees(IEnumerable<GetEmployeeModel> employees, string queriedProjectName, out string projectName)
         {
             GetEmployeeProjectModel project;
@@ -92,11 +94,11 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             }
         }
 
-        public static NextClientModel GetNextClient(GetEmployeeModel employee)
+        public static NextClientModel GetNextClient(GetEmployeeModel employee, DateTime date)
         {
-            var now = DateTime.Now.ToUniversalTime();
             var appointments = employee.Appointments
-                .Where(appointment => appointment.Start.UtcDateTime.Ticks > now.Ticks && appointment.Regarding?.ToLower() != "ssw")
+                .Where(appointment => appointment.Start.UtcDateTime.Ticks > date.Ticks)
+                .Where(appointment => appointment.Regarding?.ToLower() != "ssw" || (appointment.Regarding?.ToLower() == "ssw" && leavePhrases.Any(appointment.Subject.ToLower().Contains)))
                 .ToList();
             var appointment = appointments.LastOrDefault();
 
@@ -107,7 +109,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 
             return new NextClientModel
             {
-                FreeDays = GetBusinessDays(DateTime.Now.ToUniversalTime(), appointment.Start.UtcDateTime),
+                FreeDays = GetBusinessDays(date, appointment.Start.UtcDateTime),
                 Name = appointment.Regarding,
                 Date = appointment.Start.ToString("ddd, dd/MM/yyyy")
             };
@@ -121,13 +123,12 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                 if (end.DayOfWeek == DayOfWeek.Saturday) result--;
                 if (start.DayOfWeek == DayOfWeek.Sunday) result--;
 
-                return (int)Math.Round(result);
+                return (int)Math.Floor(result);
             }
         }
 
         public static GetAppointmentModel GetAppointmentBy(DateTime date, List<GetAppointmentModel> appointments)
         {
-            var leavePhrases = new string[] { "annual leave", "non working", "non-working", "leave", "holiday", "time in lieu", "hour leave", "hours leave", "day off", "days off" };
             var results = appointments
                 .Where(appointment => date.Ticks >= GetTicksFrom(appointment.Start) && date.Ticks <= GetTicksFrom(appointment.End))
                 .Where(appointment => !leavePhrases.Any(appointment.Subject.ToLower().Contains))
