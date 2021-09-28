@@ -145,10 +145,18 @@
     }
     ```
 - ELSE:
-    - ``````
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "Next ${if(dialog.foreach.pageindex * 10 < count(turn.employees), 10, count(turn.employees) - 10 * (dialog.foreach.pageindex - 1))} people...",
+        "wrap": true,
+        "size": "ExtraLarge",
+        "weight": "Bolder"
+    }
+    ```
 
 # Footer()
-- IF: ${ dialog.foreach.pageindex == ceiling(div(count(turn.employees), float('15.0'))) }
+- IF: ${ dialog.foreach.pageindex == ceiling(div(count(turn.employees), float('10.0'))) }
     - ```
     {
         "type": "ActionSet",
@@ -291,8 +299,14 @@
 
 # NextClient(client)
 -```
-Free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}. Working for ${client.Name} - ${client.Date}.
+Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}. ${ClientInfo(client)}
 ```
+
+# ClientInfo(client)
+- IF: ${ dialog.fromDate == null }
+    - Working for ${client.Name} - ${client.Date}.
+- ELSE:
+    -
 
 # SendActivity_pArEiW()
 [Activity

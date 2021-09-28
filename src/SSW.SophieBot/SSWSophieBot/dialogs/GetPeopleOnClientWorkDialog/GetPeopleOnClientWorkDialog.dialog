@@ -202,7 +202,8 @@
                             "id": "HWxzqw"
                           },
                           "employees": "=turn.employees",
-                          "result": "turn.employees"
+                          "result": "turn.employees",
+                          "date": "=dialog.fromDate"
                         }
                       ]
                     }
@@ -244,7 +245,7 @@
                       },
                       "pageIndex": "dialog.foreach.pageindex",
                       "page": "dialog.foreach.page",
-                      "pageSize": 15,
+                      "pageSize": 10,
                       "itemsProperty": "turn.employees",
                       "actions": [
                         {
