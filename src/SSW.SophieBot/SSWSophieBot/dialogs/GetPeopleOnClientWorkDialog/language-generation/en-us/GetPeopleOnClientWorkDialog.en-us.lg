@@ -148,7 +148,7 @@
     - ```
     {
         "type": "TextBlock",
-        "text": "Next ${if(dialog.foreach.pageindex * 10 < count(turn.employees), 10, count(turn.employees) - 10 * (dialog.foreach.pageindex - 1))} people...",
+        "text": "Next ${if(dialog.foreach.pageindex * 10 < count(turn.employees), 10, count(turn.employees) - 10 * (dialog.foreach.pageindex - 1))}...",
         "wrap": true,
         "size": "ExtraLarge",
         "weight": "Bolder"
