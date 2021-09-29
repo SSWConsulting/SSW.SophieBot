@@ -115,7 +115,7 @@
               "$designer": {
                 "id": "NZz62n"
               },
-              "condition": "dialog.dateEntity != null",
+              "condition": "dialog.dateEntity != null && dialog.dateEntity.timex[0] != ''",
               "actions": [
                 {
                   "$kind": "TimeFormatAction",
