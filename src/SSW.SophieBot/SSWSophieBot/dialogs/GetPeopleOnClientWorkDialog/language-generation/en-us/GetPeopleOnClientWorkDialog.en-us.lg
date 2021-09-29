@@ -150,7 +150,7 @@
         "type": "TextBlock",
         "text": "Next ${if(dialog.foreach.pageindex * 10 < count(turn.employees), 10, count(turn.employees) - 10 * (dialog.foreach.pageindex - 1))}...",
         "wrap": true,
-        "size": "ExtraLarge",
+        "size": "Medium",
         "weight": "Bolder"
     }
     ```
@@ -196,7 +196,9 @@
 ```
 
 # HeaderColumns
-- IF: ${ dialog.onInternal }
+- IF: ${ dialog.foreach.pageindex != 1 }
+    - 
+- ELSEIF: ${ dialog.onInternal }
     - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '125px'), HeaderColumn('Appointment', 'stretch')), ',')}
 - ELSEIF: ${ dialog.booked }
     - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '125px'), HeaderColumn('Client', 'stretch')), ',')}
