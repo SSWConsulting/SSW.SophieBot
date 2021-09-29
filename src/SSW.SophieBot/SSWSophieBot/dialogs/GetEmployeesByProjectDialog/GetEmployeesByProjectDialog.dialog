@@ -87,7 +87,7 @@
                   },
                   "pageIndex": "dialog.foreach.pageindex",
                   "page": "dialog.foreach.page",
-                  "pageSize": 15,
+                  "pageSize": 10,
                   "itemsProperty": "turn.workingEmployees.employees",
                   "actions": [
                     {
