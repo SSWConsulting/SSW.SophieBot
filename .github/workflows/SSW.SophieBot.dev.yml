@@ -1,0 +1,149 @@
+name: BuildAndDeploy-Dev
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - src/SSW.SophieBot/**
+      - .github/workflows/SSW.SophieBot.dev.yml
+      - .github/workflows/scripts/**
+
+concurrency:
+  group: SSWSophieBotDev
+  cancel-in-progress: true
+
+env:
+  BUILD_FLOW: composer
+  BOT_NAME: SSWSophieBotDev
+  WEBAPP_NAME: SSWSophieBotDev
+  SOURCE_DIR: ${{ github.workspace }}
+  OUTPUT_DIR: ${{ github.workspace }}/output/deploy
+  BOT_PROJECT_DIR: ${{ github.workspace }}/src/SSW.SophieBot/SSWSophieBot
+  BOT_PROJECT_NAME: SSWSophieBot.csproj
+  PUBLISHING_PROFILE_NAME: SSW.Bots.Dev
+  LUIS_AUTHORING_ENDPOINT: https://australiaeast.api.cognitive.microsoft.com/
+  LUIS_AUTHORING_REGION: australiaeast
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  build-and-deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - uses: actions/checkout@v2.3.4
+
+      - name: Use Node 13.x
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: '13'
+      - name: Use BF CLI
+        run: npm install -g @microsoft/botframework-cli
+      - name: Use .Net Core sdk 3.1.x
+        uses: actions/setup-dotnet@v1.8.1
+        with:
+          dotnet-version: '3.1.x'
+
+      - name: Create appsettings file
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "appsettings.json"
+          json: ${{ secrets.APPSETTINGS_JSON }}
+          dir: "src/SSW.SophieBot/SSWSophieBot/settings"
+
+      # Prepare working folders    
+      - name: Prepare working folders
+        if: env.BUILD_FLOW == 'composer'
+        run: |
+          $generatedDirectory = "${{ env.BOT_PROJECT_DIR }}/generated"
+      
+          # Clean and recreate the generated directory
+          if (Test-Path $generatedDirectory)
+          {
+            Remove-Item -Path $generatedDirectory -Force -Recurse
+          }
+
+          $outputDirectory = "$generatedDirectory/interruption"
+          New-Item -Path /. -name $outputDirectory -ItemType "directory"
+        
+      # Cross train LU models
+      - name: Cross train LU models
+        if: env.BUILD_FLOW == 'composer'
+        run: |
+          $sourceDirectory = "${{ env.BOT_PROJECT_DIR }}"
+          $outputDirectory = "${{ env.BOT_PROJECT_DIR }}/generated/interruption"
+
+          # Cross train models
+          bf luis:cross-train --in $sourceDirectory --out $outputDirectory --config $sourceDirectory/settings/cross-train.config.json --force
+
+          # List generated files
+          cd $outputDirectory
+          ls -R
+
+      # Publish LUIS models
+      - name: Publish LUIS
+        if: env.BUILD_FLOW == 'composer'
+        run: |
+          cd ${{ env.BOT_PROJECT_DIR }}
+          & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-LUIS.ps1" -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -authoringKey ${{ secrets.LUIS_AUTHORING_KEY }} -botName ${{ env.BOT_NAME }} -endpoint ${{ env.LUIS_AUTHORING_ENDPOINT }} -region ${{ env.LUIS_AUTHORING_REGION }}
+
+      # Publish Orchestrator models
+      - name: Publish orchestrator
+        if: env.BUILD_FLOW == 'composer'
+        run: |
+          cd ${{ env.BOT_PROJECT_DIR }}
+          & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-Orchestrator.ps1" -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -appSettingsFile ./settings/appsettings.json
+
+      # Compress bot models folder
+      - name: Compress bot models files
+        if: env.BUILD_FLOW == 'composer'
+        uses: ihiroky/archive-action@v1
+        with:
+          root_dir: ${{ env.BOT_PROJECT_DIR }}/generated
+          file_path: ${{ env.SOURCE_DIR }}/output/generated.zip
+
+      # Upload bot models artifact
+      - name: Upload bot models artifact
+        if: env.BUILD_FLOW == 'composer'
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: "Bot_Models_${{ github.run_id }}"
+          path: ${{ env.SOURCE_DIR }}/output/generated.zip
+          if-no-files-found: error
+          retention-days: 5
+
+      # Build bot
+      - name: Build bot publishing package
+        run: |
+          cd ${{ env.BOT_PROJECT_DIR }}
+
+          $publishingProfileName = (${{ env.BUILD_FLOW }} -eq 'composer') ? "${{ env.PUBLISHING_PROFILE_NAME }}" : ""
+          & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Publish-WebApp.ps1" -botProjectFolder ${{ env.BOT_PROJECT_DIR }} -botProjectName ${{ env.BOT_PROJECT_NAME }} -outputFolder "${{ env.OUTPUT_DIR }}/deploy" -publishingProfile $publishingProfileName
+
+      # Compress webapp publish folder
+      - name: Compress webapp publish files
+        uses: ihiroky/archive-action@v1
+        with:
+          root_dir: ${{ env.OUTPUT_DIR }}
+          file_path: ${{ env.OUTPUT_DIR }}/deploy.zip
+
+      # Upload webapp artifact
+      - name: Upload webapp artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: "Bot_Webapp_${{ github.run_id }}"
+          path: ${{ env.OUTPUT_DIR }}/deploy.zip
+          if-no-files-found: error
+          retention-days: 5
+
+      # Deploy the web app to azure
+      - name: "Deploy Azure Web App"
+        uses: Azure/webapps-deploy@v2
+        with:
+          app-Name: ${{ env.WEBAPP_NAME }}
+          publish-profile: ${{ secrets.BOT_WEBAPP_PUBLISH_PROFILE }}
+          package: "${{ env.OUTPUT_DIR }}/deploy"
