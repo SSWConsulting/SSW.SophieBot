@@ -35,10 +35,10 @@
 
 # SendActivity_lQMjCh()
 [Activity
-    Attachments = ${json(SendActivity_X1CF9d_attachment_v9gcuo(turn.firstNameString, turn.sortedEmployees, dialog.skillEntity, turn.locations))}
+    Attachments = ${json(SendActivity_X1CF9d_attachment_v9gcuo(turn.firstNames, turn.sortedEmployees, dialog.skillEntity, turn.locations))}
 ]
 
-# SendActivity_X1CF9d_attachment_v9gcuo(firstNameString, employees, skill, locations)
+# SendActivity_X1CF9d_attachment_v9gcuo(firstNames, employees, skill, locations)
 -```
 {
     "type": "AdaptiveCard",
@@ -47,7 +47,14 @@
     "body": [
         {
             "type": "TextBlock",
-            "text": "I have ${firstNameString} and **${employees.count - 3} others** with ${skill} skills.\n",
+            "text": "${skill} - All [${count(employees)}]",
+            "wrap": true,
+            "size": "ExtraLarge",
+            "weight": "Bolder"
+        },
+        {
+            "type": "TextBlock",
+            "text": "${firstNames}",
             "wrap": true
         },
         {

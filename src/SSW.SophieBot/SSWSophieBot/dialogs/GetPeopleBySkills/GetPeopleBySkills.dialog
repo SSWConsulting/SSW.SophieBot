@@ -144,7 +144,7 @@
                       "assignments": [
                         {
                           "property": "turn.firstNames",
-                          "value": "=select(take(turn.sortedEmployees, 3), employee => employee.firstName)"
+                          "value": "=select(turn.sortedEmployees, employee => employee.firstName)"
                         },
                         {
                           "property": "turn.locations",
@@ -159,8 +159,9 @@
                       },
                       "stringList": "=select(turn.firstNames, n, concat(\"**\", n, \"**\"))",
                       "delimiter": ", ",
-                      "lastDelimiter": ", ",
-                      "resultProperty": "turn.firstNameString"
+                      "resultProperty": "turn.firstNames",
+                      "wrapCount": 4,
+                      "lastDelimiter": " and "
                     },
                     {
                       "$kind": "Microsoft.SendActivity",
