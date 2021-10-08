@@ -145,8 +145,7 @@
 
 # NextClient(client)
 -```
-Free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}.  
-Working for ${client.Name} - ${client.Date}.
+${client.Name}
 ```
 
 # AvatarColumn(avatarUrl)
@@ -189,10 +188,3 @@ Working for ${client.Name} - ${client.Date}.
     "verticalContentAlignment": "Center"
 }
 ```
-# SendActivity_UhaM70()
-[Activity
-    Text = ${SendActivity_UhaM70_text()}
-]
-
-# SendActivity_UhaM70_text()
-- ${dialog.firstNames} ${if(count(turn.employees) > 1, 'are', 'is')} not on client work

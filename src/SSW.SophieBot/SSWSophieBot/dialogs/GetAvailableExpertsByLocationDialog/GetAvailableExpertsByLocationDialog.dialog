@@ -119,13 +119,6 @@
                   "result": "turn.employees"
                 },
                 {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "UhaM70"
-                  },
-                  "activity": "${SendActivity_UhaM70()}"
-                },
-                {
                   "$kind": "Microsoft.ForeachPage",
                   "$designer": {
                     "id": "OZCZuQ"
