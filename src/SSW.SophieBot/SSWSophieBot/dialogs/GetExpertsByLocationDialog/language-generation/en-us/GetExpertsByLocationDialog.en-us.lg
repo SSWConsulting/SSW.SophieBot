@@ -24,8 +24,14 @@
 
 # SendActivity_WXSOyK()
 [Activity
-    Attachments = ${json(BillableEmployeesList(if(dialog.foreach.pageindex == 1, dialog.billableTitle, ''), dialog.foreach.page))}
+    Attachments = ${json(BillableEmployeesList(if(dialog.foreach.pageindex == 1, dialog.billableTitle, 
+        GetNextTitle(dialog.foreach.pageindex, 10)), 
+        if(dialog.foreach.pageindex == 1, true, false),
+        dialog.foreach.page))}
 ]
+
+# GetNextTitle(pageIndex, pageSize)
+- ```Next ${if(pageIndex * pageSize < count(turn.billableEmployees.employees), pageSize, count(turn.billableEmployees.employees) - pageSize * (pageIndex - 1))}...```
 
 # WorkingEmployeesList(skill, location, employees)
 -```
@@ -165,5 +171,5 @@
 
 # SendActivity_CPxQF4()
 [Activity
-    Attachments = ${json(BillableEmployeesList(dialog.billableTitle, dialog.foreach.page))}
+    Attachments = ${json(BillableEmployeesList(dialog.billableTitle, true, dialog.foreach.page))}
 ]

@@ -39,11 +39,15 @@
 - In **${dialog.location}**, there is **1** person (${if(turn.employees[0].inOffice, '', 'not')} in the office today).
 # SendActivity_Jcjj19()
 [Activity
-    Attachments = ${json(EmployeesGroupActionCard(TextInfo(), turn.groupedEmployees, dialog.location, GetEntities()))}
+    Attachments = ${json(EmployeesGroupActionCard(GetTitleForAll(dialog.location, count(turn.employees)), 
+    null, TextInfo(), turn.groupedEmployees, dialog.location, GetEntities()))}
 ]
 
+# GetTitleForAll(location, count)
+- ```${location} - All [${count}]```
+
 # TextInfo()
-- In **${dialog.location}**, there are **${turn.employees.count}** people (${count(where(turn.employees, e, e.inOffice))} in the office today).
+- There are **${turn.employees.count}** people (${count(where(turn.employees, e, e.inOffice))} in the office today).
 
 # GetEntities()
 - ```

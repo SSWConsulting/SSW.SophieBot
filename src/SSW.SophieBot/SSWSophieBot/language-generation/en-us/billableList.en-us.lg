@@ -1,77 +1,11 @@
 [Icons](icons.en-us.lg)
 
-# BillableEmployeesList(title, employees)
+# BillableEmployeesList(title, isMain, employees)
 -```
 {
     "type": "AdaptiveCard",
     "body": [
-        ${ListTitle(title)}
-        {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "width": "50px",
-					"items": []
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "Name",
-                            "wrap": true,
-                            "weight": "Bolder"
-                        }
-                    ],
-                    "verticalContentAlignment": "Center"
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "Billed ↓",
-                            "weight": "Bolder",
-                            "horizontalAlignment": "Center"
-                        }
-                    ],
-                    "verticalContentAlignment": "Center"
-                },
-                {
-                    "type": "Column",
-                    "width": "auto",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "Booking Status",
-                            "weight": "Bolder"
-                        }
-                    ],
-                    "verticalContentAlignment": "Center"
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "Last Seen",
-                            "wrap": true,
-                            "weight": "Bolder",
-                            "horizontalAlignment": "Center"
-                        }
-                    ],
-                    "verticalContentAlignment": "Center"
-                }
-            ],
-            "bleed": true,
-            "style": "default",
-            "height": "stretch",
-            "spacing": "Medium"
-        },
+        ${ListTitle(title, isMain)}
         {
             "type": "Container",
             "items": [${join(select(employees, e, BillableEmployeeRow(e)), ',')}],
@@ -83,57 +17,104 @@
 }
 ```
 
-# ListTitle(title)
+# LegendAndColumnHeaders()
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Legend  🟩 Client work | ⬛ Internal work | 🟥 Leave",
+                    "wrap": true,
+                    "spacing": "None",
+                    "isSubtle": true
+                }
+            ]
+        }
+    ]
+},
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "50px",
+            "items": []
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Name",
+                    "wrap": true,
+                    "weight": "Bolder"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Billed ↓",
+                    "weight": "Bolder",
+                    "horizontalAlignment": "Center"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "auto",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Booking Status",
+                    "weight": "Bolder"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Last Seen",
+                    "wrap": true,
+                    "weight": "Bolder",
+                    "horizontalAlignment": "Center"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        }
+    ],
+    "bleed": true,
+    "style": "default",
+    "height": "stretch",
+    "spacing": "Medium"
+},
+```
+
+# ListTitle(title, isMain)
 - IF: ${exists(title) && length(title) > 0}
     - ```
     {
         "type": "TextBlock",
-        "size": "ExtraLarge",
+        "size": "${if(isMain, 'ExtraLarge', 'Medium')}",
         "text": "${title}",
         "weight": "Bolder"
     },
-    {
-        "type": "ColumnSet",
-        "columns": [
-            {
-                "type": "Column",
-                "width": "stretch",
-                "items": [
-                    {
-                        "type": "TextBlock",
-                        "text": "Legend",
-                        "wrap": true,
-                        "spacing": "None",
-                        "isSubtle": true
-                    },
-                    {
-                        "type": "TextBlock",
-                        "text": "🟢 Client work",
-                        "spacing": "Small",
-                        "wrap": true,
-                        "isSubtle": true,
-                        "weight": "Lighter"
-                    },
-                    {
-                        "type": "TextBlock",
-                        "text": "⚫ Internal work",
-                        "wrap": true,
-                        "spacing": "None",
-                        "isSubtle": true,
-                        "weight": "Lighter"
-                    },
-                    {
-                        "type": "TextBlock",
-                        "text": "🔴 Leave",
-                        "wrap": true,
-                        "spacing": "None",
-                        "weight": "Lighter",
-                        "isSubtle": true
-                    }
-                ]
-            }
-        ]
-    },
+    ${if(isMain, LegendAndColumnHeaders(), '')}
     ```
 - ELSE: 
     - 
