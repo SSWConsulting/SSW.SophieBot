@@ -15,12 +15,19 @@
     "body": [
         {
             "type": "TextBlock",
-            "text": "${DateInfo(turn.formatDate)}",
+            "text": "${PeopleType()} - All [${count(employees)}]",
+            "wrap": true,
+            "size": "ExtraLarge",
+            "weight": "Bolder"
+        },
+        {
+            "type": "TextBlock",
+            "text": "${if(turn.formatDate != null, turn.formatDate, '')}",
             "wrap": true
         },
         {
             "type": "TextBlock",
-            "text": "${firstNames} ${StatusInfo()}",
+            "text": "${firstNames}",
             "wrap": true
         },
         {
@@ -65,20 +72,6 @@
     ]
 }
 ```
-
-# DateInfo(date)
-- IF: ${ turn.formatDate != null }
-    - On **${turn.formatDate}** we have
-- ELSE:
-    - ``````
-
-# StatusInfo()
-- IF: ${ dialog.onInternal }
-    - are on internal work.
-- ELSEIF: ${ dialog.booked }
-    - are on client work.
--ELSE:
-    - are free.
 
 # LocationButton(location, number)
 -``` 
@@ -138,17 +131,30 @@
     - ```
     {
         "type": "TextBlock",
-        "text": "${PeopleType()} - ${if(location == '', 'All', location)}",
+        "text": "${PeopleType()} - ${if(location == '', 'All', location)} [${count(turn.employees)}]",
         "wrap": true,
         "size": "ExtraLarge",
         "weight": "Bolder"
+    },
+    {
+        "type": "TextBlock",
+        "text": "${if(turn.formatDate != null, turn.formatDate, '')}",
+        "wrap": true
     }
     ```
 - ELSE:
-    - ``````
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "Next ${if(dialog.foreach.pageindex * 10 < count(turn.employees), 10, count(turn.employees) - 10 * (dialog.foreach.pageindex - 1))}...",
+        "wrap": true,
+        "size": "Medium",
+        "weight": "Bolder"
+    }
+    ```
 
 # Footer()
-- IF: ${ dialog.foreach.pageindex == ceiling(div(count(turn.employees), float('15.0'))) }
+- IF: ${ dialog.foreach.pageindex == ceiling(div(count(turn.employees), float('10.0'))) }
     - ```
     {
         "type": "ActionSet",
@@ -188,7 +194,9 @@
 ```
 
 # HeaderColumns
-- IF: ${ dialog.onInternal }
+- IF: ${ dialog.foreach.pageindex != 1 }
+    - 
+- ELSEIF: ${ dialog.onInternal }
     - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '125px'), HeaderColumn('Appointment', 'stretch')), ',')}
 - ELSEIF: ${ dialog.booked }
     - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '125px'), HeaderColumn('Client', 'stretch')), ',')}
@@ -291,8 +299,14 @@
 
 # NextClient(client)
 -```
-Free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}. Working for ${client.Name} - ${client.Date}.
+Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}. ${ClientInfo(client)}
 ```
+
+# ClientInfo(client)
+- IF: ${ dialog.fromDate == null }
+    - Working for ${client.Name} - ${client.Date}.
+- ELSE:
+    -
 
 # SendActivity_pArEiW()
 [Activity
@@ -328,4 +342,3 @@ Free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}. Working 
     - ``` on ${turn.formatDate}```
 - ELSE:
     - ``````
-
