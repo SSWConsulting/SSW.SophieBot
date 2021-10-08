@@ -18,8 +18,12 @@
 - Sorry, I couldn't find anyone in the **${dialog.locationEntity}** office right now. Please try again.
 # SendActivity_AlWbJq()
 [Activity
-    Attachments = ${json(EmployeesGroupActionCard(TextInfo(), turn.groupedEmployees, dialog.locationEntity, GetEntities()))}
+    Attachments = ${json(EmployeesGroupActionCard(GetTitleForAll(dialog.locationEntity, count(turn.employees)),
+    null, turn.names, turn.groupedEmployees, dialog.locationEntity, GetEntities()))}
 ]
+
+# GetTitleForAll(location, count)
+- ```${location} - All [${count}]```
 
 # TextInfo()
 - ${join([turn.names, if(count(turn.employees) == 1, "is", "are"), "in", concat("**", dialog.locationEntity, "**")],  ' ')} right now

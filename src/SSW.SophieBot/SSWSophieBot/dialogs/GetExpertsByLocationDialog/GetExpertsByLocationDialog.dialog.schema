@@ -28,6 +28,11 @@
       "description": "Used for filtering employees with specified experience level on a particular skill",
       "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
       "title": "Experience Level"
+    },
+    "title": {
+      "description": "Title for the list card",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Title"
     }
   },
   "$result": {
