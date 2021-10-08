@@ -17,5 +17,8 @@
 - Sorry, I couldn't find anyone working on **${dialog.projectEntity}** in your organization. Please try again.
 # SendActivity_OeOolV()
 [Activity
-    Attachments = ${json(BillableEmployeesList(turn.workingEmployees.project, dialog.foreach.page))}
+    Attachments = ${json(BillableEmployeesList(CardTitle(), dialog.foreach.page))}
 ]
+
+# CardTitle()
+- ${turn.workingEmployees.project} [${count(turn.employees)}]
