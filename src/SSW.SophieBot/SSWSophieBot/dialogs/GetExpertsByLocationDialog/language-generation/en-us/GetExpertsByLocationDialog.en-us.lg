@@ -27,7 +27,8 @@
     Attachments = ${json(BillableEmployeesList(if(dialog.foreach.pageindex == 1, dialog.billableTitle, 
         GetNextTitle(dialog.foreach.pageindex, 10)), 
         if(dialog.foreach.pageindex == 1, true, false),
-        dialog.foreach.page))}
+        dialog.foreach.page,
+        dialog.foreach.pageindex * 10 >= count(turn.billableEmployees.employees)))}
 ]
 
 # GetNextTitle(pageIndex, pageSize)
@@ -168,8 +169,3 @@
     "separator": true
 }
 ```
-
-# SendActivity_CPxQF4()
-[Activity
-    Attachments = ${json(BillableEmployeesList(dialog.billableTitle, true, dialog.foreach.page))}
-]
