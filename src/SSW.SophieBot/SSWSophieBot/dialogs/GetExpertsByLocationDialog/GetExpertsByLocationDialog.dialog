@@ -144,7 +144,7 @@
                         "id": "JkGEqi"
                       },
                       "property": "dialog.billableTitle",
-                      "value": "=dialog.locationEntity"
+                      "value": "=coalesce(dialog.title, dialog.locationEntity)"
                     },
                     {
                       "$kind": "Microsoft.ForeachPage",
