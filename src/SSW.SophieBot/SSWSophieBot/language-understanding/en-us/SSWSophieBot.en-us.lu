@@ -302,6 +302,13 @@
 - Is {@contact={@firstname=Anthony}} free?
 - Is {@contact={@firstname=Anthony} {@lastname=Nguyen}} free?
 
+@ phraseList SkilledPeoplePhraseList(interchangeable) =
+	- know
+	- knows
+	- good at
+	- can work on
+
+@ intent GetPeopleBySkills usesFeature SkilledPeoplePhraseList
 
 # GetPeopleBySkills
 - I need to talk to an {skill = Angular} expert
