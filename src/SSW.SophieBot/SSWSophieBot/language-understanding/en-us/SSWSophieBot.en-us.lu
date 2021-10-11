@@ -375,6 +375,13 @@
     - right now
     - now
 
+@ phraseList GreetingPhraseList(interchangeable) =
+	- hi
+	- hello
+	- hey
+
+@ intent Greeting usesFeature GreetingPhraseList
+
 # Greeting
 - hello
 - hi
@@ -383,3 +390,4 @@
 - good morning
 - how do you do
 - what's up
+- hey sophie
