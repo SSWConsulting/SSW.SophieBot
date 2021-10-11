@@ -46,7 +46,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "🟩 Client Work  ⬛ Internal Work  🟥 Leave",
+                    "text": "🟢 Client Work  ⚫ Internal Work  🔴 Leave",
                     "wrap": true,
                     "spacing": "None",
                     "isSubtle": true

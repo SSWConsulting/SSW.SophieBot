@@ -169,3 +169,10 @@
     "separator": true
 }
 ```
+# SendActivity_HNg6Pg()
+[Activity
+    Text = ${SendActivity_HNg6Pg_text()}
+]
+
+# SendActivity_HNg6Pg_text()
+- Sorry, I don't know the place you are talking about.

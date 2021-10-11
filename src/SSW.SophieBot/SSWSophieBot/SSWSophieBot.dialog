@@ -812,11 +812,11 @@
             },
             {
               "property": "$options.location",
-              "value": "=@location"
+              "value": "=titleCase(@location)"
             },
             {
               "property": "$options.skill",
-              "value": "=@skill"
+              "value": "=titleCase(@skill)"
             },
             {
               "property": "$options.project",
