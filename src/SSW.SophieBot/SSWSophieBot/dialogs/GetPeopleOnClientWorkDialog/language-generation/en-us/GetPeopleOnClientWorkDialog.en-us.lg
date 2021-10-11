@@ -230,10 +230,24 @@
     "separator": true
 },
 {
-    "type": "TextBlock",
-    "text": "${if(employee.NextClient != null, NextClient(employee.NextClient), '')}",
-    "wrap": true,
-    "size": "Small"
+    "type": "ColumnSet",
+    "columns": [
+        ${HeaderColumn('', '35px')},
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${if(employee.NextClient != null, NextClient(employee.NextClient), '')}",
+                    "wrap": true,
+                    "size": "Small"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        }
+    ],
+    "style": "default"
 }
 ```
 
@@ -299,7 +313,7 @@
 
 # NextClient(client)
 -```
-Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}. ${ClientInfo(client)}
+Note: Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}. ${ClientInfo(client)}
 ```
 
 # ClientInfo(client)
