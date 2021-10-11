@@ -122,7 +122,7 @@
     "items": [
         {
             "type": "TextBlock",
-            "text": "Next client",
+            "text": "Note",
             "wrap": true,
             "weight": "Bolder"
         }
@@ -145,7 +145,7 @@
 
 # NextClient(client)
 -```
-${client.Name}
+Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}
 ```
 
 # AvatarColumn(avatarUrl)
