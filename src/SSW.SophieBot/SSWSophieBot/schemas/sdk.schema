@@ -35,6 +35,9 @@
       "$ref": "#/definitions/GetGroupedEmployeesAction"
     },
     {
+      "$ref": "#/definitions/GetInternalBookedEmployeesAction"
+    },
+    {
       "$ref": "#/definitions/GetPeopleBasedOnLocationDialog.dialog"
     },
     {
@@ -1131,6 +1134,11 @@
           "$ref": "#/definitions/stringExpression",
           "title": "Experience Level"
         },
+        "title": {
+          "description": "Title for the list card",
+          "$ref": "#/definitions/stringExpression",
+          "title": "Title"
+        },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
@@ -1249,6 +1257,51 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "GetGroupedEmployeesAction"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetInternalBookedEmployeesAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetInternalBookedEmployeesAction",
+      "description": "This will return a list of employees that are internally booked",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "employees": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "Employees",
+          "description": "Employees retrieved from HTTP request"
+        },
+        "date": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Date",
+          "description": "Used to filter appointments. Default value is current date"
+        },
+        "result": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result",
+          "description": "The property that result is assign to"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetInternalBookedEmployeesAction"
         },
         "$designer": {
           "title": "Designer information",
@@ -1463,10 +1516,6 @@
         "availableEntity": {
           "$ref": "#/definitions/GetPeopleOnClientWorkDialog.dialog/definitions/stringExpression",
           "title": "Available Entity"
-        },
-        "internalEntity": {
-          "$ref": "#/definitions/GetPeopleOnClientWorkDialog.dialog/definitions/stringExpression",
-          "title": "Internal Entity"
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -7597,6 +7646,9 @@
         },
         {
           "$ref": "#/definitions/GetGroupedEmployeesAction"
+        },
+        {
+          "$ref": "#/definitions/GetInternalBookedEmployeesAction"
         },
         {
           "$ref": "#/definitions/GetPeopleBasedOnLocationDialog.dialog"

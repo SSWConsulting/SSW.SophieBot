@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 
 namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 {
-    public class GetEmployeesByDateAction : ActionBase
+    public class GetInternalBookedEmployeesAction : ActionBase
     {
         [JsonProperty("$kind")]
-        public const string Kind = "GetEmployeesByDateAction";
+        public const string Kind = "GetInternalBookedEmployeesAction";
 
-        public GetEmployeesByDateAction([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
+        public GetInternalBookedEmployeesAction([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
             : base(sourceFilePath, sourceLineNumber)
         {
 
@@ -43,17 +43,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 ? EmployeesHelper.ToUserLocalTime(dc, DateTime.Parse(dateString)).AddHours(9)
                 : DateTime.Now.ToUniversalTime();
 
-            var result = EmployeesHelper.FilterEmployees(employees).Select(e => new EmployeeByDateModel
-            {
-                FirstName = e.FirstName,
-                DefaultSite = e.DefaultSite,
-                AvatarUrl = e.AvatarUrl,
-                DisplayName = $"{e.FirstName} {e.LastName}",
-                CurrentAppointment = EmployeesHelper.GetAppointmentBy(date, e.Appointments),
-                Title = e.Title,
-            })
-            .Where(e => e.CurrentAppointment != null)
-            .ToList();
+            var result = EmployeesHelper.GetInternalBookedEmployees(EmployeesHelper.FilterEmployees(employees), date);
 
 
             if (Result != null)

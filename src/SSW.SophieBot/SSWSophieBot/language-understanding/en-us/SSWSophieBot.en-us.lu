@@ -358,18 +358,17 @@
 - Who is {available = free} in {location = Sydney}?
 - Who is {available = free} in {location = Sydney} next Friday?
 
-- Who's {internal = internal}?
-- Who's {internal = internal} tomorrow
-- Who is {internal = internal} today?
-- Who is {internal = on internal} work?
-- Who is {internal = working for SSW}?
-- Who is {internal = working for SSW} Today?
-- Who is {internal = working for SSW} in {location = China}?
-- Who is {internal = working for SSW} in {location = China} next Friday?
+- Who's {available = internal}?
+- Who's {available = internal} tomorrow
+- Who is {available = internal} today?
+- Who is {available = on internal} work?
+- Who is {available = working for SSW}?
+- Who is {available = working for SSW} Today?
+- Who is {available = working for SSW} in {location = China}?
+- Who is {available = working for SSW} in {location = China} next Friday?
 
 
 @ ml available
-@ ml internal
 @ prebuilt datetimeV2
 
 # GetCurrentEmployeesOnLocation

@@ -45,7 +45,7 @@
                         "intent": "GetPeopleOnClientWork",
                         "available": "${dialog.availableEntity}",
                         "internal": "${dialog.internalEntity}",
-                        "location": "${location}",
+                        "location": "",
                         "datetime": [
                             {
                             "timex": [
@@ -161,7 +161,7 @@
         "actions": [
             {
                 "type": "Action.OpenUrl",
-                "title": "More Booking Info",
+                "title": "📈 More Booking Info",
                 "url": "${settings.CRMBookingEndpoint}"
             }
         ]
@@ -171,12 +171,10 @@
     - ``````
 
 # PeopleType()
-- IF: ${ dialog.onInternal }
-    - On internal work
-- ELSEIF: ${ dialog.booked }
-    - On client work
+- IF: ${ dialog.booked }
+    - On Client Work
 - ELSE:
-    - Free
+    - On Internal Work
 
 # EmployeeList(employees)
 -```
@@ -196,8 +194,6 @@
 # HeaderColumns
 - IF: ${ dialog.foreach.pageindex != 1 }
     - 
-- ELSEIF: ${ dialog.onInternal }
-    - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '125px'), HeaderColumn('Appointment', 'stretch')), ',')}
 - ELSEIF: ${ dialog.booked }
     - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '125px'), HeaderColumn('Client', 'stretch')), ',')}
 - ELSE:
@@ -230,17 +226,29 @@
     "separator": true
 },
 {
-    "type": "TextBlock",
-    "text": "${if(employee.NextClient != null, NextClient(employee.NextClient), '')}",
-    "wrap": true,
-    "size": "Small"
+    "type": "ColumnSet",
+    "columns": [
+        ${HeaderColumn('', '35px')},
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${if(employee.NextClient != null, NextClient(employee.NextClient), '')}",
+                    "wrap": true,
+                    "size": "Small"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        }
+    ],
+    "style": "default"
 }
 ```
 
 # BodyColumns(employee)
-- IF: ${ dialog.onInternal }
-    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '125px'), BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.subject, ''), 'stretch')), ',')}
-- ELSEIF: ${ dialog.booked }
+- IF: ${ dialog.booked }
     - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '125px'), BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.Regarding, ''), 'stretch')), ',')}
 - ELSE:
     - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '110px'), BodyColumn(concat(employee.BilledDays, if(employee.BilledDays != 0, ' Days', '')), '67px'), ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), BodyColumn(employee.LastSeen, '80px')), ',')}
@@ -299,7 +307,7 @@
 
 # NextClient(client)
 -```
-Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}. ${ClientInfo(client)}
+Note: Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}. ${ClientInfo(client)}
 ```
 
 # ClientInfo(client)
@@ -330,12 +338,10 @@ Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}. ${C
 - Sorry, I couldn't find anyone ${Status()}${Date()}.
 
 # Status()
-- IF: ${ dialog.onInternal }
-    - on internal work
-- ELSEIF: ${ dialog.booked }
+- IF: ${ dialog.booked }
     - on client work
 - ELSE:
-    - who is free
+    - on internal work
 
 # Date()
 - IF: ${ turn.formatDate != null }

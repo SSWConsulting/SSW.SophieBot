@@ -831,10 +831,6 @@
               "value": "=@available"
             },
             {
-              "property": "$options.internal",
-              "value": "=@internal"
-            },
-            {
               "property": "$options.implemented",
               "value": [
                 "GetEmailAddress",
