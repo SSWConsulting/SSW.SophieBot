@@ -1,4 +1,5 @@
-﻿using Microsoft.Bot.Builder.Dialogs;
+﻿using AdaptiveExpressions.Properties;
+using Microsoft.Bot.Builder.Dialogs;
 using SSWSophieBot.HttpClientAction.Models;
 using SSWSophieBot.HttpClientComponents.PersonQuery.Models;
 using System;
@@ -158,6 +159,16 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             var _rgx = new Regex("[^a-zA-Z0-9]", RegexOptions.Compiled);
             var prjName = _rgx.Replace(sourceProjectName, string.Empty);
             return _rgx.Replace(originalProjectName, string.Empty).IndexOf(prjName, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        public static List<GetEmployeeModel> filterEmployees(List<GetEmployeeModel> employees)
+        {
+            var excludedTitles = new string[] { "SSW Admin", "Senior Marketing Specialist", "SSW Senior Accountant", "SSW China CEO", "SSW Electrician",
+                "SSW QLD State", "International Manager", "SSW VIC State Manager", "SSW Administrative Assistant", "SSW General Manager", "SSW Multimedia Assistant",
+                "SSW Multimedia Specialist", "SSW Multimedia Videographer", "SSW Chief Architect", "Microsoft Regional Director", "SSW Lawyer",
+                "SSW Chief Financial Controller", "SSW Videographer", "SSW Producer, Director and Editor", "Administrative Assistant", "SSW Digital Marketing", "SSW Admin Manager" };
+
+            return employees.Where(employee => !excludedTitles.Any(employee.Title.Contains)).ToList();
         }
     }
 }

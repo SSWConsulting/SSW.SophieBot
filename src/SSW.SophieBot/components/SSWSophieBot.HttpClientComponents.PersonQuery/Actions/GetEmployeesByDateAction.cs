@@ -39,11 +39,11 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             var employees = dc.GetValue(Employees);
             var dateString = dc.GetValue(Date);
 
-            var date = dateString != null && dateString != "" 
-                ? EmployeesHelper.ToUserLocalTime(dc, DateTime.Parse(dateString)).AddHours(9) 
+            var date = dateString != null && dateString != ""
+                ? EmployeesHelper.ToUserLocalTime(dc, DateTime.Parse(dateString)).AddHours(9)
                 : DateTime.Now.ToUniversalTime();
 
-            var result = employees.Select(e => new EmployeeByDateModel
+            var result = EmployeesHelper.filterEmployees(employees).Select(e => new EmployeeByDateModel
             {
                 FirstName = e.FirstName,
                 DefaultSite = e.DefaultSite,
