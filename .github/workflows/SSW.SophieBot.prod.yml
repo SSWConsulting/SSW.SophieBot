@@ -1,13 +1,6 @@
 name: BuildAndDeploy-Prod
 
-on:
-  push:
-    branches:
-      - prod
-    paths:
-      - src/SSW.SophieBot/**
-      - .github/workflows/SSW.SophieBot.prod.yml
-      - .github/workflows/scripts/**
+on: workflow_dispatch
 
 concurrency:
   group: SSWSophieBotProd
