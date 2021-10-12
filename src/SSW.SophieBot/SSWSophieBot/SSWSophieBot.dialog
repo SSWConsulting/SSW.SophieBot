@@ -812,11 +812,11 @@
             },
             {
               "property": "$options.location",
-              "value": "=titleCase(@location)"
+              "value": "=if(exists(@location), titleCase(@location), null)"
             },
             {
               "property": "$options.skill",
-              "value": "=titleCase(@skill)"
+              "value": "=if(exists(@skill), titleCase(@skill), null)"
             },
             {
               "property": "$options.project",
