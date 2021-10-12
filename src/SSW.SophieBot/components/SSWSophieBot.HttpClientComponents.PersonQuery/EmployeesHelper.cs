@@ -161,7 +161,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             return _rgx.Replace(originalProjectName, string.Empty).IndexOf(prjName, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        public static List<GetEmployeeModel> filterEmployees(List<GetEmployeeModel> employees)
+        public static List<GetEmployeeModel> FilterEmployees(List<GetEmployeeModel> employees)
         {
             var excludedTitles = new string[] { "SSW Admin", "Senior Marketing Specialist", "SSW Senior Accountant", "SSW China CEO", "SSW Electrician",
                 "SSW QLD State", "International Manager", "SSW VIC State Manager", "SSW Administrative Assistant", "SSW General Manager", "SSW Multimedia Assistant",
@@ -171,7 +171,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             return employees.Where(employee => !excludedTitles.Any(employee.Title.Contains)).ToList();
         }
 
-        public static List<GetEmployeeModel> getInternalBookedEmployees(List<GetEmployeeModel> employees, DateTime date)
+        public static List<GetEmployeeModel> GetInternalBookedEmployees(List<GetEmployeeModel> employees, DateTime date)
         {
             return employees
                 .Where(employees => employees.Appointments

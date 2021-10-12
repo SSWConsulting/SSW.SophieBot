@@ -43,7 +43,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 ? EmployeesHelper.ToUserLocalTime(dc, DateTime.Parse(dateString)).AddHours(9)
                 : DateTime.Now.ToUniversalTime();
 
-            var result = EmployeesHelper.filterEmployees(employees).Select(e => new EmployeeByDateModel
+            var result = EmployeesHelper.FilterEmployees(employees).Select(e => new EmployeeByDateModel
             {
                 FirstName = e.FirstName,
                 DefaultSite = e.DefaultSite,

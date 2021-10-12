@@ -43,7 +43,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 ? EmployeesHelper.ToUserLocalTime(dc, DateTime.Parse(dateString)).AddHours(9)
                 : DateTime.Now.ToUniversalTime();
 
-            var result = EmployeesHelper.getInternalBookedEmployees(EmployeesHelper.filterEmployees(employees), date);
+            var result = EmployeesHelper.GetInternalBookedEmployees(EmployeesHelper.FilterEmployees(employees), date);
 
 
             if (Result != null)
