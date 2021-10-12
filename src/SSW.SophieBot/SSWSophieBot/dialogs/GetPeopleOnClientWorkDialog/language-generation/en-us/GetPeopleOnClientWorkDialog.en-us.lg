@@ -172,9 +172,9 @@
 
 # PeopleType()
 - IF: ${ dialog.booked }
-    - On client work
+    - On Client Work
 - ELSE:
-    - On internal work
+    - On Internal Work
 
 # EmployeeList(employees)
 -```
