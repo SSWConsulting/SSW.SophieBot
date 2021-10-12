@@ -25,6 +25,29 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "CIhSxz"
+          },
+          "condition": "=exists(dialog.locationEntity)",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "HNg6Pg"
+              },
+              "activity": "${SendActivity_HNg6Pg()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "pNQUWD"
+              }
+            }
+          ],
+          "actions": []
+        },
+        {
           "$kind": "GetProfileAction",
           "$designer": {
             "id": "J1SiVn"

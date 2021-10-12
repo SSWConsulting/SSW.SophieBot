@@ -302,6 +302,13 @@
 - Is {@contact={@firstname=Anthony}} free?
 - Is {@contact={@firstname=Anthony} {@lastname=Nguyen}} free?
 
+@ phraseList SkilledPeoplePhraseList(interchangeable) =
+	- know
+	- knows
+	- good at
+	- can work on
+
+@ intent GetPeopleBySkills usesFeature SkilledPeoplePhraseList
 
 # GetPeopleBySkills
 - I need to talk to an {skill = Angular} expert
@@ -374,6 +381,13 @@
     - right now
     - now
 
+@ phraseList GreetingPhraseList(interchangeable) =
+	- hi
+	- hello
+	- hey
+
+@ intent Greeting usesFeature GreetingPhraseList
+
 # Greeting
 - hello
 - hi
@@ -382,3 +396,4 @@
 - good morning
 - how do you do
 - what's up
+- hey sophie
