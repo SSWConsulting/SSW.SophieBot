@@ -170,5 +170,16 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 
             return employees.Where(employee => !excludedTitles.Any(employee.Title.Contains)).ToList();
         }
+
+        public static List<GetEmployeeModel> getInternalBookedEmployees(List<GetEmployeeModel> employees, DateTime date)
+        {
+            return employees
+                .Where(employees => employees.Appointments
+                    .Where(appointment => date.Ticks >= GetTicksFrom(appointment.Start) && date.Ticks <= GetTicksFrom(appointment.End))
+                    .Where(appointment => appointment.Regarding == "SSW" && !leavePhrases.Any(appointment.Subject.ToLower().Contains))
+                    .ToList().Count != 0
+                    )
+                .ToList();
+        }
     }
 }
