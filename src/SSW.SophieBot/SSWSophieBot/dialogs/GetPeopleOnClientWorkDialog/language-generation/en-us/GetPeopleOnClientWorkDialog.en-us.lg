@@ -45,7 +45,7 @@
                         "intent": "GetPeopleOnClientWork",
                         "available": "${dialog.availableEntity}",
                         "internal": "${dialog.internalEntity}",
-                        "location": "${location}",
+                        "location": "",
                         "datetime": [
                             {
                             "timex": [

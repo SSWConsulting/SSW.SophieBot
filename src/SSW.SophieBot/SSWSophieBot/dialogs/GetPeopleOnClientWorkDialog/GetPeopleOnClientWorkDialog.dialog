@@ -240,7 +240,7 @@
                   "$designer": {
                     "id": "vjhrqb"
                   },
-                  "condition": "dialog.locationEntity != null && dialog.locationEntity != ''",
+                  "condition": "dialog.locationEntity != null",
                   "actions": [
                     {
                       "$kind": "Microsoft.ForeachPage",
