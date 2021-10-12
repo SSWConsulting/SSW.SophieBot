@@ -15,10 +15,6 @@
     "availableEntity": {
       "$ref": "#/definitions/stringExpression",
       "title": "Available Entity"
-    },
-    "internalEntity": {
-      "$ref": "#/definitions/stringExpression",
-      "title": "Internal Entity"
     }
   },
   "$result": {

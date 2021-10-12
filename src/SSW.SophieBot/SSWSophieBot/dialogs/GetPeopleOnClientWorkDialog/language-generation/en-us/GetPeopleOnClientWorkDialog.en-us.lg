@@ -171,12 +171,10 @@
     - ``````
 
 # PeopleType()
-- IF: ${ dialog.onInternal }
-    - On internal work
-- ELSEIF: ${ dialog.booked }
+- IF: ${ dialog.booked }
     - On client work
 - ELSE:
-    - Free
+    - On internal work
 
 # EmployeeList(employees)
 -```
@@ -196,8 +194,6 @@
 # HeaderColumns
 - IF: ${ dialog.foreach.pageindex != 1 }
     - 
-- ELSEIF: ${ dialog.onInternal }
-    - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '125px'), HeaderColumn('Appointment', 'stretch')), ',')}
 - ELSEIF: ${ dialog.booked }
     - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '125px'), HeaderColumn('Client', 'stretch')), ',')}
 - ELSE:
@@ -252,9 +248,7 @@
 ```
 
 # BodyColumns(employee)
-- IF: ${ dialog.onInternal }
-    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '125px'), BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.subject, ''), 'stretch')), ',')}
-- ELSEIF: ${ dialog.booked }
+- IF: ${ dialog.booked }
     - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '125px'), BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.Regarding, ''), 'stretch')), ',')}
 - ELSE:
     - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '110px'), BodyColumn(concat(employee.BilledDays, if(employee.BilledDays != 0, ' Days', '')), '67px'), ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), BodyColumn(employee.LastSeen, '80px')), ',')}
@@ -344,12 +338,10 @@ Note: Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')
 - Sorry, I couldn't find anyone ${Status()}${Date()}.
 
 # Status()
-- IF: ${ dialog.onInternal }
-    - on internal work
-- ELSEIF: ${ dialog.booked }
+- IF: ${ dialog.booked }
     - on client work
 - ELSE:
-    - who is free
+    - on internal work
 
 # Date()
 - IF: ${ turn.formatDate != null }

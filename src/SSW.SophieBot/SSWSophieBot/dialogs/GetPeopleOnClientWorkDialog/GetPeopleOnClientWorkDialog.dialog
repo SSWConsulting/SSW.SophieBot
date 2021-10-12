@@ -147,14 +147,14 @@
                 {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "OCscRi"
+                    "id": "Cbn7dl"
                   },
-                  "condition": "dialog.onInternal == True",
+                  "condition": "=dialog.booked == True",
                   "actions": [
                     {
                       "$kind": "GetEmployeesByDateAction",
                       "$designer": {
-                        "id": "pdhATR"
+                        "id": "acD2tF"
                       },
                       "employees": "=turn.employees",
                       "date": "=dialog.fromDate",
@@ -163,49 +163,21 @@
                     {
                       "$kind": "Microsoft.SetProperty",
                       "$designer": {
-                        "id": "Dz0gh9"
+                        "id": "ct8ux4"
                       },
                       "property": "turn.employees",
-                      "value": "=where(turn.employees, e => e.currentAppointment.Regarding == 'SSW')"
+                      "value": "=where(turn.employees, e => e.currentAppointment.Regarding != 'SSW')"
                     }
                   ],
                   "elseActions": [
                     {
-                      "$kind": "Microsoft.IfCondition",
+                      "$kind": "GetFreeEmployeesAction",
                       "$designer": {
-                        "id": "Hif4Gq"
+                        "id": "GEdTT3"
                       },
-                      "condition": "dialog.booked == True",
-                      "actions": [
-                        {
-                          "$kind": "GetEmployeesByDateAction",
-                          "$designer": {
-                            "id": "UyDnoK"
-                          },
-                          "employees": "=turn.employees",
-                          "result": "turn.employees",
-                          "date": "=dialog.fromDate"
-                        },
-                        {
-                          "$kind": "Microsoft.SetProperty",
-                          "$designer": {
-                            "id": "6QD15y"
-                          },
-                          "property": "turn.employees",
-                          "value": "=where(turn.employees, e => e.currentAppointment.Regarding != 'SSW')"
-                        }
-                      ],
-                      "elseActions": [
-                        {
-                          "$kind": "GetFreeEmployeesAction",
-                          "$designer": {
-                            "id": "HWxzqw"
-                          },
-                          "employees": "=turn.employees",
-                          "result": "turn.employees",
-                          "date": "=dialog.fromDate"
-                        }
-                      ]
+                      "employees": "=turn.employees",
+                      "date": "=dialog.fromDate",
+                      "result": "turn.employees"
                     }
                   ]
                 },
