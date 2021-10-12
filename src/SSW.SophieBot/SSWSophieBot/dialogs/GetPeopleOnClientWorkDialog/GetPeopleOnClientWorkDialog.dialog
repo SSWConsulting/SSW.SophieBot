@@ -171,11 +171,43 @@
                   ],
                   "elseActions": [
                     {
+                      "$kind": "GetProfileAction",
+                      "$designer": {
+                        "id": "BVVSfA"
+                      },
+                      "queryString": [
+                        {
+                          "key": "booked",
+                          "value": true
+                        },
+                        {
+                          "value": "=dialog.fromDate",
+                          "key": "fromDate"
+                        },
+                        {
+                          "value": "=dialog.location",
+                          "key": "location"
+                        }
+                      ],
+                      "statusCodeProperty": "turn.statusCode",
+                      "reasonPhraseProperty": "turn.reasonPhrase",
+                      "employeesProperty": "turn.bookedEmployees"
+                    },
+                    {
+                      "$kind": "GetInternalBookedEmployeesAction",
+                      "$designer": {
+                        "id": "9MVjzM"
+                      },
+                      "employees": "=turn.bookedEmployees",
+                      "date": "=dialog.fromDate",
+                      "result": "turn.internalbookedEmployees"
+                    },
+                    {
                       "$kind": "GetFreeEmployeesAction",
                       "$designer": {
                         "id": "GEdTT3"
                       },
-                      "employees": "=turn.employees",
+                      "employees": "=union(turn.internalbookedEmployees, turn.employees) ",
                       "date": "=dialog.fromDate",
                       "result": "turn.employees"
                     }
