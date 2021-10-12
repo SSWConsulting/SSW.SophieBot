@@ -161,7 +161,7 @@
         "actions": [
             {
                 "type": "Action.OpenUrl",
-                "title": "More Booking Info",
+                "title": "📈 More Booking Info",
                 "url": "${settings.CRMBookingEndpoint}"
             }
         ]
@@ -348,3 +348,25 @@ Note: Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')
     - ``` on ${turn.formatDate}```
 - ELSE:
     - ``````
+
+# LogAction_Text_wmYVuP()
+[Activity
+    Text = ${LogAction_Text_wmYVuP_text()}
+]
+
+# LogAction_Text_wmYVuP_text()
+- ${turn.internalbookedEmployees}
+# LogAction_Text_wvhZLB()
+[Activity
+    Text = ${LogAction_Text_wvhZLB_text()}
+]
+
+# LogAction_Text_wvhZLB_text()
+- ${dialog.booked}
+# LogAction_Text_mgBugf()
+[Activity
+    Text = ${LogAction_Text_mgBugf_text()}
+]
+
+# LogAction_Text_mgBugf_text()
+- ${turn.bookedEmployees}
