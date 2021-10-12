@@ -71,30 +71,38 @@
                     "data": {
                         "intent": "GetExpertsByLocation",
                         "skill": "${skill}"
+                    },
+                    "msteams": {
+                        "type": "messageBack",
+                        "displayText": "Show All [${count(employees)}]"
                     }
                 },
-                ${join(select(subArray(locations, 0, 5), location => LocationButton(skill, location, employees)), ',')}
+                ${join(select(subArray(locations, 0, 5), location => LocationButton(skill, location, Count(location, employees))), ',')}
             ]
         },
         {
             "type": "ActionSet",
             "actions": [
-                ${join(select(subArray(locations, 5, count(locations)), location => LocationButton(skill, location, employees)), ',')}
+                ${join(select(subArray(locations, 5, count(locations)), location => LocationButton(skill, location, Count(location, employees))), ',')}
             ]
         }
     ]
 }
 ```
 
-# LocationButton(skill, location, employees)
+# LocationButton(skill, location, number)
 -``` 
 {
     "type": "Action.Submit",
-    "title": "${location} [${Count(location, employees)}]",
+    "title": "${location} [${number}]",
     "data": {
         "intent": "GetExpertsByLocation",
         "skill": "${skill}",
-        "location": "${location}"
+        "location": "${location}",
+        "msteams": {
+            "type": "messageBack",
+	        "displayText": "${location} [${number}]"
+        }
     }
 }
 ```
