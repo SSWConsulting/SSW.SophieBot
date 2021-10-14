@@ -98,6 +98,8 @@
 - which {@contact={@firstname=john}}´s new phone number?
 - who can tell me {@contact={@firstname=alfonso}}'s phone number?
 - who remembers {@contact={@firstname=albert}}´s phone number?
+- what's {@contact={@firstname=Uly}}'s mobile?
+- what is {@contact={@firstname=Uly}}'s mobile?
 
 
 # GetProfile
@@ -197,6 +199,8 @@
 - what time is it
 - login
 - what do you know
+- who is working today?
+- who is working tomorrow?
 
 > # Entity definitions
 
