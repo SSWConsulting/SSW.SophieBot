@@ -1,3 +1,5 @@
+![ssw-banner](./_docs/images/ssw-banner.png)
+
 # SSW.SophieBot
 
 An Enterprise People Bot.
