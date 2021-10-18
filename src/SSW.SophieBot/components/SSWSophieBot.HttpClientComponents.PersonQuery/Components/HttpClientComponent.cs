@@ -13,9 +13,11 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Components
         {
             services
                 .AddBotApplicationService<GetProfileClient>()
+                .AddBotApplicationService<GetOrganisationsClient>()
                 .AddBotApplicationService<IAvatarManager>();
 
             services.AddDeclarativeType<GetProfileAction>(GetProfileAction.Kind);
+            services.AddDeclarativeType<GetOrganisationsAction>(GetOrganisationsAction.Kind);
             services.AddDeclarativeType<GetEmployeesByDateAction>(GetEmployeesByDateAction.Kind);
             services.AddDeclarativeType<GetEmployeesByBillableAction>(GetEmployeesByBillableAction.Kind);
             services.AddDeclarativeType<GetGroupedEmployeesAction>(GetGroupedEmployeesAction.Kind);

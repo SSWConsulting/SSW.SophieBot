@@ -810,10 +810,10 @@
               "property": "$options.user",
               "value": "=turn.activity.value.user"
             },
-						{
-							"property": "$options.location",
-							"value": "=if(exists(coalesce(@geographyV2.location, @remote)), titleCase(coalesce(@geographyV2.location, @remote)), null)"
-						},
+            {
+              "property": "$options.location",
+              "value": "=if(exists(coalesce(@geographyV2.location, @remote)), titleCase(coalesce(@geographyV2.location, @remote)), null)"
+            },
             {
               "property": "$options.skill",
               "value": "=if(exists(@skill), titleCase(@skill), null)"

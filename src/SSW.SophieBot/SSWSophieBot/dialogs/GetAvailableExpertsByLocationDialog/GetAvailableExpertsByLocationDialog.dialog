@@ -25,11 +25,18 @@
           "value": "=null"
         },
         {
+          "$kind": "GetOrganisationsAction",
+          "$designer": {
+            "id": "4gK2wf"
+          },
+          "sitesProperty": "turn.sswSites"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "a4ywEg"
           },
-          "condition": "=exists(dialog.locationEntity) && length(dialog.locationEntity) > 0",
+          "condition": "=exists(dialog.locationEntity) && length(dialog.locationEntity) > 0 && exists(turn.sswSites) && contains(select(turn.sswSites, site, site.name), dialog.locationEntity)",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
