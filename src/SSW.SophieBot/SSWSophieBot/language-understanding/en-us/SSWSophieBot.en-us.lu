@@ -245,14 +245,11 @@
 
 
 # GetPeopleBasedOnLocation
-- {location = Melbourne} staff
-- {location = Melbourne} employees
-- Who works in {location = China}?
-- Who works in {location = Hangzhou}?
-- Who works in {location = Sydney}?
-- Who works in {location = Melbourne}?
-- Who works in {location = Brisbane}?
-- Who works in {location = Newcastle}?
+- Melbourne staff
+- Melbourne employees
+- Who works in China?
+- Who works in Hangzhou?
+- Who works {@remote}?
 
 
 
@@ -267,17 +264,28 @@
 		- you're very helpful
 
 # GetExpertsByLocation
-- I need to talk to a {skill = DevOps} expert in {location = Melbourne}
-- I need to talk to an {skill = Angular} expert in {location = Sydney}
-- Who is the {skill = Chinafy} expert in {location = China}
-- I want a {skill = Azure Stream Analytics} expert in {location = Hangzhou}
-- Show me the {skill = .NET Core} expert in {location = Brisbane}
-- Who is advanced at {skill = SQL} in {location = Newcastle}
-- Who is good at {skill = Node.js} in {location = Newcastle}
+- I need to talk to a {skill = DevOps} expert in Melbourne
+- I need to talk to an {skill = Angular} expert in Sydney
+- Who is the {skill = Chinafy} expert in China
+- I want a {skill = Azure Stream Analytics} expert in Hangzhou
+- Show me the {skill = .NET Core} expert in Brisbane
+- Who is advanced at {skill = SQL} in Newcastle
+- Who is good at {skill = Node.js} remotely
 
 @ ml skill
+	
+@ list remote = 
+	- Remote :
+		- remote
+		- remotely
+		- in Remote
+		- in remote
+		- from Remote
+		- from remote
+		- by Remote
+		- by remote
 
-@ ml location
+@ prebuilt geographyV2
 
 # GetEmployeesOnProject
 - Who is working on {project = SugarLearning}
@@ -289,13 +297,13 @@
 
 
 # GetAvailableExpertsByLocation
-- Who is free next Friday in {@location = Melbourne} with {@skill = Angular} skills?
-- Who is not booked tomorrow in {@location = Remote} with {@skill = .NET} skills?
-- Who is available next Thursday in {@location = Sydney} with {@skill = .NET Core} skills?
-- I need a {@skill = React} expert in {@location = NewCastle} next Wednesday
-- Show me {@skill = Vue} devs available next Wednesday in {@location = Brisbane}
-- Book an {@skill = Azure Devops} expert next Tuesday in {@location = China}
-- I need {@skill = SQL} developers in {@location = Sydney} tomorrow
+- Who is free next Friday in Melbourne with {@skill = Angular} skills?
+- Who is not booked tomorrow in Remote with {@skill = .NET} skills?
+- Who is available next Thursday in Sydney with {@skill = .NET Core} skills?
+- I need a {@skill = React} expert in NewCastle next Wednesday
+- Show me {@skill = Vue} devs available next Wednesday in Brisbane
+- Book an {@skill = Azure Devops} expert next Tuesday in China
+- I need {@skill = SQL} developers in remote tomorrow
 
 @ prebuilt datetimeV2
 
@@ -346,21 +354,21 @@
 - Who is on client work?
 - Who is on client work tomorrow
 - Who is on client work next Friday?
-- Who is on client work in {location = Sydney}?
-- Who is on client work in {location = Sydney} next Friday?
+- Who is on client work in Sydney?
+- Who is on client work {@remote} next Friday?
 
 - People {available = not on client work}?
 - Who {available = is not on client work}?
 - Who {available = is not on client work} tomorrow
 - Who {available = is not on client work} tomorrow?
-- Who {available = is not on client work} in {location = China}?
-- Who {available = is not on client work} in {location = China} next Monday?
+- Who {available = is not on client work} in China?
+- Who {available = is not on client work} in China next Monday?
 - Who is {available = free}?
 - who is {available = free} tomorrow
 - Who is {available = free} next Friday?
 - Who is {available = free} next Monday?
-- Who is {available = free} in {location = Sydney}?
-- Who is {available = free} in {location = Sydney} next Friday?
+- Who is {available = free} in Sydney?
+- Who is {available = free} remotely next Friday?
 
 - Who's {available = internal}?
 - Who's {available = internal} tomorrow
@@ -368,22 +376,18 @@
 - Who is {available = on internal} work?
 - Who is {available = working for SSW}?
 - Who is {available = working for SSW} Today?
-- Who is {available = working for SSW} in {location = China}?
-- Who is {available = working for SSW} in {location = China} next Friday?
+- Who is {available = working for SSW} in China?
+- Who is {available = working for SSW} remotely next Friday?
 
 
 @ ml available
 @ prebuilt datetimeV2
 
 # GetCurrentEmployeesOnLocation
-- Who is in the {location = Sydney} office right now?
-- Who is currently in the {location = Melbourne} office?
-- Show me who are in {location = Newcastle} now
-
-@ phraseList CurrentLocation(interchangeable) =
-    - currently
-    - right now
-    - now
+- Who is in the Sydney office right now?
+- Who is currently in the Melbourne office?
+- Show me who are in Newcastle now?
+- Who is {@remote} right now?
 
 @ phraseList GreetingPhraseList(interchangeable) =
 	- hi
