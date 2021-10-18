@@ -1641,23 +1641,6 @@
             }
           }
         },
-        "skill": {
-          "type": "object",
-          "title": "Skill",
-          "description": "Skill represented by technology and experienceLevel",
-          "properties": {
-            "technology": {
-              "$ref": "#/definitions/stringExpression",
-              "title": "Technology",
-              "description": "Technology"
-            },
-            "experienceLevel": {
-              "$ref": "#/definitions/stringExpression",
-              "title": "ExperienceLevel",
-              "description": "ExperienceLevel"
-            }
-          }
-        },
         "statusCodeProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Status code Property",

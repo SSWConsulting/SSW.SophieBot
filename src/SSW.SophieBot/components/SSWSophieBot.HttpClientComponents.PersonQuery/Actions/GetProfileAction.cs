@@ -7,7 +7,6 @@ using SSWSophieBot.HttpClientComponents.Abstractions;
 using SSWSophieBot.HttpClientComponents.PersonQuery.Clients;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -26,9 +25,6 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
         }
 
-        [JsonProperty("skill")]
-        public SkillExpression Skill { get; set; }
-
         [JsonProperty("employeesProperty")]
         public StringExpression EmployeesProperty { get; set; }
 
@@ -40,9 +36,9 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             var responseMessage = await httpClient.SendRequestAsync(request =>
             {
                 AddQueryStrings(request, dc);
-                if (string.IsNullOrWhiteSpace(request.RequestUri.Query) && string.IsNullOrWhiteSpace(dc.GetValue(Skill?.Technology)))
+                if (string.IsNullOrWhiteSpace(request.RequestUri.Query))
                 {
-                    throw new ArgumentNullException(nameof(QueryString), $"GetProfile request must have {nameof(QueryString)} or {nameof(Skill)} input");
+                    throw new ArgumentNullException(nameof(QueryString), $"Please specify a filtering item to query");
                 }
             });
 
@@ -59,13 +55,6 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             if (EmployeesProperty != null)
             {
                 var employees = await httpClient.GetContentAsync<List<GetEmployeeModel>>(responseMessage);
-
-                var technology = dc.GetValue(Skill?.Technology);
-                if (!string.IsNullOrWhiteSpace(technology))
-                {
-                    var experienceLevel = Skill?.GetExperienceLevel(dc);
-                    employees = employees.Where(e => e.HasSkill(technology, experienceLevel)).ToList();
-                }
 
                 if (avatarManager != null)
                 {

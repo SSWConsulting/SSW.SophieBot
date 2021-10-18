@@ -45,13 +45,13 @@
                 "items": [
                     {
                         "type": "TextBlock",
-                        "text": "${date}",
+                        "text": "${location} - ${skill} [${count(turn.employees)}]",
                         "wrap": true,
                         "size": "Large"
                     },
                     {
                         "type": "TextBlock",
-                        "text": "${skill} | ${location}",
+                        "text": "${date}",
                         "wrap": true,
                         "isSubtle": true
                     }
@@ -122,7 +122,7 @@
     "items": [
         {
             "type": "TextBlock",
-            "text": "Note",
+            "text": "Availability",
             "wrap": true,
             "weight": "Bolder"
         }
@@ -170,7 +170,7 @@ Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}
 - ${join(createArray(
    AvatarColumn(employee.avatarUrl), 
    BodyColumn(employee.displayName), 
-   BodyColumn(if(employee.NextClient != null, NextClient(employee.NextClient), ''))), ',')}
+   BodyColumn(if(employee.NextClient != null, NextClient(employee.NextClient), '—'))), ',')}
 
 # BodyColumn(text)
 -```
@@ -188,3 +188,18 @@ Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}
     "verticalContentAlignment": "Center"
 }
 ```
+
+# SendActivity_5xlJLh()
+[Activity
+    Text = ${SendActivity_5xlJLh_text()}
+]
+
+# SendActivity_5xlJLh_text()
+- Sorry, I don't know the place you are talking about.
+# SendActivity_C1DsiX()
+[Activity
+    Text = ${SendActivity_C1DsiX_text()}
+]
+
+# SendActivity_C1DsiX_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
