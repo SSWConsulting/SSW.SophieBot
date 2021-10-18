@@ -38,6 +38,9 @@
       "$ref": "#/definitions/GetInternalBookedEmployeesAction"
     },
     {
+      "$ref": "#/definitions/GetOrganisationsAction"
+    },
+    {
       "$ref": "#/definitions/GetPeopleBasedOnLocationDialog.dialog"
     },
     {
@@ -1310,6 +1313,73 @@
         }
       }
     },
+    "GetOrganisationsAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetOrganisationsRequest",
+      "description": "This will return the result of GetOrganisations query",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "queryString": {
+          "type": "array",
+          "title": "Query strings",
+          "description": "Query strings to form the request URI",
+          "items": {
+            "type": "object",
+            "title": "Query string",
+            "description": "Query string",
+            "properties": {
+              "key": {
+                "$ref": "#/definitions/stringExpression",
+                "title": "Key",
+                "description": "Key"
+              },
+              "value": {
+                "$ref": "#/definitions/valueExpression",
+                "title": "Value",
+                "description": "Value"
+              }
+            }
+          }
+        },
+        "statusCodeProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Status code Property",
+          "description": "Target path of the memory variable storing the status code"
+        },
+        "reasonPhraseProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Reason phrase property",
+          "description": "Target path of the memory variable storing the reason phrase"
+        },
+        "sitesProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Sites property",
+          "description": "Target path of the memory variable storing the sites"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetOrganisationsAction"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "GetPeopleBasedOnLocationDialog.dialog": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "GetPeopleBasedOnLocationDialog",
@@ -1638,23 +1708,6 @@
                 "title": "Value",
                 "description": "Value"
               }
-            }
-          }
-        },
-        "skill": {
-          "type": "object",
-          "title": "Skill",
-          "description": "Skill represented by technology and experienceLevel",
-          "properties": {
-            "technology": {
-              "$ref": "#/definitions/stringExpression",
-              "title": "Technology",
-              "description": "Technology"
-            },
-            "experienceLevel": {
-              "$ref": "#/definitions/stringExpression",
-              "title": "ExperienceLevel",
-              "description": "ExperienceLevel"
             }
           }
         },
@@ -7649,6 +7702,9 @@
         },
         {
           "$ref": "#/definitions/GetInternalBookedEmployeesAction"
+        },
+        {
+          "$ref": "#/definitions/GetOrganisationsAction"
         },
         {
           "$ref": "#/definitions/GetPeopleBasedOnLocationDialog.dialog"

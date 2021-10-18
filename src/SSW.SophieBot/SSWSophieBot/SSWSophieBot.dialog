@@ -812,7 +812,7 @@
             },
             {
               "property": "$options.location",
-              "value": "=if(exists(@location), titleCase(@location), null)"
+              "value": "=if(exists(coalesce(@geographyV2.location, @remote)), titleCase(coalesce(@geographyV2.location, @remote)), null)"
             },
             {
               "property": "$options.skill",
