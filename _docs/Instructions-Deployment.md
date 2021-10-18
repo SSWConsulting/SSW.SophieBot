@@ -1,7 +1,7 @@
 # Deployment
 
-1. [Deploy with Bot Framework Composer](#deploy-with-bot-framework-composer)
-2. [Automatic deployment with GitHub Actions](#automatic-deployment-with-github-actions)
+-   [Deploy with Bot Framework Composer](#deploy-with-bot-framework-composer)
+-   [Automatic deployment with GitHub Actions](#automatic-deployment-with-github-actions)
 
 ## Deploy with Bot Framework Composer
 
@@ -17,4 +17,4 @@
 
 ## Automatic deployment with GitHub Actions
 
-TODO:
+Only for dev bot, it will automatically trigger deployment after changes are pushed to the main branch.
