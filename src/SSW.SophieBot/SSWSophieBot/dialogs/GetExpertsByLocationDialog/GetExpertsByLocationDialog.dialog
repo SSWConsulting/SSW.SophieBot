@@ -163,6 +163,14 @@
                       "workingEmployeesProperty": "turn.billableEmployees"
                     },
                     {
+                      "$kind": "ClientNowAction",
+                      "$designer": {
+                        "id": "hh49KT"
+                      },
+                      "resultProperty": "turn.clientNow",
+                      "format": "dddd d MMMM"
+                    },
+                    {
                       "$kind": "Microsoft.SetProperty",
                       "$designer": {
                         "id": "JkGEqi"

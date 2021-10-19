@@ -134,6 +134,14 @@
                       "groupedEmployeesProperty": "turn.groupedEmployees"
                     },
                     {
+                      "$kind": "ClientNowAction",
+                      "$designer": {
+                        "id": "pkQMXH"
+                      },
+                      "format": "dddd d MMMM",
+                      "resultProperty": "turn.clientNow"
+                    },
+                    {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
                         "id": "AlWbJq"

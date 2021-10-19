@@ -35,6 +35,8 @@
     {
         "type": "TextBlock",
         "text": "${subTitle}",
+        "isSubtle": true,
+        "size": "Medium",
         "wrap": true
     }
     ```

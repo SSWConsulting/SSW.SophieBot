@@ -26,6 +26,7 @@
 [Activity
     Attachments = ${json(BillableEmployeesList(if(dialog.foreach.pageindex == 1, dialog.billableTitle, 
         GetNextTitle(dialog.foreach.pageindex, 10)), 
+        turn.clientNow,
         if(dialog.foreach.pageindex == 1, true, false),
         dialog.foreach.page,
         dialog.foreach.pageindex * 10 >= count(turn.billableEmployees.employees)))}
