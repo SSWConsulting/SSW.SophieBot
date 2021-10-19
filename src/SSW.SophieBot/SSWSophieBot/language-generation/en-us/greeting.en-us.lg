@@ -1,0 +1,57 @@
+# GreetingHeroCard()
+- ```
+{
+    "text": "${SayHi()}",
+    "images": [
+        ${if(!user.welcomed, GreetingImage(), '')}
+    ],
+    "buttons": [
+        ${GreetingButtons()}
+    ]
+}
+```
+
+# SayHi()
+- IF: ${turn.signedInUser.givenName != null}
+    - ```
+    <b><font size=\"4\">Welcome to SSW SophieBot!</font></b><br/><br/>
+    <b>Hi ${turn.signedInUser.givenName}</b> 🖐<br/><br/>
+    ${SummaryText()}
+    ```
+- ELSE: 
+    - ```
+    <b><font size=\"4\">Welcome to SSW SophieBot!</font></b><br/><br/>
+    <b>Hi there</b> 🖐<br/>
+    ${SummaryText()}
+    ```
+
+# GreetingImage()
+- ```
+{
+    "url": "https://www.ssw.com.au/ssw/logo/sophiebot/Images/SophieBot_preview.png"
+}
+```
+
+# SummaryText()
+- I can help you search for people in your organization. Try by asking.
+- I'm ready to help answer questions about people in your organization. Try by asking.
+- I'm here to help you find people in your organization. Try by asking.
+
+# GreetingButtons()
+- ```
+{
+    "type": "imBack",
+    "title": "Who is Adam Cogan?",
+    "value": "Who is Adam Cogan?"
+},
+{
+    "type": "imBack",
+    "title": "Who knows Azure?",
+    "value": "Who knows Azure?"
+},
+{
+    "type": "imBack",
+    "title": "Who is on client work?",
+    "value": "Who is on client work?"
+}
+```

@@ -23,29 +23,11 @@
           }
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "urj4hC"
+            "id": "6Fa6oO"
           },
-          "condition": "= turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType != 'personal'",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "DP3pJu"
-              },
-              "activity": "${SendActivity_WelcomeUser()}"
-            }
-          ],
-          "actions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "W4IWlO"
-              },
-              "activity": "${SendActivity_WelcomeAttachment()}"
-            }
-          ]
+          "activity": "${WelcomeAttachment()}"
         },
         {
           "$kind": "Microsoft.EndDialog",

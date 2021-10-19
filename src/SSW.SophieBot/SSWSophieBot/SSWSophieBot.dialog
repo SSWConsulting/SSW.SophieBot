@@ -30,7 +30,22 @@
             "id": "Lkj14X"
           },
           "activityProcessed": true,
-          "dialog": "GreetingDialog"
+          "dialog": "GreetingDialog",
+          "options": {}
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "DFYpr5"
+          },
+          "property": "user.welcomed",
+          "value": true
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "xo5s5D"
+          }
         }
       ]
     },
@@ -54,7 +69,22 @@
             "id": "v1WCKm"
           },
           "activityProcessed": true,
-          "dialog": "GreetingDialog"
+          "dialog": "GreetingDialog",
+          "options": {}
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "0zINy2"
+          },
+          "property": "user.welcomed",
+          "value": true
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "tGb7Qz"
+          }
         }
       ]
     },
@@ -771,6 +801,14 @@
             "id": "JcLjcy"
           },
           "activity": "${SendActivity_JcLjcy()}"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "INxz6g"
+          },
+          "property": "user.welcomed",
+          "value": false
         },
         {
           "$kind": "Microsoft.EndDialog",

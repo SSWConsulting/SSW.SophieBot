@@ -5,25 +5,6 @@
     Text = ${SendActivity_HTkwlL_text()}
 ]
 
-# SendActivity_DP3pJu()
-[Activity
-    Text = ${WelcomeUser()}
-]
-
-# SendActivity_W4IWlO()
-[Activity
-    Attachments = ${SendActivity_W4IWlO_attachment_EvFkJ1()}
-]
-
-# SendActivity_W4IWlO_attachment_EvFkJ1()
-[HeroCard
-  title = Welcome to People Skill!
-  subtitle = Find people in your organization by asking.
-  text = WelcomeUser()
-]
-
-
-
 # SendActivity_ipHTXS()
 [Activity
     Text = Sorry! An error was encountered.
@@ -44,16 +25,6 @@
     Text = Error: ${turn.dialogEvent.value}
 ]
 
-# WelcomeUser()
-- IF: ${turn.signedInUser.givenName != null}
-    - Hi ${turn.signedInUser.givenName} 🖐, ${IntroMessage()}
-- ELSE: 
-    - Hi there 🖐, ${IntroMessage()}
-
-# IntroMessage()
-- I can help you search for people in your organization.
-- I'm ready to help answer questions about people in your organization.
-- I'm here to help you find people in your organization.
 # SendActivity_Z0VDAj()
 [Activity
     Text = ${SendActivity_Z0VDAj_text()}
