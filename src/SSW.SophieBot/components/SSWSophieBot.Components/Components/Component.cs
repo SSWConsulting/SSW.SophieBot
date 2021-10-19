@@ -11,6 +11,7 @@ namespace SSWSophieBot.Components.Components
         {
             services.AddDeclarativeType<StringJoinAction>(StringJoinAction.Kind);
             services.AddDeclarativeType<UtcConvertAction>(UtcConvertAction.Kind);
+            services.AddDeclarativeType<ClientNowAction>(ClientNowAction.Kind);
             services.AddDeclarativeType<TimeFormatAction>(TimeFormatAction.Kind);
             services.AddDeclarativeType<TimeDifferenceAction>(TimeDifferenceAction.Kind);
         }

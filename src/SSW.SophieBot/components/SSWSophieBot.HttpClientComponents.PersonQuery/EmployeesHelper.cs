@@ -137,13 +137,6 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             return results.Count != 0 ? results[0] : null;
         }
 
-        public static DateTime ToUserLocalTime(DialogContext dc, DateTime dateTime)
-        {
-            var serverLocalTime = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
-            var utcOffset = dc.Context.Activity.LocalTimestamp.GetValueOrDefault().Offset;
-            return serverLocalTime.Subtract(utcOffset);
-        }
-
         private static long GetTicksFrom(DateTimeOffset date)
         {
             return date.UtcDateTime.Ticks;

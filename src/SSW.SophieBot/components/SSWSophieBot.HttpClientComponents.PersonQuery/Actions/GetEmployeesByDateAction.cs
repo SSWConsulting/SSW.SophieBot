@@ -40,7 +40,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             var dateString = dc.GetValue(Date);
 
             var date = dateString != null && dateString != ""
-                ? EmployeesHelper.ToUserLocalTime(dc, DateTime.Parse(dateString)).AddHours(9)
+                ? ComponentHelper.ToUserLocalTime(dc, DateTime.Parse(dateString)).AddHours(9)
                 : DateTime.Now.ToUniversalTime();
 
             var result = EmployeesHelper.FilterEmployees(employees).Select(e => new EmployeeByDateModel
