@@ -837,12 +837,28 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
+            "id": "1P6lHo"
+          },
+          "assignments": [
+            {
+              "value": "=coalesce(@contact, @email, @personName)",
+              "property": "$options.preset.contactEntity"
+            },
+            {
+              "property": "$options.preset.locationEntity",
+              "value": "=coalesce(@geographyV2.location, @location)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
             "id": "JGABEb"
           },
           "assignments": [
             {
               "property": "$options.contactEntity",
-              "value": "=coalesce(@contact, @email, @personName)"
+              "value": "=$options.preset.contactEntity"
             },
             {
               "property": "$options.user",
@@ -850,7 +866,7 @@
             },
             {
               "property": "$options.location",
-              "value": "=if(exists(@location), titleCase(@location), null)"
+              "value": "=if(exists(coalesce($options.preset.locationEntity, @remote)), titleCase(coalesce($options.preset.locationEntity, @remote)), null)"
             },
             {
               "property": "$options.skill",

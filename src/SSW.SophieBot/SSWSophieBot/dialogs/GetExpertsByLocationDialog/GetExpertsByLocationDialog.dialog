@@ -56,15 +56,16 @@
             {
               "value": "=dialog.locationEntity",
               "key": "=if(exists(dialog.isCurrentLocation) && dialog.isCurrentLocation == true, \"currentLocation\", \"location\")"
+            },
+            {
+              "key": "skills",
+              "value": "=dialog.skillEntity"
             }
           ],
           "statusCodeProperty": "turn.statusCode",
           "reasonPhraseProperty": "turn.reasonPhrase",
           "employeesProperty": "turn.employees",
-          "skill": {
-            "technology": "=dialog.skillEntity",
-            "experienceLevel": "=dialog.experienceLevel"
-          }
+          "skill": {}
         },
         {
           "$kind": "Microsoft.IfCondition",
