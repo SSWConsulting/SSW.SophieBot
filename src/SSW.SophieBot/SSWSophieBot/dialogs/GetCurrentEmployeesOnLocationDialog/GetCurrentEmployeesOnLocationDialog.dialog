@@ -23,6 +23,13 @@
           }
         },
         {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "3rFc0a"
+          },
+          "activity": "${SendActivity_3rFc0a()}"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "iRae1n"

@@ -25,6 +25,12 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "6UNZJO"
+          }
+        },
+        {
           "$kind": "GetProfileAction",
           "$designer": {
             "id": "COuGVF"

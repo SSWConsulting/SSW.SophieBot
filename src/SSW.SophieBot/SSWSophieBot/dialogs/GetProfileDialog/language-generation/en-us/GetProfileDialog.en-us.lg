@@ -42,3 +42,8 @@
 
 # SendActivity_H4LLV0_text()
 - Please specify a person name to query.
+# SendActivity_sEQtGZ()
+- ${Typing()}
+
+# SendActivity_sEQtGZ_text()
+- ${Typing()}

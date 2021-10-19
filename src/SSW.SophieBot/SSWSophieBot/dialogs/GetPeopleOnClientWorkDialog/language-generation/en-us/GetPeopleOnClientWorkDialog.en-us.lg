@@ -348,3 +348,11 @@ Note: Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')
     - ``` on ${turn.formatDate}```
 - ELSE:
     - ``````
+
+# SendActivity_hawpp3()
+- ${Typing()}
+
+# SendActivity_hawpp3_text()
+- ${Typing()}
+# SendActivity_9RytXs()
+- ${Typing()}

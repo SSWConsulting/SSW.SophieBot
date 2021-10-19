@@ -25,6 +25,13 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "sEQtGZ"
+          },
+          "activity": "${SendActivity_sEQtGZ()}"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "cgxszW"

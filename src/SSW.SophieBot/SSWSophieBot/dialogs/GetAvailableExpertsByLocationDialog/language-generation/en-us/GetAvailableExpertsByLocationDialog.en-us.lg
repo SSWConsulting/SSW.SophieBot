@@ -203,3 +203,5 @@ Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}
 
 # SendActivity_C1DsiX_text()
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_ZsXIV2()
+- ${Typing()}

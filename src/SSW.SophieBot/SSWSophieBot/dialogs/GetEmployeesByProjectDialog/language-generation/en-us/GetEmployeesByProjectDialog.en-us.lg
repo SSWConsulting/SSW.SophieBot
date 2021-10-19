@@ -22,3 +22,5 @@
 
 # CardTitle()
 - ${turn.workingEmployees.project} [${count(turn.employees)}]
+# SendActivity_6UNZJO()
+- ${Typing()}

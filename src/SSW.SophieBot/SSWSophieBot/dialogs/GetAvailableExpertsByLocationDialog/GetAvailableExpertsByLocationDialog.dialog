@@ -25,6 +25,13 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "ZsXIV2"
+          },
+          "activity": "${SendActivity_ZsXIV2()}"
+        },
+        {
           "$kind": "GetOrganisationsAction",
           "$designer": {
             "id": "4gK2wf"

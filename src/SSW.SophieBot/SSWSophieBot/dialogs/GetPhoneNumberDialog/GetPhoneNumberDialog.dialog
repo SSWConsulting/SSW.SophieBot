@@ -25,6 +25,13 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "iDvMi2"
+          },
+          "activity": "${SendActivity_iDvMi2()}"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "Gq0kqo"
