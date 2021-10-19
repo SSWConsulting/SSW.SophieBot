@@ -185,7 +185,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
         {
             return employees
                 .Where(employees => employees.Appointments
-                    .Where(appointment => date.Ticks >= GetTicksFrom(appointment.Start) && date.Ticks <= GetTicksFrom(appointment.End))
+                    .Where(appointment => date.Date.Ticks >= GetTicksFrom(appointment.Start) && date.Date.Ticks <= GetTicksFrom(appointment.End))
                     .Where(appointment => appointment.Regarding == "SSW" && !leavePhrases.Any(appointment.Subject.ToLower().Contains))
                     .ToList().Count != 0
                     )
