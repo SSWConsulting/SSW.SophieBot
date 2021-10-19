@@ -149,27 +149,9 @@
 Only free for ${DaysText(client.FreeDays, false)}
 ```
 
-# AvatarColumn(avatarUrl)
--```
-{
-    "type": "Column",
-    "width": "75px",
-    "items": [
-        {
-            "type": "Image",
-            "width": "35px",
-            "height": "35px",
-            "url": "${if(avatarUrl != null, avatarUrl, BlankAvatar())}",
-            "style": "Person"
-        }
-    ],
-    "verticalContentAlignment": "Center"
-}
-```
-
 # BodyColumns(employee)
 - ${join(createArray(
-   AvatarColumn(employee.avatarUrl), 
+   ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '75px', '35px'), 
    BodyColumn(employee.displayName), 
    BodyColumn(if(employee.NextClient != null, NextClient(employee.NextClient), '—'))), ',')}
 

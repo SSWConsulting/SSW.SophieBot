@@ -1,4 +1,5 @@
 [Common](common.en-us.lg)
+[Icons](icons.en-us.lg)
 
 # SendActivity_HTkwlL()
 [Activity
@@ -170,4 +171,40 @@ We love squashing bugs 🥰```
     - ```${days} day```
 - ELSE:
     - ```—```
+
+# ClickableAvatar(avatarUrl, firstName, lastName, columnWidth, avatarSize)
+- ```
+{
+    "type": "Column",
+    "width": "${columnWidth}",
+    "items": [
+        {
+            "type": "Image",
+            "url": "${if(avatarUrl != null, avatarUrl, BlankAvatar())}",
+            "width": "${avatarSize}",
+            "height": "${avatarSize}",
+            "style": "Person"
+        }
+    ],
+    "verticalContentAlignment": "Center",
+    "selectAction": {
+        "type": "Action.Submit",
+        "data": {
+            "intent": "GetProfile",
+            "contact": {
+                "firstName": [
+                    "${firstName}"
+                ],
+                "lastName": [
+                    "${lastName}"
+                ]
+            },
+            "msteams": {
+                "type": "messageBack",
+                "displayText": "${firstName} ${lastName}"
+            }
+        }
+    }
+}
+```
     

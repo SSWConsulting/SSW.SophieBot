@@ -137,38 +137,7 @@
 {
     "type": "ColumnSet",
     "columns": [
-        {
-            "type": "Column",
-            "width": "auto",
-            "items": [
-                {
-                    "type": "Image",
-                    "url": "${if(employee.avatarUrl != null, employee.avatarUrl, BlankAvatar())}",
-                    "width": "35px",
-                    "height": "35px",
-                    "style": "Person"
-                }
-            ],
-            "verticalContentAlignment": "Center",
-            "selectAction": {
-                "type": "Action.Submit",
-                "data": {
-                    "intent": "GetProfile",
-                    "contact": {
-                        "firstName": [
-                            "${employee.firstName}"
-                        ],
-                        "lastName": [
-                            "${employee.lastName}"
-                        ]
-                    },
-                    "msteams": {
-                        "type": "messageBack",
-                        "displayText": "${employee.firstName} ${employee.lastName}"
-                    }
-                }
-            }
-        },
+        ${ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, 'auto', '35px')},
         {
             "type": "Column",
             "width": "stretch",

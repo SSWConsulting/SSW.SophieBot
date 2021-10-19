@@ -50,6 +50,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             var result = EmployeesHelper.FilterEmployees(employees).Select(employee => new FreeEmployeeModel
             {
                 FirstName = employee.FirstName,
+                LastName = employee.LastName,
                 DefaultSite = employee.DefaultSite,
                 AvatarUrl = employee.AvatarUrl,
                 DisplayName = $"{employee.FirstName} {employee.LastName}",

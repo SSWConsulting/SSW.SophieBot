@@ -250,27 +250,18 @@
 
 # BodyColumns(employee)
 - IF: ${ dialog.booked }
-    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '125px'), BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.Regarding, ''), 'stretch')), ',')}
+    - ${join(createArray(
+            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, 'auto', '35px'), 
+            BodyColumn(employee.displayName, '125px'), 
+            BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.Regarding, ''), 'stretch')
+        ), ',')}
 - ELSE:
-    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '110px'), BodyColumn(DaysText(employee.BilledDays, true), '67px'), ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), BodyColumn(employee.LastSeen, '80px')), ',')}
-
-# AvatarColumn(avatarUrl)
--```
-{
-    "type": "Column",
-    "width": "auto",
-    "items": [
-        {
-            "type": "Image",
-            "width": "35px",
-            "height": "35px",
-            "url": "${if(avatarUrl != null, avatarUrl, BlankAvatar())}",
-            "style": "Person"
-        }
-    ],
-    "verticalContentAlignment": "Center"
-}
-```
+    - ${join(createArray(
+            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, 'auto', '35px'), 
+            BodyColumn(employee.displayName, '110px'), 
+            BodyColumn(DaysText(employee.BilledDays, true), '67px'), 
+            ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), BodyColumn(employee.LastSeen, '80px')
+        ), ',')}
 
 # BodyColumn(text, width)
 -```
