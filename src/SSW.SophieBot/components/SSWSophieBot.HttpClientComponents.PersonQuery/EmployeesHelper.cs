@@ -137,7 +137,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             return results.Count != 0 ? results[0] : null;
         }
 
-        public static List<string> GetClientAppointmentsBy(DateTime date, List<GetAppointmentModel> appointments)
+        public static List<string> GetClientsBy(DateTime date, List<GetAppointmentModel> appointments)
         {
             var clientAppointments = appointments
                 .Where(appointment => date.Date.Ticks >= GetTicksFrom(appointment.Start) && date.Date.Ticks <= GetTicksFrom(appointment.End))
