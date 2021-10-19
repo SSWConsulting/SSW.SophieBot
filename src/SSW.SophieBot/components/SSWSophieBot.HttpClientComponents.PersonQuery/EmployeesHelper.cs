@@ -34,6 +34,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                     var onClientWork = !currentAppointment?.Regarding?.Equals("ssw", StringComparison.OrdinalIgnoreCase);
                     return new EmployeeBillableItemModel
                     {
+                        UserId = e.UserId,
                         AvatarUrl = e.AvatarUrl,
                         DisplayName = $"{e.FirstName} {e.LastName}",
                         BilledDays = GetBilledDays(e, project),
