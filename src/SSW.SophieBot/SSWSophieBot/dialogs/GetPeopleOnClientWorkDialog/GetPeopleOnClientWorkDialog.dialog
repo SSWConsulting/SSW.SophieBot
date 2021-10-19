@@ -159,14 +159,6 @@
                       "employees": "=turn.employees",
                       "date": "=dialog.fromDate",
                       "result": "turn.employees"
-                    },
-                    {
-                      "$kind": "Microsoft.SetProperty",
-                      "$designer": {
-                        "id": "ct8ux4"
-                      },
-                      "property": "turn.employees",
-                      "value": "=where(turn.employees, e => e.currentAppointment.Regarding != 'SSW')"
                     }
                   ],
                   "elseActions": [
