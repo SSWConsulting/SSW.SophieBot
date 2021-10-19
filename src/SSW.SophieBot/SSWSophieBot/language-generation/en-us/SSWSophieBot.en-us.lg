@@ -22,8 +22,6 @@
   text = WelcomeUser()
 ]
 
-
-
 # SendActivity_ipHTXS()
 [Activity
     Text = Sorry! An error was encountered.
@@ -162,3 +160,14 @@ We love squashing bugs 🥰```
 - Getting current employees on location is still a work in progress.
 # SendActivity_HTkwlL_text()
 - Sorry I didn't understand. Can you please try again?
+
+# DaysText(days, useDash)
+- IF: ${exists(days) && days > 1}
+    - ```${days} days```
+- ELSEIF: ${exists(days) && days > 0}
+    - ```${days} day```
+- ELSEIF: ${(!exists(days) || days <= 0) && !useDash}
+    - ```${days} day```
+- ELSE:
+    - ```—```
+    

@@ -1,5 +1,6 @@
 [import](common.lg)
 [Icons](icons.en-us.lg)
+[SSWSophieBot](SSWSophieBot.en-us.lg)
 
 # SendActivity_0L7CNj()
 [Activity
@@ -145,7 +146,7 @@
 
 # NextClient(client)
 -```
-Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}
+Only free for ${DaysText(client.FreeDays, false)}
 ```
 
 # AvatarColumn(avatarUrl)

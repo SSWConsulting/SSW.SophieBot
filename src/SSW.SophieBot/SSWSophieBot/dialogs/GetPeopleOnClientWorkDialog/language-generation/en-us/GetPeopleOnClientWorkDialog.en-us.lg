@@ -1,5 +1,6 @@
 [import](common.lg)
 [Icons](icons.en-us.lg)
+[SSWSophieBot](SSWSophieBot.en-us.lg)
 
 # SendActivity_7cnUNi()
 [Activity
@@ -251,7 +252,7 @@
 - IF: ${ dialog.booked }
     - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '125px'), BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.Regarding, ''), 'stretch')), ',')}
 - ELSE:
-    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '110px'), BodyColumn(concat(employee.BilledDays, if(employee.BilledDays != 0, ' Days', '')), '67px'), ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), BodyColumn(employee.LastSeen, '80px')), ',')}
+    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '110px'), BodyColumn(DaysText(employee.BilledDays, true), '67px'), ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), BodyColumn(employee.LastSeen, '80px')), ',')}
 
 # AvatarColumn(avatarUrl)
 -```
@@ -307,7 +308,7 @@
 
 # NextClient(client)
 -```
-Note: Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}. ${ClientInfo(client)}
+Note: Only free for ${DaysText(client.FreeDays, false)}. ${ClientInfo(client)}
 ```
 
 # ClientInfo(client)

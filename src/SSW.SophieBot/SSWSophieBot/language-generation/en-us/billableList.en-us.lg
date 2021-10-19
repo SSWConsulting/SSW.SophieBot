@@ -1,4 +1,5 @@
 [Icons](icons.en-us.lg)
+[SSWSophieBot](SSWSophieBot.en-us.lg)
 
 # BillableEmployeesList(title, isMain, employees, isFinalPage)
 -```
@@ -176,7 +177,7 @@
                 {
                     "type": "TextBlock",
                     "wrap": true,
-                    "text": "${if(employee.billedDays > 0, concat(employee.billedDays, ' ', if(employee.billedDays > 1, 'Days', 'Day ')), '—')}",
+                    "text": "${DaysText(employee.billedDays, true)}",
                     "size": "Small",
                     "horizontalAlignment": "Center"
                 }
