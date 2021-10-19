@@ -137,6 +137,16 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             return results.Count != 0 ? results[0] : null;
         }
 
+        public static List<string> GetClientAppointmentsBy(DateTime date, List<GetAppointmentModel> appointments)
+        {
+            var clientAppointments = appointments
+                .Where(appointment => date.Date.Ticks >= GetTicksFrom(appointment.Start) && date.Date.Ticks <= GetTicksFrom(appointment.End))
+                .Where(appointment => appointment.Regarding != "SSW")
+                .Where(appointment => appointment.Regarding != null)
+                .ToList();
+            return clientAppointments.Count > 0 ? clientAppointments.Select(appointment => appointment.Regarding).Distinct().ToList() : null;
+        }
+
         public static DateTime ToUserLocalTime(DialogContext dc, DateTime dateTime)
         {
             var serverLocalTime = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
@@ -146,7 +156,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 
         private static long GetTicksFrom(DateTimeOffset date)
         {
-            return date.UtcDateTime.Ticks;
+            return date.UtcDateTime.Date.Ticks;
         }
 
         private static bool IsProjectNameEqual(string sourceProjectName, string originalProjectName)
