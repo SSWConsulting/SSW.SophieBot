@@ -1,12 +1,8 @@
 [import](common.lg)
-[SSWSophieBot](SSWSophieBot.en-us.lg)
+[Greeting](greeting.en-us.lg)
 
-# SendActivity_WelcomeUser()
-[Activity
-    Text = ${WelcomeUser()}
-]
-
-# SendActivity_WelcomeAttachment()
-[Activity
-    Attachments = ${SendActivity_W4IWlO_attachment_EvFkJ1()}
+# WelcomeAttachment()
+[Attachment
+    contenttype = herocard
+    content = ${json(GreetingHeroCard())}
 ]
