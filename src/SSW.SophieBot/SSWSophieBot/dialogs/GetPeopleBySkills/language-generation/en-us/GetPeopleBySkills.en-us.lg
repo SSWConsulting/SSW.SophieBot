@@ -18,17 +18,17 @@
 
 # SendActivity_R5w2vq()
 [Activity
-    Attachments = ${json(SendActivity_R5w2vq_attachment_ukytYp(turn.sortedEmployees, dialog.skillEntity))}
+    Attachments = ${json(SendActivity_R5w2vq_attachment_ukytYp(turn.sortedEmployees))}
 ]
 
-# SendActivity_R5w2vq_attachment_ukytYp(employees, skill)
+# SendActivity_R5w2vq_attachment_ukytYp(employees)
 -```
 {
     "type": "AdaptiveCard",
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2",
     "body": [
-        ${EmployeeList(employees, skill)}
+        ${EmployeeList(employees)}
     ]
 }
 ```
