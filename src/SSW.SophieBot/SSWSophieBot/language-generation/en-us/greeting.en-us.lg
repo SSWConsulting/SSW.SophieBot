@@ -28,14 +28,14 @@
 # GreetingImage()
 - ```
 {
-    "url": "https://www.ssw.com.au/ssw/logo/sophiebot/Images/SophieBot_preview.png"
+    "url": "${settings.App.BaseUrl}/sophiebot.png"
 }
 ```
 
 # SummaryText()
-- I can help you search for people in your organization. Try by asking.
-- I'm ready to help answer questions about people in your organization. Try by asking.
-- I'm here to help you find people in your organization. Try by asking.
+- I can help you search for people in your organization.<br/>Try by asking...
+- I'm ready to help answer questions about people in your organization.<br/>Try by asking...
+- I'm here to help you find people in your organization.<br/>Try by asking...
 
 # GreetingButtons()
 - ```
