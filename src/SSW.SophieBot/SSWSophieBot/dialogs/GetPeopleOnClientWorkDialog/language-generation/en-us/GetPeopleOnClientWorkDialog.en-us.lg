@@ -45,7 +45,12 @@
                         "intent": "GetPeopleOnClientWork",
                         "available": "${dialog.availableEntity}",
                         "internal": "${dialog.internalEntity}",
-                        "location": "",
+                        "geographyV2": [
+                            {
+                                "location": "",
+                                "type": "city"
+                            }
+                        ],
                         "datetime": [
                             {
                             "timex": [
@@ -82,7 +87,12 @@
         "intent": "GetPeopleOnClientWork",
         "available": "${dialog.availableEntity}",
         "internal": "${dialog.internalEntity}",
-        "location": "${location}",
+        "geographyV2": [
+            {
+                "location": "${location}",
+                "type": "city"
+            }
+        ],
         "datetime": [
             {
             "timex": [
@@ -187,7 +197,7 @@
 },
 {
     "type": "Container",
-    "items": [${join(select(employees, employee => EmployeeRow(employee)), ',')}]
+    "items": [${join(select(employees, employee => EmployeeSet(employee)), ',')}]
 }
 ```
 
@@ -195,7 +205,7 @@
 - IF: ${ dialog.foreach.pageindex != 1 }
     - 
 - ELSEIF: ${ dialog.booked }
-    - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '125px'), HeaderColumn('Client', 'stretch')), ',')}
+    - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '125px'), HeaderColumn('Client(s)', 'stretch')), ',')}
 - ELSE:
     - ${join(createArray(HeaderColumn('', '35px'), HeaderColumn('Name', '110px'), HeaderColumn('Billed ↓', '67px'), HeaderColumn('In Office', '58px'), HeaderColumn('Last Seen', '80px')), ',')}
 
@@ -215,6 +225,12 @@
 }
 ```
 
+# EmployeeSet(employee)
+- IF: ${ dialog.booked }
+    - ${EmployeeRow(employee)}
+- ELSE:
+    - ${join(createArray(EmployeeRow(employee), Note(employee)), ',')}
+
 # EmployeeRow(employee)
 - ```
 {
@@ -224,7 +240,11 @@
     ],
     "height": "stretch",
     "separator": true
-},
+}
+```
+
+# Note(employee)
+-```
 {
     "type": "ColumnSet",
     "columns": [
@@ -249,7 +269,7 @@
 
 # BodyColumns(employee)
 - IF: ${ dialog.booked }
-    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '125px'), BodyColumn(if(employee.currentAppointment != null, employee.currentAppointment.Regarding, ''), 'stretch')), ',')}
+    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '125px'), ClientColumn(employee.clients, 'stretch')), ',')}
 - ELSE:
     - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '110px'), BodyColumn(concat(employee.BilledDays, if(employee.BilledDays != 0, ' Days', '')), '67px'), ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), BodyColumn(employee.LastSeen, '80px')), ',')}
 
@@ -285,6 +305,28 @@
         }
     ],
     "verticalContentAlignment": "Center"
+}
+```
+
+# ClientColumn(clients, width)
+-```
+{
+    "type": "Column",
+    "width": "${width}",
+    "items": [
+        ${join(select(clients, client => TextBlock(client)), ',')}
+    ],
+    "verticalContentAlignment": "Center"
+}
+```
+
+# TextBlock(text)
+-```
+{
+    "type": "TextBlock",
+    "text": "${if(text != null && text != '', text, '—')}",
+    "wrap": true,
+    "size": "Small"
 }
 ```
 

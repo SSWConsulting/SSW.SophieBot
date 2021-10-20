@@ -18,8 +18,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Models
         [JsonProperty("avatarUrl")]
         public string AvatarUrl { get; set; }
 
-        [JsonProperty("currentAppointment")]
-        public GetAppointmentModel CurrentAppointment { get; set; }
+        [JsonProperty("Clients")]
+        public List<string> Clients { get; set; }
 
         [JsonProperty("title")]
         public string Title { get; set; }
