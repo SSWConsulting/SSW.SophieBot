@@ -79,7 +79,6 @@
                             "type": "TextBlock",
                             "text": "Skills",
                             "wrap": true,
-                            "size": "Small",
                             "weight": "Bolder"
                         }
                     ]
@@ -98,17 +97,15 @@
                                         {
                                             "type": "TextBlock",
                                             "wrap": true,
-                                            "text": "Show more",
-                                            "size": "Small",
+                                            "text": "More ∨",
                                             "color": "Accent",
                                             "id": "showMore",
                                             "horizontalAlignment": "Right"
                                         },
                                         {
                                             "type": "TextBlock",
-                                            "text": "Show less",
+                                            "text": "Less ∧",
                                             "wrap": true,
-                                            "size": "Small",
                                             "color": "Accent",
                                             "id": "showLess",
                                             "horizontalAlignment": "Right",
@@ -134,13 +131,13 @@
         },
         {
             "type": "TextBlock",
-            "text": "${profile.skillsInfo}",
+            "text": "${SkillsInfo()}",
             "id": "omittedSkills",
             "height": "stretch"
         },
         {
             "type": "TextBlock",
-            "text": "${profile.skillsInfo}",
+            "text": "${SkillsInfo()}",
             "wrap": true,
             "id": "allSkills",
             "isVisible": false
@@ -150,7 +147,6 @@
             "text": "Contact",
             "wrap": true,
             "weight": "Bolder",
-            "size": "Small",
             "separator": true,
             "height": "stretch"
         },
@@ -261,6 +257,12 @@
     "minHeight": "100px"
 }
 ```
+
+# SkillsInfo()
+-IF: ${ turn.intermediateSkills == '' }
+    - **${turn.advancedSkills}**
+- ELSE:
+    - **${turn.advancedSkills}** | ${turn.intermediateSkills}
 
 # notFound()
 -Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
