@@ -103,6 +103,8 @@
 
 
 # GetProfile
+- {@contact={@firstname=adam}}
+- {@contact={@firstname=jim} {@lastname=zheng}}
 - can you find {@contact=tom@microsoft.com} for me
 - can you the mell life about {@contact={@firstname=maria}}?
 - could you please tell me about who's emailaddress this {@contact=jim@gmail.com}?
