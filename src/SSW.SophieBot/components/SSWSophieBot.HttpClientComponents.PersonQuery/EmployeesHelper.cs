@@ -137,9 +137,26 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             return results.Count != 0 ? results[0] : null;
         }
 
+        public static List<string> GetClientsBy(DateTime date, List<GetAppointmentModel> appointments)
+        {
+            var clientAppointments = appointments
+                .Where(appointment => date.Date.Ticks >= GetTicksFrom(appointment.Start) && date.Date.Ticks <= GetTicksFrom(appointment.End))
+                .Where(appointment => appointment.Regarding != "SSW")
+                .Where(appointment => appointment.Regarding != null)
+                .ToList();
+            return clientAppointments.Count > 0 ? clientAppointments.Select(appointment => appointment.Regarding).Distinct().ToList() : null;
+        }
+
+        public static DateTime ToUserLocalTime(DialogContext dc, DateTime dateTime)
+        {
+            var serverLocalTime = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+            var utcOffset = dc.Context.Activity.LocalTimestamp.GetValueOrDefault().Offset;
+            return serverLocalTime.Subtract(utcOffset);
+        }
+
         private static long GetTicksFrom(DateTimeOffset date)
         {
-            return date.UtcDateTime.Ticks;
+            return date.UtcDateTime.Date.Ticks;
         }
 
         private static bool IsProjectNameEqual(string sourceProjectName, string originalProjectName)
@@ -168,7 +185,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
         {
             return employees
                 .Where(employees => employees.Appointments
-                    .Where(appointment => date.Ticks >= GetTicksFrom(appointment.Start) && date.Ticks <= GetTicksFrom(appointment.End))
+                    .Where(appointment => date.Date.Ticks >= GetTicksFrom(appointment.Start) && date.Date.Ticks <= GetTicksFrom(appointment.End))
                     .Where(appointment => appointment.Regarding == "SSW" && !leavePhrases.Any(appointment.Subject.ToLower().Contains))
                     .ToList().Count != 0
                     )

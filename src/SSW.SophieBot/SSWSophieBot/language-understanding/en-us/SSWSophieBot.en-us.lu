@@ -259,9 +259,14 @@
 @ list goodbye =
 	- goodbye :
 		- bye
+		- Bye bye
 		- bye for now
 		- good bye
 		- you're very helpful
+		- See ya
+		- Goodnight
+		- I’m off
+		- Catch you later
 
 # GetExpertsByLocation
 - I need to talk to a {skill = DevOps} expert in Melbourne
@@ -373,7 +378,8 @@
 - Who's {available = internal}?
 - Who's {available = internal} tomorrow
 - Who is {available = internal} today?
-- Who is {available = on internal} work?
+- Who is on {available = internal} work?
+- Who is on {available = internal} next Friday?
 - Who is {available = working for SSW}?
 - Who is {available = working for SSW} Today?
 - Who is {available = working for SSW} in China?
