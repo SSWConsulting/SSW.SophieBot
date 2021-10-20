@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SSWSophieBot.HttpClientAction.Models;
+using System.Collections.Generic;
 
 namespace SSWSophieBot.HttpClientComponents.PersonQuery.Models
 {
