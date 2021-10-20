@@ -49,10 +49,10 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 DefaultSite = e.DefaultSite,
                 AvatarUrl = e.AvatarUrl,
                 DisplayName = $"{e.FirstName} {e.LastName}",
-                CurrentAppointment = EmployeesHelper.GetAppointmentBy(date, e.Appointments),
+                Clients = EmployeesHelper.GetClientsBy(date, e.Appointments),
                 Title = e.Title,
             })
-            .Where(e => e.CurrentAppointment != null)
+            .Where(employee => employee.Clients != null)
             .ToList();
 
 
