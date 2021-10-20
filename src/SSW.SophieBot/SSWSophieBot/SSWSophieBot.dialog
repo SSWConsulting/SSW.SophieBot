@@ -841,7 +841,7 @@
           },
           "assignments": [
             {
-              "value": "=coalesce(@contact, @email, @personName)",
+              "value": "=if(exists(@contact), @contact, if(exists(@personName), json(concat('{\"firstname\":[\"', @personName, '\"]}')), null))",
               "property": "$options.preset.contactEntity"
             },
             {
