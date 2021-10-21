@@ -42,14 +42,14 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 ? EmployeesHelper.ToUserLocalTime(dc, DateTime.Parse(dateString)).AddHours(9)
                 : DateTime.Now.ToUniversalTime();
 
-            var result = EmployeesHelper.FilterEmployees(employees).Select(e => new EmployeeByDateModel
+            var result = EmployeesHelper.FilterDevelopers(employees).Select(e => new EmployeeByDateModel
             {
                 FirstName = e.FirstName,
                 LastName = e.LastName,
                 DefaultSite = e.DefaultSite,
                 AvatarUrl = e.AvatarUrl,
                 DisplayName = $"{e.FirstName} {e.LastName}",
-                Clients = EmployeesHelper.GetClientsBy(date, e.Appointments),
+                Clients = EmployeesHelper.GetClientsByDate(date, e.Appointments),
                 Title = e.Title,
             })
             .Where(employee => employee.Clients != null)

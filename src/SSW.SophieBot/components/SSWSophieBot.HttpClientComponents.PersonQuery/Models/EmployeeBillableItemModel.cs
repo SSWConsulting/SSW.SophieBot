@@ -22,8 +22,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Models
         [JsonProperty("billedDays")]
         public int BilledDays { get; set; }
 
-        [JsonProperty("onClientWork")]
-        public bool? OnClientWork { get; set; }
+        [JsonProperty("bookingStatus")]
+        public BookingStatus BookingStatus { get; set; }
 
         [JsonProperty("lastSeen")]
         public string LastSeen { get; set; }

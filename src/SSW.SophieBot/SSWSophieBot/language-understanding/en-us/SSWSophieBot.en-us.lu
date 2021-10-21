@@ -263,25 +263,20 @@
 - Who works in Hangzhou?
 - Who works on remote?
 
-@ intent Goodbye usesFeature goodbye
-
 # Goodbye
-- 
-
-@ list goodbye =
-	- goodbye :
-		- bye
-		- bye bye
-		- bye for now
-		- good bye
-		- you're very helpful
-		- see ya
-		- goodnight
-		- i’m off
-		- catch you later
-		- see you later
-		- quit
-		- exit
+- bye
+- bye bye
+- bye for now
+- good bye
+- you're very helpful
+- see ya
+- goodnight
+- i’m off
+- catch you later
+- see you later
+- quit
+- exit
+- sign off
 
 # GetExpertsByLocation
 - I need to talk to a {skill = DevOps} expert in Melbourne
