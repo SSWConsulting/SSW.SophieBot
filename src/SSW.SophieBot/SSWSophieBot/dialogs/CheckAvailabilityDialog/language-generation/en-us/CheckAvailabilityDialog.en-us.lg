@@ -56,12 +56,12 @@
 ```
 
 # Status(employee, appointments)
-- **${employee.firstName} ${employee.lastName}** is ${if(appointments.count == 0 || appointments[0].Regarding == "SSW", "free", "on client work")}.
+- **${employee.firstName} ${employee.lastName}** is ${if(appointments.count == 0 || startsWith(toLower(appointments[0].Regarding), 'ssw'), 'free', 'on client work')}.
 
 # Appointment(appointments)
 - IF: ${appointments.count == 0}
     - ``````
-- ELSEIF: ${ appointments[0].Regarding == "SSW" }:
+- ELSEIF: ${startsWith(toLower(appointments[0].Regarding), 'ssw')}:
     - On internal work - **${split(appointments[0].subject, ' -')[0]}**.
 - ELSE:
     - Working for **${appointments[0].Regarding}**.
@@ -71,11 +71,11 @@
 
 # LastSeenText(location, time)
 - IF: ${ location != null && time != null }
-    - ```Last seen at SSW ${location} ${time}.```
+    - ```Last seen at **${location}** ${time}.```
 - ELSEIF: ${ location == null }
     - ```Last seen ${time}.```
-- ELSEIF ${ time == null }:
-    - ```Last seen at SSW ${location}.```
+- ELSEIF: ${ time == null }:
+    - ```Last seen at **${location}**.```
 - ELSE:
     - ``````
 
