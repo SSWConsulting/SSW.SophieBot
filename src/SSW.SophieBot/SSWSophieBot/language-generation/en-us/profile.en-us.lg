@@ -56,13 +56,12 @@
                         {
                             "type": "TextBlock",
                             "wrap": true,
-                            "text": "${profile.basicInfo}",
-                            "isVisible": false
+                            "text": "${Status(profile)}",
                         },
                         {
                             "type": "TextBlock",
                             "wrap": true,
-                            "text": "${if(profile.lastSeenAt != null, profile.lastSeenInfo, '')}"
+                            "text": "${if(profile.lastSeenAt != null, LastSeen(profile.lastSeenAt.siteId, profile.defaultSite.name, profile.lastSeenTime), '')}"
                         }
                     ]
                 }
@@ -258,9 +257,37 @@
 }
 ```
 
+# Status(profile)
+- IF: ${ profile.clients != null && profile.clients.count != 0 }
+    - Today: Is busy working for ${join(profile.clients, ',')}.
+- ELSEIF: ${ profile.clients.count == 0 }
+    - Today: Is busy on client work.
+- ELSEIF: ${ profile.isOnLeave }
+    - Today: Is on leave.
+- ELSE:
+    - Today: Is on internal work.
+
+# LastSeen(location, defaultLocation, time)
+- IF: ${ location != null && time != null }
+    - ```Last seen: ${location}${IsTravelling(location, defaultLocation)} ${time}.```
+- ELSEIF: ${ location == null }
+    - ```Last seen: ${time}.```
+- ELSEIF: ${ time == null }:
+    - ```Last seen: ${location}${IsTravelling(location, defaultLocation)}.```
+- ELSE:
+    - 
+
+# IsTravelling(currentLocation, defaultLocation)
+- IF: ${ currentLocation != defaultLocation }
+    - ``` (Travelling)```
+- ELSE:
+    -
+
 # SkillsInfo()
 -IF: ${ turn.intermediateSkills == '' }
     - **${turn.advancedSkills}**
+- ELSEIF: ${ turn.advancedSkills == '' }:
+    - ${turn.intermediateSkills}
 - ELSE:
     - **${turn.advancedSkills}** | ${turn.intermediateSkills}
 
