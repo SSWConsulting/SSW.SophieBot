@@ -1,28 +1,10 @@
 [Common](common.en-us.lg)
+[Icons](icons.en-us.lg)
 
 # SendActivity_HTkwlL()
 [Activity
     Text = ${SendActivity_HTkwlL_text()}
 ]
-
-# SendActivity_DP3pJu()
-[Activity
-    Text = ${WelcomeUser()}
-]
-
-# SendActivity_W4IWlO()
-[Activity
-    Attachments = ${SendActivity_W4IWlO_attachment_EvFkJ1()}
-]
-
-# SendActivity_W4IWlO_attachment_EvFkJ1()
-[HeroCard
-  title = Welcome to People Skill!
-  subtitle = Find people in your organization by asking.
-  text = WelcomeUser()
-]
-
-
 
 # SendActivity_ipHTXS()
 [Activity
@@ -44,16 +26,6 @@
     Text = Error: ${turn.dialogEvent.value}
 ]
 
-# WelcomeUser()
-- IF: ${turn.signedInUser.givenName != null}
-    - Hi ${turn.signedInUser.givenName} 🖐, ${IntroMessage()}
-- ELSE: 
-    - Hi there 🖐, ${IntroMessage()}
-
-# IntroMessage()
-- I can help you search for people in your organization.
-- I'm ready to help answer questions about people in your organization.
-- I'm here to help you find people in your organization.
 # SendActivity_Z0VDAj()
 [Activity
     Text = ${SendActivity_Z0VDAj_text()}
@@ -162,3 +134,50 @@ We love squashing bugs 🥰```
 - Getting current employees on location is still a work in progress.
 # SendActivity_HTkwlL_text()
 - Sorry I didn't understand. Can you please try again?
+
+# DaysText(days, useDash)
+- IF: ${exists(days) && days > 1}
+    - ```${days} days```
+- ELSEIF: ${exists(days) && days > 0}
+    - ```${days} day```
+- ELSEIF: ${(!exists(days) || days <= 0) && !useDash}
+    - ```${days} day```
+- ELSE:
+    - ```—```
+
+# ClickableAvatar(avatarUrl, firstName, lastName, columnWidth, avatarSize)
+- ```
+{
+    "type": "Column",
+    "width": "${columnWidth}",
+    "items": [
+        {
+            "type": "Image",
+            "url": "${if(avatarUrl != null, avatarUrl, BlankAvatar())}",
+            "width": "${avatarSize}",
+            "height": "${avatarSize}",
+            "style": "Person"
+        }
+    ],
+    "verticalContentAlignment": "Center",
+    "selectAction": {
+        "type": "Action.Submit",
+        "data": {
+            "intent": "GetProfile",
+            "contact": {
+                "firstName": [
+                    "${firstName}"
+                ],
+                "lastName": [
+                    "${lastName}"
+                ]
+            },
+            "msteams": {
+                "type": "messageBack",
+                "displayText": "${firstName} ${lastName}"
+            }
+        }
+    }
+}
+```
+    

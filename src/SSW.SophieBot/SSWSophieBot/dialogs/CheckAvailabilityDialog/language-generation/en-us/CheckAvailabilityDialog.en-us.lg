@@ -1,5 +1,6 @@
 [import](common.lg)
 [Icons](icons.en-us.lg)
+[SSWSophieBot](SSWSophieBot.en-us.lg)
 
 # SendActivity_RA2SOG_text()
 - Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
@@ -30,20 +31,7 @@
         {
             "type": "ColumnSet",
             "columns": [
-                {
-                    "type": "Column",
-                    "width": "auto",
-                    "items": [
-                        {
-                            "type": "Image",
-                            "url": "${if(employee.avatarUrl != null, employee.avatarUrl, BlankAvatar())}",
-                            "width": "70px",
-                            "height": "70px",
-                            "style": "Person"
-                        }
-                    ],
-                    "verticalContentAlignment": "Center"
-                },
+                ${ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, 'auto', '70px')},
                 {
                     "type": "Column",
                     "width": "stretch",
