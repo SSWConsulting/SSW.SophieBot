@@ -171,12 +171,21 @@
                       "workingEmployeesProperty": "turn.billableEmployees"
                     },
                     {
-                      "$kind": "ClientNowAction",
+                      "$kind": "Microsoft.IfCondition",
                       "$designer": {
-                        "id": "hh49KT"
+                        "id": "HLW9Wq"
                       },
-                      "resultProperty": "turn.clientNow",
-                      "format": "dddd d MMMM"
+                      "condition": "=dialog.clientNowSubtitle",
+                      "actions": [
+                        {
+                          "$kind": "ClientNowAction",
+                          "$designer": {
+                            "id": "m3Sb5b"
+                          },
+                          "format": "dddd d MMMM",
+                          "resultProperty": "turn.clientNow"
+                        }
+                      ]
                     },
                     {
                       "$kind": "Microsoft.SetProperty",
