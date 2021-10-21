@@ -263,20 +263,24 @@
 - Who works in Hangzhou?
 - Who works on remote?
 
+@ list goodbye = 
+	- Goodbye:
+		- bye
+		- bye bye
+		- bye for now
+		- good bye
+		- you're very helpful
+		- see ya
+		- goodnight
+		- i’m off
+		- catch you later
+		- see you later
+		- quit
+		- exit
+		- sign off
+
 # Goodbye
-- bye
-- bye bye
-- bye for now
-- good bye
-- you're very helpful
-- see ya
-- goodnight
-- i’m off
-- catch you later
-- see you later
-- quit
-- exit
-- sign off
+- {@goodbye}
 
 # GetExpertsByLocation
 - I need to talk to a {skill = DevOps} expert in Melbourne
