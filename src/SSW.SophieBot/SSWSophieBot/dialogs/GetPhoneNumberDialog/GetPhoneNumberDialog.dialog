@@ -97,11 +97,75 @@
               "condition": "=turn.employees.count != 0",
               "elseActions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "AOE7pz"
+                    "id": "LKjsF7"
                   },
-                  "activity": "${SendActivity_AOE7pz()}"
+                  "condition": "=!exists(dialog.nameEntity.lastname) && endsWith(toLower(dialog.nameEntity.firstname[0]), 's')",
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "rq2SXx"
+                      },
+                      "activity": "${SendActivity_rq2SXx()}"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "TAnCyC"
+                      },
+                      "property": "dialog.suggestedName",
+                      "value": "=substring(dialog.nameEntity.firstname[0], 0, length(dialog.nameEntity.firstname[0]) - 1)"
+                    },
+                    {
+                      "$kind": "Microsoft.ConfirmInput",
+                      "$designer": {
+                        "id": "AE8yd6"
+                      },
+                      "defaultLocale": "en-us",
+                      "disabled": false,
+                      "maxTurnCount": 0,
+                      "alwaysPrompt": false,
+                      "allowInterruptions": true,
+                      "unrecognizedPrompt": "",
+                      "invalidPrompt": "",
+                      "choiceOptions": {
+                        "includeNumbers": true,
+                        "inlineOrMore": ", or ",
+                        "inlineOr": " or ",
+                        "inlineSeparator": ", "
+                      },
+                      "prompt": "${ConfirmInput_Prompt_AE8yd6()}",
+                      "confirmChoices": [],
+                      "defaultValue": false,
+                      "property": "dialog.useSuggestion",
+                      "style": "suggestedAction",
+                      "validations": []
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "vHJok6"
+                      },
+                      "condition": "=dialog.useSuggestion",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.RepeatDialog",
+                          "$designer": {
+                            "id": "MTeGwr"
+                          },
+                          "activityProcessed": true,
+                          "options": {
+                            "nameEntity": "=setProperty(dialog.nameEntity, 'firstname', [dialog.suggestedName])"
+                          }
+                        }
+                      ],
+                      "elseActions": []
+                    }
+                  ]
                 }
               ],
               "actions": [

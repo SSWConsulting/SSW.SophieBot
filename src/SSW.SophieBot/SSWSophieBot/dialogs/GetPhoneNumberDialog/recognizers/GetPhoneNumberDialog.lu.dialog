@@ -1,5 +1,8 @@
 {
   "$kind": "Microsoft.MultiLanguageRecognizer",
   "id": "LUIS_GetPhoneNumberDialog",
-  "recognizers": {}
+  "recognizers": {
+    "en-us": "GetPhoneNumberDialog.en-us.lu",
+    "": "GetPhoneNumberDialog.en-us.lu"
+  }
 }
