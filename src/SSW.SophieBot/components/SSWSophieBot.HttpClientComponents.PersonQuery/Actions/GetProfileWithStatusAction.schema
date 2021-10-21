@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "$role": "implements(Microsoft.IDialog)",
-  "title": "GetEmployeesProfileAction",
+  "title": "GetProfileWithStatusAction",
   "description": "This will return a list of employees with their profile informations",
   "type": "object",
   "additionalProperties": false,
