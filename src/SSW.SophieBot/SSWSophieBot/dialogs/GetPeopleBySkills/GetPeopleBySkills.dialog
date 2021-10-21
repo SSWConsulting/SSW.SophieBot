@@ -148,7 +148,7 @@
                         },
                         {
                           "property": "turn.locations",
-                          "value": "=unique( select(turn.sortedEmployees, employee => employee.defaultSite.name))"
+                          "value": "=unique(select(turn.sortedEmployees, employee => employee.defaultSite.name))"
                         }
                       ]
                     },
