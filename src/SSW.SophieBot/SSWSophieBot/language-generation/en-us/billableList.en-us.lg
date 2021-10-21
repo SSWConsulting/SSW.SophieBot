@@ -1,12 +1,12 @@
 [Icons](icons.en-us.lg)
 [SSWSophieBot](SSWSophieBot.en-us.lg)
 
-# BillableEmployeesList(title, isMain, employees, isFinalPage)
+# BillableEmployeesList(title, subTitle, isMain, employees, isFinalPage)
 -```
 {
     "type": "AdaptiveCard",
     "body": [
-        ${ListTitle(title, isMain)}
+        ${ListTitle(title, subTitle, isMain)}
         {
             "type": "Container",
             "items": [${join(select(employees, e, BillableEmployeeRow(e)), ',')}],
@@ -49,8 +49,7 @@
                     "type": "TextBlock",
                     "text": "🟢 Client Work  ⚫ Internal Work  🔴 Leave  ⚪ Free",
                     "wrap": true,
-                    "spacing": "None",
-                    "isSubtle": true
+                    "spacing": "None"
                 }
             ]
         }
@@ -124,19 +123,36 @@
 },
 ```
 
-# ListTitle(title, isMain)
+# ListTitle(title, subTitle, isMain)
 - IF: ${exists(title) && length(title) > 0}
     - ```
-    {
-        "type": "TextBlock",
-        "size": "${if(isMain, 'ExtraLarge', 'Medium')}",
-        "text": "${title}",
-        "weight": "Bolder"
-    },
+    ${join(where([MainTitle(title, isMain), SubTitle(subTitle, isMain)], section, exists(section) && length(section) > 0), ',')},
     ${if(isMain, LegendAndColumnHeaders(), '')}
     ```
 - ELSE: 
     - 
+
+# MainTitle(title, isMain)
+- ```
+{
+    "type": "TextBlock",
+    "size": "${if(isMain, 'ExtraLarge', 'Medium')}",
+    "text": "${coalesce(title, '')}",
+    "wrap": true,
+    "weight": "Bolder"
+}
+```
+
+# SubTitle(subTitle, isMain)
+- ```
+{
+    "type": "TextBlock",
+    "size": "Medium",
+    "text": "${if(isMain, coalesce(subTitle, ''), '')}",
+    "wrap": true,
+    "isSubtle": true
+}
+```
 
 # BillableEmployeeRow(employee)
 - ```

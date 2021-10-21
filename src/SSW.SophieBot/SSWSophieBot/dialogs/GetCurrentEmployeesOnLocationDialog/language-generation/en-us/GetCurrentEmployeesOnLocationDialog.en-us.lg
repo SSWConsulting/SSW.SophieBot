@@ -19,7 +19,7 @@
 # SendActivity_AlWbJq()
 [Activity
     Attachments = ${json(EmployeesGroupActionCard(GetTitleForAll(dialog.locationEntity, count(turn.employees)),
-    null, turn.names, turn.groupedEmployees, dialog.locationEntity, GetEntities()))}
+    turn.clientNow, turn.names, turn.groupedEmployees, dialog.locationEntity, GetEntities()))}
 ]
 
 # GetTitleForAll(location, count)
