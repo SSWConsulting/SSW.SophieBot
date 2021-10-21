@@ -43,12 +43,12 @@ namespace SSWSophieBot.Components.Actions
             if (timeDiff.TotalDays < 1)
             {
                 var hours = GetInteger(timeDiff.TotalHours);
-                result = $"{hours} {(hours == 1 ? "hr" : "hrs")} ago";
+                result = $"{hours} {(hours == 1 ? "hour" : "hours")} ago";
             }
             else if (timeDiff.TotalDays < 30)
             {
                 var days = GetInteger(timeDiff.TotalDays);
-                result = $"{days} {(days == 1 ? "d" : "ds")} ago";
+                result = $"{days} {(days == 1 ? "day" : "days")} ago";
             }
             else
             {
