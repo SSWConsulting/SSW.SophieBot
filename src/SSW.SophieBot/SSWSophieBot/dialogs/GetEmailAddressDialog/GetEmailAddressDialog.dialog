@@ -97,11 +97,98 @@
               "condition": "=turn.employees.count != 0",
               "elseActions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.SetProperty",
                   "$designer": {
-                    "id": "s0q8VQ"
+                    "id": "gRMPKL"
                   },
-                  "activity": "${SendActivity_s0q8VQ()}"
+                  "property": "turn.originalName",
+                  "value": "=join([dialog.nameEntity.firstname[0], dialog.nameEntity.lastname[0]], ' ')"
+                },
+                {
+                  "$kind": "PersonNameAlterateAction",
+                  "$designer": {
+                    "id": "tIrCfV"
+                  },
+                  "originalName": "=turn.originalName",
+                  "alteredProperty": "turn.altered",
+                  "resultFirstNameProperty": "dialog.suggestedFirstName",
+                  "resultLastNameProperty": "dialog.suggestedLastName"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "Hi1VDu"
+                  },
+                  "condition": "=turn.altered",
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "ItqJV9"
+                      },
+                      "activity": "${SendActivity_ItqJV9()}"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.ConfirmInput",
+                      "$designer": {
+                        "id": "e5KqcQ"
+                      },
+                      "defaultLocale": "en-us",
+                      "disabled": false,
+                      "maxTurnCount": 0,
+                      "alwaysPrompt": false,
+                      "allowInterruptions": true,
+                      "prompt": "${ConfirmInput_Prompt_e5KqcQ()}",
+                      "unrecognizedPrompt": "",
+                      "invalidPrompt": "",
+                      "choiceOptions": {
+                        "includeNumbers": true,
+                        "inlineOrMore": ", or ",
+                        "inlineOr": " or ",
+                        "inlineSeparator": ", "
+                      },
+                      "property": "dialog.useSuggestion",
+                      "defaultValue": false,
+                      "style": "suggestedAction"
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "QuBhRM"
+                      },
+                      "condition": "=dialog.useSuggestion",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "Dj3BRe"
+                          },
+                          "assignments": [
+                            {
+                              "property": "dialog.nameEntity",
+                              "value": "=setProperty(dialog.nameEntity, 'firstname', [dialog.suggestedFirstName])"
+                            },
+                            {
+                              "value": "=setProperty(dialog.nameEntity, 'lastname', [dialog.suggestedLastName])",
+                              "property": "dialog.nameEntity"
+                            }
+                          ]
+                        },
+                        {
+                          "$kind": "Microsoft.RepeatDialog",
+                          "$designer": {
+                            "id": "7Bnedu"
+                          },
+                          "activityProcessed": true,
+                          "options": {
+                            "nameEntity": "=dialog.nameEntity"
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
               ],
               "actions": [

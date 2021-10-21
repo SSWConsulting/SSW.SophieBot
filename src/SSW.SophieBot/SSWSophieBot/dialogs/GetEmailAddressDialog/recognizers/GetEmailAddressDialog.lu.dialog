@@ -1,5 +1,8 @@
 {
   "$kind": "Microsoft.MultiLanguageRecognizer",
   "id": "LUIS_GetEmailAddressDialog",
-  "recognizers": {}
+  "recognizers": {
+    "en-us": "GetEmailAddressDialog.en-us.lu",
+    "": "GetEmailAddressDialog.en-us.lu"
+  }
 }
