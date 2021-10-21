@@ -49,7 +49,7 @@
 - whats {@contact={@firstname=mike}}'s email?
 - who knows {@contact={@firstname=john}}'s emailaddress?
 
-@ phraseList PhoneNumber(interchangeable) =
+@ phraseList PhoneNumberPhraseList(interchangeable) =
 	- phone
 	- phone number
 	- mobile
@@ -58,7 +58,7 @@
 	- telephone
 	- telephone number
 	- number
-@ intent GetPhoneNumber usesFeature PhoneNumber
+@ intent GetPhoneNumber usesFeature PhoneNumberPhraseList
 
 # GetPhoneNumber
 - can you find me {@contact={@firstname=noe}}'s phone number?
@@ -325,6 +325,13 @@
 - I need {@skill = SQL} developers in remote tomorrow
 
 @ prebuilt datetimeV2
+
+@ intent CheckAvailability usesFeature CheckAvailabilityPhraseList
+@ phraseList CheckAvailabilityPhraseList(interchangeable) = 
+	- booked
+	- booked or free
+	- free or booked
+	- booking status
 
 # CheckAvailability
 - Is {@contact={@firstname=Anthony}} booked or free?
