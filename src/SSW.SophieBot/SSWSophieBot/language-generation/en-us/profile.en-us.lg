@@ -56,13 +56,12 @@
                         {
                             "type": "TextBlock",
                             "wrap": true,
-                            "text": "${profile.basicInfo}",
-                            "isVisible": false
+                            "text": "${Status(profile)}",
                         },
                         {
                             "type": "TextBlock",
                             "wrap": true,
-                            "text": "${if(profile.lastSeenAt != null, profile.lastSeenInfo, '')}"
+                            "text": "${if(profile.lastSeenAt != null, LastSeen(profile.lastSeenAt.siteId, profile.defaultSite.name, profile.lastSeenTime), '')}"
                         }
                     ]
                 }
@@ -79,7 +78,6 @@
                             "type": "TextBlock",
                             "text": "Skills",
                             "wrap": true,
-                            "size": "Small",
                             "weight": "Bolder"
                         }
                     ]
@@ -98,17 +96,15 @@
                                         {
                                             "type": "TextBlock",
                                             "wrap": true,
-                                            "text": "Show more",
-                                            "size": "Small",
+                                            "text": "More ∨",
                                             "color": "Accent",
                                             "id": "showMore",
                                             "horizontalAlignment": "Right"
                                         },
                                         {
                                             "type": "TextBlock",
-                                            "text": "Show less",
+                                            "text": "Less ∧",
                                             "wrap": true,
-                                            "size": "Small",
                                             "color": "Accent",
                                             "id": "showLess",
                                             "horizontalAlignment": "Right",
@@ -134,13 +130,13 @@
         },
         {
             "type": "TextBlock",
-            "text": "${profile.skillsInfo}",
+            "text": "${SkillsInfo()}",
             "id": "omittedSkills",
             "height": "stretch"
         },
         {
             "type": "TextBlock",
-            "text": "${profile.skillsInfo}",
+            "text": "${SkillsInfo()}",
             "wrap": true,
             "id": "allSkills",
             "isVisible": false
@@ -150,7 +146,6 @@
             "text": "Contact",
             "wrap": true,
             "weight": "Bolder",
-            "size": "Small",
             "separator": true,
             "height": "stretch"
         },
@@ -261,6 +256,40 @@
     "minHeight": "100px"
 }
 ```
+
+# Status(profile)
+- IF: ${ profile.clients != null && profile.clients.count != 0 }
+    - Today: Is busy working for ${join(profile.clients, ',')}.
+- ELSEIF: ${ profile.clients.count == 0 }
+    - Today: Is busy on client work.
+- ELSEIF: ${ profile.isOnLeave }
+    - Today: Is on leave.
+- ELSE:
+    - Today: Is on internal work.
+
+# LastSeen(location, defaultLocation, time)
+- IF: ${ location != null && time != null }
+    - ```Last seen: ${location}${IsTravelling(location, defaultLocation)} ${time}.```
+- ELSEIF: ${ location == null }
+    - ```Last seen: ${time}.```
+- ELSEIF: ${ time == null }:
+    - ```Last seen: ${location}${IsTravelling(location, defaultLocation)}.```
+- ELSE:
+    - 
+
+# IsTravelling(currentLocation, defaultLocation)
+- IF: ${ currentLocation != defaultLocation }
+    - ``` (Travelling)```
+- ELSE:
+    -
+
+# SkillsInfo()
+-IF: ${ turn.intermediateSkills == '' }
+    - **${turn.advancedSkills}**
+- ELSEIF: ${ turn.advancedSkills == '' }:
+    - ${turn.intermediateSkills}
+- ELSE:
+    - **${turn.advancedSkills}** | ${turn.intermediateSkills}
 
 # notFound()
 -Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.

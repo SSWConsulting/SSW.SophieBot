@@ -59,7 +59,13 @@
       "$ref": "#/definitions/GetProfileDialog.dialog"
     },
     {
+      "$ref": "#/definitions/GetProfileWithStatusAction"
+    },
+    {
       "$ref": "#/definitions/GetSkillsDialog.dialog"
+    },
+    {
+      "$ref": "#/definitions/GreetingDialog.dialog"
     },
     {
       "$ref": "#/definitions/Microsoft.ActivityTemplate"
@@ -1812,6 +1818,46 @@
         }
       }
     },
+    "GetProfileWithStatusAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetProfileWithStatusAction",
+      "description": "This will return a list of employees with their profile informations",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "employees": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "Employees",
+          "description": "Raw employees"
+        },
+        "result": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result",
+          "description": "The property that transformed employees are assign to"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetProfileWithStatusAction"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "GetSkillsDialog.dialog": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "GetSkillsDialog",
@@ -1876,6 +1922,39 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "GetSkillsDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GreetingDialog.dialog": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GreetingDialog",
+      "type": "object",
+      "$result": {
+        "type": "object",
+        "properties": {}
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GreetingDialog.dialog"
         },
         "$designer": {
           "title": "Designer information",
@@ -7725,7 +7804,13 @@
           "$ref": "#/definitions/GetProfileDialog.dialog"
         },
         {
+          "$ref": "#/definitions/GetProfileWithStatusAction"
+        },
+        {
           "$ref": "#/definitions/GetSkillsDialog.dialog"
+        },
+        {
+          "$ref": "#/definitions/GreetingDialog.dialog"
         },
         {
           "$ref": "#/definitions/Microsoft.AdaptiveDialog"

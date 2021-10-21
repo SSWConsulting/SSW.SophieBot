@@ -144,10 +144,16 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
         {
             var clientAppointments = appointments
                 .Where(appointment => date.Date.Ticks >= GetTicksFrom(appointment.Start) && date.Date.Ticks <= GetTicksFrom(appointment.End))
-                .Where(appointment => appointment.Regarding != "SSW")
-                .Where(appointment => appointment.Regarding != null)
+                .Where(appointment => appointment.Regarding?.ToLower() != "ssw" && appointment.Regarding?.ToLower() != "ssw test")
                 .ToList();
-            return clientAppointments.Count > 0 ? clientAppointments.Select(appointment => appointment.Regarding).Distinct().ToList() : null;
+            return clientAppointments.Count > 0 ? clientAppointments.Select(appointment => appointment.Regarding).Where(regarding => regarding != null).Distinct().ToList() : null;
+        }
+
+        public static bool GetIsOnLeaveBy(DateTime date, List<GetAppointmentModel> appointments)
+        {
+            return appointments
+                .Where(appointment => date.Date.Ticks >= GetTicksFrom(appointment.Start) && date.Date.Ticks <= GetTicksFrom(appointment.End))
+                .All(appointment => appointment.Regarding == "SSW" && leavePhrases.Any(appointment.Subject.ToLower().Contains));
         }
 
         public static DateTime ToUserLocalTime(DialogContext dc, DateTime dateTime)
