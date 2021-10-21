@@ -26,6 +26,9 @@
       "$ref": "#/definitions/GetEmployeesByProjectDialog.dialog"
     },
     {
+      "$ref": "#/definitions/GetEmployeesProfileAction"
+    },
+    {
       "$ref": "#/definitions/GetExpertsByLocationDialog.dialog"
     },
     {
@@ -1029,6 +1032,46 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "GetEmployeesByProjectDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetEmployeesProfileAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetEmployeesProfileAction",
+      "description": "This will return a list of employees with their profile informations",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "employees": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "Employees",
+          "description": "Raw employees"
+        },
+        "result": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result",
+          "description": "The property that transformed employees are assign to"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetEmployeesProfileAction"
         },
         "$designer": {
           "title": "Designer information",
@@ -7690,6 +7733,9 @@
         },
         {
           "$ref": "#/definitions/GetEmployeesByProjectDialog.dialog"
+        },
+        {
+          "$ref": "#/definitions/GetEmployeesProfileAction"
         },
         {
           "$ref": "#/definitions/GetExpertsByLocationDialog.dialog"
