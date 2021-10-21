@@ -841,12 +841,12 @@
           },
           "assignments": [
             {
-              "value": "=coalesce(@contact, @email, @personName)",
+              "value": "=if(exists(@contact), @contact, if(exists(@personName), json(concat('{\"firstname\":[\"', @personName, '\"]}')), null))",
               "property": "$options.preset.contactEntity"
             },
             {
               "property": "$options.preset.locationEntity",
-              "value": "=coalesce(@geographyV2.location, @location)"
+              "value": "=coalesce(@geographyV2.location, @location, @remote)"
             }
           ]
         },
@@ -866,7 +866,7 @@
             },
             {
               "property": "$options.location",
-              "value": "=if(exists(coalesce($options.preset.locationEntity, @remote)), titleCase(coalesce($options.preset.locationEntity, @remote)), null)"
+              "value": "=if(exists($options.preset.locationEntity), titleCase($options.preset.locationEntity), null)"
             },
             {
               "property": "$options.skill",

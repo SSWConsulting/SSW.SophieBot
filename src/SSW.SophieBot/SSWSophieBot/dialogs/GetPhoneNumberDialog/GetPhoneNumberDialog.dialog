@@ -97,11 +97,101 @@
               "condition": "=turn.employees.count != 0",
               "elseActions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.SetProperty",
                   "$designer": {
-                    "id": "AOE7pz"
+                    "id": "g8DRfV"
                   },
-                  "activity": "${SendActivity_AOE7pz()}"
+                  "value": "=join([dialog.nameEntity.firstname[0], dialog.nameEntity.lastname[0]], ' ')",
+                  "property": "turn.originalName"
+                },
+                {
+                  "$kind": "PersonNameAlterateAction",
+                  "$designer": {
+                    "id": "m9m4bP"
+                  },
+                  "resultFirstNameProperty": "dialog.suggestedFirstName",
+                  "resultLastNameProperty": "dialog.suggestedLastName",
+                  "alteredProperty": "turn.altered",
+                  "originalName": "=turn.originalName"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "LKjsF7"
+                  },
+                  "condition": "=turn.altered",
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "rq2SXx"
+                      },
+                      "activity": "${SendActivity_rq2SXx()}"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.ConfirmInput",
+                      "$designer": {
+                        "id": "AE8yd6"
+                      },
+                      "defaultLocale": "en-us",
+                      "disabled": false,
+                      "maxTurnCount": 0,
+                      "alwaysPrompt": false,
+                      "allowInterruptions": true,
+                      "unrecognizedPrompt": "",
+                      "invalidPrompt": "",
+                      "choiceOptions": {
+                        "includeNumbers": true,
+                        "inlineOrMore": ", or ",
+                        "inlineOr": " or ",
+                        "inlineSeparator": ", "
+                      },
+                      "prompt": "${ConfirmInput_Prompt_AE8yd6()}",
+                      "confirmChoices": [],
+                      "defaultValue": false,
+                      "property": "dialog.useSuggestion",
+                      "style": "suggestedAction",
+                      "validations": []
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "vHJok6"
+                      },
+                      "condition": "=dialog.useSuggestion",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperties",
+                          "$designer": {
+                            "id": "IPD1BB"
+                          },
+                          "assignments": [
+                            {
+                              "value": "=setProperty(dialog.nameEntity, 'firstname', [dialog.suggestedFirstName])",
+                              "property": "dialog.nameEntity"
+                            },
+                            {
+                              "value": "=setProperty(dialog.nameEntity, 'lastname', [dialog.suggestedLastName])",
+                              "property": "dialog.nameEntity"
+                            }
+                          ]
+                        },
+                        {
+                          "$kind": "Microsoft.RepeatDialog",
+                          "$designer": {
+                            "id": "MTeGwr"
+                          },
+                          "activityProcessed": true,
+                          "options": {
+                            "nameEntity": "=dialog.nameEntity"
+                          }
+                        }
+                      ],
+                      "elseActions": []
+                    }
+                  ]
                 }
               ],
               "actions": [

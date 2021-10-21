@@ -6,6 +6,7 @@ using SSWSophieBot.Components.Actions;
 using SSWSophieBot.HttpClientAction.Models;
 using SSWSophieBot.HttpClientComponents.PersonQuery.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -13,12 +14,12 @@ using System.Threading.Tasks;
 
 namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 {
-    public class GetEmployeesByDateAction : ActionBase
+    public class GetProfileWithStatusAction : ActionBase
     {
         [JsonProperty("$kind")]
-        public const string Kind = "GetEmployeesByDateAction";
+        public const string Kind = "GetProfileWithStatusAction";
 
-        public GetEmployeesByDateAction([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
+        public GetProfileWithStatusAction([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
             : base(sourceFilePath, sourceLineNumber)
         {
 
@@ -27,34 +28,32 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
         [JsonProperty("employees")]
         public ArrayExpression<GetEmployeeModel> Employees { get; set; }
 
-        [JsonProperty("date")]
-        public StringExpression Date { get; set; }
-
         [JsonProperty("result")]
         public StringExpression Result { get; set; }
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var employees = dc.GetValue(Employees);
-            var dateString = dc.GetValue(Date);
 
-            var date = dateString != null && dateString != ""
-                ? ComponentHelper.ToUserLocalTime(dc, DateTime.Parse(dateString)).AddHours(9)
-                : DateTime.Now.ToUniversalTime();
+            var date = DateTime.Now.ToUniversalTime();
 
-            var result = EmployeesHelper.FilterDevelopers(employees).Select(e => new EmployeeByDateModel
+            var result = employees.Select(e => new EmployeeProfileModel
             {
-                FirstName = e.FirstName,
-                LastName = e.LastName,
-                DefaultSite = e.DefaultSite,
                 AvatarUrl = e.AvatarUrl,
                 DisplayName = $"{e.FirstName} {e.LastName}",
-                Clients = EmployeesHelper.GetClientsByDate(date, e.Appointments),
                 Title = e.Title,
+                Clients = EmployeesHelper.GetClientsByDate(date, e.Appointments),
+                IsOnLeave = EmployeesHelper.IsOnLeave(e, date),
+                LastSeenAt = e.LastSeenAt,
+                LastSeenTime = EmployeesHelper.GetLastSeen(e),
+                Skills = e.Skills,
+                EmailAddress = e.EmailAddress,
+                MobilePhone = e.MobilePhone,
+                DefaultSite = e.DefaultSite,
+                FirstName = e.FirstName,
+                LastName = e.LastName
             })
-            .Where(employee => employee.Clients != null)
             .ToList();
-
 
             if (Result != null)
             {

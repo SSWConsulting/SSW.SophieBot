@@ -49,6 +49,16 @@
 - whats {@contact={@firstname=mike}}'s email?
 - who knows {@contact={@firstname=john}}'s emailaddress?
 
+@ phraseList PhoneNumber(interchangeable) =
+	- phone
+	- phone number
+	- mobile
+	- mobile phone
+	- mobile number
+	- telephone
+	- telephone number
+	- number
+@ intent GetPhoneNumber usesFeature PhoneNumber
 
 # GetPhoneNumber
 - can you find me {@contact={@firstname=noe}}'s phone number?
@@ -251,24 +261,22 @@
 - Melbourne employees
 - Who works in China?
 - Who works in Hangzhou?
-- Who works {@remote}?
-
-
+- Who works on remote?
 
 # Goodbye
-- {@goodbye}
-
-@ list goodbye =
-	- goodbye :
-		- bye
-		- Bye bye
-		- bye for now
-		- good bye
-		- you're very helpful
-		- See ya
-		- Goodnight
-		- I’m off
-		- Catch you later
+- bye
+- bye bye
+- bye for now
+- good bye
+- you're very helpful
+- see ya
+- goodnight
+- i’m off
+- catch you later
+- see you later
+- quit
+- exit
+- sign off
 
 # GetExpertsByLocation
 - I need to talk to a {skill = DevOps} expert in Melbourne
@@ -362,7 +370,7 @@
 - Who is on client work tomorrow
 - Who is on client work next Friday?
 - Who is on client work in Sydney?
-- Who is on client work {@remote} next Friday?
+- Who is on client work remotely next Friday?
 
 - People {available = not on client work}?
 - Who {available = is not on client work}?
@@ -395,7 +403,7 @@
 - Who is in the Sydney office right now?
 - Who is currently in the Melbourne office?
 - Show me who are in Newcastle now?
-- Who is {@remote} right now?
+- Who is on remote right now?
 
 @ phraseList GreetingPhraseList(interchangeable) =
 	- hi

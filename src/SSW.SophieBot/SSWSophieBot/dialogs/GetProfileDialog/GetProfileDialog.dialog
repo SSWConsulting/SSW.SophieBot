@@ -139,6 +139,14 @@
                   ]
                 },
                 {
+                  "$kind": "GetProfileWithStatusAction",
+                  "$designer": {
+                    "id": "S1W39n"
+                  },
+                  "employees": "=turn.employees",
+                  "result": "turn.employees"
+                },
+                {
                   "$kind": "Microsoft.Foreach",
                   "$designer": {
                     "id": "dQQXqE"
@@ -154,16 +162,12 @@
                       },
                       "assignments": [
                         {
-                          "property": "dialog.foreach.value.displayName",
-                          "value": "=concat(dialog.foreach.value.firstName, \" \", dialog.foreach.value.lastName)"
+                          "property": "turn.advancedSkills",
+                          "value": "=join(select(where(dialog.foreach.value.skills, s, s.experienceLevel == \"Advanced\"), s, s.technology), \" | \")"
                         },
                         {
-                          "property": "dialog.foreach.value.skillsInfo",
-                          "value": "=concat(join(take(select(dialog.foreach.value.skills, s, s.technology), max(count(dialog.foreach.value.skills) - 1, 0)), \", \"), \" and \", last(dialog.foreach.value.skills).technology)"
-                        },
-                        {
-                          "property": "dialog.foreach.value.lastSeenInfo",
-                          "value": "='Last seen in ${dialog.foreach.value.lastSeenAt.siteId}.'"
+                          "value": "=join(select(where(dialog.foreach.value.skills, s, s.experienceLevel == \"Intermediate\"), s, s.technology), \" | \")",
+                          "property": "turn.intermediateSkills"
                         }
                       ]
                     },

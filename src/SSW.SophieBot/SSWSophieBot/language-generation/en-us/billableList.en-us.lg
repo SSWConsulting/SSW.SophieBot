@@ -47,7 +47,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "🟢 Client Work  ⚫ Internal Work  🔴 Leave",
+                    "text": "🟢 Client Work  ⚫ Internal Work  🔴 Leave  ⚪ Free",
                     "wrap": true,
                     "spacing": "None"
                 }
@@ -194,7 +194,7 @@
                 {
                     "type": "TextBlock",
                     "wrap": true,
-                    "text": "${if(exists(employee.onClientWork), if(employee.onClientWork, '🟢', '⚫'), '🔴')}",
+                    "text": "${GetBookingStatusEmoji(employee)}",
                     "size": "Small",
                     "horizontalAlignment": "Center"
                 }
@@ -220,3 +220,14 @@
     "separator": true
 }
 ```
+# GetBookingStatusEmoji(employee)
+- IF: ${employee.bookingStatus == 1}
+    - 🟢
+- ELSEIF: ${employee.bookingStatus == 2}
+    - ⚫
+- ELSEIF: ${employee.bookingStatus == 3}
+    - 🔴
+- ELSEIF: ${employee.bookingStatus == 4}
+    - ⚪
+- ELSE: 
+    - ⚪

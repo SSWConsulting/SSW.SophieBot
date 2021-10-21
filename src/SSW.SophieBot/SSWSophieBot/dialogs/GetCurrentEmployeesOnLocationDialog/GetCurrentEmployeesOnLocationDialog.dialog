@@ -43,16 +43,7 @@
               }
             }
           ],
-          "actions": [
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "SXrm0S"
-              },
-              "value": "=titleCase(dialog.locationEntity)",
-              "property": "dialog.locationEntity"
-            }
-          ]
+          "actions": []
         },
         {
           "$kind": "GetProfileAction",

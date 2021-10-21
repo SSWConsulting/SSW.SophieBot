@@ -4,10 +4,7 @@ using Newtonsoft.Json;
 using SSWSophieBot.Components;
 using SSWSophieBot.Components.Actions;
 using SSWSophieBot.HttpClientAction.Models;
-using SSWSophieBot.HttpClientComponents.PersonQuery.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,7 +40,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 ? ComponentHelper.ToUserLocalTime(dc, DateTime.Parse(dateString)).AddHours(9)
                 : DateTime.Now.ToUniversalTime();
 
-            var result = EmployeesHelper.GetInternalBookedEmployees(EmployeesHelper.FilterEmployees(employees), date);
+            var result = EmployeesHelper.GetInternalBookedEmployees(EmployeesHelper.FilterDevelopers(employees), date);
 
 
             if (Result != null)
