@@ -6,7 +6,6 @@ using SSWSophieBot.Components.Actions;
 using SSWSophieBot.HttpClientAction.Models;
 using SSWSophieBot.HttpClientComponents.PersonQuery.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -46,6 +45,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             var result = EmployeesHelper.FilterEmployees(employees).Select(e => new EmployeeByDateModel
             {
                 FirstName = e.FirstName,
+                LastName = e.LastName,
                 DefaultSite = e.DefaultSite,
                 AvatarUrl = e.AvatarUrl,
                 DisplayName = $"{e.FirstName} {e.LastName}",

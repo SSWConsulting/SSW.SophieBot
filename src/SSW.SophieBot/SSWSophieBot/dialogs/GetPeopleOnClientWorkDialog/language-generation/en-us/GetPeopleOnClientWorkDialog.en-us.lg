@@ -1,5 +1,6 @@
 [import](common.lg)
 [Icons](icons.en-us.lg)
+[SSWSophieBot](SSWSophieBot.en-us.lg)
 
 # SendActivity_7cnUNi()
 [Activity
@@ -269,27 +270,18 @@
 
 # BodyColumns(employee)
 - IF: ${ dialog.booked }
-    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '125px'), ClientColumn(employee.clients, 'stretch')), ',')}
+    - ${join(createArray(
+            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, 'auto', '35px'), 
+            BodyColumn(employee.displayName, '125px'), 
+            ClientColumn(employee.clients, 'stretch')
+        ), ',')}
 - ELSE:
-    - ${join(createArray(AvatarColumn(employee.avatarUrl), BodyColumn(employee.displayName, '110px'), BodyColumn(concat(employee.BilledDays, if(employee.BilledDays != 0, ' Days', '')), '67px'), ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), BodyColumn(employee.LastSeen, '80px')), ',')}
-
-# AvatarColumn(avatarUrl)
--```
-{
-    "type": "Column",
-    "width": "auto",
-    "items": [
-        {
-            "type": "Image",
-            "width": "35px",
-            "height": "35px",
-            "url": "${if(avatarUrl != null, avatarUrl, BlankAvatar())}",
-            "style": "Person"
-        }
-    ],
-    "verticalContentAlignment": "Center"
-}
-```
+    - ${join(createArray(
+            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, 'auto', '35px'), 
+            BodyColumn(employee.displayName, '110px'), 
+            BodyColumn(DaysText(employee.BilledDays, true), '67px'), 
+            ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), BodyColumn(employee.LastSeen, '80px')
+        ), ',')}
 
 # BodyColumn(text, width)
 -```
@@ -349,7 +341,7 @@
 
 # NextClient(client)
 -```
-Note: Only free for ${client.FreeDays} ${if(client.FreeDays <= 1, 'day', 'days')}. ${ClientInfo(client)}
+Note: Only free for ${DaysText(client.FreeDays, false)}. ${ClientInfo(client)}
 ```
 
 # ClientInfo(client)
