@@ -33,6 +33,11 @@
       "description": "Title for the list card",
       "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
       "title": "Title"
+    },
+    "clientNowSubtitle": {
+      "description": "When set to true, display local current time in the subtitle",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/booleanExpression",
+      "title": "Client Now Subtitle"
     }
   },
   "$result": {

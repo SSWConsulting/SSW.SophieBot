@@ -412,7 +412,8 @@
                 "title": "=@title",
                 "byBillable": "=@byBillable",
                 "isCurrentLocation": "=@isCurrentLocation",
-                "experienceLevel": "=coalesce(@experienceLevel, 'Advanced, Intermediate')"
+                "experienceLevel": "=coalesce(@experienceLevel, 'Advanced, Intermediate')",
+                "clientNowSubtitle": "=@clientNowSubTitle"
               }
             }
           ]
