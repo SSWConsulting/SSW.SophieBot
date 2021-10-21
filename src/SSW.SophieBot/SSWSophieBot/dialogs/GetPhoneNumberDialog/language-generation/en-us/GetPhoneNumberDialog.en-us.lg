@@ -55,4 +55,4 @@
 ]
 
 # ConfirmInput_Prompt_AE8yd6_text()
-- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Did you mean **${dialog.suggestedName}**?
+- Sorry, I couldn't find anyone named **${turn.originalName}** in your organization. Did you mean **${join([dialog.suggestedFirstName, dialog.suggestedLastName], ' ')}**?
