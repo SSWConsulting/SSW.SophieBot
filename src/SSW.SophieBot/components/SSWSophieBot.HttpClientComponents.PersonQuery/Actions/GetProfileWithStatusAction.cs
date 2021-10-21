@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 
 namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 {
-    public class GetEmployeesProfileAction : ActionBase
+    public class GetProfileWithStatusAction : ActionBase
     {
         [JsonProperty("$kind")]
-        public const string Kind = "GetEmployeesProfileAction";
+        public const string Kind = "GetProfileWithStatusAction";
 
-        public GetEmployeesProfileAction([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
+        public GetProfileWithStatusAction([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
             : base(sourceFilePath, sourceLineNumber)
         {
 

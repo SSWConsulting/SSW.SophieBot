@@ -139,9 +139,9 @@
                   ]
                 },
                 {
-                  "$kind": "GetEmployeesProfileAction",
+                  "$kind": "GetProfileWithStatusAction",
                   "$designer": {
-                    "id": "kawoDC"
+                    "id": "S1W39n"
                   },
                   "employees": "=turn.employees",
                   "result": "turn.employees"
