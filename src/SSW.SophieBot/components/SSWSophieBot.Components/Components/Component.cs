@@ -9,6 +9,7 @@ namespace SSWSophieBot.Components.Components
     {
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddDeclarativeType<PersonNameAlterateAction>(PersonNameAlterateAction.Kind);
             services.AddDeclarativeType<StringJoinAction>(StringJoinAction.Kind);
             services.AddDeclarativeType<UtcConvertAction>(UtcConvertAction.Kind);
             services.AddDeclarativeType<TimeFormatAction>(TimeFormatAction.Kind);
