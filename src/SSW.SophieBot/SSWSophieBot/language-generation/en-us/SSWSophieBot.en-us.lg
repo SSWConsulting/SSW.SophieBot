@@ -180,4 +180,40 @@ We love squashing bugs 🥰```
     }
 }
 ```
+
+# ClickableName(displayName, firstName, lastName, columnWidth, fontSize)
+- ```
+{
+    "type": "Column",
+    "width": "${columnWidth}",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${displayName}",
+            "size": "${fontSize}",
+            "wrap": true,
+            "color": "Accent"
+        }
+    ],
+    "verticalContentAlignment": "Center",
+    "selectAction": {
+        "type": "Action.Submit",
+        "data": {
+            "intent": "GetProfile",
+            "contact": {
+                "firstName": [
+                    "${firstName}"
+                ],
+                "lastName": [
+                    "${lastName}"
+                ]
+            },
+            "msteams": {
+                "type": "messageBack",
+                "displayText": "${firstName} ${lastName}"
+            }
+        }
+    }
+}
+```
     
