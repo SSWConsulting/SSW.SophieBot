@@ -1,7 +1,7 @@
 [import](common.lg)
 
 # SendActivity_ojOPMX_text()
-- **${dialog.displayName}**'s email address is:<br/>**${dialog.emailAddress}**
+- **${dialog.displayName}**'s email address is:<br/>**<${dialog.emailAddress}>**
 # SendActivity_ojOPMX()
 [Activity
     Text = ${SendActivity_ojOPMX_text()}
