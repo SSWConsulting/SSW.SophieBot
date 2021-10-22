@@ -107,6 +107,14 @@
               ],
               "actions": [
                 {
+                  "$kind": "GetProfileWithBookingInfoAction",
+                  "$designer": {
+                    "id": "kfFwkk"
+                  },
+                  "result": "turn.employees",
+                  "employees": "=turn.employees"
+                },
+                {
                   "$kind": "Microsoft.Foreach",
                   "$designer": {
                     "id": "MhZ00e"
@@ -115,58 +123,6 @@
                   "value": "dialog.profile",
                   "itemsProperty": "turn.employees",
                   "actions": [
-                    {
-                      "$kind": "Microsoft.Foreach",
-                      "$designer": {
-                        "id": "64qTrE"
-                      },
-                      "index": "dialog.appointment.index",
-                      "value": "dialog.appointment",
-                      "itemsProperty": "dialog.profile.appointments",
-                      "actions": [
-                        {
-                          "$kind": "UtcConvertAction",
-                          "$designer": {
-                            "id": "BhMTg9"
-                          },
-                          "datetime": "=dialog.appointment.start",
-                          "resultProperty": "dialog.profile.appointments[dialog.appointment.index].convertedStart"
-                        },
-                        {
-                          "$kind": "UtcConvertAction",
-                          "$designer": {
-                            "id": "qbGfLA"
-                          },
-                          "datetime": "=dialog.appointment.end",
-                          "resultProperty": "dialog.profile.appointments[dialog.appointment.index].convertedEnd"
-                        }
-                      ]
-                    },
-                    {
-                      "$kind": "Microsoft.IfCondition",
-                      "$designer": {
-                        "id": "ASznx6"
-                      },
-                      "condition": "=dialog.profile.lastSeenAt != null",
-                      "actions": [
-                        {
-                          "$kind": "TimeDifferenceAction",
-                          "$designer": {
-                            "id": "LmYoYh"
-                          },
-                          "date": "=dialog.profile.lastSeenAt.lastSeen",
-                          "result": "dialog.profile.lastSeenAt.time"
-                        }
-                      ]
-                    },
-                    {
-                      "$kind": "Microsoft.SetProperty",
-                      "$designer": {
-                        "id": "STyc4R"
-                      },
-                      "value": "=where(dialog.profile.appointments, appointment => ticks(utcNow()) >= ticks(appointment.convertedStart) && ticks(utcNow()) <= ticks(appointment.convertedEnd))",
-                      "property": "turn.currentAppoinments"
-                    },
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
