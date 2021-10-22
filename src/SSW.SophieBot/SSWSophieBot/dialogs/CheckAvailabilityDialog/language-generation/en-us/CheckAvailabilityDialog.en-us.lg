@@ -18,10 +18,10 @@
 
 # SendActivity_8hLWNo()
 [Activity
-    Attachments = ${json(EmployeeStatusCard(dialog.profile, turn.currentAppoinments))}
+    Attachments = ${json(EmployeeStatusCard(dialog.profile))}
 ]
 
-# EmployeeStatusCard(employee, appointments)
+# EmployeeStatusCard(profile)
 -```
 {
     "type": "AdaptiveCard",
@@ -31,12 +31,12 @@
         {
             "type": "ColumnSet",
             "columns": [
-                ${ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, 'auto', '70px')},
+                ${ClickableAvatar(profile.avatarUrl, profile.firstName, profile.lastName, 'auto', '70px')},
                 {
                     "type": "Column",
                     "width": "stretch",
                     "items": [
-                        ${join(where(select(createArray(Status(employee, appointments), Appointment(appointments), LastSeen(employee)), text => TextBlock(text)), item => item != ''), ',')}
+                        ${join(createArray(TextBlock(BookingStatus(profile)), TextBlock(ClientInfo(profile)), TextBlock(LastSeen(profile))), ',')}
                     ],
                     "verticalContentAlignment": "Center"
                 }
@@ -46,6 +46,33 @@
 }
 ```
 
+# BookingStatus(profile)
+- IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
+    - ${profile.displayName} is booked today.
+- ELSEIF: ${ profile.bookingStatus == 3 }
+    - ${profile.displayName} is on leave today.
+- ELSE:
+    - ${profile.displayName} is free today.
+
+# ClientInfo(profile)
+- IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
+    - Is busy working for ${join(profile.clients, ',')}.
+- ELSE:
+    -
+
+# LastSeen(profile)
+- ${if(profile.lastSeenAt != null, LastSeenText(profile.lastSeenAt.siteId, profile.lastSeenTime), '')}
+
+# LastSeenText(location, time)
+- IF: ${ location != null && time != null }
+    - ```Last seen in ${location} ${time}.```
+- ELSEIF: ${ location == null }
+    - ```Last seen ${time}.```
+- ELSEIF: ${ time == null }:
+    - ```Last seen in ${location}.```
+- ELSE:
+    - 
+
 # TextBlock(text)
 -```
 {
@@ -54,30 +81,6 @@
     "wrap": true
 }
 ```
-
-# Status(employee, appointments)
-- **${employee.firstName} ${employee.lastName}** is ${if(appointments.count == 0 || startsWith(toLower(appointments[0].Regarding), 'ssw'), 'free', 'on client work')}.
-
-# Appointment(appointments)
-- IF: ${appointments.count == 0}
-    - ``````
-- ELSEIF: ${startsWith(toLower(appointments[0].Regarding), 'ssw')}:
-    - On internal work - **${split(appointments[0].subject, ' -')[0]}**.
-- ELSE:
-    - Working for **${appointments[0].Regarding}**.
-
-# LastSeen(employee)
-- ${if(employee.lastSeenAt != null, LastSeenText(employee.lastSeenAt.siteId, employee.lastSeenAt.time), '')}
-
-# LastSeenText(location, time)
-- IF: ${ location != null && time != null }
-    - ```Last seen at **${location}** ${time}.```
-- ELSEIF: ${ location == null }
-    - ```Last seen ${time}.```
-- ELSEIF: ${ time == null }:
-    - ```Last seen at **${location}**.```
-- ELSE:
-    - ``````
 
 # SendActivity_5SDlSO()
 [Activity

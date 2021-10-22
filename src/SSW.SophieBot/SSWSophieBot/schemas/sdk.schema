@@ -62,6 +62,9 @@
       "$ref": "#/definitions/GetProfileDialog.dialog"
     },
     {
+      "$ref": "#/definitions/GetProfileWithBookingInfoAction"
+    },
+    {
       "$ref": "#/definitions/GetProfileWithStatusAction"
     },
     {
@@ -1194,6 +1197,11 @@
           "$ref": "#/definitions/stringExpression",
           "title": "Title"
         },
+        "clientNowSubtitle": {
+          "description": "When set to true, display local current time in the subtitle",
+          "$ref": "#/definitions/booleanExpression",
+          "title": "Client Now Subtitle"
+        },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
@@ -1856,6 +1864,46 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "GetProfileDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetProfileWithBookingInfoAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetProfileWithBookingInfoAction",
+      "description": "This will return a list of employees with booking info",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "employees": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "Employees",
+          "description": "Raw employees"
+        },
+        "result": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result",
+          "description": "The property that transformed employees are assign to"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetProfileWithBookingInfoAction"
         },
         "$designer": {
           "title": "Designer information",
@@ -7851,6 +7899,9 @@
         },
         {
           "$ref": "#/definitions/GetProfileDialog.dialog"
+        },
+        {
+          "$ref": "#/definitions/GetProfileWithBookingInfoAction"
         },
         {
           "$ref": "#/definitions/GetProfileWithStatusAction"
