@@ -15,6 +15,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             "annual leave",
             "non working",
             "non-working",
+            "non-work",
             "leave",
             "holiday",
             "time in lieu",
