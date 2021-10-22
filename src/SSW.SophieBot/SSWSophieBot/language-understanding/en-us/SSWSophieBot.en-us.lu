@@ -108,6 +108,7 @@
 - which {@contact={@firstname=john}}´s new phone number?
 - who can tell me {@contact={@firstname=alfonso}}'s phone number?
 - who remembers {@contact={@firstname=albert}}´s phone number?
+- what's {@contact={@firstname=jims}} phone number?
 - what's {@contact={@firstname=Uly}}'s mobile?
 - what is {@contact={@firstname=Uly}}'s mobile?
 
