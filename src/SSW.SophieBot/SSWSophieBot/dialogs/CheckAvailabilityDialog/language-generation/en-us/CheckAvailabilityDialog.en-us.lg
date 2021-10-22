@@ -48,11 +48,11 @@
 
 # BookingStatus(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - ${profile.displayName} is booked today.
+    - ${profile.displayName} is **booked** today.
 - ELSEIF: ${ profile.bookingStatus == 3 }
-    - ${profile.displayName} is on leave today.
+    - ${profile.displayName} is **on leave** today.
 - ELSE:
-    - ${profile.displayName} is free today.
+    - ${profile.displayName} is **free** today.
 
 # ClientInfo(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
