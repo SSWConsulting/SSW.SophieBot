@@ -54,7 +54,7 @@
           },
           "queryString": [
             {
-              "value": "=dialog.locationEntity",
+              "value": "=if(toLower(dialog.locationEntity) == 'all', '', dialog.locationEntity)",
               "key": "=if(exists(dialog.isCurrentLocation) && dialog.isCurrentLocation == true, \"currentLocation\", \"location\")"
             },
             {
@@ -162,6 +162,31 @@
                     }
                   ],
                   "actions": [
+                    {
+                      "$kind": "GetEmployeesByBillableAction",
+                      "$designer": {
+                        "id": "YGPHlR"
+                      },
+                      "employees": "=turn.sortedEmployees",
+                      "workingEmployeesProperty": "turn.billableEmployees"
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "HLW9Wq"
+                      },
+                      "condition": "=dialog.clientNowSubtitle",
+                      "actions": [
+                        {
+                          "$kind": "ClientNowAction",
+                          "$designer": {
+                            "id": "m3Sb5b"
+                          },
+                          "format": "dddd d MMMM",
+                          "resultProperty": "turn.clientNow"
+                        }
+                      ]
+                    },
                     {
                       "$kind": "Microsoft.SetProperty",
                       "$designer": {

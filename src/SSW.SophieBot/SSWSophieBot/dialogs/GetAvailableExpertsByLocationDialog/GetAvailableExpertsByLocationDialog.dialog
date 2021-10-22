@@ -25,31 +25,40 @@
           "value": "=null"
         },
         {
-          "$kind": "GetOrganisationsAction",
-          "$designer": {
-            "id": "4gK2wf"
-          },
-          "sitesProperty": "turn.sswSites"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "a4ywEg"
+            "id": "KVcnEG"
           },
-          "condition": "=exists(dialog.locationEntity) && length(dialog.locationEntity) > 0 && exists(turn.sswSites) && contains(select(turn.sswSites, site, site.name), dialog.locationEntity)",
+          "condition": "=toLower(dialog.locationEntity) == 'remote'",
           "elseActions": [
             {
-              "$kind": "Microsoft.SendActivity",
+              "$kind": "GetOrganisationsAction",
               "$designer": {
-                "id": "5xlJLh"
+                "id": "Dy86UX"
               },
-              "activity": "${SendActivity_5xlJLh()}"
+              "sitesProperty": "turn.sswSites"
             },
             {
-              "$kind": "Microsoft.EndDialog",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "wu3x1s"
-              }
+                "id": "olVGm3"
+              },
+              "condition": "=exists(dialog.locationEntity) && length(dialog.locationEntity) > 0 && exists(turn.sswSites) && contains(select(turn.sswSites, site, site.name), dialog.locationEntity)",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "6tkO7W"
+                  },
+                  "activity": "${SendActivity_6tkO7W()}"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "SUXCbW"
+                  }
+                }
+              ]
             }
           ]
         },
@@ -96,167 +105,143 @@
               "activity": "${SendActivity_0L7CNj()}"
             }
           ],
-          "actions": [
-            {
-              "$kind": "TimeFormatAction",
-              "$designer": {
-                "id": "7KxZvy"
-              },
-              "datetime": "=dialog.dateEntity.timex[0]",
-              "format": "dddd d MMMM",
-              "resultProperty": "turn.formatDate"
-            },
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "CytQto"
-              },
-              "condition": "=exists(turn.employees) && count(turn.employees) > 0",
-              "elseActions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "sftkhO"
-                  },
-                  "activity": "${SendActivity_sftkhO()}"
-                }
-              ],
-              "actions": [
-                {
-                  "$kind": "GetProfileAction",
-                  "$designer": {
-                    "id": "wTBXbs"
-                  },
-                  "queryString": [
-                    {
-                      "key": "booked",
-                      "value": "true"
-                    },
-                    {
-                      "key": "fromDate",
-                      "value": "=dialog.dateEntity.timex[0]"
-                    },
-                    {
-                      "value": "=dialog.locationEntity",
-                      "key": "location"
-                    },
-                    {
-                      "value": "=dialog.skillEntity",
-                      "key": "skills"
-                    }
-                  ],
-                  "statusCodeProperty": "turn.statusCode",
-                  "reasonPhraseProperty": "turn.reasonPhrase",
-                  "employeesProperty": "turn.internalbookedEmployees"
-                },
-                {
-                  "$kind": "Microsoft.IfCondition",
-                  "$designer": {
-                    "id": "zUXzc0"
-                  },
-                  "condition": "=turn.statusCode == 200",
-                  "elseActions": [
-                    {
-                      "$kind": "Microsoft.SendActivity",
-                      "$designer": {
-                        "id": "C1DsiX"
-                      },
-                      "activity": "${SendActivity_C1DsiX()}"
-                    },
-                    {
-                      "$kind": "Microsoft.EndDialog",
-                      "$designer": {
-                        "id": "B2q6L9"
-                      }
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "$kind": "GetInternalBookedEmployeesAction",
-                      "$designer": {
-                        "id": "7zJtZc"
-                      },
-                      "employees": "=turn.internalbookedEmployees",
-                      "result": "turn.internalbookedEmployees",
-                      "date": "=dialog.dateEntity.timex[0]"
-                    },
-                    {
-                      "$kind": "Microsoft.SetProperty",
-                      "$designer": {
-                        "id": "zPkbul"
-                      },
-                      "property": "turn.employees",
-                      "value": "=union(turn.internalbookedEmployees, turn.employees) "
-                    }
-                  ]
-                },
-                {
-                  "$kind": "Microsoft.SetProperty",
-                  "$designer": {
-                    "id": "wIXxRd"
-                  },
-                  "value": "=select(turn.employees, e, e.firstName)",
-                  "property": "turn.firstNames"
-                },
-                {
-                  "$kind": "StringJoinAction",
-                  "$designer": {
-                    "id": "ie4Rpw"
-                  },
-                  "stringList": "=select(turn.firstNames, n, concat(\"**\", n, \"**\"))",
-                  "delimiter": ", ",
-                  "lastDelimiter": " and ",
-                  "resultProperty": "dialog.firstNames",
-                  "wrapCount": 4
-                },
-                {
-                  "$kind": "GetFreeEmployeesAction",
-                  "$designer": {
-                    "id": "x6JX6d"
-                  },
-                  "employees": "=turn.employees",
-                  "result": "turn.employees"
-                },
-                {
-                  "$kind": "Microsoft.IfCondition",
-                  "$designer": {
-                    "id": "rEdHJ2"
-                  },
-                  "condition": "=count(turn.employees) > 0",
-                  "elseActions": [
-                    {
-                      "$kind": "Microsoft.SendActivity",
-                      "$designer": {
-                        "id": "iSmCig"
-                      },
-                      "activity": "${SendActivity_sftkhO()}"
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "$kind": "Microsoft.ForeachPage",
-                      "$designer": {
-                        "id": "OZCZuQ"
-                      },
-                      "pageIndex": "dialog.foreach.pageindex",
-                      "page": "dialog.foreach.page",
-                      "pageSize": 15,
-                      "itemsProperty": "turn.employees",
-                      "actions": [
-                        {
-                          "$kind": "Microsoft.SendActivity",
-                          "$designer": {
-                            "id": "6uyLeH"
-                          },
-                          "activity": "${SendActivity_6uyLeH()}"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+					"actions": [
+						{
+							"$kind": "GetProfileAction",
+							"$designer": {
+								"id": "wTBXbs"
+							},
+							"queryString": [
+								{
+									"key": "booked",
+									"value": "true"
+								},
+								{
+									"key": "fromDate",
+									"value": "=dialog.dateEntity.timex[0]"
+								},
+								{
+									"value": "=dialog.locationEntity",
+									"key": "location"
+								},
+								{
+									"value": "=dialog.skillEntity",
+									"key": "skills"
+								}
+							],
+							"statusCodeProperty": "turn.statusCode",
+							"reasonPhraseProperty": "turn.reasonPhrase",
+							"employeesProperty": "turn.internalbookedEmployees"
+						},
+						{
+							"$kind": "Microsoft.IfCondition",
+							"$designer": {
+								"id": "zUXzc0"
+							},
+							"condition": "=turn.statusCode == 200",
+							"elseActions": [
+								{
+									"$kind": "Microsoft.SendActivity",
+									"$designer": {
+										"id": "C1DsiX"
+									},
+									"activity": "${SendActivity_C1DsiX()}"
+								}
+							],
+							"actions": [
+								{
+									"$kind": "TimeFormatAction",
+									"$designer": {
+										"id": "7KxZvy"
+									},
+									"datetime": "=dialog.dateEntity.timex[0]",
+									"format": "dddd d MMMM",
+									"resultProperty": "turn.formatDate"
+								},
+								{
+									"$kind": "GetInternalBookedEmployeesAction",
+									"$designer": {
+										"id": "7zJtZc"
+									},
+									"employees": "=turn.internalbookedEmployees",
+									"result": "turn.internalbookedEmployees",
+									"date": "=dialog.dateEntity.timex[0]"
+								},
+								{
+									"$kind": "Microsoft.SetProperty",
+									"$designer": {
+										"id": "zPkbul"
+									},
+									"property": "turn.employees",
+									"value": "=union(turn.internalbookedEmployees, turn.employees) "
+								},
+								{
+									"$kind": "Microsoft.SetProperty",
+									"$designer": {
+										"id": "wIXxRd"
+									},
+									"value": "=select(turn.employees, e, e.firstName)",
+									"property": "turn.firstNames"
+								},
+								{
+									"$kind": "StringJoinAction",
+									"$designer": {
+										"id": "ie4Rpw"
+									},
+									"stringList": "=select(turn.firstNames, n, concat(\"**\", n, \"**\"))",
+									"delimiter": ", ",
+									"lastDelimiter": " and ",
+									"resultProperty": "dialog.firstNames",
+									"wrapCount": 4
+								},
+								{
+									"$kind": "GetFreeEmployeesAction",
+									"$designer": {
+										"id": "x6JX6d"
+									},
+									"employees": "=turn.employees",
+									"result": "turn.employees"
+								},
+								{
+									"$kind": "Microsoft.IfCondition",
+									"$designer": {
+										"id": "rEdHJ2"
+									},
+									"condition": "=count(turn.employees) > 0",
+									"elseActions": [
+										{
+											"$kind": "Microsoft.SendActivity",
+											"$designer": {
+												"id": "iSmCig"
+											},
+											"activity": "${SendActivity_sftkhO()}"
+										}
+									],
+									"actions": [
+										{
+											"$kind": "Microsoft.ForeachPage",
+											"$designer": {
+												"id": "OZCZuQ"
+											},
+											"pageIndex": "dialog.foreach.pageindex",
+											"page": "dialog.foreach.page",
+											"pageSize": 15,
+											"itemsProperty": "turn.employees",
+											"actions": [
+												{
+													"$kind": "Microsoft.SendActivity",
+													"$designer": {
+														"id": "6uyLeH"
+													},
+													"activity": "${SendActivity_6uyLeH()}"
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
         },
         {
           "$kind": "Microsoft.EndDialog",

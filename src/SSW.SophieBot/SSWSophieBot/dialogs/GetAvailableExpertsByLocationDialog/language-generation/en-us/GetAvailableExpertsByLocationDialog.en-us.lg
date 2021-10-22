@@ -15,9 +15,7 @@
 ]
 
 # SendActivity_sftkhO_text()
-- Sorry, I couldn't find anyone with **${dialog.skillEntity}** skill in **${dialog.locationEntity}** on **${turn.formatDate}**. Please try again.
-
-
+- Sorry, I couldn't find anyone available with **${dialog.skillEntity}** skill in **${dialog.locationEntity}** on **${turn.formatDate}**. Please try again.
 # SendActivity_6uyLeH()
 [Activity
     Attachments = ${json(EmployeesListCard(turn.formatDate, dialog.skillEntity, dialog.locationEntity, dialog.foreach.page))}
@@ -172,13 +170,6 @@ Only free for ${DaysText(client.FreeDays, false)}
 }
 ```
 
-# SendActivity_5xlJLh()
-[Activity
-    Text = ${SendActivity_5xlJLh_text()}
-]
-
-# SendActivity_5xlJLh_text()
-- Sorry, I don't know the place you are talking about.
 # SendActivity_C1DsiX()
 [Activity
     Text = ${SendActivity_C1DsiX_text()}
@@ -186,3 +177,10 @@ Only free for ${DaysText(client.FreeDays, false)}
 
 # SendActivity_C1DsiX_text()
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_6tkO7W()
+[Activity
+    Text = ${SendActivity_6tkO7W_text()}
+]
+
+# SendActivity_6tkO7W_text()
+- Sorry, I don't know the place you are talking about.

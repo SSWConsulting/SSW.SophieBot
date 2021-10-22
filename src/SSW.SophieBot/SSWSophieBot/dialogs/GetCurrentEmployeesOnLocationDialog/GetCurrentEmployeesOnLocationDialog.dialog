@@ -43,16 +43,7 @@
               }
             }
           ],
-          "actions": [
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "SXrm0S"
-              },
-              "value": "=titleCase(dialog.locationEntity)",
-              "property": "dialog.locationEntity"
-            }
-          ]
+          "actions": []
         },
         {
           "$kind": "GetProfileAction",
@@ -132,6 +123,14 @@
                       },
                       "employees": "=turn.employees",
                       "groupedEmployeesProperty": "turn.groupedEmployees"
+                    },
+                    {
+                      "$kind": "ClientNowAction",
+                      "$designer": {
+                        "id": "pkQMXH"
+                      },
+                      "format": "dddd d MMMM",
+                      "resultProperty": "turn.clientNow"
                     },
                     {
                       "$kind": "Microsoft.SendActivity",

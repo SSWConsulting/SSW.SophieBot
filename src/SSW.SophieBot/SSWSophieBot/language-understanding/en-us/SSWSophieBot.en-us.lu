@@ -49,7 +49,7 @@
 - whats {@contact={@firstname=mike}}'s email?
 - who knows {@contact={@firstname=john}}'s emailaddress?
 
-@ phraseList PhoneNumber(interchangeable) =
+@ phraseList PhoneNumberPhraseList(interchangeable) =
 	- phone
 	- phone number
 	- mobile
@@ -58,7 +58,7 @@
 	- telephone
 	- telephone number
 	- number
-@ intent GetPhoneNumber usesFeature PhoneNumber
+@ intent GetPhoneNumber usesFeature PhoneNumberPhraseList
 
 # GetPhoneNumber
 - can you find me {@contact={@firstname=noe}}'s phone number?
@@ -213,6 +213,11 @@
 - what do you know
 - who is working today?
 - who is working tomorrow?
+- yes
+- no
+- that's not right
+- you're right
+- that's it
 
 > # Entity definitions
 
@@ -263,13 +268,8 @@
 - Who works in Hangzhou?
 - Who works on remote?
 
-@ intent Goodbye usesFeature goodbye
-
-# Goodbye
-- 
-
-@ list goodbye =
-	- goodbye :
+@ list goodbye = 
+	- Goodbye:
 		- bye
 		- bye bye
 		- bye for now
@@ -282,6 +282,10 @@
 		- see you later
 		- quit
 		- exit
+		- sign off
+
+# Goodbye
+- {@goodbye}
 
 # GetExpertsByLocation
 - I need to talk to a {skill = DevOps} expert in Melbourne
@@ -326,6 +330,13 @@
 - I need {@skill = SQL} developers in remote tomorrow
 
 @ prebuilt datetimeV2
+
+@ intent CheckAvailability usesFeature CheckAvailabilityPhraseList
+@ phraseList CheckAvailabilityPhraseList(interchangeable) = 
+	- booked
+	- booked or free
+	- free or booked
+	- booking status
 
 # CheckAvailability
 - Is {@contact={@firstname=Anthony}} booked or free?

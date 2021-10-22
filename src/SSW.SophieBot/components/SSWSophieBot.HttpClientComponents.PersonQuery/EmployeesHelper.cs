@@ -1,5 +1,4 @@
-﻿using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder.Dialogs;
+﻿using Microsoft.Bot.Builder.Dialogs;
 using SSWSophieBot.HttpClientAction.Models;
 using SSWSophieBot.HttpClientComponents.PersonQuery.Models;
 using System;
@@ -11,7 +10,53 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 {
     public static class EmployeesHelper
     {
-        private static string[] leavePhrases = new string[] { "annual leave", "non working", "non-working", "leave", "holiday", "time in lieu", "hour leave", "hours leave", "day off", "days off" };
+        private static readonly string[] _leavePhrases = new string[]
+        {
+            "annual leave",
+            "non working",
+            "non-working",
+            "non-work",
+            "leave",
+            "holiday",
+            "time in lieu",
+            "hour leave",
+            "hours leave",
+            "day off",
+            "days off",
+            "study days"
+        };
+
+        private static readonly string[] _nonDevTitles = new string[]
+        {
+            "SSW Admin",
+            "Senior Marketing Specialist",
+            "SSW Senior Accountant",
+            "SSW China CEO",
+            "SSW Electrician",
+            "SSW QLD State",
+            "International Manager",
+            "SSW VIC State Manager",
+            "SSW Administrative Assistant",
+            "SSW General Manager",
+            "SSW Multimedia Assistant",
+            "SSW Multimedia Specialist",
+            "SSW Multimedia Videographer",
+            "SSW Chief Architect",
+            "Microsoft Regional Director",
+            "SSW Lawyer",
+            "SSW Chief Financial Controller",
+            "SSW Videographer",
+            "SSW Producer, Director and Editor",
+            "Administrative Assistant",
+            "SSW Digital Marketing",
+            "SSW Admin Manager"
+        };
+
+        private static readonly string[] _internalCompanyNames = new string[]
+        {
+            "ssw",
+            "ssw test"
+        };
 
         public static List<EmployeeBillableItemModel> GetBillableEmployees(IEnumerable<GetEmployeeModel> employees, string queriedProjectName, out string projectName)
         {
@@ -28,24 +73,46 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 
             var date = DateTime.Now.ToUniversalTime();
             return employees
-                .Select(e =>
+                .Select(e => new EmployeeBillableItemModel
                 {
-                    var currentAppointment = GetAppointmentBy(date, e.Appointments);
-                    var onClientWork = !currentAppointment?.Regarding?.Equals("ssw", StringComparison.OrdinalIgnoreCase);
-                    return new EmployeeBillableItemModel
-                    {
-                        UserId = e.UserId,
-                        AvatarUrl = e.AvatarUrl,
-                        FirstName = e.FirstName,
-                        LastName = e.LastName,
-                        DisplayName = $"{e.FirstName} {e.LastName}",
-                        BilledDays = GetBilledDays(e, project),
-                        OnClientWork = onClientWork,
-                        LastSeen = GetLastSeen(e)
-                    };
+                    UserId = e.UserId,
+                    AvatarUrl = e.AvatarUrl,
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    DisplayName = $"{e.FirstName} {e.LastName}",
+                    BilledDays = GetBilledDays(e, project),
+                    BookingStatus = GetBookingStatus(e, date),
+                    LastSeen = GetLastSeen(e)
                 })
                 .OrderByDescending(i => i.BilledDays)
                 .ToList();
+        }
+
+        public static BookingStatus GetBookingStatus(GetEmployeeModel employee, DateTime date)
+        {
+            if (employee == null)
+            {
+                return BookingStatus.Unknown;
+            }
+
+            if (IsFree(employee, date))
+            {
+                return BookingStatus.Free;
+            }
+            if (IsOnClientWork(employee, date))
+            {
+                return BookingStatus.ClientWork;
+            }
+            if (IsOnInternalWork(employee, date))
+            {
+                return BookingStatus.InternalWork;
+            }
+            if (IsOnLeave(employee, date))
+            {
+                return BookingStatus.Leave;
+            }
+
+            return BookingStatus.Unknown;
         }
 
         public static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project)
@@ -102,7 +169,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
         {
             var appointments = employee.Appointments
                 .Where(appointment => appointment.Start.UtcDateTime.Ticks > date.Ticks)
-                .Where(appointment => appointment.Regarding?.ToLower() != "ssw" || (appointment.Regarding?.ToLower() == "ssw" && leavePhrases.Any(appointment.Subject.ToLower().Contains)))
+                .Where(appointment => appointment.Regarding?.ToLower() != "ssw" || (appointment.Regarding?.ToLower() == "ssw" && _leavePhrases.Any(appointment.Subject.ToLower().Contains)))
                 .ToList();
             var appointment = appointments.LastOrDefault();
 
@@ -131,29 +198,41 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             }
         }
 
-        public static GetAppointmentModel GetAppointmentBy(DateTime date, List<GetAppointmentModel> appointments)
+        public static List<string> GetClientsByDate(DateTime date, List<GetAppointmentModel> appointments)
         {
-            var results = appointments
-                .Where(appointment => date.Ticks >= GetTicksFrom(appointment.Start) && date.Ticks <= GetTicksFrom(appointment.End))
-                .Where(appointment => !leavePhrases.Any(appointment.Subject.ToLower().Contains))
-                .ToList();
-            return results.Count != 0 ? results[0] : null;
+            var clientAppointments = GetEnumerableAppointmentsByDate(appointments, date)
+                .Where(appointment => !_internalCompanyNames.Contains(appointment.Regarding.ToLower()))
+                .Select(appointment => appointment.Regarding)
+                .Distinct();
+
+            return clientAppointments.Any()
+                ? clientAppointments.ToList()
+                : null;
         }
 
-        public static List<string> GetClientsBy(DateTime date, List<GetAppointmentModel> appointments)
+        public static bool IsOnClientWork(GetEmployeeModel employee, DateTime date)
         {
-            var clientAppointments = appointments
-                .Where(appointment => date.Date.Ticks >= GetTicksFrom(appointment.Start) && date.Date.Ticks <= GetTicksFrom(appointment.End))
-                .Where(appointment => appointment.Regarding?.ToLower() != "ssw" && appointment.Regarding?.ToLower() != "ssw test")
-                .ToList();
-            return clientAppointments.Count > 0 ? clientAppointments.Select(appointment => appointment.Regarding).Where(regarding => regarding != null).Distinct().ToList() : null;
+            return GetEnumerableAppointmentsByDate(employee.Appointments, date)
+                .Any(appointment => !_internalCompanyNames.Contains(appointment.Regarding.ToLower()));
         }
 
-        public static bool GetIsOnLeaveBy(DateTime date, List<GetAppointmentModel> appointments)
+        public static bool IsOnInternalWork(GetEmployeeModel employee, DateTime date)
         {
-            return appointments
-                .Where(appointment => date.Date.Ticks >= GetTicksFrom(appointment.Start) && date.Date.Ticks <= GetTicksFrom(appointment.End))
-                .All(appointment => appointment.Regarding == "SSW" && leavePhrases.Any(appointment.Subject.ToLower().Contains));
+            return GetEnumerableAppointmentsByDate(employee.Appointments, date)
+                .Any(appointment => _internalCompanyNames.Contains(appointment.Regarding.ToLower())
+                    && !_leavePhrases.Any(appointment.Subject.ToLower().Contains));
+        }
+
+        public static bool IsOnLeave(GetEmployeeModel employee, DateTime date)
+        {
+            return GetEnumerableAppointmentsByDate(employee.Appointments, date)
+                .All(appointment => _internalCompanyNames.Contains(appointment.Regarding.ToLower())
+                    && _leavePhrases.Any(appointment.Subject.ToLower().Contains));
+        }
+
+        public static bool IsFree(GetEmployeeModel employee, DateTime date)
+        {
+            return !GetEnumerableAppointmentsByDate(employee.Appointments, date).Any();
         }
 
         public static DateTime ToUserLocalTime(DialogContext dc, DateTime dateTime)
@@ -180,25 +259,30 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             return _rgx.Replace(originalProjectName, string.Empty).IndexOf(prjName, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        public static List<GetEmployeeModel> FilterEmployees(List<GetEmployeeModel> employees)
+        public static List<GetEmployeeModel> FilterDevelopers(List<GetEmployeeModel> employees)
         {
-            var excludedTitles = new string[] { "SSW Admin", "Senior Marketing Specialist", "SSW Senior Accountant", "SSW China CEO", "SSW Electrician",
-                "SSW QLD State", "International Manager", "SSW VIC State Manager", "SSW Administrative Assistant", "SSW General Manager", "SSW Multimedia Assistant",
-                "SSW Multimedia Specialist", "SSW Multimedia Videographer", "SSW Chief Architect", "Microsoft Regional Director", "SSW Lawyer",
-                "SSW Chief Financial Controller", "SSW Videographer", "SSW Producer, Director and Editor", "Administrative Assistant", "SSW Digital Marketing", "SSW Admin Manager" };
-
-            return employees.Where(employee => !excludedTitles.Any(employee.Title.Contains)).ToList();
+            return employees.Where(employee => !_nonDevTitles.Any(employee.Title.Contains)).ToList();
         }
 
         public static List<GetEmployeeModel> GetInternalBookedEmployees(List<GetEmployeeModel> employees, DateTime date)
         {
             return employees
-                .Where(employees => employees.Appointments
-                    .Where(appointment => date.Date.Ticks >= GetTicksFrom(appointment.Start) && date.Date.Ticks <= GetTicksFrom(appointment.End))
-                    .Where(appointment => appointment.Regarding == "SSW" && !leavePhrases.Any(appointment.Subject.ToLower().Contains))
-                    .ToList().Count != 0
-                    )
+                .Where(employee => IsOnInternalWork(employee, date))
                 .ToList();
+        }
+
+        public static IEnumerable<GetAppointmentModel> GetEnumerableAppointmentsByDate(IEnumerable<GetAppointmentModel> appointments, DateTime date)
+        {
+            if (appointments == null || !appointments.Any())
+            {
+                return Enumerable.Empty<GetAppointmentModel>();
+            }
+
+            return appointments
+                .Where(appointment =>
+                    !string.IsNullOrWhiteSpace(appointment.Regarding)
+                    && date.Date.Ticks >= GetTicksFrom(appointment.Start)
+                    && date.Date.Ticks <= GetTicksFrom(appointment.End));
         }
     }
 }

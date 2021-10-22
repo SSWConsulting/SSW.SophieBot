@@ -14,16 +14,21 @@
 # SayHi()
 - IF: ${turn.signedInUser.givenName != null}
     - ```
-    <b><font size=\"4\">Welcome to SSW SophieBot!</font></b><br/><br/>
+    ${if(!user.welcomed, WelcomeText(), '')}
     <b>Hi ${turn.signedInUser.givenName}</b> 🖐<br/><br/>
     ${SummaryText()}
     ```
 - ELSE: 
     - ```
-    <b><font size=\"4\">Welcome to SSW SophieBot!</font></b><br/><br/>
+    ${if(!user.welcomed, WelcomeText(), '')}
     <b>Hi there</b> 🖐<br/>
     ${SummaryText()}
     ```
+
+# WelcomeText()
+- ```
+<b><font size=\"4\">Welcome to SSW SophieBot!</font></b><br/><br/>
+```
 
 # GreetingImage()
 - ```

@@ -412,7 +412,8 @@
                 "title": "=@title",
                 "byBillable": "=@byBillable",
                 "isCurrentLocation": "=@isCurrentLocation",
-                "experienceLevel": "=coalesce(@experienceLevel, 'Advanced, Intermediate')"
+                "experienceLevel": "=coalesce(@experienceLevel, 'Advanced, Intermediate')",
+                "clientNowSubtitle": "=@clientNowSubTitle"
               }
             }
           ]
@@ -846,7 +847,7 @@
             },
             {
               "property": "$options.preset.locationEntity",
-              "value": "=coalesce(@geographyV2.location, @location)"
+              "value": "=coalesce(@geographyV2.location, @location, @remote)"
             }
           ]
         },
@@ -866,7 +867,7 @@
             },
             {
               "property": "$options.location",
-              "value": "=if(exists(coalesce($options.preset.locationEntity, @remote)), titleCase(coalesce($options.preset.locationEntity, @remote)), null)"
+              "value": "=if(exists($options.preset.locationEntity), titleCase($options.preset.locationEntity), null)"
             },
             {
               "property": "$options.skill",
