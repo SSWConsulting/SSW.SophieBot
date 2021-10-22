@@ -42,7 +42,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 DisplayName = $"{e.FirstName} {e.LastName}",
                 Title = e.Title,
                 Clients = EmployeesHelper.GetClientsByDate(date, e.Appointments),
-                IsOnLeave = EmployeesHelper.IsOnLeave(e, date),
+                BookingStatus = EmployeesHelper.GetBookingStatus(e, date),
                 LastSeenAt = e.LastSeenAt,
                 LastSeenTime = EmployeesHelper.GetLastSeen(e),
                 Skills = e.Skills,
