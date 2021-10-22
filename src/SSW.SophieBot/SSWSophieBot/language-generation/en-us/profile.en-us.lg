@@ -171,7 +171,7 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "<${profile.emailAddress}>",
+                            "text": "[${profile.emailAddress}](${profile.emailAddress})",
                             "wrap": true
                         }
                     ],
