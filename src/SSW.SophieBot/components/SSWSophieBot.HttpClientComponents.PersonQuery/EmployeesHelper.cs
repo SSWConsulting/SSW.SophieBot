@@ -225,7 +225,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 
         public static bool IsOnLeave(GetEmployeeModel employee, DateTime date)
         {
-            return GetEnumerableAppointmentsByDate(employee.Appointments, date)
+            var appointments = GetEnumerableAppointmentsByDate(employee.Appointments, date);
+            return appointments.Any() && appointments
                 .All(appointment => _internalCompanyNames.Contains(appointment.Regarding.ToLower())
                     && _leavePhrases.Any(appointment.Subject.ToLower().Contains));
         }
