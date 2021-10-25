@@ -467,7 +467,8 @@
               "activityProcessed": true,
               "dialog": "GetEmployeesByProjectDialog",
               "options": {
-                "projectEntity": "=$options.project"
+                "projectEntity": "=$options.project",
+                "exactMatch": "=@exactMatch"
               }
             }
           ]

@@ -22,3 +22,44 @@
 
 # CardTitle()
 - ${turn.workingEmployees.project} [${count(turn.employees)}]
+
+# ChooseProjectButtons(queriedProjectName, projects)
+- ```
+{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "TextBlock",
+            "wrap": true,
+            "text": "There are multiple projects with the name \"${queriedProjectName}\". Which one were you asking?"
+        }
+    ],
+    "actions": [
+        ${join(select(projects, project, ProjectButton(project.projectName, project.employeesCount)), ',')}
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2"
+}
+```
+
+# ProjectButton(projectName, employeesCount)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${projectName} [${employeesCount}]",
+    "data": 
+    {
+        "intent": "GetEmployeesByProject",
+        "project" : "${projectName}",
+        "exactMatch": true,
+        "msteams": {
+            "type": "messageBack",
+			"displayText": "${projectName} [${employeesCount}]"
+        }
+    }
+}
+```
+# SendActivity_lalAjt()
+[Activity
+    Attachments = ${json(ChooseProjectButtons(dialog.projectEntity, titleCase(turn.projectMatches)))}
+]

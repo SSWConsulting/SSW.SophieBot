@@ -72,12 +72,72 @@
               ],
               "actions": [
                 {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "O8xRo1"
+                  },
+                  "condition": "=exists(exactMatch) && exactMatch == true",
+                  "elseActions": [
+                    {
+                      "$kind": "GetProjectsFromQueryAction",
+                      "$designer": {
+                        "id": "LyySM6"
+                      },
+                      "employees": "=turn.employees",
+                      "queriedProject": "=dialog.projectEntity",
+                      "projectsResultProperty": "turn.projectMatches"
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "dnDcXq"
+                      },
+                      "condition": "=count(turn.projectMatches) > 1",
+                      "elseActions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "Y2l3J1"
+                          },
+                          "property": "turn.resultProjectName",
+                          "value": "=turn.projectMatches[0].projectName"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "lalAjt"
+                          },
+                          "activity": "${SendActivity_lalAjt()}"
+                        },
+                        {
+                          "$kind": "Microsoft.EndDialog",
+                          "$designer": {
+                            "id": "IYFBcx"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "5hSb93"
+                      },
+                      "property": "turn.resultProjectName",
+                      "value": "=dialog.projectEntity"
+                    }
+                  ]
+                },
+                {
                   "$kind": "GetEmployeesByBillableAction",
                   "$designer": {
                     "id": "DxTUuD"
                   },
                   "employees": "=turn.employees",
-                  "project": "=dialog.projectEntity",
+                  "project": "=turn.resultProjectName",
                   "workingEmployeesProperty": "turn.workingEmployees"
                 },
                 {

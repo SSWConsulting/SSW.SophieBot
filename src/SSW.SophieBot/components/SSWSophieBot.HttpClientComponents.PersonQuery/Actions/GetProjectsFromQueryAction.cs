@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using SSWSophieBot.Components;
 using SSWSophieBot.Components.Actions;
 using SSWSophieBot.HttpClientAction.Models;
+using SSWSophieBot.HttpClientComponents.PersonQuery.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,38 +43,48 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 throw new ArgumentNullException(nameof(Employees));
             }
 
-            var resultProjects = new List<string>();
+            var resultProjectsDic = new Dictionary<string, int>();
 
-            if (string.IsNullOrWhiteSpace(queriedProject))
+            void AddResultProject(string projectName)
             {
-                resultProjects = employees
-                    .SelectMany(employee => employee.Projects.Select(project => project.ProjectName))
-                    .Where(projectName => !string.IsNullOrWhiteSpace(projectName))
-                    .Distinct()
-                    .ToList();
+                if (!string.IsNullOrWhiteSpace(projectName))
+                {
+                    if (resultProjectsDic.TryGetValue(projectName, out var employeesCount))
+                    {
+                        resultProjectsDic[projectName]++;
+                    }
+                    else
+                    {
+                        resultProjectsDic[projectName] = 1;
+                    }
+                }
             }
-            else
+
+            employees.ForEach(employee =>
             {
-                resultProjects = employees
-                    .SelectMany(employee => employee.Projects.Select(project =>
-                        {
-                            if (string.IsNullOrWhiteSpace(project.ProjectName))
-                            {
-                                return string.Empty;
-                            }
+                var projectNames = Enumerable.Empty<string>();
 
-                            if (EmployeesHelper.IsProjectNameMatch(queriedProject, project.ProjectName))
-                            {
-                                return project.ProjectName;
-                            }
+                if (string.IsNullOrWhiteSpace(queriedProject))
+                {
+                    projectNames = employee.Projects.Select(project => project?.ProjectName).Distinct();
+                }
+                else
+                {
+                    projectNames = employee.Projects.Where(project =>
+                        EmployeesHelper.IsProjectNameMatch(queriedProject, project.ProjectName))
+                    .Select(project => project.ProjectName)
+                    .Distinct();
+                }
 
-                            return string.Empty;
-                        })
-                    )
-                    .Where(projectName => !string.IsNullOrWhiteSpace(projectName))
-                    .Distinct()
-                    .ToList();
-            }
+                foreach (var projectName in projectNames)
+                {
+                    AddResultProject(projectName);
+                }
+            });
+
+            var resultProjects = resultProjectsDic
+                .Select(pair => new ProjectWithEmployeesCountModel(pair.Key, pair.Value))
+                .ToList();
 
             dc.State.SetValue(dc.GetValue(ProjectsResultProperty), resultProjects);
 
