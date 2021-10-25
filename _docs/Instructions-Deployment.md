@@ -17,4 +17,4 @@
 
 ## Automatic deployment with GitHub Actions
 
-Only for dev bot, it will automatically trigger deployment after changes are pushed to the main branch.
+Only for dev bot, it will automatically trigger deployment after changes are pushed to the main branch. Please refer to [SSW.SophieBot.dev.yml](https://github.com/SSWConsulting/SSW.SophieBot/blob/main/.github/workflows/SSW.SophieBot.dev.yml)
