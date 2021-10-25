@@ -48,15 +48,15 @@
 
 # BookingStatus(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - ${profile.displayName} is **booked** today.
+    - Today: ${profile.displayName} is **booked**.
 - ELSEIF: ${ profile.bookingStatus == 3 }
-    - ${profile.displayName} is **on leave** today.
+    - Today: ${profile.displayName} is **on leave**.
 - ELSE:
-    - ${profile.displayName} is **free** today.
+    - Today: ${profile.displayName} is **free**.
 
 # ClientInfo(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - Is busy working for ${join(profile.clients, ',')}.
+    - Client: ${join(profile.clients, ',')}.
 - ELSE:
     -
 
@@ -65,11 +65,11 @@
 
 # LastSeenText(location, time)
 - IF: ${ location != null && time != null }
-    - ```Last seen in ${location} ${time}.```
+    - ```Last seen: ${location} ${time}.```
 - ELSEIF: ${ location == null }
-    - ```Last seen ${time}.```
+    - ```Last seen: ${time}.```
 - ELSEIF: ${ time == null }:
-    - ```Last seen in ${location}.```
+    - ```Last seen: ${location}.```
 - ELSE:
     - 
 
