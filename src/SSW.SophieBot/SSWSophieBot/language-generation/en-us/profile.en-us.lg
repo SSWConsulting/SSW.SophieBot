@@ -259,23 +259,23 @@
 
 # Status(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - Today: Is busy working for ${join(profile.clients, ',')}.
+    - **Today**: Working for ${join(profile.clients, ',')}.
 - ELSEIF: ${ profile.bookingStatus == 1 && profile.clients.count == 0 }
-    - Today: Is busy on client work.
+    - **Today**: On client work.
 - ELSEIF: ${ profile.bookingStatus == 2 }
-    - Today: Is on internal work.
+    - **Today**: On internal work.
 - ELSEIF: ${ profile.bookingStatus == 3 }
-    - Today: Is on leave.
+    - **Today**: On leave.
 - ELSE:
-    - Today: Is free.
+    - **Today**: Free.
 
 # LastSeen(location, defaultLocation, time)
 - IF: ${ location != null && time != null }
-    - ```Last seen: ${location}${IsTravelling(location, defaultLocation)} ${time}.```
+    - ```**Last seen**: ${location}${IsTravelling(location, defaultLocation)} ${time}.```
 - ELSEIF: ${ location == null }
-    - ```Last seen: ${time}.```
+    - ```**Last seen**: ${time}.```
 - ELSEIF: ${ time == null }:
-    - ```Last seen: ${location}${IsTravelling(location, defaultLocation)}.```
+    - ```**Last seen**: ${location}${IsTravelling(location, defaultLocation)}.```
 - ELSE:
     - 
 
