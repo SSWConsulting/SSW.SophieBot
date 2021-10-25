@@ -160,19 +160,7 @@
     "type": "ColumnSet",
     "columns": [
         ${ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px')},
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "text": "${employee.displayName}",
-                    "size": "Small",
-                    "wrap": true
-                }
-            ],
-            "verticalContentAlignment": "Center"
-        },
+        ${ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', 'Small')},
         {
             "type": "Column",
             "width": "stretch",

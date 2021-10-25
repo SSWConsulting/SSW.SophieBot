@@ -272,13 +272,13 @@
 - IF: ${ dialog.booked }
     - ${join(createArray(
             ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, 'auto', '35px'), 
-            BodyColumn(employee.displayName, '125px'), 
+            ClickableName(employee.displayName, employee.firstName, employee.lastName, '125px', 'Small'),
             ClientColumn(employee.clients, 'stretch')
         ), ',')}
 - ELSE:
     - ${join(createArray(
             ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, 'auto', '35px'), 
-            BodyColumn(employee.displayName, '110px'), 
+            ClickableName(employee.displayName, employee.firstName, employee.lastName, '110px', 'Small'),
             BodyColumn(DaysText(employee.BilledDays, true), '67px'), 
             ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), BodyColumn(employee.LastSeen, '80px')
         ), ',')}

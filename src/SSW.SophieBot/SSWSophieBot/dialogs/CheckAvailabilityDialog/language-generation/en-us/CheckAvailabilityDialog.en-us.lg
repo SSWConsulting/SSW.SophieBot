@@ -36,7 +36,11 @@
                     "type": "Column",
                     "width": "stretch",
                     "items": [
-                        ${join(createArray(TextBlock(BookingStatus(profile)), TextBlock(ClientInfo(profile)), TextBlock(LastSeen(profile))), ',')}
+                        ${join(createArray(
+                            TextBlockWithClickableName(profile.displayName, profile.firstName, profile.lastName, BookingStatus(profile)), 
+                            TextBlock(ClientInfo(profile)), 
+                            TextBlock(LastSeen(profile))
+                        ), ',')}
                     ],
                     "verticalContentAlignment": "Center"
                 }
@@ -48,11 +52,11 @@
 
 # BookingStatus(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - ${profile.displayName} is booked today.
+    - is booked today.
 - ELSEIF: ${ profile.bookingStatus == 3 }
-    - ${profile.displayName} is on leave today.
+    - is on leave today.
 - ELSE:
-    - ${profile.displayName} is free today.
+    - is free today.
 
 # ClientInfo(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
@@ -79,6 +83,24 @@
     "type": "TextBlock",
     "text": "${text}",
     "wrap": true
+}
+```
+
+# TextBlockWithClickableName(displayName, firstName, lastName, text)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        ${ClickableName(displayName, firstName, lastName, 'auto', 'Default')},
+        {
+            "type": "Column",
+            "width": "stretch",
+            "spacing": "Small",
+            "items": [${TextBlock(text)}],
+            "verticalContentAlignment": "Center"
+        }
+    ],
+    "height": "auto"
 }
 ```
 
