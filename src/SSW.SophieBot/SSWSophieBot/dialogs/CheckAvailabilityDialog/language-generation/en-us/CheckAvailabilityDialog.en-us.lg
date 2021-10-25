@@ -52,15 +52,15 @@
 
 # BookingStatus(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - is booked today.
+    - is **booked**.
 - ELSEIF: ${ profile.bookingStatus == 3 }
-    - is on leave today.
+    - is **on leave**.
 - ELSE:
-    - is free today.
+    - is **free**.
 
 # ClientInfo(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - Is busy working for ${join(profile.clients, ',')}.
+    - Client: ${join(profile.clients, ',')}.
 - ELSE:
     -
 
@@ -69,11 +69,11 @@
 
 # LastSeenText(location, time)
 - IF: ${ location != null && time != null }
-    - ```Last seen in ${location} ${time}.```
+    - ```Last seen: ${location} ${time}.```
 - ELSEIF: ${ location == null }
-    - ```Last seen ${time}.```
+    - ```Last seen: ${time}.```
 - ELSEIF: ${ time == null }:
-    - ```Last seen in ${location}.```
+    - ```Last seen: ${location}.```
 - ELSE:
     - 
 
@@ -91,7 +91,14 @@
 {
     "type": "ColumnSet",
     "columns": [
-        ${ClickableName(displayName, firstName, lastName, 'auto', 'Default')},
+        {
+            "type": "Column",
+            "width": "auto",
+            "spacing": "Small",
+            "items": [${TextBlock('Today: ')}],
+            "verticalContentAlignment": "Center"
+        },
+        ${ClickableName(displayName, firstName, lastName, 'auto', 'Default', 'Small')},
         {
             "type": "Column",
             "width": "stretch",
