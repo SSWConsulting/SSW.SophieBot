@@ -98,7 +98,7 @@
             "items": [${TextBlock('Today: ')}],
             "verticalContentAlignment": "Center"
         },
-        ${ClickableName(displayName, firstName, lastName, 'auto', 'Default')},
+        ${ClickableName(displayName, firstName, lastName, 'auto', 'Default', 'Small')},
         {
             "type": "Column",
             "width": "stretch",

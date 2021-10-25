@@ -181,11 +181,12 @@ We love squashing bugs 🥰```
 }
 ```
 
-# ClickableName(displayName, firstName, lastName, columnWidth, fontSize)
+# ClickableName(displayName, firstName, lastName, columnWidth, fontSize, spacing)
 - ```
 {
     "type": "Column",
     "width": "${columnWidth}",
+    "spacing": "${spacing}",
     "items": [
         {
             "type": "TextBlock",
@@ -216,4 +217,3 @@ We love squashing bugs 🥰```
     }
 }
 ```
-    
