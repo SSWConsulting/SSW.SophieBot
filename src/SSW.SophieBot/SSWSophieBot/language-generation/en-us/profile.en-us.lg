@@ -258,14 +258,16 @@
 ```
 
 # Status(profile)
-- IF: ${ profile.clients != null && profile.clients.count != 0 }
+- IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
     - Today: Is busy working for ${join(profile.clients, ',')}.
-- ELSEIF: ${ profile.clients.count == 0 }
+- ELSEIF: ${ profile.bookingStatus == 1 && profile.clients.count == 0 }
     - Today: Is busy on client work.
-- ELSEIF: ${ profile.isOnLeave }
+- ELSEIF: ${ profile.bookingStatus == 2 }
+    - Today: Is on internal work.
+- ELSEIF: ${ profile.bookingStatus == 3 }
     - Today: Is on leave.
 - ELSE:
-    - Today: Is on internal work.
+    - Today: Is free.
 
 # LastSeen(location, defaultLocation, time)
 - IF: ${ location != null && time != null }

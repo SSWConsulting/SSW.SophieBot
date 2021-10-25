@@ -47,7 +47,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "🟢 Client Work  ⚫ Internal Work  🔴 Leave  ⚪ Free",
+                    "text": "🟢 Booked　⚫ Booked (Internal)　⚪ Free　🔴 Leave",
                     "wrap": true,
                     "spacing": "None"
                 }

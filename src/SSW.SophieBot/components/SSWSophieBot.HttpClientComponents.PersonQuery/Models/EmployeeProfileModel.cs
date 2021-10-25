@@ -18,8 +18,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Models
         [JsonProperty("clients")]
         public List<string> Clients { get; set; }
 
-        [JsonProperty("isOnLeave")]
-        public bool IsOnLeave { get; set; }
+        [JsonProperty("bookingStatus")]
+        public BookingStatus BookingStatus { get; set; }
 
         [JsonProperty("lastSeenAt")]
         public GetLastSeenAtSiteModel LastSeenAt { get; set; }

@@ -6,7 +6,6 @@ using SSWSophieBot.Components.Actions;
 using SSWSophieBot.HttpClientAction.Models;
 using SSWSophieBot.HttpClientComponents.PersonQuery.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -43,7 +42,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 DisplayName = $"{e.FirstName} {e.LastName}",
                 Title = e.Title,
                 Clients = EmployeesHelper.GetClientsByDate(date, e.Appointments),
-                IsOnLeave = EmployeesHelper.IsOnLeave(e, date),
+                BookingStatus = EmployeesHelper.GetBookingStatus(e, date),
                 LastSeenAt = e.LastSeenAt,
                 LastSeenTime = EmployeesHelper.GetLastSeen(e),
                 Skills = e.Skills,
