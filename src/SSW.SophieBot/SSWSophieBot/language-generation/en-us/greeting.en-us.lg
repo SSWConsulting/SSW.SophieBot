@@ -33,7 +33,7 @@
 # GreetingImage()
 - ```
 {
-    "url": "${settings.App.BaseUrl}/sophiebot.png"
+    "url": "${settings.App.BaseUrl}/sophiebot-branding.png"
 }
 ```
 
