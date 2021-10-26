@@ -12,17 +12,14 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
     {
         private static readonly string[] _leavePhrases = new string[]
         {
-            "annual leave",
             "non working",
             "non-working",
             "non-work",
-            "leave",
             "holiday",
             "time in lieu",
-            "hour leave",
-            "hours leave",
             "day off",
             "days off",
+            "leave",
             "study days",
             "uni days"
         };
