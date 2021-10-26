@@ -51,7 +51,7 @@
 {
     "type": "Action.OpenUrl",
     "title": "📄 More Project Info",
-    "url": "${settings.ProjectUrl}"
+    "url": "${settings.App.ProjectUrl}"
 }
 ```
 
