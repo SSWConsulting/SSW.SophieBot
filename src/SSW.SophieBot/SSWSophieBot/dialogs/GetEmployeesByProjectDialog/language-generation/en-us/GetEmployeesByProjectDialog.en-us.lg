@@ -17,7 +17,7 @@
 - Sorry, I couldn't find anyone working on **${dialog.projectEntity}** in your organization. Please try again.
 # SendActivity_OeOolV()
 [Activity
-    Attachments = ${json(BillableEmployeesList(CardTitle(), null, true, dialog.foreach.page, dialog.foreach.pageindex * 10 >= count(turn.employees)))}
+    Attachments = ${json(BillableEmployeesList(CardTitle(), null, true, dialog.foreach.page, dialog.foreach.pageindex * 10 >= count(turn.employees), true))}
 ]
 
 # CardTitle()
@@ -31,11 +31,15 @@
         {
             "type": "TextBlock",
             "wrap": true,
-            "text": "There are multiple projects with the name \"${queriedProjectName}\". Which one were you asking?"
+            "text": "There are multiple projects with the name **${queriedProjectName}**. Which one were you asking?"
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                ${join(select(take(projects, 6), project, ProjectButton(project.projectName, project.employeesCount)), ',')}
+            ],
+            "height": "stretch"
         }
-    ],
-    "actions": [
-        ${join(select(projects, project, ProjectButton(project.projectName, project.employeesCount)), ',')}
     ],
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2"
@@ -49,7 +53,7 @@
     "title": "${projectName} [${employeesCount}]",
     "data": 
     {
-        "intent": "GetEmployeesByProject",
+        "intent": "GetEmployeesOnProject",
         "project" : "${projectName}",
         "exactMatch": true,
         "msteams": {
@@ -61,5 +65,5 @@
 ```
 # SendActivity_lalAjt()
 [Activity
-    Attachments = ${json(ChooseProjectButtons(dialog.projectEntity, titleCase(turn.projectMatches)))}
+    Attachments = ${json(ChooseProjectButtons(dialog.projectEntity, turn.projectMatches))}
 ]

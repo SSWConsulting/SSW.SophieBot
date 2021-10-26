@@ -30,7 +30,8 @@
         turn.clientNow,
         if(dialog.foreach.pageindex == 1, true, false),
         dialog.foreach.page,
-        dialog.foreach.pageindex * 10 >= count(turn.billableEmployees.employees)))}
+        dialog.foreach.pageindex * 10 >= count(turn.billableEmployees.employees),
+        false))}
 ]
 
 # GetNextTitle(pageIndex, pageSize)

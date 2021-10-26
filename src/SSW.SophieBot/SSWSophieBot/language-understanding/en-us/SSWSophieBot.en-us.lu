@@ -316,7 +316,8 @@
 - Who is on {@project} project[?]
 - Who is working on {@project}[?]
 - Who is on {@project}[?]
-- Who is working on {@project = ssw} projects[?]
+- Who's working on {@project = Dynamic 365 CRM Customization}
+- Who are working on {@project = SugarLearning Development}
 - Show me the people working on {project = Sophie Hub}
 - Show me who are working on {project = NorthWind}
 
@@ -410,6 +411,7 @@
 	- free
 	- in the bench
 	- on the bench
+	- working on ssw projects
 
 @ phraselist UnavailablePhraseList(interchangeable) = 
 	- on client work
