@@ -849,6 +849,10 @@
             {
               "property": "$options.preset.locationEntity",
               "value": "=coalesce(@geographyV2.location, @location, @remote)"
+            },
+            {
+              "property": "$options.preset.positive",
+              "value": "=if(exists(@presentBe), if(@presentBe=='positive', true, false), true)"
             }
           ]
         },
@@ -884,7 +888,7 @@
             },
             {
               "property": "$options.booked",
-              "value": "=@available"
+              "value": "=if(exists(coalesce(@available, @unavailable)), if($options.preset.positive, @available, @unavailable), null)"
             },
             {
               "property": "$options.implemented",
