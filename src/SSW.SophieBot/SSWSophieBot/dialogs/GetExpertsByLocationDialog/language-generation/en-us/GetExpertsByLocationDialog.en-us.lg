@@ -140,7 +140,7 @@
     "type": "ColumnSet",
     "columns": [
         ${ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, 'auto', '35px')},
-        ${ClickableName(concat(employee.firstName, ' ', employee.lastName), employee.firstName, employee.lastName, 'stretch', 'Small')},
+        ${ClickableName(concat(employee.firstName, ' ', employee.lastName), employee.firstName, employee.lastName, 'stretch', 'Small', 'Default')},
         {
             "type": "Column",
             "width": "stretch",
