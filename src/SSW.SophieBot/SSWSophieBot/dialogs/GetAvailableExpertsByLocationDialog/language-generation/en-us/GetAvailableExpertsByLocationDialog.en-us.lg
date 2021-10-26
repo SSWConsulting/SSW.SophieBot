@@ -72,7 +72,7 @@
             {
                 "type": "Action.OpenUrl",
                 "title": "📈 More Booking Info",
-                "url": "${settings.CRMBookingEndpoint}"
+                "url": "${settings.App.CRMBookingEndpoint}"
             }
         ]
     }
