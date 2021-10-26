@@ -43,21 +43,26 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 throw new ArgumentNullException(nameof(Employees));
             }
 
-            var date = dateString != null && dateString != ""
+            var date = !string.IsNullOrEmpty(dateString)
                 ? ComponentHelper.ToUserLocalTime(dc, DateTime.Parse(dateString)).AddHours(9)
                 : DateTime.Now.ToUniversalTime();
 
-            var result = EmployeesHelper.FilterDevelopers(employees).Select(employee => new FreeEmployeeModel
+            var result = EmployeesHelper.FilterDevelopers(employees).Select(employee =>
             {
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                DefaultSite = employee.DefaultSite,
-                AvatarUrl = employee.AvatarUrl,
-                DisplayName = $"{employee.FirstName} {employee.LastName}",
-                BilledDays = EmployeesHelper.GetBilledDays(employee, null),
-                InOffice = employee.InOffice,
-                LastSeen = EmployeesHelper.GetLastSeen(employee),
-                NextClient = EmployeesHelper.GetNextClient(employee, date)
+                var nextUnavailability = EmployeesHelper.GetNextUnavailability(employee, date, out var freeDays);
+                return new FreeEmployeeModel
+                {
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    DefaultSite = employee.DefaultSite,
+                    AvatarUrl = employee.AvatarUrl,
+                    DisplayName = $"{employee.FirstName} {employee.LastName}",
+                    BilledDays = EmployeesHelper.GetBilledDays(employee, null),
+                    InOffice = employee.InOffice,
+                    LastSeen = EmployeesHelper.GetLastSeen(employee),
+                    NextClient = nextUnavailability,
+                    FreeDays = freeDays
+                };
             })
             .OrderByDescending(employee => employee.BilledDays)
             .ToList();

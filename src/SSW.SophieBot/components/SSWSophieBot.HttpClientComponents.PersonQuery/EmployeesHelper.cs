@@ -23,7 +23,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             "hours leave",
             "day off",
             "days off",
-            "study days"
+            "study days",
+            "uni days"
         };
 
         private static readonly string[] _nonDevTitles = new string[]
@@ -165,37 +166,51 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             }
         }
 
-        public static NextClientModel GetNextClient(GetEmployeeModel employee, DateTime date)
+        public static NextClientModel GetNextUnavailability(GetEmployeeModel employee, DateTime date, out int freeDays)
         {
-            var appointments = employee.Appointments
-                .Where(appointment => appointment.Start.UtcDateTime.Ticks > date.Ticks)
-                .Where(appointment => appointment.Regarding?.ToLower() != "ssw" || (appointment.Regarding?.ToLower() == "ssw" && _leavePhrases.Any(appointment.Subject.ToLower().Contains)))
-                .ToList();
-            var appointment = appointments.LastOrDefault();
+            const int daysForNext4Weeks = 4 * 7;
+            var daysTillNextWeek = (int)DayOfWeek.Saturday - (int)date.DayOfWeek + 1;
 
-            if (appointments.Count == 0 || appointment.Regarding == null)
+            freeDays = daysForNext4Weeks;
+            var unfreeAppointments = new List<GetAppointmentModel>();
+            var lastDate = DateTimeOffset.MinValue;
+
+            var startDate = date.AddDays(daysTillNextWeek);
+            var endDate = date.AddDays(daysTillNextWeek + daysForNext4Weeks);
+
+            foreach (var a in employee.Appointments
+                .Where(a => a.Start.UtcTicks >= startDate.Ticks
+                    && a.End.UtcTicks < endDate.Ticks
+                    && !string.IsNullOrWhiteSpace(a.Regarding))
+                .OrderBy(a => a.Start.UtcTicks))
+            {
+                if (!IsOnInternalWorkFunc(a))
+                {
+                    unfreeAppointments.Add(a);
+
+                    if (a.End.Date >= lastDate)
+                    {
+                        var unfreeDays = (int)Math.Ceiling((a.End.Date.AddDays(1) - (a.Start.Date < lastDate ? lastDate : a.Start.Date)).TotalDays);
+
+                        freeDays -= unfreeDays;
+                        lastDate = a.End.Date.AddDays(1);
+                    }
+                }
+            }
+
+            var appointment = unfreeAppointments.FirstOrDefault();
+
+            if (appointment?.Regarding == null)
             {
                 return null;
             }
 
             return new NextClientModel
             {
-                FreeDays = GetBusinessDays(date, appointment.Start.UtcDateTime),
                 Name = appointment.Regarding,
-                Date = appointment.Start.ToString("ddd, dd/MM/yyyy")
+                Date = appointment.Start.ToString("ddd, dd/MM/yyyy"),
+                Type = IsOnLeaveFunc(appointment) ? BookingStatus.Leave : BookingStatus.ClientWork
             };
-
-            static int GetBusinessDays(DateTime start, DateTime end)
-            {
-                double result =
-                    1 + ((end - start).TotalDays * 5 -
-                    (start.DayOfWeek - end.DayOfWeek) * 2) / 7;
-
-                if (end.DayOfWeek == DayOfWeek.Saturday) result--;
-                if (start.DayOfWeek == DayOfWeek.Sunday) result--;
-
-                return (int)Math.Floor(result);
-            }
         }
 
         public static List<string> GetClientsByDate(DateTime date, List<GetAppointmentModel> appointments)
@@ -216,19 +231,29 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                 .Any(appointment => !_internalCompanyNames.Contains(appointment.Regarding.ToLower()));
         }
 
+        private static bool IsOnInternalWorkFunc(GetAppointmentModel appointment)
+        {
+            return _internalCompanyNames.Contains(appointment.Regarding.ToLower())
+                && !_leavePhrases.Any(appointment.Subject.ToLower().Contains);
+        }
+
+        private static bool IsOnLeaveFunc(GetAppointmentModel appointment)
+        {
+            return _internalCompanyNames.Contains(appointment.Regarding.ToLower())
+                && _leavePhrases.Any(appointment.Subject.ToLower().Contains);
+        }
+
         public static bool IsOnInternalWork(GetEmployeeModel employee, DateTime date)
         {
             return GetEnumerableAppointmentsByDate(employee.Appointments, date)
-                .Any(appointment => _internalCompanyNames.Contains(appointment.Regarding.ToLower())
-                    && !_leavePhrases.Any(appointment.Subject.ToLower().Contains));
+                .Any(IsOnInternalWorkFunc);
         }
 
         public static bool IsOnLeave(GetEmployeeModel employee, DateTime date)
         {
             var appointments = GetEnumerableAppointmentsByDate(employee.Appointments, date);
             return appointments.Any() && appointments
-                .All(appointment => _internalCompanyNames.Contains(appointment.Regarding.ToLower())
-                    && _leavePhrases.Any(appointment.Subject.ToLower().Contains));
+                .All(IsOnLeaveFunc);
         }
 
         public static bool IsFree(GetEmployeeModel employee, DateTime date)
