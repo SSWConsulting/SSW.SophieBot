@@ -44,5 +44,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Models
 
         [JsonProperty("lastName")]
         public string LastName { get; set; }
+
+        [JsonProperty("billableRate")]
+        public double BillableRate { get; set; }
     }
 }

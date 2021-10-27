@@ -38,7 +38,7 @@
                             "spacing": "None",
                             "isSubtle": true,
                             "wrap": true,
-                            "text": "${profile.title}"
+                            "text": "${profile.title} | $${round(profile.billableRate)} + GST"
                         }
                     ],
                     "width": "stretch",
@@ -51,17 +51,50 @@
             "columns": [
                 {
                     "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "**Today:** ",
+                            "wrap": true
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
                     "width": "stretch",
                     "items": [
                         {
                             "type": "TextBlock",
                             "wrap": true,
                             "text": "${Status(profile)}",
-                        },
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "**Last Seen:** ",
+                            "wrap": true
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
                         {
                             "type": "TextBlock",
                             "wrap": true,
-                            "text": "${if(profile.lastSeenAt != null, LastSeen(profile.lastSeenAt.siteId, profile.defaultSite.name, profile.lastSeenTime), '')}"
+                            "text": "${if(profile.lastSeenAt != null, LastSeen(profile.lastSeenAt.siteId, profile.defaultSite.name, profile.lastSeenTime), '—')}"
                         }
                     ]
                 }
@@ -76,9 +109,8 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "Skills",
-                            "wrap": true,
-                            "weight": "Bolder"
+                            "text": "**Skills**",
+                            "wrap": true
                         }
                     ]
                 },
@@ -143,9 +175,8 @@
         },
         {
             "type": "TextBlock",
-            "text": "Contact",
+            "text": "**Contact**",
             "wrap": true,
-            "weight": "Bolder",
             "separator": true,
             "height": "stretch"
         },
@@ -259,23 +290,23 @@
 
 # Status(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - Today: Is busy working for ${join(profile.clients, ',')}.
+    - Is busy working for ${join(profile.clients, ',')}.
 - ELSEIF: ${ profile.bookingStatus == 1 && profile.clients.count == 0 }
-    - Today: Is busy on client work.
+    - Is busy on client work.
 - ELSEIF: ${ profile.bookingStatus == 2 }
-    - Today: Is on internal work.
+    - Is on internal work.
 - ELSEIF: ${ profile.bookingStatus == 3 }
-    - Today: Is on leave.
+    - Is on leave.
 - ELSE:
-    - Today: Is free.
+    - Is free.
 
 # LastSeen(location, defaultLocation, time)
 - IF: ${ location != null && time != null }
-    - ```Last seen: ${location}${IsTravelling(location, defaultLocation)} ${time}.```
+    - ```${location}${IsTravelling(location, defaultLocation)} ${time}.```
 - ELSEIF: ${ location == null }
-    - ```Last seen: ${time}.```
+    - ```${time}.```
 - ELSEIF: ${ time == null }:
-    - ```Last seen: ${location}${IsTravelling(location, defaultLocation)}.```
+    - ```${location}${IsTravelling(location, defaultLocation)}.```
 - ELSE:
     - 
 
