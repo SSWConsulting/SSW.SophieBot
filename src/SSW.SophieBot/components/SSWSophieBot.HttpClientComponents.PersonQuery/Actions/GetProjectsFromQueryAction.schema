@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "GetProjectsFromQuery",
+  "description": "This will return the result of matched project names from query",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "queriedProject": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Queried project name",
+      "description": "The queried project name"
+    },
+    "employees": {
+      "$ref": "schema:#/definitions/arrayExpression",
+      "title": "Employees",
+      "description": "Working employees retrieved from HTTP request"
+    },
+    "projectsResultProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Projects result property",
+      "description": "The property to store the result of project names"
+    }
+  }
+}

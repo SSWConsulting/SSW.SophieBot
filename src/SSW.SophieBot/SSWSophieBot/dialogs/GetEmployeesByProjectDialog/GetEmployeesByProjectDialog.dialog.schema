@@ -8,6 +8,11 @@
       "title": "Project Entity",
       "description": "The project name employees are working on",
       "$ref": "#/definitions/stringExpression"
+    },
+    "exactMatch": {
+      "description": "If set to true, do exact match for the project name",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/booleanExpression",
+      "title": "Exact Match"
     }
   },
   "$result": {

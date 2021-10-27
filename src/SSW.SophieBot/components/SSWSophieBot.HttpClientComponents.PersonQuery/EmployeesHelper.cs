@@ -58,7 +58,10 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             "ssw test"
         };
 
-        public static List<EmployeeBillableItemModel> GetBillableEmployees(IEnumerable<GetEmployeeModel> employees, string queriedProjectName, out string projectName)
+        public static List<EmployeeBillableItemModel> GetBillableEmployees(
+            IEnumerable<GetEmployeeModel> employees,
+            string queriedProjectName,
+            out string projectName)
         {
             GetEmployeeProjectModel project;
             if (string.IsNullOrWhiteSpace(queriedProjectName))
@@ -250,6 +253,16 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 
         private static bool IsProjectNameEqual(string sourceProjectName, string originalProjectName)
         {
+            return sourceProjectName?.Trim() == originalProjectName?.Trim();
+        }
+
+        public static bool IsProjectNameMatch(string sourceProjectName, string originalProjectName)
+        {
+            if (string.IsNullOrWhiteSpace(originalProjectName) && string.IsNullOrWhiteSpace(sourceProjectName))
+            {
+                return true;
+            }
+
             if (string.IsNullOrWhiteSpace(originalProjectName) || string.IsNullOrWhiteSpace(sourceProjectName))
             {
                 return false;
