@@ -61,15 +61,7 @@
     }
     ```
 - ELSE:
-    - ```
-    {
-        "type": "TextBlock",
-        "text": "Next ${if(dialog.foreach.pageindex * 10 < count(turn.employees), 10, count(turn.employees) - 10 * (dialog.foreach.pageindex - 1))}...",
-        "wrap": true,
-        "size": "Medium",
-        "weight": "Bolder"
-    }
-    ```
+    - ${Pagination(dialog.foreach.pageindex, count(turn.employees))}
 
 # EmployeeList(employees)
 -```
