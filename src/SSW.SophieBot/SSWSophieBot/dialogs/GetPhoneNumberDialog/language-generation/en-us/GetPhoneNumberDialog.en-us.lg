@@ -49,10 +49,11 @@
 
 # SendActivity_rq2SXx_text()
 - Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
-# ConfirmInput_Prompt_AE8yd6()
+
+# SendActivity_2cInUM()
 [Activity
-    Text = ${ConfirmInput_Prompt_AE8yd6_text()}
+    Text = ${SendActivity_2cInUM_text()}
 ]
 
-# ConfirmInput_Prompt_AE8yd6_text()
-- Sorry, I couldn't find anyone named **${turn.originalName}** in your organization. Did you mean **${join([dialog.suggestedFirstName, dialog.suggestedLastName], ' ')}**?
+# SendActivity_2cInUM_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
