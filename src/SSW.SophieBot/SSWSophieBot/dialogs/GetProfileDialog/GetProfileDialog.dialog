@@ -119,22 +119,21 @@
                       },
                       "property": "turn.displayName",
                       "value": "=concat(turn.employees[0].firstName, \" \", turn.employees[0].lastName)"
-                    },
-                    {
-                      "$kind": "Microsoft.SendActivity",
-                      "$designer": {
-                        "id": "q5H2c0"
-                      },
-                      "activity": "${SendActivity_q5H2c0()}"
                     }
                   ],
                   "actions": [
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "pkRvWS"
+                        "id": "1wGn1P"
                       },
-                      "activity": "${SendActivity_pkRvWS()}"
+                      "activity": "${SendActivity_1wGn1P()}"
+                    },
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "LAyzEN"
+                      }
                     }
                   ]
                 },

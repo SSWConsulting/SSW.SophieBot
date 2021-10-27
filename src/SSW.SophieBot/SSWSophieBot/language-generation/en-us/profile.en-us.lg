@@ -276,7 +276,7 @@
             "actions": [
                 {
                     "type": "Action.OpenUrl",
-                    "title": "More about ${profile.firstName}",
+                    "title": "View in People",
                     "url": "https://www.ssw.com.au/people/${toLower(profile.firstName)}-${toLower(profile.lastName)}"
                 }
             ]
