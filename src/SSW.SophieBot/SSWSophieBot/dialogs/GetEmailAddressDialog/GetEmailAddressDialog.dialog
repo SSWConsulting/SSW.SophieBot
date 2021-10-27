@@ -97,6 +97,28 @@
               "condition": "=turn.employees.count != 0",
               "elseActions": [
                 {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "2ZTQJD"
+                  },
+                  "condition": "=dialog.altered",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "KKT6Ev"
+                      },
+                      "activity": "${SendActivity_KKT6Ev()}"
+                    },
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "1kCKAX"
+                      }
+                    }
+                  ]
+                },
+                {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
                     "id": "gRMPKL"
@@ -131,62 +153,31 @@
                   ],
                   "actions": [
                     {
-                      "$kind": "Microsoft.ConfirmInput",
+                      "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "e5KqcQ"
+                        "id": "Dj3BRe"
                       },
-                      "defaultLocale": "en-us",
-                      "disabled": false,
-                      "maxTurnCount": 0,
-                      "alwaysPrompt": false,
-                      "allowInterruptions": true,
-                      "prompt": "${ConfirmInput_Prompt_e5KqcQ()}",
-                      "unrecognizedPrompt": "",
-                      "invalidPrompt": "",
-                      "choiceOptions": {
-                        "includeNumbers": true,
-                        "inlineOrMore": ", or ",
-                        "inlineOr": " or ",
-                        "inlineSeparator": ", "
-                      },
-                      "property": "dialog.useSuggestion",
-                      "defaultValue": false,
-                      "style": "suggestedAction"
-                    },
-                    {
-                      "$kind": "Microsoft.IfCondition",
-                      "$designer": {
-                        "id": "QuBhRM"
-                      },
-                      "condition": "=dialog.useSuggestion",
-                      "actions": [
+                      "assignments": [
                         {
-                          "$kind": "Microsoft.SetProperties",
-                          "$designer": {
-                            "id": "Dj3BRe"
-                          },
-                          "assignments": [
-                            {
-                              "property": "dialog.nameEntity",
-                              "value": "=setProperty(dialog.nameEntity, 'firstname', [dialog.suggestedFirstName])"
-                            },
-                            {
-                              "value": "=setProperty(dialog.nameEntity, 'lastname', [dialog.suggestedLastName])",
-                              "property": "dialog.nameEntity"
-                            }
-                          ]
+                          "property": "dialog.nameEntity",
+                          "value": "=setProperty(dialog.nameEntity, 'firstname', if(length(dialog.suggestedFirstName)>0, [dialog.suggestedFirstName], null))"
                         },
                         {
-                          "$kind": "Microsoft.RepeatDialog",
-                          "$designer": {
-                            "id": "7Bnedu"
-                          },
-                          "activityProcessed": true,
-                          "options": {
-                            "nameEntity": "=dialog.nameEntity"
-                          }
+                          "value": "=setProperty(dialog.nameEntity, 'lastname', if(length(dialog.suggestedLastName)>0, [dialog.suggestedLastName], null))",
+                          "property": "dialog.nameEntity"
                         }
                       ]
+                    },
+                    {
+                      "$kind": "Microsoft.RepeatDialog",
+                      "$designer": {
+                        "id": "7Bnedu"
+                      },
+                      "activityProcessed": true,
+                      "options": {
+                        "nameEntity": "=dialog.nameEntity",
+                        "altered": "=true"
+                      }
                     }
                   ]
                 }

@@ -29,10 +29,10 @@
 
 # SendActivity_ItqJV9_text()
 - Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
-# ConfirmInput_Prompt_e5KqcQ()
+# SendActivity_KKT6Ev()
 [Activity
-    Text = ${ConfirmInput_Prompt_e5KqcQ_text()}
+    Text = ${SendActivity_KKT6Ev_text()}
 ]
 
-# ConfirmInput_Prompt_e5KqcQ_text()
-- Sorry, I couldn't find anyone named **${turn.originalName}** in your organization. Did you mean **${join([dialog.suggestedFirstName, dialog.suggestedLastName], ' ')}**?
+# SendActivity_KKT6Ev_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
