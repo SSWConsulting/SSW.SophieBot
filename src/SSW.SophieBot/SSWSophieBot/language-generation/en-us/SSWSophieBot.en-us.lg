@@ -229,7 +229,7 @@ We love squashing bugs 🥰```
 }
 ```
 
-# NameButtons()
+# NameButtons(intent)
 - ```
 {
     "type": "AdaptiveCard",
@@ -242,7 +242,7 @@ We love squashing bugs 🥰```
         {
             "type": "ActionSet",
             "actions": [
-                ${join(select(take(turn.employees, 6), employee, NameButton(employee.firstName, employee.lastName)), ',')}
+                ${join(select(take(turn.employees, 6), employee, NameButton(intent, employee.firstName, employee.lastName)), ',')}
             ],
             "height": "stretch"
         }
@@ -252,13 +252,13 @@ We love squashing bugs 🥰```
 }
 ```
 
-# NameButton(firstName, lastName)
+# NameButton(intent, firstName, lastName)
 - ```
 {
     "type": "Action.Submit",
     "title": "${firstName} ${lastName}",
     "data": {
-        "intent": "GetSkills",
+        "intent": "${intent}",
         "contact": {
             "firstName": [
                 "${firstName}"

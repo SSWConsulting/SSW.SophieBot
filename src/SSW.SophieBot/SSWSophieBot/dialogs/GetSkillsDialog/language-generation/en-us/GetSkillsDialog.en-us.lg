@@ -38,5 +38,5 @@ ${turn.intermediateSkills}```
 
 # SendActivity_yo7Djv()
 [Activity
-    Attachments = ${json(NameButtons())}
+    Attachments = ${json(NameButtons('GetSkills'))}
 ]
