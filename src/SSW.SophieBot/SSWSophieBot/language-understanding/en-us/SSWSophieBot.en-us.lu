@@ -114,6 +114,7 @@
 
 
 # GetProfile
+- who is {@contact}[?]
 - {@contact={@firstname=adam}}
 - {@contact={@firstname=jim} {@lastname=zheng}}
 - can you find {@contact=tom@microsoft.com} for me
