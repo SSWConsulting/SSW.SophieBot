@@ -1,7 +1,7 @@
 [Icons](icons.en-us.lg)
 [SSWSophieBot](SSWSophieBot.en-us.lg)
 
-# BillableEmployeesList(title, subTitle, isMain, employees, isFinalPage)
+# BillableEmployeesList(title, subTitle, isMain, employees, isFinalPage, hasProjectInfo)
 -```
 {
     "type": "AdaptiveCard",
@@ -15,7 +15,7 @@
         {
             "type": "ActionSet",
             "actions": [
-                ${GetFooterAction(isFinalPage)}
+                ${GetFooterActions(isFinalPage, hasProjectInfo)}
             ]
         }
     ],
@@ -24,17 +24,36 @@
 }
 ```
 
-# GetFooterAction(isFinalPage)
-- IF: ${isFinalPage}
+# GetFooterActions(isFinalPage, hasProjectInfo)
+- IF: ${isFinalPage && hasProjectInfo}
     - ```
-    {
-        "type": "Action.OpenUrl",
-        "title": "📈 More Booking Info",
-        "url": "${settings.CRMBookingEndpoint}"
-    }
+    ${MoreBookingInfoButton()},
+    ${MoreProjectInfoButton()}
+    ```
+- ELSEIF: ${isFinalPage}
+    - ```
+    ${MoreBookingInfoButton()}
     ```
 - ELSE: 
     - ``````
+
+# MoreBookingInfoButton()
+- ```
+{
+    "type": "Action.OpenUrl",
+    "title": "📈 More Booking Info",
+    "url": "${settings.CRMBookingEndpoint}"
+}
+```
+
+# MoreProjectInfoButton()
+- ```
+{
+    "type": "Action.OpenUrl",
+    "title": "📄 More Project Info",
+    "url": "${settings.App.ProjectUrl}"
+}
+```
 
 # LegendAndColumnHeaders()
 - ```
@@ -47,7 +66,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "🟢 Client Work  ⚫ Internal Work  🔴 Leave  ⚪ Free",
+                    "text": "🟢 Booked　⚫ Booked (Internal)　⚪ Free　🔴 Leave",
                     "wrap": true,
                     "spacing": "None"
                 }
@@ -160,19 +179,7 @@
     "type": "ColumnSet",
     "columns": [
         ${ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px')},
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "text": "${employee.displayName}",
-                    "size": "Small",
-                    "wrap": true
-                }
-            ],
-            "verticalContentAlignment": "Center"
-        },
+        ${ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', 'Small', 'Default')},
         {
             "type": "Column",
             "width": "stretch",

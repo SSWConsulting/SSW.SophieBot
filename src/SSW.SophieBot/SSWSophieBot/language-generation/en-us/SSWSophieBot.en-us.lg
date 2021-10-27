@@ -180,4 +180,51 @@ We love squashing bugs 🥰```
     }
 }
 ```
-    
+
+# ClickableName(displayName, firstName, lastName, columnWidth, fontSize, spacing)
+- ```
+{
+    "type": "Column",
+    "width": "${columnWidth}",
+    "spacing": "${spacing}",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${displayName}",
+            "size": "${fontSize}",
+            "wrap": true,
+            "color": "Accent"
+        }
+    ],
+    "verticalContentAlignment": "Center",
+    "selectAction": {
+        "type": "Action.Submit",
+        "data": {
+            "intent": "GetProfile",
+            "contact": {
+                "firstName": [
+                    "${firstName}"
+                ],
+                "lastName": [
+                    "${lastName}"
+                ]
+            },
+            "msteams": {
+                "type": "messageBack",
+                "displayText": "${firstName} ${lastName}"
+            }
+        }
+    }
+}
+```
+
+# Pagination(current, total)
+-```
+{
+    "type": "TextBlock",
+    "text": "Page ${current} (${10 * (current - 1) + 1}-${10 * (current - 1) + if(total >= current * 10, 10, total - 10 * (current - 1))})",
+    "wrap": true,
+    "size": "Medium",
+    "weight": "Bolder"
+}
+```

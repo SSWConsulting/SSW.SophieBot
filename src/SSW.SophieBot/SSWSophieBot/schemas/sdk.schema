@@ -62,7 +62,13 @@
       "$ref": "#/definitions/GetProfileDialog.dialog"
     },
     {
+      "$ref": "#/definitions/GetProfileWithBookingInfoAction"
+    },
+    {
       "$ref": "#/definitions/GetProfileWithStatusAction"
+    },
+    {
+      "$ref": "#/definitions/GetProjectsFromQueryAction"
     },
     {
       "$ref": "#/definitions/GetSkillsDialog.dialog"
@@ -1194,6 +1200,11 @@
           "$ref": "#/definitions/stringExpression",
           "title": "Title"
         },
+        "clientNowSubtitle": {
+          "description": "When set to true, display local current time in the subtitle",
+          "$ref": "#/definitions/booleanExpression",
+          "title": "Client Now Subtitle"
+        },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
@@ -1864,6 +1875,46 @@
         }
       }
     },
+    "GetProfileWithBookingInfoAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetProfileWithBookingInfoAction",
+      "description": "This will return a list of employees with booking info",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "employees": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "Employees",
+          "description": "Raw employees"
+        },
+        "result": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result",
+          "description": "The property that transformed employees are assign to"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetProfileWithBookingInfoAction"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "GetProfileWithStatusAction": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "GetProfileWithStatusAction",
@@ -1896,6 +1947,51 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "GetProfileWithStatusAction"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetProjectsFromQueryAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetProjectsFromQuery",
+      "description": "This will return the result of matched project names from query",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "queriedProject": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Queried project name",
+          "description": "The queried project name"
+        },
+        "employees": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "Employees",
+          "description": "Working employees retrieved from HTTP request"
+        },
+        "projectsResultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Projects result property",
+          "description": "The property to store the result of project names"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetProjectsFromQueryAction"
         },
         "$designer": {
           "title": "Designer information",
@@ -7853,7 +7949,13 @@
           "$ref": "#/definitions/GetProfileDialog.dialog"
         },
         {
+          "$ref": "#/definitions/GetProfileWithBookingInfoAction"
+        },
+        {
           "$ref": "#/definitions/GetProfileWithStatusAction"
+        },
+        {
+          "$ref": "#/definitions/GetProjectsFromQueryAction"
         },
         {
           "$ref": "#/definitions/GetSkillsDialog.dialog"

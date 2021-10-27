@@ -30,7 +30,8 @@
         turn.clientNow,
         if(dialog.foreach.pageindex == 1, true, false),
         dialog.foreach.page,
-        dialog.foreach.pageindex * 10 >= count(turn.billableEmployees.employees)))}
+        dialog.foreach.pageindex * 10 >= count(turn.billableEmployees.employees),
+        false))}
 ]
 
 # GetNextTitle(pageIndex, pageSize)
@@ -60,15 +61,7 @@
     }
     ```
 - ELSE:
-    - ```
-    {
-        "type": "TextBlock",
-        "text": "Next ${if(dialog.foreach.pageindex * 10 < count(turn.employees), 10, count(turn.employees) - 10 * (dialog.foreach.pageindex - 1))}...",
-        "wrap": true,
-        "size": "Medium",
-        "weight": "Bolder"
-    }
-    ```
+    - ${Pagination(dialog.foreach.pageindex, count(turn.employees))}
 
 # EmployeeList(employees)
 -```
@@ -139,19 +132,7 @@
     "type": "ColumnSet",
     "columns": [
         ${ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, 'auto', '35px')},
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "text": "${employee.firstName} ${employee.lastName}",
-                    "size": "Small",
-                    "wrap": true
-                }
-            ],
-            "verticalContentAlignment": "Center"
-        },
+        ${ClickableName(concat(employee.firstName, ' ', employee.lastName), employee.firstName, employee.lastName, 'stretch', 'Small', 'Default')},
         {
             "type": "Column",
             "width": "stretch",

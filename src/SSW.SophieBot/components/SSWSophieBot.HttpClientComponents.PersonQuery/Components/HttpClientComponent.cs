@@ -17,6 +17,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Components
                 .AddBotApplicationService<IAvatarManager>();
 
             services.AddDeclarativeType<GetProfileAction>(GetProfileAction.Kind);
+            services.AddDeclarativeType<GetProjectsFromQueryAction>(GetProjectsFromQueryAction.Kind);
             services.AddDeclarativeType<GetOrganisationsAction>(GetOrganisationsAction.Kind);
             services.AddDeclarativeType<GetEmployeesByDateAction>(GetEmployeesByDateAction.Kind);
             services.AddDeclarativeType<GetEmployeesByBillableAction>(GetEmployeesByBillableAction.Kind);
@@ -24,6 +25,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Components
             services.AddDeclarativeType<GetFreeEmployeesAction>(GetFreeEmployeesAction.Kind);
             services.AddDeclarativeType<GetInternalBookedEmployeesAction>(GetInternalBookedEmployeesAction.Kind);
             services.AddDeclarativeType<GetProfileWithStatusAction>(GetProfileWithStatusAction.Kind);
+            services.AddDeclarativeType<GetProfileWithBookingInfoAction>(GetProfileWithBookingInfoAction.Kind);
         }
     }
 }

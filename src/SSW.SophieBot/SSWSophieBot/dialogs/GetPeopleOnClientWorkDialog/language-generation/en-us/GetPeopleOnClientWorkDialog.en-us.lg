@@ -154,15 +154,7 @@
     }
     ```
 - ELSE:
-    - ```
-    {
-        "type": "TextBlock",
-        "text": "Next ${if(dialog.foreach.pageindex * 10 < count(turn.employees), 10, count(turn.employees) - 10 * (dialog.foreach.pageindex - 1))}...",
-        "wrap": true,
-        "size": "Medium",
-        "weight": "Bolder"
-    }
-    ```
+    - ${Pagination(dialog.foreach.pageindex, count(turn.employees))}
 
 # Footer()
 - IF: ${ dialog.foreach.pageindex == ceiling(div(count(turn.employees), float('10.0'))) }
@@ -173,7 +165,7 @@
             {
                 "type": "Action.OpenUrl",
                 "title": "📈 More Booking Info",
-                "url": "${settings.CRMBookingEndpoint}"
+                "url": "${settings.App.CRMBookingEndpoint}"
             }
         ]
     }
@@ -256,7 +248,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "${if(employee.NextClient != null, NextClient(employee.NextClient), '')}",
+                    "text": "${if(employee.nextClient != null, NextClient(employee.nextClient, employee.freeDays), '')}",
                     "wrap": true,
                     "size": "Small"
                 }
@@ -272,13 +264,13 @@
 - IF: ${ dialog.booked }
     - ${join(createArray(
             ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, 'auto', '35px'), 
-            BodyColumn(employee.displayName, '125px'), 
+            ClickableName(employee.displayName, employee.firstName, employee.lastName, '125px', 'Small', 'Default'),
             ClientColumn(employee.clients, 'stretch')
         ), ',')}
 - ELSE:
     - ${join(createArray(
             ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, 'auto', '35px'), 
-            BodyColumn(employee.displayName, '110px'), 
+            ClickableName(employee.displayName, employee.firstName, employee.lastName, '110px', 'Small', 'Default'),
             BodyColumn(DaysText(employee.BilledDays, true), '67px'), 
             ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), BodyColumn(employee.LastSeen, '80px')
         ), ',')}
@@ -339,14 +331,14 @@
 }
 ```
 
-# NextClient(client)
+# NextClient(client, freeDays)
 -```
-Note: Only free for ${DaysText(client.FreeDays, false)}. ${ClientInfo(client)}
+Note: Only free for ${DaysText(freeDays, false)} for the next 28 days. ${ClientInfo(client)}
 ```
 
 # ClientInfo(client)
 - IF: ${ dialog.fromDate == null }
-    - Working for ${client.Name} - ${client.Date}.
+    - ${if(client.type == 3, 'On leave', concat('Working for ', client.name))} - ${client.date}.
 - ELSE:
     -
 
