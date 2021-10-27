@@ -111,10 +111,13 @@
 - what's {@contact={@firstname=jims}} phone number?
 - what's {@contact={@firstname=Uly}}'s mobile?
 - what is {@contact={@firstname=Uly}}'s mobile?
-
+	
+@ ml personInfo
 
 # GetProfile
 - who is {@contact}[?]
+- what's {@contact={@firstname=calum}}'s {@personInfo=rate}
+- what is the {@personInfo=youtube account} of {@contact={@firstname=mehmet}}
 - {@contact={@firstname=adam}}
 - {@contact={@firstname=jim} {@lastname=zheng}}
 - can you find {@contact=tom@microsoft.com} for me
@@ -223,10 +226,10 @@
 
 > # Entity definitions
 
-@ ml contact usesFeatures personName,email
+@ ml contact usesFeature personName,email
 @ contact = 
-	- @ ml firstname usesFeatures personName
-	- @ ml lastname usesFeatures personName
+	- @ ml firstname usesFeature personName
+	- @ ml lastname usesFeature personName
 
 
 > # PREBUILT Entity definitions
@@ -249,7 +252,6 @@
 
 @ phraselist Department(interchangeable) disabledForAllModels = 
 	- department,organization,org,division,team,product
-
 
 # GetSkills
 - Show all Skills for {@contact={@firstname=Eden} {@lastname=Liang}}
@@ -350,13 +352,13 @@
 - Is {@contact={@firstname=Anthony}} free?
 - Is {@contact={@firstname=Anthony} {@lastname=Nguyen}} free?
 
-@ phraseList SkilledPeoplePhraseList(interchangeable) =
+@ phraseList SkilledPhraseList(interchangeable) =
 	- know
 	- knows
 	- good at
 	- can work on
 
-@ intent GetPeopleBySkills usesFeature SkilledPeoplePhraseList
+@ intent GetPeopleBySkills usesFeature SkilledPhraseList
 
 # GetPeopleBySkills
 - I need to talk to an {skill = Angular} expert
