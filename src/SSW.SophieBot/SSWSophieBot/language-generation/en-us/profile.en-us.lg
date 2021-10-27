@@ -278,7 +278,8 @@
                     "type": "Action.OpenUrl",
                     "title": "View in People",
                     "url": "https://www.ssw.com.au/people/${toLower(profile.firstName)}-${toLower(profile.lastName)}"
-                }
+                },
+                ${ViewInPeopleAction(profile)}
             ]
         }
     ],
@@ -287,6 +288,18 @@
     "minHeight": "100px"
 }
 ```
+
+# ViewInPeopleAction(profile)
+- IF: ${exists(settings.App.CRMBaseUrl) && length(settings.App.CRMBaseUrl) > 0}
+    - ```
+    ,{
+        "type": "Action.OpenUrl",
+        "title": "View in CRM",
+        "url": "${settings.App.CRMBaseUrl}&id=${profile.userId}"
+    }
+    ```
+- ELSE:
+    -
 
 # Status(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
