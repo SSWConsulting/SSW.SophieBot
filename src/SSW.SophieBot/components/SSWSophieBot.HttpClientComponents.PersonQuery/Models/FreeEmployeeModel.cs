@@ -31,5 +31,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Models
 
         [JsonProperty("nextClient")]
         public NextClientModel NextClient { get; set; }
+
+        [JsonProperty("freeDays")]
+        public int FreeDays { get; set; }
     }
 }

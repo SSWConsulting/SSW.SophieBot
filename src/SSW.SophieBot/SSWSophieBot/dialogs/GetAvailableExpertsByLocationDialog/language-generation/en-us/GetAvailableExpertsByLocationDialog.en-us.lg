@@ -72,7 +72,7 @@
             {
                 "type": "Action.OpenUrl",
                 "title": "📈 More Booking Info",
-                "url": "${settings.CRMBookingEndpoint}"
+                "url": "${settings.App.CRMBookingEndpoint}"
             }
         ]
     }
@@ -121,7 +121,7 @@
     "items": [
         {
             "type": "TextBlock",
-            "text": "Availability",
+            "text": "Availability for next 4 weeks",
             "wrap": true,
             "weight": "Bolder"
         }
@@ -142,16 +142,16 @@
 }
 ```
 
-# NextClient(client)
+# FreeDays(client, freeDays)
 -```
-Only free for ${DaysText(client.FreeDays, false)}
+${freeDays}/28 days
 ```
 
 # BodyColumns(employee)
 - ${join(createArray(
    ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '75px', '35px'), 
    ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', 'Small', 'Default'),
-   BodyColumn(if(employee.NextClient != null, NextClient(employee.NextClient), '—'))), ',')}
+   BodyColumn(FreeDays(employee.nextClient, employee.freeDays))), ',')}
 
 # BodyColumn(text)
 -```

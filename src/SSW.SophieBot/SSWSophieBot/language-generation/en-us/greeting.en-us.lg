@@ -27,20 +27,20 @@
 
 # WelcomeText()
 - ```
-<b><font size=\"4\">Welcome to SSW SophieBot!</font></b><br/><br/>
+<b><font size=\"4\">Welcome to <a href=\"${settings.App.ProductUrl}\">SSW SophieBot</a>!</font></b><br/><br/>
 ```
 
 # GreetingImage()
 - ```
 {
-    "url": "${settings.App.BaseUrl}/sophiebot.png"
+    "url": "${settings.App.BaseUrl}/sophiebot-branding.png"
 }
 ```
 
 # SummaryText()
-- I can help you search for people in your organization.<br/>Try by asking...
-- I'm ready to help answer questions about people in your organization.<br/>Try by asking...
-- I'm here to help you find people in your organization.<br/>Try by asking...
+- I can help you search for people in your organization. Try  asking...
+- I'm ready to help answer questions about people in your organization. Try  asking...
+- I'm here to help you find people in your organization. Try  asking...
 
 # GreetingButtons()
 - ```

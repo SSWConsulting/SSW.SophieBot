@@ -286,7 +286,9 @@
     -
 
 # SkillsInfo()
--IF: ${ turn.intermediateSkills == '' }
+- IF: ${length(turn.intermediateSkills) == 0 && length(turn.advancedSkills) == 0}
+    - —
+- ELSEIF: ${ turn.intermediateSkills == '' }
     - **${turn.advancedSkills}**
 - ELSEIF: ${ turn.advancedSkills == '' }:
     - ${turn.intermediateSkills}
