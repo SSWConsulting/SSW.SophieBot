@@ -49,3 +49,11 @@
 
 # SendActivity_rq2SXx_text()
 - Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
+
+# SendActivity_2cInUM()
+[Activity
+    Text = ${SendActivity_2cInUM_text()}
+]
+
+# SendActivity_2cInUM_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.

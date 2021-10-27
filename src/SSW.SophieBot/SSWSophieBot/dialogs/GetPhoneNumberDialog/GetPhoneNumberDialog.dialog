@@ -97,6 +97,28 @@
               "condition": "=turn.employees.count != 0",
               "elseActions": [
                 {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "AHx4Fk"
+                  },
+                  "condition": "=dialog.altered",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "2cInUM"
+                      },
+                      "activity": "${SendActivity_2cInUM()}"
+                    },
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "3RO2yQ"
+                      }
+                    }
+                  ]
+                },
+                {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
                     "id": "g8DRfV"
@@ -120,43 +142,44 @@
                     "id": "LKjsF7"
                   },
                   "condition": "=turn.altered",
-									"elseActions": [
-										{
-											"$kind": "Microsoft.SendActivity",
-											"$designer": {
-												"id": "rq2SXx"
-											},
-											"activity": "${SendActivity_rq2SXx()}"
-										}
-									],
-									"actions": [
-										{
-											"$kind": "Microsoft.SetProperties",
-											"$designer": {
-												"id": "IPD1BB"
-											},
-											"assignments": [
-												{
-													"value": "=setProperty(dialog.nameEntity, 'firstname', [dialog.suggestedFirstName])",
-													"property": "dialog.nameEntity"
-												},
-												{
-													"value": "=setProperty(dialog.nameEntity, 'lastname', [dialog.suggestedLastName])",
-													"property": "dialog.nameEntity"
-												}
-											]
-										},
-										{
-											"$kind": "Microsoft.RepeatDialog",
-											"$designer": {
-												"id": "MTeGwr"
-											},
-											"activityProcessed": true,
-											"options": {
-												"nameEntity": "=dialog.nameEntity"
-											}
-										}
-									]
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "rq2SXx"
+                      },
+                      "activity": "${SendActivity_rq2SXx()}"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "IPD1BB"
+                      },
+                      "assignments": [
+                        {
+                          "value": "=setProperty(dialog.nameEntity, 'firstname', if(length(dialog.suggestedFirstName)>0, [dialog.suggestedFirstName], null))",
+                          "property": "dialog.nameEntity"
+                        },
+                        {
+                          "value": "=setProperty(dialog.nameEntity, 'lastname', if(length(dialog.suggestedLastName)>0, [dialog.suggestedLastName], null))",
+                          "property": "dialog.nameEntity"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.RepeatDialog",
+                      "$designer": {
+                        "id": "MTeGwr"
+                      },
+                      "activityProcessed": true,
+                      "options": {
+                        "nameEntity": "=dialog.nameEntity",
+                        "altered": "=true"
+                      }
+                    }
+                  ]
                 }
               ],
               "actions": [
