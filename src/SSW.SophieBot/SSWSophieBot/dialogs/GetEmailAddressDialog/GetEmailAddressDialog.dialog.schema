@@ -8,6 +8,11 @@
       "description": "Name entity to search",
       "$ref": "#/definitions/stringExpression",
       "title": "Name Entity"
+    },
+    "altered": {
+      "description": "Whether the queried person name has been altered",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/booleanExpression",
+      "title": "Altered"
     }
   },
   "$result": {
