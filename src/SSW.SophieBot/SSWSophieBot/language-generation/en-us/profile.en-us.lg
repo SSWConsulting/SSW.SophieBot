@@ -109,7 +109,7 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "**Skills**",
+                            "text": "**Skills:** ",
                             "wrap": true
                         }
                     ]
@@ -175,7 +175,7 @@
         },
         {
             "type": "TextBlock",
-            "text": "**Contact**",
+            "text": "**Contact:** ",
             "wrap": true,
             "separator": true,
             "height": "stretch"
@@ -303,15 +303,15 @@
 
 # Status(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - Is busy working for ${join(profile.clients, ',')}.
+    - Busy working for ${join(profile.clients, ',')}.
 - ELSEIF: ${ profile.bookingStatus == 1 && profile.clients.count == 0 }
-    - Is busy on client work.
+    - Busy on client work.
 - ELSEIF: ${ profile.bookingStatus == 2 }
-    - Is on internal work.
+    - On internal work.
 - ELSEIF: ${ profile.bookingStatus == 3 }
-    - Is on leave.
+    - On leave.
 - ELSE:
-    - Is free.
+    - Free.
 
 # LastSeen(location, defaultLocation, time)
 - IF: ${ location != null && time != null }
