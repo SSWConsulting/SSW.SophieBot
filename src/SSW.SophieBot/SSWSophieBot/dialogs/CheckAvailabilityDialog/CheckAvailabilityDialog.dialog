@@ -95,7 +95,7 @@
               "$designer": {
                 "id": "T8OQM0"
               },
-              "condition": "=turn.employees.count != 0",
+              "condition": "=exists(turn.employees) && count(turn.employees) > 0",
               "elseActions": [
                 {
                   "$kind": "Microsoft.SendActivity",
@@ -109,26 +109,33 @@
                 {
                   "$kind": "GetProfileWithBookingInfoAction",
                   "$designer": {
-                    "id": "kfFwkk"
+                    "id": "HmDiq4"
                   },
-                  "result": "turn.employees",
-                  "employees": "=turn.employees"
+                  "employees": "=turn.employees",
+                  "result": "turn.employees"
                 },
                 {
-                  "$kind": "Microsoft.Foreach",
+                  "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "MhZ00e"
+                    "id": "tyHecN"
                   },
-                  "index": "dialog.profile.index",
-                  "value": "dialog.profile",
-                  "itemsProperty": "turn.employees",
+                  "condition": "=count(turn.employees) == 1",
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "27H1kR"
+                      },
+                      "activity": "${SendActivity_27H1kR()}"
+                    }
+                  ],
                   "actions": [
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "8hLWNo"
+                        "id": "FASez8"
                       },
-                      "activity": "${SendActivity_8hLWNo()}"
+                      "activity": "${SendActivity_FASez8()}"
                     }
                   ]
                 }

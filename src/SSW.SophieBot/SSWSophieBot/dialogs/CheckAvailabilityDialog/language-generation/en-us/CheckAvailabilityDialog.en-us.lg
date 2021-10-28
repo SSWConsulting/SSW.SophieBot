@@ -16,11 +16,6 @@
     Text = ${SendActivity_yFDz4n_text()}
 ]
 
-# SendActivity_8hLWNo()
-[Activity
-    Attachments = ${json(EmployeeStatusCard(dialog.profile))}
-]
-
 # EmployeeStatusCard(profile)
 -```
 {
@@ -118,3 +113,13 @@
 
 # SendActivity_5SDlSO_text()
 - Please specify a person name to query.
+
+# SendActivity_27H1kR()
+[Activity
+    Attachments = ${json(NameButtons('CheckAvailability'))}
+]
+
+# SendActivity_FASez8()
+[Activity
+    Attachments = ${json(EmployeeStatusCard(turn.employees[0]))}
+]
