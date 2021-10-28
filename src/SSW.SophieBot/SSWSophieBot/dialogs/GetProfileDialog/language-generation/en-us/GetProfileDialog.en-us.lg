@@ -1,5 +1,6 @@
 [Common](common.en-us.lg)
 [Profile](profile.en-us.lg)
+[SSWSophieBot](SSWSophieBot.en-us.lg)
 
 # SendActivity_Ut9mVe()
 [Activity
@@ -29,54 +30,7 @@
 # SendActivity_H4LLV0_text()
 - Please specify a person name to query.
 
-# ChooseProfileButtons(queriedPersonName, profiles)
-- ```
-{
-    "type": "AdaptiveCard",
-    "body": [
-        {
-            "type": "TextBlock",
-            "wrap": true,
-            "text": "There seems to be more than one **${queriedPersonName}**. Which one were you asking?"
-        },
-        {
-            "type": "ActionSet",
-            "actions": [
-                ${join(select(take(profiles, 6), profile, ProfileButton(profile.firstName, profile.lastName)), ',')}
-            ],
-            "height": "stretch"
-        }
-    ],
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "version": "1.2"
-}
-```
-
-# ProfileButton(firstName, lastName)
-- ```
-{
-    "type": "Action.Submit",
-    "title": "${firstName} ${lastName}",
-    "data": 
-    {
-        "intent": "GetProfile",
-        "contact" : {
-            "firstName": [
-                "${firstName}"
-            ],
-            "lastName": [
-                "${lastName}"
-            ]
-        },
-        "msteams": {
-            "type": "messageBack",
-			"displayText": "${firstName} ${lastName}"
-        }
-    }
-}
-```
-
 # SendActivity_1wGn1P()
 [Activity
-    Attachments = ${json(ChooseProfileButtons(turn.userInputName, turn.employees))}
+    Attachments = ${json(NameButtons('GetProfile'))}
 ]
