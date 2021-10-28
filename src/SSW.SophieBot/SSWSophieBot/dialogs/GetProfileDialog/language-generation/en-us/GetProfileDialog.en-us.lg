@@ -1,5 +1,6 @@
 [Common](common.en-us.lg)
 [Profile](profile.en-us.lg)
+[SSWSophieBot](SSWSophieBot.en-us.lg)
 
 # SendActivity_Ut9mVe()
 [Activity
@@ -8,20 +9,6 @@
 
 # SendActivity_Ut9mVe_text()
 - ${notFound()}
-# SendActivity_q5H2c0()
-[Activity
-    Text = ${SendActivity_q5H2c0_text()}
-]
-
-# SendActivity_q5H2c0_text()
-- Here is what I found for **${turn.displayName}**:
-# SendActivity_pkRvWS()
-[Activity
-    Text = ${SendActivity_pkRvWS_text()}
-]
-
-# SendActivity_pkRvWS_text()
-- There seems to be more than one **${turn.userInputName}**. Here are all the **${turn.userInputName}**'s I could find.
 # SendActivity_D9w7zc()
 [Activity
     Attachments = ${json(ProfileCardWithSSWPeopleAPI(dialog.foreach.value))}
@@ -42,3 +29,8 @@
 
 # SendActivity_H4LLV0_text()
 - Please specify a person name to query.
+
+# SendActivity_1wGn1P()
+[Activity
+    Attachments = ${json(NameButtons('GetProfile'))}
+]

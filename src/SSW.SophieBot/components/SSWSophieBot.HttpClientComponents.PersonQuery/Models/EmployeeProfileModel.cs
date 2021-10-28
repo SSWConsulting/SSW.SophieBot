@@ -4,8 +4,11 @@ using System.Collections.Generic;
 
 namespace SSWSophieBot.HttpClientComponents.PersonQuery.Models
 {
-    public class EmployeeProfileModel
+    public class EmployeeProfileWithStatusModel
     {
+        [JsonProperty("userId")]
+        public string UserId { get; set; }
+
         [JsonProperty("avatarUrl")]
         public string AvatarUrl { get; set; }
 
@@ -44,5 +47,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Models
 
         [JsonProperty("lastName")]
         public string LastName { get; set; }
+
+        [JsonProperty("billableRate")]
+        public double BillableRate { get; set; }
     }
 }

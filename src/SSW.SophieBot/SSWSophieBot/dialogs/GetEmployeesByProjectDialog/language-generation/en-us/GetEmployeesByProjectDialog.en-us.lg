@@ -31,7 +31,7 @@
         {
             "type": "TextBlock",
             "wrap": true,
-            "text": "There are multiple projects with the name **${queriedProjectName}**. Which one were you asking?"
+            "text": "There seems to be more than one project with the name **${queriedProjectName}**. Which one were you asking?"
         },
         {
             "type": "ActionSet",

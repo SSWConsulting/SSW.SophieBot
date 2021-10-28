@@ -49,7 +49,7 @@
 - whats {@contact={@firstname=mike}}'s email?
 - who knows {@contact={@firstname=john}}'s emailaddress?
 
-@ phraseList PhoneNumberPhraseList(interchangeable) =
+@ phraseList PhoneNumberPhraseList(interchangeable) disabledForAllModels =
 	- phone
 	- phone number
 	- mobile
@@ -111,87 +111,41 @@
 - what's {@contact={@firstname=jims}} phone number?
 - what's {@contact={@firstname=Uly}}'s mobile?
 - what is {@contact={@firstname=Uly}}'s mobile?
-
+	
+@ ml personInfo
 
 # GetProfile
+- who is {@contact}[?]
+- what's {@contact={@firstname=calum}}'s {@personInfo=rate}
+- what is the {@personInfo=youtube account} of {@contact={@firstname=mehmet}}
 - {@contact={@firstname=adam}}
 - {@contact={@firstname=jim} {@lastname=zheng}}
-- can you find {@contact=tom@microsoft.com} for me
-- can you the mell life about {@contact={@firstname=maria}}?
-- could you please tell me about who's emailaddress this {@contact=jim@gmail.com}?
 - do you know who is {@contact={@firstname=paige}}?
-- get me {@contact=lebron@test.com}
 - hey, can you tell me who this guy {@contact={@firstname=john}} is
-- hey, who's email {@contact=jenny20@gmail.com} belong to
 - i want to know who is {@contact={@firstname=john} {@lastname=paul}} really?
 - is there a guy called {@contact={@firstname=cliff}}?
-- let me see {@contact=sam@college.com}
-- {@contact=paul.f@fmail.com} is your email?
-- please show me {@contact=hariry@happy.com}
-- please tell me about the lawyer {@contact={@firstname=alexander}}
-- please tell me about who {@contact={@firstname=sam}} is and what does he do for a living?
+- please tell me about {@contact={@firstname=alexander}}
 - present {@contact={@firstname=katherine}} to me
 - show {@contact={@firstname=ben}}'s profile page
 - show {@contact={@firstname=cesar} {@lastname=felipe}}.
 - show {@contact={@firstname=eremias}} profile
-- show {@contact=hdj.record@gmail.com}
 - show me {@contact=daniel@outlook.edu}
-- show me {@contact=john@apple.com}
-- show me {@contact=marcus@email.com}
 - show me {@contact=maria@company.co.uk}
 - show me {@contact={@firstname=pedro} {@lastname=navaja}}
-- show me the {@contact=fox@gmail.com} profile
 - tell me about {@contact=henry_miller@contoso.co.uk}
-- tell me {@contact=alirio@domain.com}
-- tell me anything about {@contact=marcus@gmail.com}
 - tell me everything about {@contact=peter@microsoft.co.za}
 - tell me more about {@contact={@firstname=paulina}}
 - tell me more about {@contact={@firstname=rathna}}
-- what about {@contact={@firstname=brad} {@lastname=pitt}}?
 - what do you know about {@contact={@firstname=lisa}}?
 - what do you know about {@contact={@firstname=tom}}?
-- what is the name of {@contact=pandare@oracle.com}?
 - when did you last seen {@contact={@firstname=sam}}?
 - who exactly is {@contact={@firstname=ross} {@lastname=geller}}?
-- who has the email {@contact=qwe@yahioo.com}
-- who is {@contact=alexa.wood@contoso.net}?
-- who is {@contact=alexanderen@joy.com}?
 - who is {@contact={@firstname=angel} {@lastname=john}} of the mirage company?
 - who is {@contact={@firstname=angelica}} in the company?
-- who is {@contact={@firstname=antonio} {@lastname=lebroski}}
-- who is {@contact=atif.toma@hotmail.com}
-- who is {@contact=ben@gmail.com}
-- who is {@contact=bryan15@gmail.com}
-- who is {@contact={@firstname=candice} {@lastname=swanepoel}}?
-- who is {@contact=cesar250360@hotmail.com}, please.
-- who is {@contact={@firstname=donatella}}
-- who is {@contact={@firstname=erik} {@lastname=cornel}}
-- who is {@contact=e-steysi@microsoft.com}
-- who is {@contact={@firstname=gisela} {@lastname=sanchez}}
 - who is {@contact={@firstname=gorge}} please?
-- who is {@contact=hari@gmail.com} ?
-- who is {@contact={@firstname=iria} {@lastname=madden}}?
-- who is {@contact={@firstname=jackson}}?
-- who is {@contact={@firstname=jenifer} {@lastname=lopez}}?
-- who is {@contact={@firstname=jhon} {@lastname=galt}}
-- who is {@contact={@firstname=john} {@lastname=grisham}}
 - who is {@contact={@firstname=karl}} at this company
-- who is {@contact=katehudson@gmail.com}
-- who is {@contact=kimthan@hgmail.com}?
 - who is {@contact={@firstname=leo}} from microsoft?
-- who is {@contact=luisadominguez@hotmail.com} ?
-- who is {@contact=marco-mircrosoft@gmail.com}
-- who is {@contact={@firstname=maria} {@lastname=gonzalez}}?
-- who is {@contact={@firstname=minhtu} {@lastname=loren}}
-- who is {@contact={@firstname=morissette}}?
 - who is mr. {@contact={@lastname=andy}}
-- who is {@contact={@firstname=nikola} {@lastname=gruevski}}?
-- who is {@contact={@firstname=paul} {@lastname=pierce}}?
-- who is {@contact={@firstname=peter} {@lastname=slack}}?
-- who is {@contact={@firstname=robert.stevensongmail.com}}?
-- who is {@contact={@firstname=sara} {@lastname=lewis}}?
-- who is {@contact={@firstname=simon} {@lastname=rodriguez}}?
-
 
 # None
 - create a new meeting with rhonda and renee
@@ -222,10 +176,10 @@
 
 > # Entity definitions
 
-@ ml contact usesFeatures personName,email
+@ ml contact usesFeature personName,email
 @ contact = 
-	- @ ml firstname usesFeatures personName
-	- @ ml lastname usesFeatures personName
+	- @ ml firstname usesFeature personName
+	- @ ml lastname usesFeature personName
 
 
 > # PREBUILT Entity definitions
@@ -249,18 +203,33 @@
 @ phraselist Department(interchangeable) disabledForAllModels = 
 	- department,organization,org,division,team,product
 
+@ phraselist SkillInfoPhraseList(interchangeable) disabledForAllModels =
+	- skill,skills,tech,technology,expertise,experience,knowledge,specialty,good at
+
+@ ml skillInfo usesFeature SkillInfoPhraseList
+@ intent GetSkills usesFeature SkillInfoPhraseList
 
 # GetSkills
-- Show all Skills for {@contact={@firstname=Eden} {@lastname=Liang}}
-- Show me {@contact={@firstname=jack}}'s skills
-- show me {@contact={@firstname=williams}} skills
-- show me skills for {@contact={@firstname=Duncan}}
-- Show me all skills
-- Show me all skills for {@contact={@firstname=Jack} {@lastname=Kranz}}
-- What does {@contact={@firstname=Jack}} know?
-- I need to see {@contact={@firstname=Jack}}'s skills
-- What is {@contact={@firstname=Jack}} good at?
-
+- what {@presentBe} {@contact}'s {@skillInfo}[?]
+- show all {@skillInfo=skills} for {@contact={@firstname=Eden} {@lastname=Liang}}
+- show me {@contact={@firstname=jack}}'s {@skillInfo=skills}
+- show me {@contact={@firstname=williams}} {@skillInfo=skills}
+- show me {@skillInfo=techs} for {@contact={@firstname=Duncan}}
+- show me all {@skillInfo=expertise}
+- show me all {@skillInfo=skills} for {@contact={@firstname=Jack} {@lastname=Kranz}}
+- what does {@contact={@firstname=Jack}} know?
+- i need to see {@contact={@firstname=Jack}}'s {@skillInfo=specialty}
+- what is {@contact={@firstname=Jack}} {@skillInfo=good at}
+- what is {@contact={@firstname=John}} {@skillInfo=good at}
+- what is {@contact={@firstname=Adam}} {@skillInfo=good at}
+- what is {@contact={@firstname=John} {@lastname=Smith}} {@skillInfo=good at}
+- what's {@contact={@firstname=Jack}} {@skillInfo=good at}?
+- what is {@contact={@firstname=John}}'s {@skillInfo=skill}?
+- what is {@contact={@firstname=John}}'s {@skillInfo=tech}?
+- what is {@contact={@firstname=John}}'s {@skillInfo=technology}
+- what are {@contact={@firstname=Jason}}'s {@skillInfo=skills}
+- what is the {@skillInfo=expertise} of {@contact={@firstname=John} {@lastname=Smith}}?
+- what is the {@skillInfo=specialty} of {@contact={@firstname=John} {@lastname=Smith}}
 
 # GetPeopleBasedOnLocation
 - Melbourne staff
@@ -336,7 +305,7 @@
 @ prebuilt datetimeV2
 
 @ intent CheckAvailability usesFeature CheckAvailabilityPhraseList
-@ phraseList CheckAvailabilityPhraseList(interchangeable) = 
+@ phraseList CheckAvailabilityPhraseList(interchangeable) disabledForAllModels = 
 	- booked
 	- booked or free
 	- free or booked
@@ -349,13 +318,13 @@
 - Is {@contact={@firstname=Anthony}} free?
 - Is {@contact={@firstname=Anthony} {@lastname=Nguyen}} free?
 
-@ phraseList SkilledPeoplePhraseList(interchangeable) =
+@ phraseList SkilledPhraseList(interchangeable) disabledForAllModels =
 	- know
 	- knows
 	- good at
 	- can work on
 
-@ intent GetPeopleBySkills usesFeature SkilledPeoplePhraseList
+@ intent GetPeopleBySkills usesFeature SkilledPhraseList
 
 # GetPeopleBySkills
 - I need to talk to an {skill = Angular} expert
@@ -401,7 +370,7 @@
 		- 's not
 		- 're not
 
-@ phraselist AvailablePhraseList(interchangeable) = 
+@ phraselist AvailablePhraseList(interchangeable) disabledForAllModels = 
 	- internal
 	- on internal
 	- on internal work
@@ -413,7 +382,7 @@
 	- on the bench
 	- working on ssw projects
 
-@ phraselist UnavailablePhraseList(interchangeable) = 
+@ phraselist UnavailablePhraseList(interchangeable) disabledForAllModels = 
 	- on client work
 	- on client works
 	- working on client work
@@ -457,7 +426,7 @@
 - Show me who are in Newcastle now?
 - Who is on remote right now?
 
-@ phraseList GreetingPhraseList(interchangeable) =
+@ phraseList GreetingPhraseList(interchangeable) disabledForAllModels =
 	- hi
 	- hello
 	- hey
@@ -473,3 +442,6 @@
 - how do you do
 - what's up
 - hey sophie
+- help
+- what can you do
+- what can i do

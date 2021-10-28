@@ -47,15 +47,15 @@
 
 # BookingStatus(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - is **booked**.
+    - is booked.
 - ELSEIF: ${ profile.bookingStatus == 3 }
-    - is **on leave**.
+    - is on leave.
 - ELSE:
-    - is **free**.
+    - is free.
 
 # ClientInfo(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - Client: ${join(profile.clients, ',')}.
+    - **Client**: ${join(profile.clients, ',')}.
 - ELSE:
     -
 
@@ -64,11 +64,11 @@
 
 # LastSeenText(location, time)
 - IF: ${ location != null && time != null }
-    - ```Last seen: ${location} ${time}.```
+    - ```**Last seen**: ${location} ${time}.```
 - ELSEIF: ${ location == null }
-    - ```Last seen: ${time}.```
+    - ```**Last seen**: ${time}.```
 - ELSEIF: ${ time == null }:
-    - ```Last seen: ${location}.```
+    - ```**Last seen**: ${location}.```
 - ELSE:
     - 
 
@@ -90,7 +90,7 @@
             "type": "Column",
             "width": "auto",
             "spacing": "Small",
-            "items": [${TextBlock('Today: ')}],
+            "items": [${TextBlock('**Today**:')}],
             "verticalContentAlignment": "Center"
         },
         ${ClickableName(displayName, firstName, lastName, 'auto', 'Default', 'Small')},

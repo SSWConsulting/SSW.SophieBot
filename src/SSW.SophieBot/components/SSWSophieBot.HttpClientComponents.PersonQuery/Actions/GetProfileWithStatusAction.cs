@@ -36,8 +36,9 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
             var date = DateTime.Now.ToUniversalTime();
 
-            var result = employees.Select(e => new EmployeeProfileModel
+            var result = employees.Select(e => new EmployeeProfileWithStatusModel
             {
+                UserId = e.UserId,
                 AvatarUrl = e.AvatarUrl,
                 DisplayName = $"{e.FirstName} {e.LastName}",
                 Title = e.Title,
@@ -50,7 +51,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 MobilePhone = e.MobilePhone,
                 DefaultSite = e.DefaultSite,
                 FirstName = e.FirstName,
-                LastName = e.LastName
+                LastName = e.LastName,
+                BillableRate = e.BillableRate
             })
             .ToList();
 
