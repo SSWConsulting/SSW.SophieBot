@@ -228,3 +228,50 @@ We love squashing bugs 🥰```
     "weight": "Bolder"
 }
 ```
+
+# NameButtons(intent)
+- ```
+{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "TextBlock",
+            "wrap": true,
+            "text": "There seems to be more than one **${titleCase(turn.userInputName)}**. Which one were you asking?"
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                ${join(select(take(turn.employees, 6), employee, NameButton(intent, employee.firstName, employee.lastName)), ',')}
+            ],
+            "height": "stretch"
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2"
+}
+```
+
+# NameButton(intent, firstName, lastName)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${firstName} ${lastName}",
+    "data": {
+        "intent": "${intent}",
+        "contact": {
+            "firstName": [
+                "${firstName}"
+            ],
+            "lastName": [
+                "${lastName}"
+            ]
+        },
+        "msteams": {
+            "type": "messageBack",
+            "displayText": "${firstName} ${lastName}"
+        }
+    }
+}
+```
+
