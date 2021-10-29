@@ -274,12 +274,7 @@
         {
             "type": "ActionSet",
             "actions": [
-                {
-                    "type": "Action.OpenUrl",
-                    "title": "View in People",
-                    "url": "https://www.ssw.com.au/people/${toLower(profile.firstName)}-${toLower(profile.lastName)}"
-                },
-                ${ViewInPeopleAction(profile)}
+                ${join(where([ViewInPeopleAction(profile), ViewInCRMAction(profile)], action, exists(action) && length(action) > 0), ',')}
             ]
         }
     ],
@@ -290,9 +285,18 @@
 ```
 
 # ViewInPeopleAction(profile)
+- ```
+{
+    "type": "Action.OpenUrl",
+    "title": "View in People",
+    "url": "https://www.ssw.com.au/people/${toLower(profile.firstName)}-${toLower(profile.lastName)}"
+}
+```
+
+# ViewInCRMAction(profile)
 - IF: ${exists(settings.App.CRMBaseUrl) && length(settings.App.CRMBaseUrl) > 0}
     - ```
-    ,{
+    {
         "type": "Action.OpenUrl",
         "title": "View in CRM",
         "url": "${settings.App.CRMBaseUrl}&id=${profile.userId}"
