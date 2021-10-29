@@ -5,14 +5,17 @@
       "": [
         "GreetingDialog.en-us"
       ],
+      "Greeting": [
+        "GreetingDialog.en-us"
+      ],
+      "GetProfile": [
+        "GetProfileDialog.en-us"
+      ],
       "GetEmailAddress": [
         "GetEmailAddressDialog.en-us"
       ],
       "GetPhoneNumber": [
         "GetPhoneNumberDialog.en-us"
-      ],
-      "GetProfile": [
-        "GetProfileDialog.en-us"
       ],
       "GetSkills": [
         "GetSkillsDialog.en-us"
@@ -20,11 +23,11 @@
       "GetPeopleBasedOnLocation": [
         "GetPeopleBasedOnLocationDialog.en-us"
       ],
-      "Goodbye": "",
       "GetExpertsByLocation": [
         "GetExpertsByLocationDialog.en-us"
       ],
       "GetEmployeesOnProject": [
+        "GetPeopleOnClientWorkDialog.en-us",
         "GetEmployeesByProjectDialog.en-us"
       ],
       "GetAvailableExpertsByLocation": [
@@ -36,16 +39,14 @@
       "GetPeopleBySkills": [
         "GetPeopleBySkills.en-us"
       ],
-      "BugReport": "",
       "GetPeopleOnClientWork": [
         "GetPeopleOnClientWorkDialog.en-us"
       ],
       "GetCurrentEmployeesOnLocation": [
         "GetCurrentEmployeesOnLocationDialog.en-us"
       ],
-      "Greeting": [
-        "GreetingDialog.en-us"
-      ]
+      "BugReport": "",
+      "Goodbye": ""
     }
   }
 }

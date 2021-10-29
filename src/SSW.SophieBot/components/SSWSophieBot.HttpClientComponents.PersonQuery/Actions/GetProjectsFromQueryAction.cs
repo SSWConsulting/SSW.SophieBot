@@ -25,6 +25,9 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
         }
 
+        [JsonProperty("isProject")]
+        public BoolExpression IsProject { get; set; }
+
         [JsonProperty("queriedProject")]
         public StringExpression QueriedProject { get; set; }
 
@@ -36,6 +39,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
+            var isProject = dc.GetValue(IsProject);
             var queriedProject = dc.GetValue(QueriedProject);
             var employees = dc.GetValue(Employees);
             if (employees == null || !employees.Any())
@@ -66,13 +70,13 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
                 if (string.IsNullOrWhiteSpace(queriedProject))
                 {
-                    projectNames = employee.Projects.Select(project => project?.ProjectName).Distinct();
+                    projectNames = employee.Projects.Select(project => isProject ? project?.ProjectName : project?.CustomerName).Distinct();
                 }
                 else
                 {
                     projectNames = employee.Projects.Where(project =>
-                        EmployeesHelper.IsProjectNameMatch(queriedProject, project.ProjectName))
-                    .Select(project => project.ProjectName)
+                        EmployeesHelper.IsProjectNameMatch(queriedProject, isProject ? project?.ProjectName : project?.CustomerName))
+                    .Select(project => isProject ? project?.ProjectName : project?.CustomerName)
                     .Distinct();
                 }
 

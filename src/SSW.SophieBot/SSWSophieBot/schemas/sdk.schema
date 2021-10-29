@@ -919,6 +919,11 @@
           "$ref": "#/definitions/GetEmailAddressDialog.dialog/definitions/stringExpression",
           "title": "Name Entity"
         },
+        "altered": {
+          "description": "Whether the queried person name has been altered",
+          "$ref": "#/definitions/booleanExpression",
+          "title": "Altered"
+        },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
@@ -949,6 +954,11 @@
         }
       },
       "properties": {
+        "isProject": {
+          "$ref": "#/definitions/booleanExpression",
+          "title": "Is Project",
+          "description": "If set to true, get potentially different projects, otherwise clients"
+        },
         "project": {
           "$ref": "#/definitions/stringExpression",
           "title": "Project",
@@ -1080,6 +1090,11 @@
           "title": "Project Entity",
           "description": "The project name employees are working on",
           "$ref": "#/definitions/GetEmployeesByProjectDialog.dialog/definitions/stringExpression"
+        },
+        "exactMatch": {
+          "description": "If set to true, do exact match for the project name",
+          "$ref": "#/definitions/booleanExpression",
+          "title": "Exact Match"
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -1722,6 +1737,11 @@
           "$ref": "#/definitions/GetPhoneNumberDialog.dialog/definitions/stringExpression",
           "title": "Name Entity"
         },
+        "altered": {
+          "description": "Whether the queried person name has been altered",
+          "$ref": "#/definitions/booleanExpression",
+          "title": "Altered"
+        },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
@@ -1975,6 +1995,11 @@
           "$ref": "#/definitions/stringExpression",
           "title": "Queried project name",
           "description": "The queried project name"
+        },
+        "isProject": {
+          "$ref": "#/definitions/booleanExpression",
+          "title": "Is Project",
+          "description": "If set to true, get potentially different projects, otherwise clients"
         },
         "employees": {
           "$ref": "#/definitions/arrayExpression",

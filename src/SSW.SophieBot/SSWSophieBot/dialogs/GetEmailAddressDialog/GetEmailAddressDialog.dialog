@@ -94,7 +94,7 @@
               "$designer": {
                 "id": "2Vqgpg"
               },
-              "condition": "==exists(turn.employees) && count(turn.employees) > 0",
+              "condition": "=exists(turn.employees) && count(turn.employees) > 0",
               "elseActions": [
                 {
                   "$kind": "Microsoft.SendActivity",

@@ -281,17 +281,27 @@
 @ prebuilt geographyV2
 
 # GetEmployeesOnProject
+- who {@presentBe} working (on | for) ({@project} | {@ssw})[?]
 - Who is working on {@project} project[?]
 - Who is on {@project} project[?]
 - Who is working on {@project}[?]
 - Who is on {@project}[?]
-- Who's working on {@project = Dynamic 365 CRM Customization}
+- Who are working for {@project = Baidu}
+- Who is working for {@project = Sophie}
+- Who is currently working for {@project = Contoso Ltd}
+- Who is booked for {@project = National Insurance Company}
+- Who's working on {@project = Microsoft} projects
 - Who are working on {@project = SugarLearning Development}
-- Show me the people working on {project = Sophie Hub}
-- Show me who are working on {project = NorthWind}
+- Show me the people working on {@project = Sophie Hub}
+- Show me who are working on {@project = NorthWind}
 
 @ ml project
-
+@ list ssw = 
+	- ssw :
+		- ssw
+		- SSW
+		- our company
+		- us
 
 # GetAvailableExpertsByLocation
 - Who is free next Friday in Melbourne with {@skill = Angular} skills?

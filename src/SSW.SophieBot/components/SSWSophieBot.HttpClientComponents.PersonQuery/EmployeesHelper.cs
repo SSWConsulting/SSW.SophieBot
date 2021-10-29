@@ -59,6 +59,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
         public static List<EmployeeBillableItemModel> GetBillableEmployees(
             IEnumerable<GetEmployeeModel> employees,
             string queriedProjectName,
+            bool isProject,
             out string projectName)
         {
             GetEmployeeProjectModel project;
@@ -68,9 +69,9 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             }
             else
             {
-                project = employees?.FirstOrDefault()?.Projects?.FirstOrDefault(p => IsProjectNameEqual(queriedProjectName, p.ProjectName));
+                project = employees?.FirstOrDefault()?.Projects?.FirstOrDefault(p => IsProjectNameEqual(queriedProjectName, isProject ? p.ProjectName : p.CustomerName));
             }
-            projectName = project?.ProjectName;
+            projectName = isProject ? project?.ProjectName : project?.CustomerName;
 
             var date = DateTime.Now.ToUniversalTime();
             return employees

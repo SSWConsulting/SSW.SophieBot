@@ -24,6 +24,9 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
         }
 
+        [JsonProperty("isProject")]
+        public BoolExpression IsProject { get; set; } 
+
         [JsonProperty("project")]
         public StringExpression Project { get; set; }
 
@@ -35,6 +38,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
+            var isProject = dc.GetValue(IsProject);
             var queriedProject = dc.GetValue(Project);
 
             var employees = dc.GetValue(Employees);
@@ -43,7 +47,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 throw new ArgumentNullException(nameof(Employees));
             }
 
-            var billableEmployees = EmployeesHelper.GetBillableEmployees(employees, queriedProject, out var projectName);
+            var billableEmployees = EmployeesHelper.GetBillableEmployees(employees, queriedProject, isProject, out var projectName);
 
             var workingEmployees = new EmployeesByProjectListModel
             {

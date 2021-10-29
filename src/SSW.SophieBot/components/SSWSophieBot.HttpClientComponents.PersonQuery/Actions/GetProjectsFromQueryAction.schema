@@ -11,6 +11,11 @@
       "title": "Queried project name",
       "description": "The queried project name"
     },
+    "isProject": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Is Project",
+      "description": "If set to true, get potentially different projects, otherwise clients"
+    },
     "employees": {
       "$ref": "schema:#/definitions/arrayExpression",
       "title": "Employees",
