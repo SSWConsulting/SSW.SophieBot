@@ -63,101 +63,175 @@
               "condition": "=exists(turn.employees) && count(turn.employees) > 0",
               "elseActions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "GetProfileAction",
                   "$designer": {
-                    "id": "lY9fbY"
+                    "id": "6InfF3"
                   },
-                  "activity": "${SendActivity_lY9fbY()}"
-                }
-              ],
-              "actions": [
+                  "queryString": [
+                    {
+                      "value": "=dialog.projectEntity",
+                      "key": "client"
+                    }
+                  ],
+                  "statusCodeProperty": "turn.statusCode",
+                  "reasonPhraseProperty": "turn.reasonPhrase",
+                  "employeesProperty": "turn.employees"
+                },
                 {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "O8xRo1"
+                    "id": "3vuM93"
                   },
-                  "condition": "=exists(exactMatch) && exactMatch == true",
+                  "condition": "=turn.statusCode == 200",
                   "elseActions": [
                     {
-                      "$kind": "GetProjectsFromQueryAction",
+                      "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "LyySM6"
+                        "id": "4hdGWH"
                       },
-                      "employees": "=turn.employees",
-                      "queriedProject": "=dialog.projectEntity",
-                      "projectsResultProperty": "turn.projectMatches"
+                      "activity": "${SendActivity_4hdGWH()}"
                     },
                     {
-                      "$kind": "Microsoft.IfCondition",
+                      "$kind": "Microsoft.EndDialog",
                       "$designer": {
-                        "id": "dnDcXq"
-                      },
-                      "condition": "=count(turn.projectMatches) > 1",
-                      "elseActions": [
-                        {
-                          "$kind": "Microsoft.SetProperty",
-                          "$designer": {
-                            "id": "Y2l3J1"
-                          },
-                          "property": "turn.resultProjectName",
-                          "value": "=turn.projectMatches[0].projectName"
-                        }
-                      ],
-                      "actions": [
-                        {
-                          "$kind": "Microsoft.SendActivity",
-                          "$designer": {
-                            "id": "lalAjt"
-                          },
-                          "activity": "${SendActivity_lalAjt()}"
-                        },
-                        {
-                          "$kind": "Microsoft.EndDialog",
-                          "$designer": {
-                            "id": "IYFBcx"
-                          }
-                        }
-                      ]
+                        "id": "KuYj5w"
+                      }
                     }
                   ],
                   "actions": [
                     {
-                      "$kind": "Microsoft.SetProperty",
+                      "$kind": "Microsoft.IfCondition",
                       "$designer": {
-                        "id": "5hSb93"
+                        "id": "vROhCg"
                       },
-                      "property": "turn.resultProjectName",
-                      "value": "=dialog.projectEntity"
+                      "condition": "=exists(turn.employees) && count(turn.employees) > 0",
+                      "elseActions": [
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "ZjNjFQ"
+                          },
+                          "activity": "${SendActivity_ZjNjFQ()}"
+                        },
+                        {
+                          "$kind": "Microsoft.EndDialog",
+                          "$designer": {
+                            "id": "pN55fO"
+                          }
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "Kf3D4h"
+                          },
+                          "property": "turn.isProject",
+                          "value": "=false"
+                        }
+                      ]
                     }
                   ]
-                },
+                }
+              ],
+              "actions": [
                 {
-                  "$kind": "GetEmployeesByBillableAction",
+                  "$kind": "Microsoft.SetProperty",
                   "$designer": {
-                    "id": "DxTUuD"
+                    "id": "npDZTe"
+                  },
+                  "property": "turn.isProject",
+                  "value": "=true"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "O8xRo1"
+              },
+              "condition": "=exists(exactMatch) && exactMatch == true",
+              "elseActions": [
+                {
+                  "$kind": "GetProjectsFromQueryAction",
+                  "$designer": {
+                    "id": "LyySM6"
                   },
                   "employees": "=turn.employees",
-                  "project": "=turn.resultProjectName",
-                  "workingEmployeesProperty": "turn.workingEmployees"
+                  "queriedProject": "=dialog.projectEntity",
+                  "projectsResultProperty": "turn.projectMatches",
+                  "isProject": "=turn.isProject"
                 },
                 {
-                  "$kind": "Microsoft.ForeachPage",
+                  "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "TDWb7H"
+                    "id": "dnDcXq"
                   },
-                  "pageIndex": "dialog.foreach.pageindex",
-                  "page": "dialog.foreach.page",
-                  "pageSize": 10,
-                  "itemsProperty": "turn.workingEmployees.employees",
+                  "condition": "=count(turn.projectMatches) > 1",
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "Y2l3J1"
+                      },
+                      "property": "turn.resultProjectName",
+                      "value": "=turn.projectMatches[0].projectName"
+                    }
+                  ],
                   "actions": [
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "OeOolV"
+                        "id": "lalAjt"
                       },
-                      "activity": "${SendActivity_OeOolV()}"
+                      "activity": "${SendActivity_lalAjt()}"
+                    },
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "IYFBcx"
+                      }
                     }
                   ]
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "5hSb93"
+                  },
+                  "property": "turn.resultProjectName",
+                  "value": "=dialog.projectEntity"
+                }
+              ]
+            },
+            {
+              "$kind": "GetEmployeesByBillableAction",
+              "$designer": {
+                "id": "DxTUuD"
+              },
+              "employees": "=turn.employees",
+              "project": "=turn.resultProjectName",
+              "workingEmployeesProperty": "turn.workingEmployees",
+              "isProject": "=turn.isProject"
+            },
+            {
+              "$kind": "Microsoft.ForeachPage",
+              "$designer": {
+                "id": "TDWb7H"
+              },
+              "pageIndex": "dialog.foreach.pageindex",
+              "page": "dialog.foreach.page",
+              "pageSize": 10,
+              "itemsProperty": "turn.workingEmployees.employees",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "OeOolV"
+                  },
+                  "activity": "${SendActivity_OeOolV()}"
                 }
               ]
             }

@@ -460,16 +460,40 @@
           ],
           "actions": [
             {
-              "$kind": "Microsoft.BeginDialog",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "XwUh1r"
+                "id": "Bt7gk0"
               },
-              "activityProcessed": true,
-              "dialog": "GetEmployeesByProjectDialog",
-              "options": {
-                "projectEntity": "=$options.project",
-                "exactMatch": "=@exactMatch"
-              }
+              "condition": "=exists(@ssw)",
+							"actions": [
+								{
+									"$kind": "Microsoft.BeginDialog",
+									"$designer": {
+										"id": "B0CvUh"
+									},
+									"activityProcessed": true,
+									"dialog": "GetPeopleOnClientWorkDialog",
+									"options": {
+										"dateEntity": "=$options.datetime",
+										"locationEntity": "=$options.location",
+										"availableEntity": "available"
+									}
+								}
+							],
+							"elseActions": [
+								{
+									"$kind": "Microsoft.BeginDialog",
+									"$designer": {
+										"id": "XwUh1r"
+									},
+									"activityProcessed": true,
+									"dialog": "GetEmployeesByProjectDialog",
+									"options": {
+										"projectEntity": "=$options.project",
+										"exactMatch": "=@exactMatch"
+									}
+								}
+							]
             }
           ]
         }

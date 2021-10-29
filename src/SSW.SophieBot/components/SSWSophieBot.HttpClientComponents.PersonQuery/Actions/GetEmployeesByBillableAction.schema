@@ -6,6 +6,11 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "isProject": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Is Project",
+      "description": "If set to true, get potentially different projects, otherwise clients"
+    },
     "project": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Project",
