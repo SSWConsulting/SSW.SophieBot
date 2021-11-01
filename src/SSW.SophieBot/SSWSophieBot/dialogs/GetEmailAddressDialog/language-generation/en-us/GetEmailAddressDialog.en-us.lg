@@ -1,6 +1,13 @@
 [import](common.lg)
 [SSWSophieBot](SSWSophieBot.en-us.lg)
 
+# SendActivity_ojOPMX_text()
+- **${dialog.displayName}**'s email address is:<br/>**<${dialog.emailAddress}>**
+# SendActivity_ojOPMX()
+[Activity
+    Text = ${SendActivity_ojOPMX_text()}
+]
+
 # SendActivity_mrti0A_text()
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
 # SendActivity_mrti0A()
@@ -16,22 +23,25 @@
 
 # SendActivity_N0ap4L_text()
 - Please specify a person name to query.
-# SendActivity_KtaM6I()
+# SendActivity_ItqJV9()
 [Activity
-    Text = ${SendActivity_KtaM6I_text()}
+    Text = ${SendActivity_ItqJV9_text()}
 ]
 
-# SendActivity_KtaM6I_text()
+# SendActivity_ItqJV9_text()
 - Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
-# SendActivity_DAumeF()
+# SendActivity_KKT6Ev()
 [Activity
-    Text = ${SendActivity_DAumeF_text()}
+    Text = ${SendActivity_KKT6Ev_text()}
 ]
 
-# SendActivity_DAumeF_text()
-- **${turn.employee.firstName} ${turn.employee.lastName}**'s email address is:<br/>**<${turn.employee.emailAddress}>**
-
-# SendActivity_BWNvpq()
+# SendActivity_KKT6Ev_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
+# SendActivity_LcfbHZ()
+[Activity
+    Text = ${SendActivity_ojOPMX_text()}
+]
+# SendActivity_3TXOcW()
 [Activity
     Attachments = ${json(NameButtons('GetEmailAddress'))}
 ]
