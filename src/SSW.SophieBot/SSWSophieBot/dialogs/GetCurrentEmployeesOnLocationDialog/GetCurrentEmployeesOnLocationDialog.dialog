@@ -162,6 +162,14 @@
                         {
                           "property": "turn.employees[0].lastSeenInfo",
                           "value": "='Last seen in ${turn.employees[0].lastSeenAt.siteId}.'"
+                        },
+                        {
+                          "value": "=join(select(where(turn.employees[0].skills, s, s.experienceLevel == \"Advanced\"), s, s.technology), \" | \")",
+                          "property": "turn.advancedSkills"
+                        },
+                        {
+                          "property": "turn.intermediateSkills",
+                          "value": "=join(select(where(turn.employees[0].skills, s, s.experienceLevel == \"Intermediate\"), s, s.technology), \" | \")"
                         }
                       ]
                     },
