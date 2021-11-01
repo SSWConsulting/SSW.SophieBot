@@ -222,12 +222,19 @@ We love squashing bugs 🥰```
 -```
 {
     "type": "TextBlock",
-    "text": "Page ${current} (${10 * (current - 1) + 1}-${10 * (current - 1) + if(total >= current * 10, 10, total - 10 * (current - 1))})",
+    "text": "Page ${current} ${PageRange(current, total)}",
     "wrap": true,
     "size": "Medium",
     "weight": "Bolder"
 }
 ```
+
+# PageRange(current, total)
+- IF: ${ 10 * (current - 1) + 1 == 10 * (current - 1) + if(total >= current * 10, 10, total - 10 * (current - 1))}
+    - (${10 * (current - 1) + 1})
+- ELSE:
+    - (${10 * (current - 1) + 1}-${10 * (current - 1) + if(total >= current * 10, 10, total - 10 * (current - 1))})
+
 
 # NameButtons(intent)
 - ```
