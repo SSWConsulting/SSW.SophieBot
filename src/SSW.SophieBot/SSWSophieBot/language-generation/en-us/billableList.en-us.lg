@@ -85,14 +85,7 @@
         {
             "type": "Column",
             "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "text": "Name",
-                    "wrap": true,
-                    "weight": "Bolder"
-                }
-            ],
+            "items": [],
             "verticalContentAlignment": "Center"
         },
         {
@@ -110,12 +103,13 @@
         },
         {
             "type": "Column",
-            "width": "auto",
+            "width": "stretch",
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "Booking Status",
-                    "weight": "Bolder"
+                    "text": "Booking",
+                    "weight": "Bolder",
+                    "horizontalAlignment": "Center"
                 }
             ],
             "verticalContentAlignment": "Center"
