@@ -89,14 +89,7 @@
     {
         "type": "Column",
         "width": "stretch",
-        "items": [
-            {
-                "type": "TextBlock",
-                "text": "Name",
-                "wrap": true,
-                "weight": "Bolder"
-            }
-        ]
+        "items": []
     },
     {
         "type": "Column",

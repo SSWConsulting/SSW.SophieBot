@@ -105,15 +105,7 @@
 {
     "type": "Column",
     "width": "stretch",
-    "items": [
-        {
-            "type": "TextBlock",
-            "text": "Name",
-            "wrap": true,
-            "weight": "Bolder"
-        }
-    ],
-    "verticalContentAlignment": "Center"
+    "items": []
 },
 {
     "type": "Column",
