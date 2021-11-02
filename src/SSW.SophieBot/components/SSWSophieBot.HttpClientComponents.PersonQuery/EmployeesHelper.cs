@@ -170,14 +170,16 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
         public static NextClientModel GetNextUnavailability(GetEmployeeModel employee, DateTime date, out int freeDays)
         {
             const int daysForNext4Weeks = 4 * 7;
+            const int daysFor4Weekends = 4 * 2;
+
             var daysTillNextWeek = (int)DayOfWeek.Saturday - (int)date.DayOfWeek + 1;
 
-            freeDays = daysForNext4Weeks;
+            freeDays = daysForNext4Weeks - daysFor4Weekends;
             var unfreeAppointments = new List<GetAppointmentModel>();
             var lastDate = DateTimeOffset.MinValue;
 
-            var startDate = date.AddDays(daysTillNextWeek);
-            var endDate = date.AddDays(daysTillNextWeek + daysForNext4Weeks);
+            var startDate = date.AddDays(1);
+            var endDate = date.AddDays(1 + daysForNext4Weeks);
 
             foreach (var a in employee.Appointments
                 .Where(a => a.Start.UtcTicks >= startDate.Ticks
@@ -185,7 +187,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                     && !string.IsNullOrWhiteSpace(a.Regarding))
                 .OrderBy(a => a.Start.UtcTicks))
             {
-                if (!IsOnInternalWorkFunc(a))
+                if (!IsOnInternalWorkFunc(a) && !IsOnLeaveFunc(a))
                 {
                     unfreeAppointments.Add(a);
 
