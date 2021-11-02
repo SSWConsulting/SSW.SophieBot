@@ -298,14 +298,29 @@
     "type": "Column",
     "width": "${width}",
     "items": [
-        ${join(select(clients, client => TextBlock(client)), ',')}
+        ${ClientTextBlock(clients)}
     ],
     "verticalContentAlignment": "Center"
 }
 ```
 
-# TextBlock(text)
--```
+# ClientTextBlock(clients)
+- IF: ${!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false}
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "\\\\*\\\\*\\\\*",
+        "wrap": true,
+        "size": "Small"
+    }
+    ```
+- ELSE:
+    - ```
+    ${join(select(clients, client => ClientText(client)), ',')}
+    ```
+
+# ClientText(text)
+- ```
 {
     "type": "TextBlock",
     "text": "${if(text != null && text != '', text, '—')}",
