@@ -54,7 +54,9 @@
     - is free.
 
 # ClientInfo(profile)
-- IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
+- IF: ${!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false}
+    - **Client**: \\\\*\\\\*\\\\*
+- ELSEIF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
     - **Client**: ${join(profile.clients, ',')}.
 - ELSE:
     -

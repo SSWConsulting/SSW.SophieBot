@@ -74,3 +74,10 @@
 
 # SendActivity_ZjNjFQ_text()
 - Sorry, I couldn't find anyone working on **${dialog.projectEntity}** in your organization. Please try again.
+# SendActivity_3iVgUC()
+[Activity
+    Text = ${SendActivity_3iVgUC_text()}
+]
+
+# SendActivity_3iVgUC_text()
+- You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.

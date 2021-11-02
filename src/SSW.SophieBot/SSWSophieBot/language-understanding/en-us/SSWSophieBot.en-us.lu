@@ -146,6 +146,7 @@
 - who is {@contact={@firstname=karl}} at this company
 - who is {@contact={@firstname=leo}} from microsoft?
 - who is mr. {@contact={@lastname=andy}}
+- who is {@contact={@firstname=nemo}}?
 
 # None
 - create a new meeting with rhonda and renee

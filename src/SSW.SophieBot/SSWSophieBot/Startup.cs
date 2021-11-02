@@ -9,10 +9,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using SSWSophieBot.Adapters;
 using SSWSophieBot.HttpClientComponents.Abstractions;
 using SSWSophieBot.HttpClientComponents.PersonQuery;
 using SSWSophieBot.Integration;
+using SSWSophieBot.Middlewares;
+using SSWSophieBot.settings;
 
 namespace SSWSophieBot
 {
@@ -36,6 +37,10 @@ namespace SSWSophieBot
 			services.Replace(ServiceDescriptor.Singleton<BotAdapter>(sp => sp.GetRequiredService<SSWSophieBotAdapter>()));
 
 			services.AddSingleton<ITelemetryInitializer, SSWSophieBotTelemetryInitializer>();
+
+			services.AddSingleton<IMiddleware, TeamsTenantAuthenticationMiddleware>();
+
+			services.Configure<ApplicationSettings>(Configuration.GetSection(ConfigurationConstants.AppSettingsKey));
 
 			services.ConfigureSophieBotHttpClient()
 				.AddPersonQueryClient();
