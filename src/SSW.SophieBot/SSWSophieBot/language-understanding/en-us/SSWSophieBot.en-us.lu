@@ -23,12 +23,12 @@
 - please, find {@contact={@firstname=phineas}} personal email.
 - search the {@contact={@firstname=roger}} email
 - what is {@contact={@firstname=angelica}}'s secret emailaddress?
-- what is {@contact={@firstname=clark}}'s email?
+- what is {@contact={@firstname=clark}}'s e-mail?
 - what is {@contact={@firstname=helen}}'s emailaddress?
-- what is {@contact={@firstname=johns}} email?
+- what is {@contact={@firstname=johns}} e-mail?
 - what is {@contact={@firstname=lebron} {@lastname=james}}' emailaddress?
-- what is {@contact={@firstname=mario}} email?
-- what is {@contact={@firstname=neobux}} email?
+- what is {@contact={@firstname=mario}} e-mail?
+- what is {@contact={@firstname=neobux}} e-mail?
 - what is new emailaddress of my friend {@contact={@firstname=sam}}?
 - what is {@contact={@firstname=pamela}}'s emailaddress?
 - what is {@contact={@firstname=stan}}'s personal email?
