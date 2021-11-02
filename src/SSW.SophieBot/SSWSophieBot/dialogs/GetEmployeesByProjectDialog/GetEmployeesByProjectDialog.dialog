@@ -85,6 +85,28 @@
               "condition": "=exists(turn.employees) && count(turn.employees) > 0",
               "elseActions": [
                 {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "OdHJjH"
+                  },
+                  "condition": "=!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "3iVgUC"
+                      },
+                      "activity": "${SendActivity_3iVgUC()}"
+                    },
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "B7m3a8"
+                      }
+                    }
+                  ]
+                },
+                {
                   "$kind": "GetProfileAction",
                   "$designer": {
                     "id": "6InfF3"
