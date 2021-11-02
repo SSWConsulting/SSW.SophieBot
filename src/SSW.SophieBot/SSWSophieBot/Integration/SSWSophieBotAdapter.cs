@@ -9,7 +9,7 @@ using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace SSWSophieBot.Adapters
+namespace SSWSophieBot.Integration
 {
 	public class SSWSophieBotAdapter : CloudAdapter
 	{

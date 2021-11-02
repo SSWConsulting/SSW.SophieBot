@@ -307,7 +307,7 @@
 
 # Status(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - Busy working for ${join(profile.clients, ',')}.
+    - Busy working for ${if(!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false, '\\\\*\\\\*\\\\*', join(profile.clients, ','))}.
 - ELSEIF: ${ profile.bookingStatus == 1 && profile.clients.count == 0 }
     - Busy on client work.
 - ELSEIF: ${ profile.bookingStatus == 2 }
