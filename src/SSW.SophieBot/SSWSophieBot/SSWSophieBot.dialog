@@ -465,35 +465,35 @@
                 "id": "Bt7gk0"
               },
               "condition": "=exists(@ssw)",
-							"actions": [
-								{
-									"$kind": "Microsoft.BeginDialog",
-									"$designer": {
-										"id": "B0CvUh"
-									},
-									"activityProcessed": true,
-									"dialog": "GetPeopleOnClientWorkDialog",
-									"options": {
-										"dateEntity": "=$options.datetime",
-										"locationEntity": "=$options.location",
-										"availableEntity": "available"
-									}
-								}
-							],
-							"elseActions": [
-								{
-									"$kind": "Microsoft.BeginDialog",
-									"$designer": {
-										"id": "XwUh1r"
-									},
-									"activityProcessed": true,
-									"dialog": "GetEmployeesByProjectDialog",
-									"options": {
-										"projectEntity": "=$options.project",
-										"exactMatch": "=@exactMatch"
-									}
-								}
-							]
+              "actions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "B0CvUh"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetPeopleOnClientWorkDialog",
+                  "options": {
+                    "dateEntity": "=$options.datetime",
+                    "locationEntity": "=$options.location",
+                    "availableEntity": "available"
+                  }
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "XwUh1r"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetEmployeesByProjectDialog",
+                  "options": {
+                    "projectEntity": "=$options.project",
+                    "exactMatch": "=@exactMatch"
+                  }
+                }
+              ]
             }
           ]
         }
@@ -704,20 +704,41 @@
           ],
           "actions": [
             {
-              "$kind": "Microsoft.BeginDialog",
+              "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "oI8v1M"
+                "id": "8hukyY"
               },
-              "activityProcessed": true,
-              "dialog": "GetPeopleOnClientWorkDialog",
-              "options": {
-                "dateEntity": "=$options.datetime",
-                "locationEntity": "=$options.location",
-                "bookedEntity": "=$options.booked",
-                "availableEntity": "=$options.booked",
-                "internal": "=$options.internal",
-                "internalEntity": "=$options.internal"
-              }
+              "condition": "=exists($options.skill)",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "Sje0tC"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetPeopleOnClientWorkDialog",
+                  "options": {
+                    "dateEntity": "=$options.datetime",
+                    "locationEntity": "=$options.location",
+                    "availableEntity": "=$options.booked"
+                  }
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "38ruYx"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetAvailableExpertsByLocationDialog",
+                  "options": {
+                    "dateEntity": "=$options.datetime",
+                    "locationEntity": "=$options.location",
+                    "skillEntity": "=$options.skill"
+                  }
+                }
+              ]
             }
           ]
         }
