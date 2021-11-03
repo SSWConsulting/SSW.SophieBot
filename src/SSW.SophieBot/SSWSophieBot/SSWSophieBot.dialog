@@ -893,7 +893,7 @@
             },
             {
               "property": "$options.preset.locationEntity",
-              "value": "=coalesce(@geographyV2.location, @location, @remote)"
+              "value": "=coalesce(@geographyV2.location, @site, @location, @remote)"
             },
             {
               "property": "$options.preset.positive",

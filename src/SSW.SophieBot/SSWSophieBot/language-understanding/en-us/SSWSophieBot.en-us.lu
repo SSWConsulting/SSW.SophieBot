@@ -431,7 +431,24 @@
 @ ml unavailable usesFeature UnavailablePhraseList
 @ prebuilt datetimeV2
 
+@ list site = 
+	- china:
+		- China
+	- hangzhou:
+		- Hangzhou
+	- brisbane:
+		- Brisbane
+	- melbourne:
+		- Melbourne
+	- newcastle:
+		- Newcastle
+	- melbourne:
+		- Melbourne
+	- sydney:
+		- Sydney
+
 # GetCurrentEmployeesOnLocation
+- who is in brisbane right now
 - Who is in the Sydney office right now?
 - Who is currently in the Melbourne office?
 - Show me who are in Newcastle now?
