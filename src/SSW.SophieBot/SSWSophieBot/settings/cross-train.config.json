@@ -40,7 +40,8 @@
         "GetPeopleBySkills.en-us"
       ],
       "GetPeopleOnClientWork": [
-        "GetPeopleOnClientWorkDialog.en-us"
+        "GetPeopleOnClientWorkDialog.en-us",
+        "GetAvailableExpertsByLocationDialog.en-us"
       ],
       "GetCurrentEmployeesOnLocation": [
         "GetCurrentEmployeesOnLocationDialog.en-us"
