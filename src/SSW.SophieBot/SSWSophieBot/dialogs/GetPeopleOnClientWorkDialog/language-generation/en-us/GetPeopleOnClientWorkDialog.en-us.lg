@@ -364,7 +364,7 @@
 
 # NextClient(client, freeDays)
 -```
-Note: Only free for ${DaysText(freeDays, false)} for the next 28 days. ${ClientInfo(client)}
+Note: Free for ${DaysText(freeDays, false)} for the next 4 weeks. ${ClientInfo(client)}
 ```
 
 # ClientInfo(client)
