@@ -99,12 +99,12 @@
 -```
 {
     "type": "Column",
-    "width": "75px",
+    "width": "50px",
     "items": []
 },
 {
     "type": "Column",
-    "width": "stretch",
+    "width": "100px",
     "items": []
 },
 {
@@ -115,7 +115,8 @@
             "type": "TextBlock",
             "text": "Availability for next 4 weeks",
             "wrap": true,
-            "weight": "Bolder"
+            "weight": "Bolder",
+            "horizontalAlignment": "Center"
         }
     ],
     "verticalContentAlignment": "Center"
@@ -141,8 +142,8 @@ ${freeDays}/28 days
 
 # BodyColumns(employee)
 - ${join(createArray(
-   ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '75px', '35px'), 
-   ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', 'Small', 'Default'),
+   ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
+   ClickableName(employee.displayName, employee.firstName, employee.lastName, '100px', 'Small', 'Default'),
    BodyColumn(FreeDays(employee.nextClient, employee.freeDays))), ',')}
 
 # BodyColumn(text)
@@ -155,7 +156,8 @@ ${freeDays}/28 days
             "type": "TextBlock",
             "text": "${text}",
             "wrap": true,
-            "size": "Small"
+            "size": "Small",
+            "horizontalAlignment": "Center"
         }
     ],
     "verticalContentAlignment": "Center"

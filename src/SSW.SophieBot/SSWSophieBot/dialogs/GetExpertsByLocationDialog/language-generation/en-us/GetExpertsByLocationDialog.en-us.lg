@@ -83,7 +83,7 @@
     - ```
     {
         "type": "Column",
-        "width": "35px",
+        "width": "50px",
         "items": []
     },
     {
@@ -99,7 +99,8 @@
                 "type": "TextBlock",
                 "text": "Level ↓",
                 "wrap": true,
-                "weight": "Bolder"
+                "weight": "Bolder",
+                "horizontalAlignment": "Center"
             }
         ]
     },
@@ -111,7 +112,8 @@
                 "type": "TextBlock",
                 "text": "Billed",
                 "wrap": true,
-                "weight": "Bolder"
+                "weight": "Bolder",
+                "horizontalAlignment": "Center"
             }
         ]
     }
@@ -124,7 +126,7 @@
 {
     "type": "ColumnSet",
     "columns": [
-        ${ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, 'auto', '35px')},
+        ${ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px')},
         ${ClickableName(concat(employee.firstName, ' ', employee.lastName), employee.firstName, employee.lastName, 'stretch', 'Small', 'Default')},
         {
             "type": "Column",
@@ -134,7 +136,8 @@
                     "type": "TextBlock",
                     "wrap": true,
                     "text": "${employee.skillLevel}",
-                    "size": "Small"
+                    "size": "Small",
+                    "horizontalAlignment": "Center"
                 }
             ],
             "verticalContentAlignment": "Center"
@@ -147,7 +150,8 @@
                     "type": "TextBlock",
                     "wrap": true,
                     "text": "${DaysText(first(where(turn.billableEmployees.employees, e, e.userId == employee.UserId)).billedDays, true)}",
-                    "size": "Small"
+                    "size": "Small",
+                    "horizontalAlignment": "Center"
                 }
             ],
             "verticalContentAlignment": "Center"
