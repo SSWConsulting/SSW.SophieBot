@@ -43,6 +43,23 @@
                     ],
                     "width": "stretch",
                     "verticalContentAlignment": "Center"
+                },
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "ActionSet",
+                            "actions": [
+                                {
+                                    "type": "Action.OpenUrl",
+                                    "title": "Contact Now",
+                                    "url": "sip:${profile.emailAddress}"
+                                }
+                            ],
+                            "horizontalAlignment": "Right"
+                        }
+                    ]
                 }
             ]
         },
