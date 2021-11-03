@@ -465,35 +465,35 @@
                 "id": "Bt7gk0"
               },
               "condition": "=exists(@ssw)",
-							"actions": [
-								{
-									"$kind": "Microsoft.BeginDialog",
-									"$designer": {
-										"id": "B0CvUh"
-									},
-									"activityProcessed": true,
-									"dialog": "GetPeopleOnClientWorkDialog",
-									"options": {
-										"dateEntity": "=$options.datetime",
-										"locationEntity": "=$options.location",
-										"availableEntity": "available"
-									}
-								}
-							],
-							"elseActions": [
-								{
-									"$kind": "Microsoft.BeginDialog",
-									"$designer": {
-										"id": "XwUh1r"
-									},
-									"activityProcessed": true,
-									"dialog": "GetEmployeesByProjectDialog",
-									"options": {
-										"projectEntity": "=$options.project",
-										"exactMatch": "=@exactMatch"
-									}
-								}
-							]
+              "actions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "B0CvUh"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetPeopleOnClientWorkDialog",
+                  "options": {
+                    "dateEntity": "=$options.datetime",
+                    "locationEntity": "=$options.location",
+                    "availableEntity": "available"
+                  }
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "XwUh1r"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetEmployeesByProjectDialog",
+                  "options": {
+                    "projectEntity": "=$options.project",
+                    "exactMatch": "=@exactMatch"
+                  }
+                }
+              ]
             }
           ]
         }
@@ -872,7 +872,7 @@
             },
             {
               "property": "$options.preset.locationEntity",
-              "value": "=coalesce(@geographyV2.location, @location, @remote)"
+              "value": "=coalesce(@geographyV2.location, @site, @location, @remote)"
             },
             {
               "property": "$options.preset.positive",
