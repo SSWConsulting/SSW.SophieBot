@@ -85,8 +85,7 @@
         {
             "type": "Column",
             "width": "stretch",
-            "items": [],
-            "verticalContentAlignment": "Center"
+            "items": []
         },
         {
             "type": "Column",

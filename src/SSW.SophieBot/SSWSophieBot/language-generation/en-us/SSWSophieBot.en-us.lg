@@ -244,7 +244,7 @@ We love squashing bugs 🥰```
         {
             "type": "TextBlock",
             "wrap": true,
-            "text": "There seems to be more than one **${titleCase(turn.userInputName)}**. Which one were you asking?"
+            "text": "There seems to be more than one **${titleCase(turn.userInputName)}**. Which one were you looking for?"
         },
         {
             "type": "ActionSet",
