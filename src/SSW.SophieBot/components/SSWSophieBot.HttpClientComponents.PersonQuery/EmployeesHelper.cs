@@ -172,14 +172,12 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             const int daysForNext4Weeks = 4 * 7;
             const int daysFor4Weekends = 4 * 2;
 
-            var daysTillNextWeek = (int)DayOfWeek.Saturday - (int)date.DayOfWeek + 1;
-
             freeDays = daysForNext4Weeks - daysFor4Weekends;
             var unfreeAppointments = new List<GetAppointmentModel>();
             var lastDate = DateTimeOffset.MinValue;
 
-            var startDate = date.AddDays(1);
-            var endDate = date.AddDays(1 + daysForNext4Weeks);
+            var startDate = date;
+            var endDate = date.AddDays(daysForNext4Weeks);
 
             foreach (var a in employee.Appointments
                 .Where(a => a.Start.UtcTicks >= startDate.Ticks
