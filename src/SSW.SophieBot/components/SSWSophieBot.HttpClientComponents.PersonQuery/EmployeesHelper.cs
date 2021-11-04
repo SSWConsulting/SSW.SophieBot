@@ -10,7 +10,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 {
     public static class EmployeesHelper
     {
-        private static readonly string[] _leavePhrases = new string[]
+        private static readonly string[] _leavePhrases = new[]
         {
             "non working",
             "non-working",
@@ -24,7 +24,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             "uni days"
         };
 
-        private static readonly string[] _internalCompanyNames = new string[]
+        private static readonly string[] _internalCompanyNames = new[]
         {
             "ssw",
             "ssw test"
