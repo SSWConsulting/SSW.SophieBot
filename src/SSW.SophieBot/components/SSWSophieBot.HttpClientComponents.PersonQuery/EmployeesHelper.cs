@@ -100,7 +100,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             }
             else
             {
-                billableHours = employee.Projects.Sum(p => p.BillableHours);
+                billableHours = employee.Projects.Where(project => !project.CustomerName.Equals("ssw", StringComparison.OrdinalIgnoreCase)).Sum(p => p.BillableHours);
             }
 
             return billableHours == 0 ? 0 : (int)Math.Ceiling(billableHours / 8);
