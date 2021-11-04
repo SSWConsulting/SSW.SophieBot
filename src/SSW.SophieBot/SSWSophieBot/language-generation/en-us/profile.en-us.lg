@@ -1,4 +1,5 @@
 [Icons](icons.en-us.lg)
+[Agenda](agenda.en-us.lg)
 
 # ProfileCardWithSSWPeopleAPI(profile)
 -```
@@ -73,6 +74,7 @@
                         {
                             "type": "TextBlock",
                             "text": "**Today:** ",
+                            "color": "Accent",
                             "wrap": true
                         }
                     ]
@@ -100,6 +102,7 @@
                         {
                             "type": "TextBlock",
                             "text": "**Last Seen:** ",
+                            "color": "Accent",
                             "wrap": true
                         }
                     ]
@@ -127,6 +130,7 @@
                         {
                             "type": "TextBlock",
                             "text": "**Skills:** ",
+                            "color": "Accent",
                             "wrap": true
                         }
                     ]
@@ -193,6 +197,7 @@
         {
             "type": "TextBlock",
             "text": "**Contact:** ",
+            "color": "Accent",
             "wrap": true,
             "separator": true,
             "height": "stretch"
@@ -291,13 +296,25 @@
         {
             "type": "ActionSet",
             "actions": [
-                ${join(where([ViewInPeopleAction(profile), ViewInCRMAction(profile)], action, exists(action) && length(action) > 0), ',')}
+                ${join(where([
+                    ViewInPeopleAction(profile), 
+                    ViewInCRMAction(profile),
+                    ViewCalendarAction(profile.appointments)], action, exists(action) && length(action) > 0), ',')}
             ]
         }
     ],
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2",
     "minHeight": "100px"
+}
+```
+
+# ViewCalendarAction(appointments)
+- ```
+{
+    "type": "Action.ShowCard",
+    "title": "View Calendar",
+    "card": ${json(AppointmentAgenda())}
 }
 ```
 

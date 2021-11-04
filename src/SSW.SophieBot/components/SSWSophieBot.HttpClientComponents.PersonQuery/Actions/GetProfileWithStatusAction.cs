@@ -52,7 +52,17 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 DefaultSite = e.DefaultSite,
                 FirstName = e.FirstName,
                 LastName = e.LastName,
-                BillableRate = e.BillableRate
+                BillableRate = e.BillableRate,
+                Appointments = EmployeesHelper.GetAppointments(e.Appointments, date, 10)
+                    .Select(a => new EmployeeProfileAppointment
+                    {
+                        Start = a.Start.DateTime.ToUserLocalTime(dc).ToUserFriendlyTime(date),
+                        Duration = (a.End - a.Start).ToUserFriendlyDuration(),
+                        BookingStatus = EmployeesHelper.GetBookingStatus(a),
+                        Subject = a.Subject.Trim(),
+                        Regarding = a.Regarding.Trim()
+                    })
+                    .ToList()
             })
             .ToList();
 
