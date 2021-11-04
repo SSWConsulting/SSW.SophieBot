@@ -53,9 +53,10 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             {
                 if (!string.IsNullOrWhiteSpace(projectName))
                 {
-                    if (resultProjectsDic.TryGetValue(projectName, out var employeesCount))
+                    var existedKey = resultProjectsDic.Keys.FirstOrDefault(key => EmployeesHelper.IsProjectNameMatch(key, projectName));
+                    if (!string.IsNullOrEmpty(existedKey))
                     {
-                        resultProjectsDic[projectName]++;
+                        resultProjectsDic[existedKey]++;
                     }
                     else
                     {

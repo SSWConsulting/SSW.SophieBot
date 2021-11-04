@@ -69,7 +69,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             }
             else
             {
-                project = employees?.FirstOrDefault()?.Projects?.FirstOrDefault(p => IsProjectNameEqual(queriedProjectName, isProject ? p.ProjectName : p.CustomerName));
+                project = employees?.FirstOrDefault()?.Projects?.FirstOrDefault(p => IsProjectNameMatch(queriedProjectName, isProject ? p.ProjectName : p.CustomerName));
             }
             projectName = isProject ? project?.ProjectName : project?.CustomerName;
 
@@ -272,11 +272,6 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
         private static long GetTicksFrom(DateTimeOffset date)
         {
             return date.UtcDateTime.Date.Ticks;
-        }
-
-        private static bool IsProjectNameEqual(string sourceProjectName, string originalProjectName)
-        {
-            return sourceProjectName?.Trim() == originalProjectName?.Trim();
         }
 
         public static bool IsProjectNameMatch(string sourceProjectName, string originalProjectName)
