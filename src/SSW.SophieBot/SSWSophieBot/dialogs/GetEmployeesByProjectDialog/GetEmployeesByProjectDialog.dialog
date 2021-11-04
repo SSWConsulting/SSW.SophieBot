@@ -194,7 +194,7 @@
               "$designer": {
                 "id": "O8xRo1"
               },
-              "condition": "=exists(exactMatch) && exactMatch == true",
+              "condition": "=exists(dialog.exactMatch) && dialog.exactMatch == true",
               "elseActions": [
                 {
                   "$kind": "GetProjectsFromQueryAction",
