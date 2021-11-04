@@ -10,20 +10,6 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 {
     public static class EmployeesHelper
     {
-        private static readonly string[] _leavePhrases = new[]
-        {
-            "non working",
-            "non-working",
-            "non-work",
-            "holiday",
-            "time in lieu",
-            "day off",
-            "days off",
-            "leave",
-            "study days",
-            "uni days"
-        };
-
         private static readonly string[] _internalCompanyNames = new[]
         {
             "ssw",
@@ -209,13 +195,12 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
         private static bool IsOnInternalWorkFunc(GetAppointmentModel appointment)
         {
             return _internalCompanyNames.Contains(appointment.Regarding.ToLower())
-                && !_leavePhrases.Any(appointment.Subject.ToLower().Contains);
+                && !IsOnLeaveFunc(appointment);
         }
 
         private static bool IsOnLeaveFunc(GetAppointmentModel appointment)
         {
-            return _internalCompanyNames.Contains(appointment.Regarding.ToLower())
-                && _leavePhrases.Any(appointment.Subject.ToLower().Contains);
+            return appointment.RequiredAttendees.Any(attendee => attendee.ToLower().Contains("absence"));
         }
 
         public static bool IsOnInternalWork(GetEmployeeModel employee, DateTime date)
