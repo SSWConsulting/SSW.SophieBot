@@ -10,6 +10,6 @@
         MarketingAndVideo = 100000004,
         AutomationAndElectrical = 100000005,
         Others = 100000006,
-        Unknows = 0
+        Unknown = 0
     }
 }
