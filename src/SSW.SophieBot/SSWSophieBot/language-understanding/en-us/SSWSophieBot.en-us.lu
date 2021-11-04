@@ -282,7 +282,7 @@
 @ prebuilt geographyV2
 
 # GetEmployeesOnProject
-- who {@presentBe} working (on | for) ({@project} | {@ssw})[?]
+- who {@presentBe} working {@prep} ({@project} | {@ssw})[?]
 - Who {@presentBe} on {@project} project[?]
 - Who {@presentBe} working on {@project}[?]
 - Who {@presentBe} on {@project}[?]
@@ -401,6 +401,12 @@
 	- working for clients
 	- unavailable
 	
+@ list prep = 
+	- on:
+		- on
+	- for:
+		- for
+
 # GetPeopleOnClientWork
 - Who {@presentBe} ({@available} | {@unavailable})[?]
 - Who is {@unavailable = on client work} tomorrow
