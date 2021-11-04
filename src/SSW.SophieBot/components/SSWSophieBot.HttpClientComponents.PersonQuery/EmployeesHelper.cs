@@ -24,32 +24,6 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             "uni days"
         };
 
-        private static readonly string[] _nonDevTitles = new string[]
-        {
-            "SSW Admin",
-            "Senior Marketing Specialist",
-            "SSW Senior Accountant",
-            "SSW China CEO",
-            "SSW Electrician",
-            "SSW QLD State",
-            "International Manager",
-            "SSW VIC State Manager",
-            "SSW Administrative Assistant",
-            "SSW General Manager",
-            "SSW Multimedia Assistant",
-            "SSW Multimedia Specialist",
-            "SSW Multimedia Videographer",
-            "SSW Chief Architect",
-            "Microsoft Regional Director",
-            "SSW Lawyer",
-            "SSW Chief Financial Controller",
-            "SSW Videographer",
-            "SSW Producer, Director and Editor",
-            "Administrative Assistant",
-            "SSW Digital Marketing",
-            "SSW Admin Manager"
-        };
-
         private static readonly string[] _internalCompanyNames = new string[]
         {
             "ssw",
@@ -298,7 +272,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 
         public static List<GetEmployeeModel> FilterDevelopers(List<GetEmployeeModel> employees)
         {
-            return employees.Where(employee => !_nonDevTitles.Any(employee.Title.Contains)).ToList();
+            var devCategories = new[] { ProfileCategory.Developers, ProfileCategory.Designers };
+            return employees.Where(employee => devCategories.Any(category => category == employee.ProfileCategory)).ToList();
         }
 
         public static List<GetEmployeeModel> GetInternalBookedEmployees(List<GetEmployeeModel> employees, DateTime date)

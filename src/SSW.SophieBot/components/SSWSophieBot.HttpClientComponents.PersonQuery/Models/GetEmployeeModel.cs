@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SSWSophieBot.HttpClientComponents.PersonQuery;
 
 namespace SSWSophieBot.HttpClientAction.Models
 {
@@ -41,6 +42,7 @@ namespace SSWSophieBot.HttpClientAction.Models
         public string PublicPhotoAlbumUrl { get; set; }
         public int? EmployeeCategory { get; set; }
         public string Title { get; set; }
+        public ProfileCategory? ProfileCategory { get; set; }
 
         public bool HasSkill(string technology, ExperienceLevel? experienceLevel = ExperienceLevel.Advanced | ExperienceLevel.Intermediate)
         {
