@@ -56,6 +56,7 @@
                         {
                             "type": "TextBlock",
                             "text": "**Today:** ",
+                            "color": "Accent",
                             "wrap": true
                         }
                     ]
@@ -83,6 +84,7 @@
                         {
                             "type": "TextBlock",
                             "text": "**Last Seen:** ",
+                            "color": "Accent",
                             "wrap": true
                         }
                     ]
@@ -110,6 +112,7 @@
                         {
                             "type": "TextBlock",
                             "text": "**Skills:** ",
+                            "color": "Accent",
                             "wrap": true
                         }
                     ]
@@ -176,6 +179,7 @@
         {
             "type": "TextBlock",
             "text": "**Contact:** ",
+            "color": "Accent",
             "wrap": true,
             "separator": true,
             "height": "stretch"
