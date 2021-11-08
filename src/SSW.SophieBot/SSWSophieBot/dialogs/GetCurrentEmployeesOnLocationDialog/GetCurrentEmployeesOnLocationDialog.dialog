@@ -20,7 +20,8 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "IMIzT4"
-          }
+          },
+          "name": "SSWSophieBot.GetCurrentEmployeesOnLocation.BeginDialog"
         },
         {
           "$kind": "Microsoft.IfCondition",
