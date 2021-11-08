@@ -4,6 +4,7 @@ using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using SSWSophieBot.settings;
@@ -12,33 +13,36 @@ namespace SSWSophieBot.Integration
 {
 	public class SSWSophieBotTelemetryInitializer : ITelemetryInitializer
 	{
-		private readonly IHttpContextAccessor _httpContextAccessor;
+		private readonly IServiceProvider _serviceProvider;
 		private readonly ApplicationSettings _applicationSettings;
 
-		public SSWSophieBotTelemetryInitializer(IHttpContextAccessor httpContextAccessor, IOptions<ApplicationSettings> options)
+		public SSWSophieBotTelemetryInitializer(IServiceProvider serviceProvider, IOptions<ApplicationSettings> options)
 		{
-			_httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+			_serviceProvider = serviceProvider;
 			_applicationSettings = options.Value;
 		}
 
 		public void Initialize(ITelemetry telemetry)
 		{
-			var httpContext = _httpContextAccessor.HttpContext;
-			var items = httpContext?.Items;
-
-			if (items != null)
+			using (var scope = _serviceProvider.CreateScope())
 			{
-				if ((telemetry is RequestTelemetry || telemetry is EventTelemetry
-					|| telemetry is TraceTelemetry || telemetry is DependencyTelemetry || telemetry is PageViewTelemetry)
-					&& items.ContainsKey(TelemetryBotIdInitializer.BotActivityKey))
+				var httpContext = scope.ServiceProvider.GetRequiredService<IHttpContextAccessor>().HttpContext;
+				var items = httpContext?.Items;
+
+				if (items != null)
 				{
-					if (items[TelemetryBotIdInitializer.BotActivityKey] is JObject body)
+					if ((telemetry is RequestTelemetry || telemetry is EventTelemetry
+						|| telemetry is TraceTelemetry || telemetry is DependencyTelemetry || telemetry is PageViewTelemetry)
+						&& items.ContainsKey(TelemetryBotIdInitializer.BotActivityKey))
 					{
-						var from = body["from"];
-						if (!string.IsNullOrWhiteSpace(from?.ToString()))
+						if (items[TelemetryBotIdInitializer.BotActivityKey] is JObject body)
 						{
-							var userName = (string)from["name"];
-							telemetry.Context.User.AccountId = userName;
+							var from = body["from"];
+							if (!string.IsNullOrWhiteSpace(from?.ToString()))
+							{
+								var userName = (string)from["name"];
+								telemetry.Context.User.AccountId = userName;
+							}
 						}
 					}
 				}
