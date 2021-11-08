@@ -60,6 +60,10 @@
             {
               "key": "skills",
               "value": "=dialog.skillEntity"
+            },
+            {
+              "key": "inoffice",
+              "value": "=if(exists(dialog.isCurrentLocation), dialog.isCurrentLocation, '')"
             }
           ],
           "statusCodeProperty": "turn.statusCode",
