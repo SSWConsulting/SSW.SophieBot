@@ -1,0 +1,30 @@
+[common](common.en-us.lu)
+[entities](entities.en-us.lu)
+
+# GetPeopleOnClientWork
+- Who {@presentBe} ({@available} | {@unavailable})[?]
+- Who is {@unavailable = on client work} tomorrow
+- Who is {@unavailable = working on client work} next Friday?
+- Who is {@unavailable = working for clients} in Sydney?
+- Who is {@unavailable = unavailable} remotely next Friday?
+
+- People not {@unavailable = on client work}?
+- Who is not {@unavailable = on client work} tomorrow
+- Who is not {@unavailable = on client work} tomorrow?
+- Who is not {@unavailable = on client work} in China?
+- Who is not {@unavailable = on client work} in China next Monday?
+- who is {@available = free} tomorrow
+- Who is {@available = free} next Friday?
+- Who is {@available = free} next Monday?
+- Who is {@available = free} in Sydney?
+- Who is {@available = free} remotely next Friday?
+
+- Who's {@available = internal} tomorrow
+- Who is {@available = internal} today?
+- Who is {@available = on internal} work?
+- Who is {@available = on internal} next Friday?
+- Who is {@available = working for SSW} Today?
+- Who is {@available = working for SSW} in China?
+- Who is {@available = working for SSW} remotely next Friday?
+
+@ intent GetPeopleOnClientWork usesFeature available,unavailable,datetimeV2

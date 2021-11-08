@@ -1,0 +1,52 @@
+[entities](entities.en-us.lu)
+
+# GetEmailAddress
+- {@contact={@firstname=antonio}}'s {@profileProperty={@emailAddressProperty=email}} please
+- can you find {@contact={@firstname=julian}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
+- can you get me {@contact={@firstname=benny}}'s {@profileProperty={@emailAddressProperty=email}}?
+- can you give me the {@contact={@firstname=alberto}} {@profileProperty={@emailAddressProperty=email addreess}}
+- can you give me the {@contact={@firstname=luis}} {@profileProperty={@emailAddressProperty=emailaddress}}
+- can you tell me {@profileProperty={@emailAddressProperty=email}} {@contact={@firstname=valderrama}}?
+- could you give me {@contact={@firstname=daniella}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
+- could you tell me {@contact={@firstname=paola}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
+- find {@contact={@firstname=donald}}'s {@profileProperty={@emailAddressProperty=email}}
+- find {@contact={@firstname=luong}} {@profileProperty={@emailAddressProperty=email}}
+- find {@contact={@firstname=nancy} {@lastname=benavides}} {@profileProperty={@emailAddressProperty=email}}.
+- find {@contact={@firstname=ted}} {@profileProperty={@emailAddressProperty=email}}.
+- hey, find me an {@profileProperty={@emailAddressProperty=email}} of that lady {@contact={@firstname=paola}}
+- i want {@contact={@firstname=lisa}} {@profileProperty={@emailAddressProperty=gmail emailaddress}}.
+- is the {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstname=charles}} correct?
+- may i know {@contact={@firstname=nancy}}'s new {@profileProperty={@emailAddressProperty=emailaddress}} ?
+- please provide me with {@contact={@firstname=jim}}'s {@profileProperty={@emailAddressProperty=emailaddress}}
+- please provide the {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstname=brandon} {@lastname=sim}}.
+- please tell me the new {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstname=darrel}}
+- please, find {@contact={@firstname=phineas}} {@profileProperty={@emailAddressProperty=personal email}}.
+- search the {@contact={@firstname=roger}} {@profileProperty={@emailAddressProperty=email}}
+- what is {@contact={@firstname=angelica}}'s {@profileProperty={@emailAddressProperty=secret emailaddress}}?
+- what is {@contact={@firstname=clark}}'s {@profileProperty={@emailAddressProperty=e-mail}}?
+- what is {@contact={@firstname=helen}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
+- what is {@contact={@firstname=johns}} {@profileProperty={@emailAddressProperty=e-mail}}?
+- what is {@contact={@firstname=lebron} {@lastname=james}}' {@profileProperty={@emailAddressProperty=emailaddress}}?
+- what is {@contact={@firstname=mario}} {@profileProperty={@emailAddressProperty=e-mail}}?
+- what is {@contact={@firstname=neobux}} {@profileProperty={@emailAddressProperty=e-mail}}?
+- what is new {@profileProperty={@emailAddressProperty=emailaddress}} of my friend {@contact={@firstname=sam}}?
+- what is {@contact={@firstname=pamela}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
+- what is {@contact={@firstname=stan}}'s personal {@profileProperty={@emailAddressProperty=email}}?
+- what is the {@profileProperty={@emailAddressProperty=email}} for {@contact={@firstname=neyer}}
+- what is the {@profileProperty={@emailAddressProperty=email}} of {@contact={@firstname=jimmy} {@lastname=hong}}?
+- what is the {@profileProperty={@emailAddressProperty=email}} of {@contact={@firstname=melania}}?
+- what is the {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstname=hang} {@lastname=dam}}?
+- what is the {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstname=john}}?
+- what is the {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstname=molly}}?
+- what is the {@contact={@firstname=mary}}'s {@profileProperty={@emailAddressProperty=email}}
+- what is {@contact={@firstname=walter} {@lastname=madden}}'s {@profileProperty={@emailAddressProperty=email}}?
+- what is your {@profileProperty={@emailAddressProperty=email}} {@contact={@firstname=anne}}?
+- what is your {@profileProperty={@emailAddressProperty=email}} {@contact={@firstname=tiana}}?
+- what's {@contact={@firstname=alex}} {@profileProperty={@emailAddressProperty=emailaddress}}?
+- what's {@contact={@firstname=chris}} {@profileProperty={@emailAddressProperty=email}}
+- what's {@contact={@firstname=jefferson}}'s {@profileProperty={@emailAddressProperty=email}}?
+- what's {@contact={@firstname=jon}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
+- whats {@contact={@firstname=mike}}'s {@profileProperty={@emailAddressProperty=email}}?
+- who knows {@contact={@firstname=john}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
+
+@ intent GetEmailAddress usesFeature contact,emailAddressProperty

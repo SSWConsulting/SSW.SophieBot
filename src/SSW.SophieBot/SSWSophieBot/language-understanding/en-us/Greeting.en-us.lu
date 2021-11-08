@@ -1,0 +1,18 @@
+# Greeting
+- hello
+- hi
+- nice to meet you
+- how are you
+- good morning
+- how do you do
+- what's up
+- hey sophie
+- help
+- what can you do
+- what can i do
+
+@ phraseList GreetingPhraseList(interchangeable) disabledForAllModels =
+	- hi
+	- hello
+	- hey
+@ intent Greeting usesFeature GreetingPhraseList
