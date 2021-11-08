@@ -8,13 +8,6 @@
 
 # SendActivity_sOvRvR_text()
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
-# SendActivity_USdQMN()
-[Activity
-    Text = ${SendActivity_USdQMN_text()}
-]
-
-# SendActivity_USdQMN_text()
-- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
 # SendActivity_Ist81Z()
 [Activity
     Text = ${SendActivity_Ist81Z_text()}
@@ -22,12 +15,28 @@
 
 # SendActivity_Ist81Z_text()
 - Please specify a person name to query.
-# SendActivity_DcHkxo()
+# SendActivity_72ky16()
 [Activity
-    Text = ${SendActivity_DcHkxo_text()}
+    Text = ${SendActivity_72ky16_text()}
 ]
 
-# SendActivity_DcHkxo_text()
+# SendActivity_72ky16_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
+# SendActivity_c8fpmZ()
+[Activity
+    Text = ${SendActivity_72ky16_text()}
+]
+
+# SendActivity_14L7mP()
+[Activity
+    Attachments = ${json(NameButtons('GetSkills'))}
+]
+# SendActivity_EPfIcV()
+[Activity
+    Text = ${SendActivity_EPfIcV_text()}
+]
+
+# SendActivity_EPfIcV_text()
 - ```**${turn.displayName}** knows:
 <br/>
 **${turn.advancedSkills}**
@@ -35,8 +44,10 @@
 He also knows:
 <br/>
 ${turn.intermediateSkills}```
-
-# SendActivity_yo7Djv()
+# LogAction_Text_1PTJ5w()
 [Activity
-    Attachments = ${json(NameButtons('GetSkills'))}
+    Text = ${LogAction_Text_1PTJ5w_text()}
 ]
+
+# LogAction_Text_1PTJ5w_text()
+- ${dialog.nameEntity}
