@@ -21,7 +21,7 @@
           "$designer": {
             "id": "tSQGsG"
           },
-          "name": "SSWSophieBot.GetPhoneNumberDialog.BeginDialog",
+          "name": "SSWSophieBot.GetEmailAddress.BeginDialog",
           "value": "=null"
         },
         {
