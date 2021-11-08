@@ -149,6 +149,11 @@
     },
     {
         "type": "TextBlock",
+        "text": "${if(dialog.booked == false, 'Note: Billed - total billed days of an employee', '')} ",
+        "wrap": true
+    },
+    {
+        "type": "TextBlock",
         "text": "${if(turn.formatDate != null, turn.formatDate, '')}",
         "wrap": true
     }
@@ -364,7 +369,7 @@
 
 # NextClient(client, freeDays)
 -```
-Note: Free for ${DaysText(freeDays, false)} for the next 4 weeks. ${ClientInfo(client)}
+Availability: Free for ${DaysText(freeDays, false)} for the next 4 weeks. ${ClientInfo(client)}
 ```
 
 # ClientInfo(client)

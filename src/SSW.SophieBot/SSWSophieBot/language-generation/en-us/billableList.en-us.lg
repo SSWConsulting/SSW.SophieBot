@@ -69,7 +69,12 @@
                     "text": "🟢 Booked　⚫ Booked (Internal)　⚪ Free　🔴 Leave",
                     "wrap": true,
                     "spacing": "None"
-                }
+                },
+                {
+                    "type": "TextBlock",
+                    "text": "Note: Billed - total billed days of an employee",
+                    "wrap": true
+                },
             ]
         }
     ]
