@@ -25,8 +25,8 @@
 
 # SendActivity_WXSOyK()
 [Activity
-    Attachments = ${json(BillableEmployeesList(if(dialog.foreach.pageindex == 1, dialog.billableTitle, 
-        GetNextTitle(dialog.foreach.pageindex, 10)), 
+    Attachments = ${json(BillableEmployeesList(
+        if(dialog.foreach.pageindex == 1, dialog.billableTitle, GetNextTitle(dialog.foreach.pageindex, 10)), 
         turn.clientNow,
         if(dialog.foreach.pageindex == 1, true, false),
         dialog.foreach.page,
@@ -35,7 +35,7 @@
 ]
 
 # GetNextTitle(pageIndex, pageSize)
-- ```Next ${if(pageIndex * pageSize < count(turn.billableEmployees.employees), pageSize, count(turn.billableEmployees.employees) - pageSize * (pageIndex - 1))}...```
+- ${PaginationText(pageIndex, count(turn.employees))}
 
 # WorkingEmployeesList(location, employees)
 -```
