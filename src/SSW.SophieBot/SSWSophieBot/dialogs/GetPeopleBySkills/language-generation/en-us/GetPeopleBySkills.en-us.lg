@@ -18,7 +18,7 @@
 
 # SendActivity_R5w2vq()
 [Activity
-    Attachments = ${json(SendActivity_R5w2vq_attachment_ukytYp(turn.sortedEmployees))}
+    Attachments = ${json(WorkingEmployeesList('', turn.sortedEmployees))}
 ]
 
 # SendActivity_R5w2vq_attachment_ukytYp(employees)

@@ -128,6 +128,14 @@
                   "condition": "turn.sortedEmployees.count <= 10",
                   "actions": [
                     {
+                      "$kind": "GetEmployeesByBillableAction",
+                      "$designer": {
+                        "id": "SmBZvX"
+                      },
+                      "employees": "=turn.sortedEmployees",
+                      "workingEmployeesProperty": "turn.billableEmployees"
+                    },
+                    {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
                         "id": "R5w2vq"

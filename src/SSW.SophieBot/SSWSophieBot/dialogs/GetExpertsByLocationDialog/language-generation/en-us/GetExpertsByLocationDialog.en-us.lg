@@ -50,11 +50,11 @@
 ```
 
 # SkillCardHeader(location, count)
-- IF: ${ dialog.foreach.pageindex == 1 }
+- IF: ${ dialog.foreach.pageindex == 1 || count <= 10 }
     - ```
     {
         "type": "TextBlock",
-        "text": "${dialog.skillEntity} - ${if(location != null, location, 'All')} [${count}]",
+        "text": "${dialog.skillEntity} - ${if(location != null, titleCase(location), 'All')} [${count}]",
         "wrap": true,
         "size": "ExtraLarge",
         "weight": "Bolder"
@@ -68,7 +68,7 @@
 {
     "type": "ColumnSet",
     "columns": [
-        ${ColumnHeaders()}
+        ${ColumnHeaders(count(employees))}
     ],
     "style": "default"
 },
@@ -78,8 +78,8 @@
 }
 ```
 
-# ColumnHeaders()
-- IF: ${ dialog.foreach.pageindex == 1 }
+# ColumnHeaders(pageCount)
+- IF: ${ dialog.foreach.pageindex == 1 || pageCount <= 10 }
     - ```
     {
         "type": "Column",

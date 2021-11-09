@@ -167,14 +167,6 @@
                   ],
                   "actions": [
                     {
-                      "$kind": "GetEmployeesByBillableAction",
-                      "$designer": {
-                        "id": "YGPHlR"
-                      },
-                      "employees": "=turn.sortedEmployees",
-                      "workingEmployeesProperty": "turn.billableEmployees"
-                    },
-                    {
                       "$kind": "Microsoft.IfCondition",
                       "$designer": {
                         "id": "HLW9Wq"
@@ -197,7 +189,7 @@
                         "id": "JkGEqi"
                       },
                       "property": "dialog.billableTitle",
-                      "value": "=coalesce(dialog.title, dialog.locationEntity)"
+                      "value": "=coalesce(dialog.title, titleCase(dialog.locationEntity))"
                     },
                     {
                       "$kind": "Microsoft.ForeachPage",

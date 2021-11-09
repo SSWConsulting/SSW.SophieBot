@@ -272,6 +272,9 @@
 - who is remote
 
 # GetPeopleBySkills
+- who know[s] {@skill}[?]
+- who (has|have) {@skill} skill[s][?]
+- {@skill} expert[s][?]
 - I need to talk to an {@skill = Angular} expert
 - {@skill = Dot Net Core} Experts
 - {@skill = .NET Core} Experts
@@ -282,8 +285,8 @@
 - anyone with {@skill = Angular} skills?
 - {@skill = Angular} Developers
 - who has {@skill = CSS} skills?
-- who knows {@skill = angular}?
-- Who knows {@skill = Docker}?
+- who know {@skill = angular}?
+- Who know {@skill = Docker}?
 - who knows {@skill = Azure DevOps}
 - who knows {@skill = Azure Bot Service}
 - who knows {@skill = Azure Bot Service}?
