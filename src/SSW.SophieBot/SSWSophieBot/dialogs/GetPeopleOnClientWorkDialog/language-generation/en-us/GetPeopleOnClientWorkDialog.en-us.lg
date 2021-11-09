@@ -275,8 +275,8 @@
 - IF: ${ dialog.booked }
     - ${join(createArray(
             ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
-            ClickableName(employee.displayName, employee.firstName, employee.lastName, '100px', 'Small', 'Default'),
-            ClientColumn(employee.clients, 'stretch', 'Left')
+            ClickableName(employee.displayName, employee.firstName, employee.lastName, '150px', 'Small', 'Default'),
+            ClientColumn(employee.clients, 'stretch', 'Center')
         ), ',')}
 - ELSE:
     - ${join(createArray(
@@ -340,7 +340,7 @@
     "text": "${if(text != null && text != '', text, '—')}",
     "wrap": true,
     "size": "Small",
-    "horizontalAlignment": "Center"
+    "horizontalAlignment": "Left"
 }
 ```
 
