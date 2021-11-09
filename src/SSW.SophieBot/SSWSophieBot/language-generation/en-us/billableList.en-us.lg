@@ -87,25 +87,7 @@
             "width": "stretch",
             "items": []
         },
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "text": "Billed ↓",
-                    "weight": "Bolder",
-                    "horizontalAlignment": "Center"
-                },
-                {
-                    "type": "TextBlock",
-                    "text": "(Last Month)",
-                    "wrap": true,
-                    "spacing": "None",
-                    "horizontalAlignment": "Center"
-                }
-            ]
-        },
+        ${BilledHeader('Billed ↓', 'stretch', 'Center')},
         {
             "type": "Column",
             "width": "stretch",

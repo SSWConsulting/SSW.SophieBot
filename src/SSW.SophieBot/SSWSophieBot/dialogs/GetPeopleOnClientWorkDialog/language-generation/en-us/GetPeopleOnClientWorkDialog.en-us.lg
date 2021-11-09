@@ -228,30 +228,6 @@
     }
     ```
 
-# BilledHeader(text, width, alignment)
--```
-{
-    "type": "Column",
-    "width": "${width}",
-    "items": [
-        {
-            "type": "TextBlock",
-            "text": "${text}",
-            "wrap": true,
-            "weight": "Bolder",
-            "horizontalAlignment": "${alignment}"
-        },
-        {
-            "type": "TextBlock",
-            "text": "(Last Month)",
-            "wrap": true,
-            "spacing": "None",
-            "horizontalAlignment": "${alignment}"
-        }
-    ]
-}
-```
-
 # EmployeeSet(employee)
 - IF: ${ dialog.booked }
     - ${EmployeeRow(employee)}
