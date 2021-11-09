@@ -339,8 +339,7 @@
     "type": "TextBlock",
     "text": "${if(text != null && text != '', text, '—')}",
     "wrap": true,
-    "size": "Small",
-    "horizontalAlignment": "Left"
+    "size": "Small"
 }
 ```
 
