@@ -114,6 +114,13 @@
                 "wrap": true,
                 "weight": "Bolder",
                 "horizontalAlignment": "Center"
+            },
+            {
+                "type": "TextBlock",
+                "text": "(Last Month)",
+                "wrap": true,
+                "spacing": "None",
+                "horizontalAlignment": "Center"
             }
         ]
     }

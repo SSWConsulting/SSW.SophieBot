@@ -200,7 +200,7 @@
 - ELSEIF: ${ dialog.booked }
     - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', '100px', 'Center'), HeaderColumn('Client(s)', 'stretch', 'Center')), ',')}
 - ELSE:
-    - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', 'stretch', 'Center'), HeaderColumn('Billed ↓', 'stretch', 'Right'), HeaderColumn('In Office', 'stretch', 'Center'), HeaderColumn('Last Seen', 'stretch', 'Center')), ',')}
+    - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', 'stretch', 'Center'), BilledHeader('Billed ↓', 'stretch', 'Center'), HeaderColumn('In Office', 'stretch', 'Center'), HeaderColumn('Last Seen', 'stretch', 'Center')), ',')}
 
 # HeaderColumn(text, width, alignment)
 - IF: ${!exists(text) || length(text) == 0}
@@ -227,6 +227,30 @@
         ]
     }
     ```
+
+# BilledHeader(text, width, alignment)
+-```
+{
+    "type": "Column",
+    "width": "${width}",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${text}",
+            "wrap": true,
+            "weight": "Bolder",
+            "horizontalAlignment": "${alignment}"
+        },
+        {
+            "type": "TextBlock",
+            "text": "(Last Month)",
+            "wrap": true,
+            "spacing": "None",
+            "horizontalAlignment": "${alignment}"
+        }
+    ]
+}
+```
 
 # EmployeeSet(employee)
 - IF: ${ dialog.booked }
@@ -276,7 +300,7 @@
     - ${join(createArray(
             ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
             ClickableName(employee.displayName, employee.firstName, employee.lastName, '100px', 'Small', 'Default'),
-            ClientColumn(employee.clients, 'stretch')
+            ClientColumn(employee.clients, 'stretch', 'Left')
         ), ',')}
 - ELSE:
     - ${join(createArray(
@@ -305,7 +329,7 @@
 }
 ```
 
-# ClientColumn(clients, width)
+# ClientColumn(clients, width, alignment)
 -```
 {
     "type": "Column",
@@ -313,7 +337,7 @@
     "items": [
         ${ClientTextBlock(clients)}
     ],
-    "verticalContentAlignment": "Center"
+    "verticalContentAlignment": "${alignment}"
 }
 ```
 
@@ -348,7 +372,7 @@
 -```
 {
     "type": "Column",
-    "width": "58px",
+    "width": "stretch",
     "items": [
         {
             "type": "Image",
