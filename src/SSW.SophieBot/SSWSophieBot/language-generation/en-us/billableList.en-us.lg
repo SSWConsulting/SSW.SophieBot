@@ -87,19 +87,7 @@
             "width": "stretch",
             "items": []
         },
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "text": "Billed ↓",
-                    "weight": "Bolder",
-                    "horizontalAlignment": "Center"
-                }
-            ],
-            "verticalContentAlignment": "Center"
-        },
+        ${BilledHeader('Billed ↓', 'stretch', 'Center')},
         {
             "type": "Column",
             "width": "stretch",
