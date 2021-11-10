@@ -161,7 +161,7 @@
                       "disabled": false,
                       "maxTurnCount": 0,
                       "alwaysPrompt": true,
-                      "allowInterruptions": false,
+                      "allowInterruptions": true,
                       "unrecognizedPrompt": "",
                       "invalidPrompt": "",
                       "choiceOptions": {
@@ -194,11 +194,20 @@
                       ],
                       "elseActions": [
                         {
-                          "$kind": "Microsoft.SendActivity",
+                          "$kind": "Microsoft.IfCondition",
                           "$designer": {
-                            "id": "hKyyQH"
+                            "id": "uRqCgy"
                           },
-                          "activity": "${SendActivity_hKyyQH()}"
+                          "condition": "=user.confirmed == false",
+                          "actions": [
+                            {
+                              "$kind": "Microsoft.SendActivity",
+                              "$designer": {
+                                "id": "Qj2YoD"
+                              },
+                              "activity": "${SendActivity_Qj2YoD()}"
+                            }
+                          ]
                         }
                       ]
                     }
