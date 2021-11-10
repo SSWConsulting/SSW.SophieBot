@@ -214,12 +214,20 @@
                   "condition": "=count(turn.projectMatches) > 1",
                   "elseActions": [
                     {
-                      "$kind": "Microsoft.SetProperty",
+                      "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "Y2l3J1"
+                        "id": "X0zVFp"
                       },
-                      "property": "turn.resultProjectName",
-                      "value": "=turn.projectMatches[0].projectName"
+                      "assignments": [
+                        {
+                          "property": "turn.resultCrmProjectId",
+                          "value": "=turn.projectMatches[0].crmProjectId"
+                        },
+                        {
+                          "property": "turn.resultProjectName",
+                          "value": "=turn.projectMatches[0].projectName"
+                        }
+                      ]
                     }
                   ],
                   "actions": [
@@ -247,6 +255,22 @@
                   },
                   "property": "turn.resultProjectName",
                   "value": "=dialog.projectEntity"
+                },
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "tSwXus"
+                  },
+                  "assignments": [
+                    {
+                      "property": "turn.resultCrmProjectId",
+                      "value": "=dialog.crmProjectId"
+                    },
+                    {
+                      "property": "turn.resultProjectName",
+                      "value": "=dialog.projectEntity"
+                    }
+                  ]
                 }
               ]
             },

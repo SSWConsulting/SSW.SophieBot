@@ -13,6 +13,11 @@
       "description": "If set to true, do exact match for the project name",
       "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/booleanExpression",
       "title": "Exact Match"
+    },
+    "crmProjectId": {
+      "description": "Project Id from Crm system",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Crm Project Id"
     }
   },
   "$result": {

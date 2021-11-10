@@ -192,8 +192,7 @@ We love squashing bugs 🥰```
             "type": "TextBlock",
             "text": "${displayName}",
             "size": "${fontSize}",
-            "wrap": true,
-            "color": "Accent"
+            "wrap": true
         }
     ],
     "verticalContentAlignment": "Center",
