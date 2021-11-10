@@ -131,7 +131,7 @@
         ${BodyColumns(employee)}
     ],
     "height": "stretch",
-    "separator": true
+    "separator": false
 }
 ```
 

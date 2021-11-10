@@ -147,7 +147,7 @@
         }
     ],
     "height": "stretch",
-    "separator": true
+    "separator": false
 }
 ```
 # SendActivity_HNg6Pg()

@@ -205,7 +205,7 @@
         }
     ],
     "bleed": true,
-    "separator": true
+    "separator": false
 }
 ```
 # GetBookingStatusEmoji(employee)
