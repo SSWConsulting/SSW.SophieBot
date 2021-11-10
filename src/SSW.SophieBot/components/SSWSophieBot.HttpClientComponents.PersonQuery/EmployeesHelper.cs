@@ -149,12 +149,12 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                 {
                     unfreeAppointments.Add(a);
 
-                    if (a.End.Date >= lastDate)
+                    if (a.End.UtcDateTime >= lastDate)
                     {
-                        var unfreeDays = (int)Math.Ceiling((a.End.Date.AddDays(1) - (a.Start.Date < lastDate ? lastDate : a.Start.Date)).TotalDays);
+                        var unfreeDays = (int)Math.Ceiling((a.End.UtcDateTime - (a.Start.UtcDateTime < lastDate ? lastDate : a.Start.UtcDateTime)).TotalHours / 24);
 
                         freeDays -= unfreeDays;
-                        lastDate = a.End.Date.AddDays(1);
+                        lastDate = a.End.UtcDateTime;
                     }
                 }
             }
