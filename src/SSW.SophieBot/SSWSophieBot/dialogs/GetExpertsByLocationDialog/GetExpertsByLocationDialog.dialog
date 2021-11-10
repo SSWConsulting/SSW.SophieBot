@@ -122,11 +122,96 @@
               "condition": "=exists(turn.sortedEmployees) && count(turn.sortedEmployees) > 0",
               "elseActions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "GetProfileAction",
                   "$designer": {
-                    "id": "o4r1IC"
+                    "id": "5whOGQ"
                   },
-                  "activity": "${SendActivity_o4r1IC()}"
+                  "queryString": [
+                    {
+                      "key": "skills",
+                      "value": "=dialog.skillEntity"
+                    }
+                  ],
+                  "statusCodeProperty": "turn.statusCode",
+                  "reasonPhraseProperty": "turn.reasonPhrase",
+                  "employeesProperty": "turn.employees"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "gX9T29"
+                  },
+                  "condition": "=exists(turn.employees) && count(turn.employees) > 0",
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "WQzWA6"
+                      },
+                      "activity": "${SendActivity_WQzWA6()}"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.ConfirmInput",
+                      "$designer": {
+                        "id": "V36UxP"
+                      },
+                      "defaultLocale": "en-us",
+                      "disabled": false,
+                      "maxTurnCount": 0,
+                      "alwaysPrompt": true,
+                      "allowInterruptions": true,
+                      "unrecognizedPrompt": "",
+                      "invalidPrompt": "",
+                      "choiceOptions": {
+                        "inlineOrMore": ", or ",
+                        "inlineOr": " or ",
+                        "inlineSeparator": ", ",
+                        "includeNumbers": true
+                      },
+                      "property": "user.confirmed",
+                      "prompt": "${ConfirmInput_Prompt_V36UxP()}"
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "vWyfTc"
+                      },
+                      "condition": "=user.confirmed == True",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.BeginDialog",
+                          "$designer": {
+                            "id": "QdikIE"
+                          },
+                          "activityProcessed": true,
+                          "dialog": "GetPeopleBySkills",
+                          "options": {
+                            "skillEntity": "=dialog.skillEntity"
+                          }
+                        }
+                      ],
+                      "elseActions": [
+                        {
+                          "$kind": "Microsoft.IfCondition",
+                          "$designer": {
+                            "id": "uRqCgy"
+                          },
+                          "condition": "=user.confirmed == false",
+                          "actions": [
+                            {
+                              "$kind": "Microsoft.SendActivity",
+                              "$designer": {
+                                "id": "Qj2YoD"
+                              },
+                              "activity": "${SendActivity_Qj2YoD()}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 }
               ],
               "actions": [
