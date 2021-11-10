@@ -16,7 +16,7 @@
         true, 
         dialog.foreach.page, 
         dialog.foreach.pageindex * 10 >= count(turn.employees), 
-        turn.resultCrmProjectId,
+        turn.resultCrmId,
         turn.isProject))}
 ]
 
@@ -50,16 +50,16 @@
 - ```
 {
     "type": "Action.Submit",
-    "title": "${project.projectName} [${employeesCount}]",
+    "title": "${project.displayName} [${employeesCount}]",
     "data": 
     {
         "intent": "GetEmployeesOnProject",
-        "project" : "${project.projectName}",
-        "crmProjectId" : "${project.crmProjectId}",
+        "project" : "${project.displayName}",
+        "crmId" : "${project.crmId}",
         "exactMatch": true,
         "msteams": {
             "type": "messageBack",
-			"displayText": "${project.projectName} [${employeesCount}]"
+			"displayText": "${project.displayName} [${employeesCount}]"
         }
     }
 }

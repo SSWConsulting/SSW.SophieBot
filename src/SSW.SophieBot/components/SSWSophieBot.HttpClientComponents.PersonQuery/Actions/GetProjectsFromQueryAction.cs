@@ -75,7 +75,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                     {
                         if (!string.IsNullOrEmpty(project?.CrmProjectId) && !projects.ContainsKey(project.CrmProjectId))
                         {
-                            projects[project.CrmProjectId] = isProject ? project.ProjectName : project.CustomerName;
+                            projects[isProject ? project.CrmProjectId : project.CrmClientId] = isProject ? project.ProjectName : project.CustomerName;
                         }
                     });
                 }
@@ -87,7 +87,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                             && !projects.ContainsKey(project.CrmProjectId)
                             && EmployeesHelper.IsProjectNameMatch(queriedProject, isProject ? project.ProjectName : project.CustomerName))
                         {
-                            projects[project.CrmProjectId] = isProject ? project.ProjectName : project.CustomerName;
+                            projects[isProject ? project.CrmProjectId : project.CrmClientId] = isProject ? project.ProjectName : project.CustomerName;
                         }
                     });
                 }
@@ -99,7 +99,10 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             });
 
             var resultProjects = resultProjectsDic
-                .Select(pair => new ProjectWithEmployeesCountModel(pair.Key.Key, pair.Key.Value, pair.Value))
+                .Select(pair => new ProjectWithEmployeesCountModel(
+                    pair.Key.Key, 
+                    pair.Key.Value, 
+                    pair.Value))
                 .ToList();
 
             dc.State.SetValue(dc.GetValue(ProjectsResultProperty), resultProjects);
