@@ -51,10 +51,10 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
             void AddResultProject(KeyValuePair<string, string> project)
             {
-                if (!string.IsNullOrWhiteSpace(project.Value))
+                if (!string.IsNullOrWhiteSpace(project.Key))
                 {
-                    var existedKey = resultProjectsDic.Keys.FirstOrDefault(key => EmployeesHelper.IsProjectNameMatch(key.Value, project.Value));
-                    if (!string.IsNullOrWhiteSpace(existedKey.Value))
+                    var existedKey = resultProjectsDic.Keys.FirstOrDefault(key => EmployeesHelper.IsProjectNameMatch(key.Key, project.Key));
+                    if (!string.IsNullOrWhiteSpace(existedKey.Key))
                     {
                         resultProjectsDic[existedKey]++;
                     }
@@ -73,9 +73,12 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 {
                     employee.Projects.ForEach(project =>
                     {
-                        if (!string.IsNullOrEmpty(project?.CrmProjectId) && !projects.ContainsKey(project.CrmProjectId))
+                        var crmId = isProject ? project?.CrmProjectId : project?.CrmClientId;
+                        var displayName = isProject ? project.ProjectName : project.CustomerName;
+
+                        if (!string.IsNullOrEmpty(displayName) && !projects.ContainsKey(displayName))
                         {
-                            projects[isProject ? project.CrmProjectId : project.CrmClientId] = isProject ? project.ProjectName : project.CustomerName;
+                            projects[displayName] = crmId;
                         }
                     });
                 }
@@ -83,11 +86,14 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 {
                     employee.Projects.ForEach(project =>
                     {
-                        if (!string.IsNullOrEmpty(project?.CrmProjectId)
-                            && !projects.ContainsKey(project.CrmProjectId)
-                            && EmployeesHelper.IsProjectNameMatch(queriedProject, isProject ? project.ProjectName : project.CustomerName))
+                        var crmId = isProject ? project?.CrmProjectId : project?.CrmClientId;
+                        var displayName = isProject ? project.ProjectName : project.CustomerName;
+
+                        if (!string.IsNullOrEmpty(displayName)
+                            && !projects.ContainsKey(displayName)
+                            && EmployeesHelper.IsProjectNameMatch(queriedProject, displayName))
                         {
-                            projects[isProject ? project.CrmProjectId : project.CrmClientId] = isProject ? project.ProjectName : project.CustomerName;
+                            projects[displayName] = crmId;
                         }
                     });
                 }
@@ -100,8 +106,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
             var resultProjects = resultProjectsDic
                 .Select(pair => new ProjectWithEmployeesCountModel(
-                    pair.Key.Key, 
                     pair.Key.Value, 
+                    pair.Key.Key, 
                     pair.Value))
                 .ToList();
 
