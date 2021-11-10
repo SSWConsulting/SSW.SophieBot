@@ -10,14 +10,6 @@
 
 # SendActivity_emJef2_text()
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
-# SendActivity_o4r1IC()
-[Activity
-    Text = ${SendActivity_o4r1IC_text()}
-]
-
-# SendActivity_o4r1IC_text()
-- Sorry, I couldn't find anyone with **${dialog.skillEntity}** skill in **${dialog.locationEntity}** office. Please try again.
-
 # SendActivity_LcKuck()
 [Activity
     Attachments = ${json(WorkingEmployeesList(dialog.locationEntity, dialog.foreach.page))}
@@ -156,3 +148,26 @@
 
 # SendActivity_HNg6Pg_text()
 - Sorry, I don't know the place you are talking about.
+
+# SendActivity_WQzWA6()
+[Activity
+    Text = ${SendActivity_WQzWA6_text()}
+]
+
+# SendActivity_WQzWA6_text()
+- Sorry, I couldn't find anyone with ${dialog.skillEntity} skill in ${dialog.locationEntity} office. I will let you in on a secret. No one in the company has ${dialog.skillEntity} skills!
+# SendActivity_hKyyQH()
+[Activity
+    Text = ${SendActivity_hKyyQH_text()}
+]
+
+# SendActivity_hKyyQH_text()
+- Bye~
+
+# ConfirmInput_Prompt_V36UxP()
+[Activity
+    Text = ${ConfirmInput_Prompt_V36UxP_text()}
+]
+
+# ConfirmInput_Prompt_V36UxP_text()
+- Sorry, I couldn't find anyone with ${dialog.skillEntity} skills in ${dialog.locationEntity} office. However, I did find ${turn.employees.count} person in the rest of the company. Do you want to query all offices?
