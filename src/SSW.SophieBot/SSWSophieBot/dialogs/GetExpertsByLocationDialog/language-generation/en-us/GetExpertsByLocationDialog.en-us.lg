@@ -23,6 +23,7 @@
         if(dialog.foreach.pageindex == 1, true, false),
         dialog.foreach.page,
         dialog.foreach.pageindex * 10 >= count(turn.billableEmployees.employees),
+        '',
         false))}
 ]
 
@@ -138,7 +139,7 @@
         }
     ],
     "height": "stretch",
-    "separator": true
+    "separator": false
 }
 ```
 # SendActivity_HNg6Pg()

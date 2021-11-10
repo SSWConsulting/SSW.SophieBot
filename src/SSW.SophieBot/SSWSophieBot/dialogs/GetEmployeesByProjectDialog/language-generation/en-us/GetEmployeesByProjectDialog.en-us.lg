@@ -10,7 +10,14 @@
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
 # SendActivity_OeOolV()
 [Activity
-    Attachments = ${json(BillableEmployeesList(CardTitle(), null, true, dialog.foreach.page, dialog.foreach.pageindex * 10 >= count(turn.employees), true))}
+    Attachments = ${json(BillableEmployeesList(
+        CardTitle(), 
+        null, 
+        true, 
+        dialog.foreach.page, 
+        dialog.foreach.pageindex * 10 >= count(turn.employees), 
+        turn.resultCrmId,
+        turn.isProject))}
 ]
 
 # CardTitle()
@@ -29,7 +36,7 @@
         {
             "type": "ActionSet",
             "actions": [
-                ${join(select(take(projects, 6), project, ProjectButton(project.projectName, project.employeesCount)), ',')}
+                ${join(select(take(projects, 6), project, ProjectButton(project, project.employeesCount)), ',')}
             ],
             "height": "stretch"
         }
@@ -39,19 +46,20 @@
 }
 ```
 
-# ProjectButton(projectName, employeesCount)
+# ProjectButton(project, employeesCount)
 - ```
 {
     "type": "Action.Submit",
-    "title": "${projectName} [${employeesCount}]",
+    "title": "${project.displayName} [${employeesCount}]",
     "data": 
     {
         "intent": "GetEmployeesOnProject",
-        "project" : "${projectName}",
+        "project" : "${project.displayName}",
+        "crmId" : "${project.crmId}",
         "exactMatch": true,
         "msteams": {
             "type": "messageBack",
-			"displayText": "${projectName} [${employeesCount}]"
+			"displayText": "${project.displayName} [${employeesCount}]"
         }
     }
 }

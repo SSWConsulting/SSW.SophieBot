@@ -3,16 +3,20 @@
 namespace SSWSophieBot.HttpClientComponents.PersonQuery.Models
 {
     public class ProjectWithEmployeesCountModel
-    {
-        [JsonProperty("projectName")]
-        public string ProjectName { get; set; }
+    { 
+        [JsonProperty("crmId")]
+        public string CrmId { get; set; }
+
+        [JsonProperty("displayName")]
+        public string DisplayName { get; set; }
 
         [JsonProperty("employeesCount")]
         public int EmployeesCount { get; set; }
 
-        public ProjectWithEmployeesCountModel(string projectName, int employeeCount)
+        public ProjectWithEmployeesCountModel(string crmId, string displayName, int employeeCount)
         {
-            ProjectName = projectName;
+            CrmId = crmId;
+            DisplayName = displayName;
             EmployeesCount = employeeCount;
         }
     }
