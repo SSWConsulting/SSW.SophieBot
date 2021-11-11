@@ -9,12 +9,12 @@ using SSWSophieBot.settings;
 
 namespace SSWSophieBot.Middlewares
 {
-	public class TeamsTenantAuthenticationMiddleware : IMiddleware
+	public class TeamsAuthenticationMiddleware : IMiddleware
 	{
 		private readonly UserState _userState;
 		private readonly ApplicationSettings _applicationSettings;
 
-		public TeamsTenantAuthenticationMiddleware(UserState userState, IOptions<ApplicationSettings> options)
+		public TeamsAuthenticationMiddleware(UserState userState, IOptions<ApplicationSettings> options)
 		{
 			_userState = userState;
 			_applicationSettings = options.Value;
@@ -24,20 +24,24 @@ namespace SSWSophieBot.Middlewares
 		{
 			if (string.Equals(Channels.Msteams, turnContext.Activity.ChannelId, StringComparison.OrdinalIgnoreCase))
 			{
-				var authenticated = false;
-				var property = _userState.CreateProperty<bool>("TenantAuthenticated");
+				var tenantAuthenticated = false;
+
+				var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
+
+				var tenantAuthenticatedProperty = _userState.CreateProperty<bool>("TenantAuthenticated");
+				var identityProperty = _userState.CreateProperty<object>("Identity");
 
 				var tenantId = _applicationSettings.TenantId;
 				if (!string.IsNullOrEmpty(tenantId))
 				{
-					var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
 					if (member.TenantId == tenantId)
 					{
-						authenticated = true;
+						tenantAuthenticated = true;
 					}
 				}
 
-				await property.SetAsync(turnContext, authenticated);
+				await tenantAuthenticatedProperty.SetAsync(turnContext, tenantAuthenticated);
+				await identityProperty.SetAsync(turnContext, member);
 			}
 
 			await next(cancellationToken);

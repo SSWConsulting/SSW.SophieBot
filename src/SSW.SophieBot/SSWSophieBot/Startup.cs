@@ -38,7 +38,7 @@ namespace SSWSophieBot
 
 			services.AddSingleton<ITelemetryInitializer, SSWSophieBotTelemetryInitializer>();
 
-			services.AddSingleton<IMiddleware, TeamsTenantAuthenticationMiddleware>();
+			services.AddSingleton<IMiddleware, TeamsAuthenticationMiddleware>();
 
 			services.Configure<ApplicationSettings>(Configuration.GetSection(ConfigurationConstants.AppSettingsKey));
 

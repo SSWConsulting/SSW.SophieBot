@@ -12,10 +12,10 @@
 ```
 
 # SayHi()
-- IF: ${turn.signedInUser.givenName != null}
+- IF: ${exists(user.Identity)}
     - ```
     ${if(!user.welcomed, WelcomeText(), '')}
-    <b>Hi ${turn.signedInUser.givenName}</b> 🖐<br/><br/>
+    <b>Hi ${user.Identity.givenName}</b> 🖐<br/><br/>
     ${SummaryText()}
     ```
 - ELSE: 

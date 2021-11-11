@@ -18,19 +18,23 @@ namespace SSWSophieBot.Components
 
             if (dateOffset == 0)
             {
-                return $"{dateTime:h:mm tt} Today";
+                return $"Today";
             }
             else if (dateOffset == -1)
             {
-                return $"{dateTime:h:mm tt} Yesterday";
+                return $"Yesterday";
             }
             else if (dateOffset == 1)
             {
-                return $"{dateTime:h:mm tt} Tomorrow";
+                return $"Tomorrow";
+            }
+            else if(dateTime.Year == now.Year)
+            {
+                return dateTime.ToString("ddd d MMM");
             }
             else
             {
-                return dateTime.ToString("h:mm tt ddd d MMM");
+                return dateTime.ToString("ddd d MMM yyyy");
             }
         }
 
