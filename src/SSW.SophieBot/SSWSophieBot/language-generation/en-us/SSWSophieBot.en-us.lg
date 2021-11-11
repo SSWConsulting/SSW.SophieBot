@@ -103,15 +103,6 @@
     Text = ${SendActivity_FVjYof_text()}
 ]
 
-# SendActivity_Br9244()
-[Activity
-    Text = ${SendActivity_Br9244_text()}
-]
-
-# SendActivity_Br9244_text()
-- ```No worries, please send us an email with your feedback and screenshots to  [SSWSophieBotDevs@ssw.com.au](mailto:SSWSophieBotDevs@ssw.com.au)  <br/>  <br/>
-  
-We love squashing bugs 🥰```
 # SendActivity_ymOUe4_text()
 - Getting people by skills is still a work in progress.
 # SendActivity_ymOUe4()
@@ -307,3 +298,22 @@ We love squashing bugs 🥰```
     ]
 }
 ```
+
+# SendActivity_8fHHcb()
+[Activity
+    Text = ${SendActivity_8fHHcb_text()}
+]
+
+# SendActivity_8fHHcb_text()
+- ```No worries, please send us an email with your feedback and screenshots to  [SSWSophieBotDevs@ssw.com.au](mailto:SSWSophieBotDevs@ssw.com.au)  <br/>  <br/>
+  
+We love squashing bugs 🥰```
+# SendActivity_Ql6zUr()
+[Activity
+    Text = ${SendActivity_Ql6zUr_text()}
+]
+
+# SendActivity_Ql6zUr_text()
+- ```Sorry, I could not answer that.  <br/>
+See all queries www.sswsophie.com/SophieBot  <br/>
+Try SSW Intranet [sswcom.sharepoint.com](https://sswcom.sharepoint.com)  <br/>```
