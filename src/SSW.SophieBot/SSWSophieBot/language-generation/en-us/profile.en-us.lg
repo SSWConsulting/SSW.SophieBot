@@ -1,4 +1,5 @@
 [Icons](icons.en-us.lg)
+[Agenda](agenda.en-us.lg)
 
 # ProfileCardWithSSWPeopleAPI(profile)
 -```
@@ -43,6 +44,23 @@
                     ],
                     "width": "stretch",
                     "verticalContentAlignment": "Center"
+                },
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "ActionSet",
+                            "actions": [
+                                {
+                                    "type": "Action.OpenUrl",
+                                    "title": "Contact Now",
+                                    "url": "sip:${profile.emailAddress}"
+                                }
+                            ],
+                            "horizontalAlignment": "Right"
+                        }
+                    ]
                 }
             ]
         },
@@ -278,13 +296,33 @@
         {
             "type": "ActionSet",
             "actions": [
-                ${join(where([ViewInPeopleAction(profile), ViewInCRMAction(profile)], action, exists(action) && length(action) > 0), ',')}
+                ${join(where([
+                    ViewInPeopleAction(profile), 
+                    ViewInCRMAction(profile),
+                    ViewCalendarAction(turn.displayName, turn.employees[0].bookedDays)], action, exists(action) && length(action) > 0), ',')}
             ]
         }
     ],
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2",
     "minHeight": "100px"
+}
+```
+
+# ViewCalendarAction(displayName, bookedDays)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "View Calendar",
+    "data": 
+    {
+        "intent": "GetCalendar",
+        "contact": ${dialog.nameEntity},
+        "msteams": {
+            "type": "messageBack",
+			"displayText": "Show calendar for ${displayName} (${if(bookedDays > 0, concat(bookedDays, 'days'), 'not')} booked 🗓)"
+        }
+    }
 }
 ```
 

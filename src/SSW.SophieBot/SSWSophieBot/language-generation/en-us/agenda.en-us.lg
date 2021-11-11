@@ -1,0 +1,405 @@
+[Icons](icons.en-us.lg)
+[billableList](billableList.en-us.lg)
+
+# AppointmentAgenda(displayName, appointments)
+- IF: ${count(appointments) > 0}
+    - ```
+    ${AppointmentTable(displayName, appointments)}
+    ```
+- ELSE:
+    - ```
+    ${AppointmentNoData()}
+    ```
+
+# AppointmentNoData()
+- ```
+{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "No calendar available",
+            "wrap": true,
+            "horizontalAlignment": "Center",
+            "weight": "Lighter",
+            "isSubtle": true
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2"
+}
+```
+
+# AppointmentTable(displayName, appointments)
+- ```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.3",
+    "body": [
+        ${MainTitle(concat(displayName, "'s next appointments are"), false)},
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Date",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        }
+                    ],
+                    "verticalContentAlignment": "Center"
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Regarding",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        }
+                    ],
+                    "verticalContentAlignment": "Center"
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Subject",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        }
+                    ],
+                    "verticalContentAlignment": "Center"
+                }
+            ],
+            "minHeight": "30px"
+        },
+        ${join(select(appointments, appointment, AppointmentTableRow(appointment)), ',')},
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.OpenUrl",
+                    "title": "Details in CRM",
+                    "url": "${settings.App.CRMBookingEndpoint}"
+                }
+            ]
+        }
+    ]
+}
+```
+
+# AppointmentTableRow(appointment)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${appointment.start}",
+                    "wrap": true,
+                    "size": "Small"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${appointment.regarding}",
+                    "wrap": true,
+                    "size": "Small"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${appointment.subject}",
+                    "wrap": true,
+                    "size": "Small"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        }
+    ],
+    "separator": true,
+    "minHeight": "30px"
+}
+```
+
+# AppointmentTimeLine(appointments)
+- ```
+{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": 1,
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "🟢 Booked",
+                            "wrap": true,
+                            "horizontalAlignment": "Center"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": 2,
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "⚫ Booked (Internal)",
+                            "wrap": true,
+                            "horizontalAlignment": "Center"
+                        }
+                    ],
+                    "separator": true
+                },
+                {
+                    "type": "Column",
+                    "width": 1,
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "🔴 Leave",
+                            "wrap": true,
+                            "horizontalAlignment": "Center"
+                        }
+                    ],
+                    "separator": true
+                }
+            ]
+        },
+        {
+            "type": "ColumnSet",
+            "spacing": "Medium",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": 4,
+                    "items": [
+                        ${join(select(take(appointments, count(appointments) - 1), appointment, TimeAndDurationBlock(appointment.start, appointment.duration, false)), ',')},
+                        ${TimeAndDurationBlock(last(appointments).start, last(appointments).duration, true)}
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": 2,
+                    "backgroundImage": {
+                        "url": "${SmallGrayVerticalLine()}",
+                        "fillMode": "RepeatVertically",
+                        "horizontalAlignment": "Center",
+                        "verticalAlignment": "Center"
+                    },
+                    "style": "emphasis",
+                    "items": [
+                        ${join(select(take(appointments, count(appointments) - 1), appointment, StatusBlock(appointment.bookingStatus, false)), ',')},
+                        ${StatusBlock(last(appointments).bookingStatus, true)}
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": 7,
+                    "items": [
+                        ${join(select(take(appointments, count(appointments) - 1), appointment, SubjectBlock(appointment, false)), ',')},
+                        ${SubjectBlock(last(appointments), true)}
+                    ]
+                }
+            ],
+            "height": "stretch"
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.OpenUrl",
+                    "title": "Details in CRM",
+                    "url": "${settings.App.CRMBookingEndpoint}"
+                }
+            ]
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "minHeight": "100px"
+}
+```
+
+# PlaceholderCell()
+- ```
+{
+    "type": "Container",
+    "minHeight": "25px",
+    "items": [
+        {
+            "type": "TextBlock",
+            "wrap": true
+        }
+    ]
+}
+```
+
+# TimeAndDurationBlock(time, duration, isLast)
+- ```
+{
+    "type": "Container",
+    "items": [
+        ${TimeBlock(time)},
+        {
+            "type": "TextBlock",
+            "wrap": true,
+            "text": "${duration}",
+            "weight": "Lighter",
+            "isSubtle": true,
+            "spacing": "None"
+        }
+    ],
+    "minHeight": "${if(isLast, '30px', '80px')}",
+    "spacing": "None"
+}
+```
+
+# TimeBlock(time)
+- IF: ${contains(toLower(time), 'today')}
+    - ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "items": [
+                    {
+                        "type": "Image",
+                        "url": "${Calendar()}"
+                    }
+                ],
+                "width": "auto"
+            },
+            {
+                "type": "Column",
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "wrap": true,
+                        "text": "10:00 PM Today"
+                    }
+                ],
+                "spacing": "Small"
+            }
+        ]
+    }
+    ```
+- ELSE:
+    - ```
+    {
+        "type": "TextBlock",
+        "wrap": true,
+        "text": "${time}"
+    }
+    ```
+
+# SingleTextCell(text, isLast)
+- ```
+{
+    "type": "Container",
+    "items": [
+        {
+            "type": "TextBlock",
+            "wrap": true,
+            "text": "${text}",
+            "horizontalAlignment": "Center"
+        }
+    ],
+    "minHeight": "${if(isLast, '30px', '80px')}",
+    "spacing": "None"
+}
+```
+
+# SubjectBlock(appointment, isLast)
+- ```
+{
+    "type": "Container",
+    "minHeight": "${if(isLast, '30px', '80px')}",
+    "items": [
+        {
+            "type": "TextBlock",
+            "wrap": true,
+            "text": "**${appointment.subject}**",
+            "weight": "Bolder"
+        },
+        {
+            "type": "ColumnSet",
+            "spacing": "Small",
+            "columns": [
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${Company()}"
+                        }
+                    ],
+                    "width": "auto"
+                },
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${appointment.regarding}",
+                            "wrap": true
+                        }
+                    ],
+                    "width": "stretch",
+                    "spacing": "None"
+                }
+            ]
+        }
+    ],
+    "spacing": "None"
+}
+```
+
+# StatusBlock(status, isLast)
+- IF: ${status == 1}
+    - ```
+    ${SingleTextCell('🟢', isLast)}
+    ```
+- ELSEIF: ${status == 2}
+    - ```
+    ${SingleTextCell('⚫', isLast)}
+    ```
+- ELSEIF: ${status == 3}
+    - ```
+    ${SingleTextCell('🔴', isLast)}
+    ```
+- ELSE:
+    - ```
+    ${SingleTextCell('⚪', isLast)}
+    ```

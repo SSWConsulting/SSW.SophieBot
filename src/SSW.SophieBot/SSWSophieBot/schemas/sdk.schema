@@ -14,6 +14,9 @@
       "$ref": "#/definitions/GetAvailableExpertsByLocationDialog.dialog"
     },
     {
+      "$ref": "#/definitions/GetCalendarDialog.dialog"
+    },
+    {
       "$ref": "#/definitions/GetCurrentEmployeesOnLocationDialog.dialog"
     },
     {
@@ -789,6 +792,49 @@
         }
       }
     },
+    "GetCalendarDialog.dialog": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetCalendarDialog",
+      "type": "object",
+      "$result": {
+        "type": "object",
+        "properties": {}
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "nameEntity": {
+          "description": "Name entity to search",
+          "$ref": "#/definitions/stringExpression",
+          "title": "Name Entity"
+        },
+        "altered": {
+          "description": "Whether the queried person name has been altered",
+          "$ref": "#/definitions/booleanExpression",
+          "title": "Altered"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetCalendarDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "GetCurrentEmployeesOnLocationDialog.dialog": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "GetCurrentEmployeesOnLocationDialog",
@@ -1095,6 +1141,11 @@
           "description": "If set to true, do exact match for the project name",
           "$ref": "#/definitions/booleanExpression",
           "title": "Exact Match"
+        },
+        "crmId": {
+          "description": "Project Id or client Id from Crm system",
+          "title": "Crm Id",
+          "$ref": "#/definitions/stringExpression"
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -2082,6 +2133,11 @@
           "title": "Name Entity",
           "description": "Name entity to search",
           "$ref": "#/definitions/GetSkillsDialog.dialog/definitions/stringExpression"
+        },
+        "altered": {
+          "title": "Altered",
+          "description": "Whether the queried person name has been altered",
+          "$ref": "#/definitions/booleanExpression"
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -7926,6 +7982,9 @@
           "$ref": "#/definitions/GetAvailableExpertsByLocationDialog.dialog"
         },
         {
+          "$ref": "#/definitions/GetCalendarDialog.dialog"
+        },
+        {
           "$ref": "#/definitions/GetCurrentEmployeesOnLocationDialog.dialog"
         },
         {
@@ -13626,17 +13685,17 @@
         },
         "alteredProperty": {
           "$ref": "#/definitions/stringExpression",
-          "title": "Result property",
+          "title": "Altered property",
           "description": "Target path of the memory variable storing the altered flag"
         },
         "resultFirstNameProperty": {
           "$ref": "#/definitions/stringExpression",
-          "title": "Result property",
+          "title": "First name result property",
           "description": "Target path of the memory variable storing the altered first name"
         },
         "resultLastNameProperty": {
           "$ref": "#/definitions/stringExpression",
-          "title": "Result property",
+          "title": "Last name result property",
           "description": "Target path of the memory variable storing the altered last name"
         },
         "$kind": {

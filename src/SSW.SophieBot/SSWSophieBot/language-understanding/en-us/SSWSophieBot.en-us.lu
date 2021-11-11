@@ -510,3 +510,18 @@
 - you're right
 - that's it
 - let me know when Adam's booked
+
+# GetCalendar
+- show {@contact={@firstname=adam}}'s calendar
+- show calendar for {@contact={@firstname=adam} {@lastname=cogan}}
+- what's {@contact={@firstname=john}}'s calendar?
+- what is the calendar of {@contact={@firstname=talor}}
+- give me {@contact={@firstname=elise}}'s calendar
+- i want to see {@contact={@firstname=michael}}'s appointments
+- do you have {@contact={@firstname=kiki}}'s schedule?
+
+@ phraseList CalendarPhraseList(interchangeable) disabledForAllModels =
+	- calendar
+	- schedule
+	- appointments
+@ intent GetCalendar usesFeature CalendarPhraseList

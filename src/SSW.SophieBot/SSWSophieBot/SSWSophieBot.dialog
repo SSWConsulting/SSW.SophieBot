@@ -1085,6 +1085,40 @@
         }
       ],
       "runOnce": true
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "yKhTIj",
+        "name": "OnIntent (GetCalendar)"
+      },
+      "intent": "GetCalendar",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "eL4ML7"
+          }
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "B2qI7w"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "7Xk8Nm"
+          },
+          "activityProcessed": true,
+          "dialog": "GetCalendarDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
+          }
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",

@@ -50,6 +50,29 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                 .ToList();
         }
 
+        public static BookingStatus GetBookingStatus(GetAppointmentModel appointment)
+        {
+            if (appointment == null)
+            {
+                return BookingStatus.Unknown;
+            }
+
+            if (IsOnClientWorkFunc(appointment))
+            {
+                return BookingStatus.ClientWork;
+            }
+            if (IsOnInternalWorkFunc(appointment))
+            {
+                return BookingStatus.InternalWork;
+            }
+            if (IsOnLeaveFunc(appointment))
+            {
+                return BookingStatus.Leave;
+            }
+
+            return BookingStatus.Unknown;
+        }
+
         public static BookingStatus GetBookingStatus(GetEmployeeModel employee, DateTime date)
         {
             if (employee == null)
@@ -174,6 +197,14 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             };
         }
 
+        public static IEnumerable<GetAppointmentModel> GetAppointments(IEnumerable<GetAppointmentModel> appointments, DateTime startTime, int maxCount = int.MaxValue)
+        {
+            return appointments
+                .Where(a => !string.IsNullOrWhiteSpace(a.Regarding) && a.End.UtcTicks >= startTime.Ticks)
+                .OrderBy(a => a.Start)
+                .Take(maxCount);
+        }
+
         public static List<string> GetClientsByDate(DateTime date, List<GetAppointmentModel> appointments)
         {
             var clientAppointments = GetEnumerableAppointmentsByDate(appointments, date)
@@ -189,16 +220,21 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
         public static bool IsOnClientWork(GetEmployeeModel employee, DateTime date)
         {
             return GetEnumerableAppointmentsByDate(employee.Appointments, date)
-                .Any(appointment => !_internalCompanyNames.Contains(appointment.Regarding.ToLower()));
+                .Any(IsOnClientWorkFunc);
         }
 
-        private static bool IsOnInternalWorkFunc(GetAppointmentModel appointment)
+        public static bool IsOnClientWorkFunc(GetAppointmentModel appointment)
+        {
+            return !_internalCompanyNames.Contains(appointment.Regarding.ToLower());
+        }
+
+        public static bool IsOnInternalWorkFunc(GetAppointmentModel appointment)
         {
             return _internalCompanyNames.Contains(appointment.Regarding.ToLower())
                 && !IsOnLeaveFunc(appointment);
         }
 
-        private static bool IsOnLeaveFunc(GetAppointmentModel appointment)
+        public static bool IsOnLeaveFunc(GetAppointmentModel appointment)
         {
             return appointment.RequiredAttendees.Any(attendee => attendee.ToLower().Contains("absence"));
         }
