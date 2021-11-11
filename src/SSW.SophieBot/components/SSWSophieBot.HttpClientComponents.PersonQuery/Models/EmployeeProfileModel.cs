@@ -51,6 +51,9 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Models
         [JsonProperty("billableRate")]
         public double BillableRate { get; set; }
 
+        [JsonProperty("bookedDays")]
+        public int BookedDays { get; set; }
+
         [JsonProperty("appointments")]
         public List<EmployeeProfileAppointment> Appointments { get; set; }
     }

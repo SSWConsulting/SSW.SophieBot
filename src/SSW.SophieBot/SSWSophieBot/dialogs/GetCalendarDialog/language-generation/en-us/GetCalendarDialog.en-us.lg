@@ -1,0 +1,40 @@
+[import](common.lg)
+[agenda](agenda.en-us.lg)
+[SSWSophieBot](SSWSophieBot.en-us.lg)
+
+# SendActivity_2NqXcv()
+[Activity
+    Text = ${SendActivity_2NqXcv_text()}
+]
+
+# SendActivity_2NqXcv_text()
+- Please specify a person name to query.
+# SendActivity_qP71PG()
+[Activity
+    Text = ${SendActivity_qP71PG_text()}
+]
+
+# SendActivity_qP71PG_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_yEShBq()
+[Activity
+    Text = ${SendActivity_yEShBq_text()}
+]
+
+# SendActivity_yEShBq_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
+# SendActivity_iPYUuZ()
+[Activity
+    Text = ${SendActivity_iPYUuZ_text()}
+]
+
+# SendActivity_iPYUuZ_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
+# SendActivity_e2zip0()
+[Activity
+    Attachments = ${json(NameButtons('GetEmailAddress'))}
+]
+# SendActivity_LB1FzJ()
+[Activity
+    Attachments = ${json(AppointmentAgenda(dialog.displayName, turn.employeesWithStatus[0].appointments))}
+]

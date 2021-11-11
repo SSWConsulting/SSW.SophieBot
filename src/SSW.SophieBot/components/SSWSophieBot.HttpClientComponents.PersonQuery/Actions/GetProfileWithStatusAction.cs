@@ -53,6 +53,9 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 FirstName = e.FirstName,
                 LastName = e.LastName,
                 BillableRate = e.BillableRate,
+                BookedDays = e.Appointments
+                    .Where(appointment => appointment.End.UtcTicks >= date.Ticks)
+                    .Count(appointment => EmployeesHelper.IsOnClientWorkFunc(appointment)),
                 Appointments = EmployeesHelper.GetAppointments(e.Appointments, date, 10)
                     .Select(a => new EmployeeProfileAppointment
                     {

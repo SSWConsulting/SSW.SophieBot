@@ -47,7 +47,10 @@
         "GetCurrentEmployeesOnLocationDialog.en-us"
       ],
       "BugReport": "",
-      "Goodbye": ""
+      "Goodbye": "",
+      "GetCalendar": [
+        "GetCalendarDialog.en-us"
+      ]
     }
   }
 }

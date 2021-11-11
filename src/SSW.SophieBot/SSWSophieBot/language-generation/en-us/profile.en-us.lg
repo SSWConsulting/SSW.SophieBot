@@ -299,7 +299,7 @@
                 ${join(where([
                     ViewInPeopleAction(profile), 
                     ViewInCRMAction(profile),
-                    ViewCalendarAction(profile.appointments)], action, exists(action) && length(action) > 0), ',')}
+                    ViewCalendarAction(turn.displayName, turn.employees[0].bookedDays)], action, exists(action) && length(action) > 0), ',')}
             ]
         }
     ],
@@ -309,12 +309,20 @@
 }
 ```
 
-# ViewCalendarAction(appointments)
+# ViewCalendarAction(displayName, bookedDays)
 - ```
 {
-    "type": "Action.ShowCard",
+    "type": "Action.Submit",
     "title": "View Calendar",
-    "card": ${json(AppointmentAgenda())}
+    "data": 
+    {
+        "intent": "GetCalendar",
+        "contact": ${dialog.nameEntity},
+        "msteams": {
+            "type": "messageBack",
+			"displayText": "Show calendar for ${displayName} (${if(bookedDays > 0, concat(bookedDays, 'days'), 'not')} booked 🗓)"
+        }
+    }
 }
 ```
 

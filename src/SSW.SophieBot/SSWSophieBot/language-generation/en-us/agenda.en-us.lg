@@ -1,9 +1,10 @@
 [Icons](icons.en-us.lg)
+[billableList](billableList.en-us.lg)
 
-# AppointmentAgenda(appointments)
+# AppointmentAgenda(displayName, appointments)
 - IF: ${count(appointments) > 0}
     - ```
-    ${AppointmentTimeLine(appointments)}
+    ${AppointmentTable(displayName, appointments)}
     ```
 - ELSE:
     - ```
@@ -26,6 +27,124 @@
     ],
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2"
+}
+```
+
+# AppointmentTable(displayName, appointments)
+- ```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.3",
+    "body": [
+        ${MainTitle(concat(displayName, "'s next appointments are"), false)},
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Date",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        }
+                    ],
+                    "verticalContentAlignment": "Center"
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Regarding",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        }
+                    ],
+                    "verticalContentAlignment": "Center"
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Subject",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        }
+                    ],
+                    "verticalContentAlignment": "Center"
+                }
+            ],
+            "minHeight": "30px"
+        },
+        ${join(select(appointments, appointment, AppointmentTableRow(appointment)), ',')},
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.OpenUrl",
+                    "title": "Details in CRM",
+                    "url": "${settings.App.CRMBookingEndpoint}"
+                }
+            ]
+        }
+    ]
+}
+```
+
+# AppointmentTableRow(appointment)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${appointment.start}",
+                    "wrap": true,
+                    "size": "Small"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${appointment.regarding}",
+                    "wrap": true,
+                    "size": "Small"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${appointment.subject}",
+                    "wrap": true,
+                    "size": "Small"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        }
+    ],
+    "separator": true,
+    "minHeight": "30px"
 }
 ```
 
