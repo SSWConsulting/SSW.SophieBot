@@ -813,11 +813,36 @@
           "value": "=null"
         },
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "Br9244"
+            "id": "BYZO4e"
           },
-          "activity": "${SendActivity_Br9244()}"
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "jRbE6g"
+          },
+          "condition": "=exists($options.project)",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "8fHHcb"
+              },
+              "activity": "${SendActivity_8fHHcb()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Ql6zUr"
+              },
+              "activity": "${SendActivity_Ql6zUr()}"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EndDialog",
