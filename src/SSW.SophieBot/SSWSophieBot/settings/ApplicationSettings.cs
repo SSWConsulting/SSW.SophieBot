@@ -10,9 +10,11 @@
 
 		public string CRMBookingEndpoint { get; set; }
 
-		public string ProjectUrl { get; set; }
+		public string CRMProjectUrl { get; set; }
 
-		public string CRMBaseUrl { get; set; }
+		public string CRMClientUrl { get; set; }
+
+		public string CRMUserUrl { get; set; }
 
 		public string ProductUrl { get; set; }
 

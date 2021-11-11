@@ -200,7 +200,7 @@
 - ELSEIF: ${ dialog.booked }
     - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', '100px', 'Center'), HeaderColumn('Client(s)', 'stretch', 'Center')), ',')}
 - ELSE:
-    - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', 'stretch', 'Center'), HeaderColumn('Billed ↓', 'stretch', 'Right'), HeaderColumn('In Office', 'stretch', 'Center'), HeaderColumn('Last Seen', 'stretch', 'Center')), ',')}
+    - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', 'stretch', 'Center'), BilledHeader('Billed ↓', 'stretch', 'Center'), HeaderColumn('In Office', 'stretch', 'Center'), HeaderColumn('Last Seen', 'stretch', 'Center')), ',')}
 
 # HeaderColumn(text, width, alignment)
 - IF: ${!exists(text) || length(text) == 0}
@@ -242,7 +242,7 @@
         ${BodyColumns(employee)}
     ],
     "height": "stretch",
-    "separator": true
+    "separator": false
 }
 ```
 
@@ -275,8 +275,8 @@
 - IF: ${ dialog.booked }
     - ${join(createArray(
             ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
-            ClickableName(employee.displayName, employee.firstName, employee.lastName, '100px', 'Small', 'Default'),
-            ClientColumn(employee.clients, 'stretch')
+            ClickableName(employee.displayName, employee.firstName, employee.lastName, '150px', 'Small', 'Default'),
+            ClientColumn(employee.clients, 'stretch', 'Center')
         ), ',')}
 - ELSE:
     - ${join(createArray(
@@ -305,7 +305,7 @@
 }
 ```
 
-# ClientColumn(clients, width)
+# ClientColumn(clients, width, alignment)
 -```
 {
     "type": "Column",
@@ -313,7 +313,7 @@
     "items": [
         ${ClientTextBlock(clients)}
     ],
-    "verticalContentAlignment": "Center"
+    "verticalContentAlignment": "${alignment}"
 }
 ```
 
@@ -339,8 +339,7 @@
     "type": "TextBlock",
     "text": "${if(text != null && text != '', text, '—')}",
     "wrap": true,
-    "size": "Small",
-    "horizontalAlignment": "Center"
+    "size": "Small"
 }
 ```
 
@@ -348,7 +347,7 @@
 -```
 {
     "type": "Column",
-    "width": "58px",
+    "width": "stretch",
     "items": [
         {
             "type": "Image",

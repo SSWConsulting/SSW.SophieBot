@@ -85,28 +85,6 @@
               "condition": "=exists(turn.employees) && count(turn.employees) > 0",
               "elseActions": [
                 {
-                  "$kind": "Microsoft.IfCondition",
-                  "$designer": {
-                    "id": "OdHJjH"
-                  },
-                  "condition": "=!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false",
-                  "actions": [
-                    {
-                      "$kind": "Microsoft.SendActivity",
-                      "$designer": {
-                        "id": "3iVgUC"
-                      },
-                      "activity": "${SendActivity_3iVgUC()}"
-                    },
-                    {
-                      "$kind": "Microsoft.EndDialog",
-                      "$designer": {
-                        "id": "B7m3a8"
-                      }
-                    }
-                  ]
-                },
-                {
                   "$kind": "GetProfileAction",
                   "$designer": {
                     "id": "6InfF3"
@@ -166,12 +144,36 @@
                       ],
                       "actions": [
                         {
-                          "$kind": "Microsoft.SetProperty",
+                          "$kind": "Microsoft.IfCondition",
                           "$designer": {
-                            "id": "Kf3D4h"
+                            "id": "OdHJjH"
                           },
-                          "property": "turn.isProject",
-                          "value": "=false"
+                          "condition": "=exists(user.TenantAuthenticated) || user.TenantAuthenticated == false",
+                          "elseActions": [
+                            {
+                              "$kind": "Microsoft.SetProperty",
+                              "$designer": {
+                                "id": "Kf3D4h"
+                              },
+                              "property": "turn.isProject",
+                              "value": "=false"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "$kind": "Microsoft.SendActivity",
+                              "$designer": {
+                                "id": "3iVgUC"
+                              },
+                              "activity": "${SendActivity_3iVgUC()}"
+                            },
+                            {
+                              "$kind": "Microsoft.EndDialog",
+                              "$designer": {
+                                "id": "B7m3a8"
+                              }
+                            }
+                          ]
                         }
                       ]
                     }
@@ -194,7 +196,7 @@
               "$designer": {
                 "id": "O8xRo1"
               },
-              "condition": "=exists(exactMatch) && exactMatch == true",
+              "condition": "=exists(dialog.exactMatch) && dialog.exactMatch == true",
               "elseActions": [
                 {
                   "$kind": "GetProjectsFromQueryAction",
@@ -214,12 +216,20 @@
                   "condition": "=count(turn.projectMatches) > 1",
                   "elseActions": [
                     {
-                      "$kind": "Microsoft.SetProperty",
+                      "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "Y2l3J1"
+                        "id": "X0zVFp"
                       },
-                      "property": "turn.resultProjectName",
-                      "value": "=turn.projectMatches[0].projectName"
+                      "assignments": [
+                        {
+                          "property": "turn.resultCrmId",
+                          "value": "=turn.projectMatches[0].crmId"
+                        },
+                        {
+                          "property": "turn.resultDisplayName",
+                          "value": "=turn.projectMatches[0].displayName"
+                        }
+                      ]
                     }
                   ],
                   "actions": [
@@ -247,6 +257,22 @@
                   },
                   "property": "turn.resultProjectName",
                   "value": "=dialog.projectEntity"
+                },
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "tSwXus"
+                  },
+                  "assignments": [
+                    {
+                      "property": "turn.resultCrmId",
+                      "value": "=dialog.crmId"
+                    },
+                    {
+                      "property": "turn.resultDisplayName",
+                      "value": "=dialog.projectEntity"
+                    }
+                  ]
                 }
               ]
             },
@@ -256,7 +282,7 @@
                 "id": "DxTUuD"
               },
               "employees": "=turn.employees",
-              "project": "=turn.resultProjectName",
+              "project": "=turn.resultDisplayName",
               "workingEmployeesProperty": "turn.workingEmployees",
               "isProject": "=turn.isProject"
             },

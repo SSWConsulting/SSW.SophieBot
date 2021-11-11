@@ -47,47 +47,68 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 throw new ArgumentNullException(nameof(Employees));
             }
 
-            var resultProjectsDic = new Dictionary<string, int>();
+            var resultProjectsDic = new Dictionary<KeyValuePair<string, string>, int>();
 
-            void AddResultProject(string projectName)
+            void AddResultProject(KeyValuePair<string, string> project)
             {
-                if (!string.IsNullOrWhiteSpace(projectName))
+                if (!string.IsNullOrWhiteSpace(project.Key))
                 {
-                    if (resultProjectsDic.TryGetValue(projectName, out var employeesCount))
+                    var existedKey = resultProjectsDic.Keys.FirstOrDefault(key => EmployeesHelper.IsProjectNameMatch(key.Key, project.Key));
+                    if (!string.IsNullOrWhiteSpace(existedKey.Key))
                     {
-                        resultProjectsDic[projectName]++;
+                        resultProjectsDic[existedKey]++;
                     }
                     else
                     {
-                        resultProjectsDic[projectName] = 1;
+                        resultProjectsDic[project] = 1;
                     }
                 }
             }
 
             employees.ForEach(employee =>
             {
-                var projectNames = Enumerable.Empty<string>();
+                var projects = new Dictionary<string, string>();
 
                 if (string.IsNullOrWhiteSpace(queriedProject))
                 {
-                    projectNames = employee.Projects.Select(project => isProject ? project?.ProjectName : project?.CustomerName).Distinct();
+                    employee.Projects.ForEach(project =>
+                    {
+                        var crmId = isProject ? project?.CrmProjectId : project?.CrmClientId;
+                        var displayName = isProject ? project.ProjectName : project.CustomerName;
+
+                        if (!string.IsNullOrEmpty(displayName) && !projects.ContainsKey(displayName))
+                        {
+                            projects[displayName] = crmId;
+                        }
+                    });
                 }
                 else
                 {
-                    projectNames = employee.Projects.Where(project =>
-                        EmployeesHelper.IsProjectNameMatch(queriedProject, isProject ? project?.ProjectName : project?.CustomerName))
-                    .Select(project => isProject ? project?.ProjectName : project?.CustomerName)
-                    .Distinct();
+                    employee.Projects.ForEach(project =>
+                    {
+                        var crmId = isProject ? project?.CrmProjectId : project?.CrmClientId;
+                        var displayName = isProject ? project.ProjectName : project.CustomerName;
+
+                        if (!string.IsNullOrEmpty(displayName)
+                            && !projects.ContainsKey(displayName)
+                            && EmployeesHelper.IsProjectNameMatch(queriedProject, displayName))
+                        {
+                            projects[displayName] = crmId;
+                        }
+                    });
                 }
 
-                foreach (var projectName in projectNames)
+                foreach (var project in projects)
                 {
-                    AddResultProject(projectName);
+                    AddResultProject(project);
                 }
             });
 
             var resultProjects = resultProjectsDic
-                .Select(pair => new ProjectWithEmployeesCountModel(pair.Key, pair.Value))
+                .Select(pair => new ProjectWithEmployeesCountModel(
+                    pair.Key.Value, 
+                    pair.Key.Key, 
+                    pair.Value))
                 .ToList();
 
             dc.State.SetValue(dc.GetValue(ProjectsResultProperty), resultProjects);

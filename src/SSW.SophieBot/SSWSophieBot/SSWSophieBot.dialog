@@ -402,17 +402,17 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "3AGO6Q"
+                "id": "eOKgOm"
               },
               "activityProcessed": true,
               "dialog": "GetExpertsByLocationDialog",
               "options": {
                 "skillEntity": "=$options.skill",
-                "locationEntity": "=$options.location",
-                "title": "=@title",
+                "locationEntity": "=coalesce($options.location, 'all')",
                 "byBillable": "=@byBillable",
                 "isCurrentLocation": "=@isCurrentLocation",
                 "experienceLevel": "=coalesce(@experienceLevel, 'Advanced, Intermediate')",
+                "title": "=@title",
                 "clientNowSubtitle": "=@clientNowSubTitle"
               }
             }

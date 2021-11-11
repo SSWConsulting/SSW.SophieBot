@@ -192,8 +192,7 @@ We love squashing bugs 🥰```
             "type": "TextBlock",
             "text": "${displayName}",
             "size": "${fontSize}",
-            "wrap": true,
-            "color": "Accent"
+            "wrap": true
         }
     ],
     "verticalContentAlignment": "Center",
@@ -222,12 +221,15 @@ We love squashing bugs 🥰```
 -```
 {
     "type": "TextBlock",
-    "text": "Page ${current} ${PageRange(current, total)}",
+    "text": "${PaginationText(current, total)}",
     "wrap": true,
     "size": "Medium",
     "weight": "Bolder"
 }
 ```
+
+# PaginationText(current, total)
+- Page ${current} ${PageRange(current, total)}
 
 # PageRange(current, total)
 - IF: ${ 10 * (current - 1) + 1 == 10 * (current - 1) + if(total >= current * 10, 10, total - 10 * (current - 1))}
@@ -282,3 +284,26 @@ We love squashing bugs 🥰```
 }
 ```
 
+# BilledHeader(text, width, alignment)
+-```
+{
+    "type": "Column",
+    "width": "${width}",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${text}",
+            "wrap": true,
+            "weight": "Bolder",
+            "horizontalAlignment": "${alignment}"
+        },
+        {
+            "type": "TextBlock",
+            "text": "(Last Month)",
+            "wrap": true,
+            "spacing": "None",
+            "horizontalAlignment": "${alignment}"
+        }
+    ]
+}
+```

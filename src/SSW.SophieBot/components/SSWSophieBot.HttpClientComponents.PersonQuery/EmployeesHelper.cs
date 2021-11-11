@@ -10,47 +10,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 {
     public static class EmployeesHelper
     {
-        private static readonly string[] _leavePhrases = new string[]
-        {
-            "non working",
-            "non-working",
-            "non-work",
-            "holiday",
-            "time in lieu",
-            "day off",
-            "days off",
-            "leave",
-            "study days",
-            "uni days"
-        };
-
-        private static readonly string[] _nonDevTitles = new string[]
-        {
-            "SSW Admin",
-            "Senior Marketing Specialist",
-            "SSW Senior Accountant",
-            "SSW China CEO",
-            "SSW Electrician",
-            "SSW QLD State",
-            "International Manager",
-            "SSW VIC State Manager",
-            "SSW Administrative Assistant",
-            "SSW General Manager",
-            "SSW Multimedia Assistant",
-            "SSW Multimedia Specialist",
-            "SSW Multimedia Videographer",
-            "SSW Chief Architect",
-            "Microsoft Regional Director",
-            "SSW Lawyer",
-            "SSW Chief Financial Controller",
-            "SSW Videographer",
-            "SSW Producer, Director and Editor",
-            "Administrative Assistant",
-            "SSW Digital Marketing",
-            "SSW Admin Manager"
-        };
-
-        private static readonly string[] _internalCompanyNames = new string[]
+        private static readonly string[] _internalCompanyNames = new[]
         {
             "ssw",
             "ssw test"
@@ -69,7 +29,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             }
             else
             {
-                project = employees?.FirstOrDefault()?.Projects?.FirstOrDefault(p => IsProjectNameEqual(queriedProjectName, isProject ? p.ProjectName : p.CustomerName));
+                project = employees?.FirstOrDefault()?.Projects?.FirstOrDefault(p => IsProjectNameMatch(queriedProjectName, isProject ? p.ProjectName : p.CustomerName));
             }
             projectName = isProject ? project?.ProjectName : project?.CustomerName;
 
@@ -149,7 +109,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             }
             else
             {
-                billableHours = employee.Projects.Sum(p => p.BillableHours);
+                billableHours = employee.Projects.Where(project => !project.CustomerName.Equals("ssw", StringComparison.OrdinalIgnoreCase)).Sum(p => p.BillableHours);
             }
 
             return billableHours == 0 ? 0 : (int)Math.Ceiling(billableHours / 8);
@@ -212,12 +172,12 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                 {
                     unfreeAppointments.Add(a);
 
-                    if (a.End.Date >= lastDate)
+                    if (a.End.UtcDateTime >= lastDate)
                     {
-                        var unfreeDays = (int)Math.Ceiling((a.End.Date.AddDays(1) - (a.Start.Date < lastDate ? lastDate : a.Start.Date)).TotalDays);
+                        var unfreeDays = (int)Math.Ceiling((a.End.UtcDateTime - (a.Start.UtcDateTime < lastDate ? lastDate : a.Start.UtcDateTime)).TotalHours / 24);
 
                         freeDays -= unfreeDays;
-                        lastDate = a.End.Date.AddDays(1);
+                        lastDate = a.End.UtcDateTime;
                     }
                 }
             }
@@ -271,13 +231,12 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
         public static bool IsOnInternalWorkFunc(GetAppointmentModel appointment)
         {
             return _internalCompanyNames.Contains(appointment.Regarding.ToLower())
-                && !_leavePhrases.Any(appointment.Subject.ToLower().Contains);
+                && !IsOnLeaveFunc(appointment);
         }
 
         public static bool IsOnLeaveFunc(GetAppointmentModel appointment)
         {
-            return _internalCompanyNames.Contains(appointment.Regarding.ToLower())
-                && _leavePhrases.Any(appointment.Subject.ToLower().Contains);
+            return appointment.RequiredAttendees.Any(attendee => attendee.ToLower().Contains("absence"));
         }
 
         public static bool IsOnInternalWork(GetEmployeeModel employee, DateTime date)
@@ -310,11 +269,6 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             return date.UtcDateTime.Date.Ticks;
         }
 
-        private static bool IsProjectNameEqual(string sourceProjectName, string originalProjectName)
-        {
-            return sourceProjectName?.Trim() == originalProjectName?.Trim();
-        }
-
         public static bool IsProjectNameMatch(string sourceProjectName, string originalProjectName)
         {
             if (string.IsNullOrWhiteSpace(originalProjectName) && string.IsNullOrWhiteSpace(sourceProjectName))
@@ -334,7 +288,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 
         public static List<GetEmployeeModel> FilterDevelopers(List<GetEmployeeModel> employees)
         {
-            return employees.Where(employee => !_nonDevTitles.Any(employee.Title.Contains)).ToList();
+            var devCategories = new[] { ProfileCategory.Developers, ProfileCategory.Designers };
+            return employees.Where(employee => devCategories.Any(category => category == employee.ProfileCategory)).ToList();
         }
 
         public static List<GetEmployeeModel> GetInternalBookedEmployees(List<GetEmployeeModel> employees, DateTime date)

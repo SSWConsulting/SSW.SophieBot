@@ -328,12 +328,12 @@
 ```
 
 # ViewInCRMAction(profile)
-- IF: ${exists(settings.App.CRMBaseUrl) && length(settings.App.CRMBaseUrl) > 0}
+- IF: ${exists(settings.App.CRMUserUrl) && length(settings.App.CRMUserUrl) > 0}
     - ```
     {
         "type": "Action.OpenUrl",
         "title": "View in CRM",
-        "url": "${settings.App.CRMBaseUrl}&id=${profile.userId}"
+        "url": "${settings.App.CRMUserUrl}&id=${profile.userId}"
     }
     ```
 - ELSE:

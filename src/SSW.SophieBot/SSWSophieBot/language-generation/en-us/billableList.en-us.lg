@@ -1,7 +1,7 @@
 [Icons](icons.en-us.lg)
 [SSWSophieBot](SSWSophieBot.en-us.lg)
 
-# BillableEmployeesList(title, subTitle, isMain, employees, isFinalPage, hasProjectInfo)
+# BillableEmployeesList(title, subTitle, isMain, employees, isFinalPage, crmId, isProject)
 -```
 {
     "type": "AdaptiveCard",
@@ -15,7 +15,7 @@
         {
             "type": "ActionSet",
             "actions": [
-                ${GetFooterActions(isFinalPage, hasProjectInfo)}
+                ${GetFooterActions(isFinalPage, crmId, isProject)}
             ]
         }
     ],
@@ -24,11 +24,11 @@
 }
 ```
 
-# GetFooterActions(isFinalPage, hasProjectInfo)
-- IF: ${isFinalPage && hasProjectInfo}
+# GetFooterActions(isFinalPage, crmId, isProject)
+- IF: ${isFinalPage && length(crmId) > 0}
     - ```
     ${MoreBookingInfoButton()},
-    ${MoreProjectInfoButton()}
+    ${MoreProjectOrClientInfoButton(crmId, isProject)}
     ```
 - ELSEIF: ${isFinalPage}
     - ```
@@ -46,12 +46,12 @@
 }
 ```
 
-# MoreProjectInfoButton()
+# MoreProjectOrClientInfoButton(crmId, isProject)
 - ```
 {
     "type": "Action.OpenUrl",
-    "title": "📄 More Project Info",
-    "url": "${settings.App.ProjectUrl}"
+    "title": "📄 More ${if(isProject, 'Project', 'Client')} Info",
+    "url": "${if(isProject, settings.App.CRMProjectUrl, settings.App.CRMClientUrl)}&id=${crmId}"
 }
 ```
 
@@ -87,19 +87,7 @@
             "width": "stretch",
             "items": []
         },
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "text": "Billed ↓",
-                    "weight": "Bolder",
-                    "horizontalAlignment": "Center"
-                }
-            ],
-            "verticalContentAlignment": "Center"
-        },
+        ${BilledHeader('Billed ↓', 'stretch', 'Center')},
         {
             "type": "Column",
             "width": "stretch",
@@ -217,7 +205,7 @@
         }
     ],
     "bleed": true,
-    "separator": true
+    "separator": false
 }
 ```
 # GetBookingStatusEmoji(employee)
