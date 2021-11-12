@@ -148,7 +148,7 @@
                           "$designer": {
                             "id": "OdHJjH"
                           },
-                          "condition": "=exists(user.TenantAuthenticated) || user.TenantAuthenticated == false",
+                          "condition": "=!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false",
                           "elseActions": [
                             {
                               "$kind": "Microsoft.SetProperty",
