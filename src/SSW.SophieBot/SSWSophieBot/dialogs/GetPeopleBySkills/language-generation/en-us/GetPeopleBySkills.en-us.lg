@@ -62,54 +62,11 @@
             "text": "Narrow your search...",
             "wrap": true
         },
-        {
-            "type": "ActionSet",
-            "actions": [
-                {
-                    "type": "Action.Submit",
-                    "title": "Show All [${employees.count}]",
-                    "data": {
-                        "intent": "GetExpertsByLocation",
-                        "location": "All",
-                        "skill": "${skill}",
-                        "msteams": {
-                            "type": "messageBack",
-                            "displayText": "Show All [${count(employees)}]"
-                        }
-                    }
-                },
-                ${join(select(subArray(locations, 0, 5), location => LocationButton(skill, location, Count(location, employees))), ',')}
-            ]
-        },
-        {
-            "type": "ActionSet",
-            "actions": [
-                ${join(select(subArray(locations, 5, count(locations)), location => LocationButton(skill, location, Count(location, employees))), ',')}
-            ]
-        }
+        ${GetExpertsButtons(employees, skill, locations)}
     ]
 }
 ```
 
-# LocationButton(skill, location, number)
--``` 
-{
-    "type": "Action.Submit",
-    "title": "${location} [${number}]",
-    "data": {
-        "intent": "GetExpertsByLocation",
-        "skill": "${skill}",
-        "location": "${location}",
-        "msteams": {
-            "type": "messageBack",
-	        "displayText": "${location} [${number}]"
-        }
-    }
-}
-```
-
-# Count(location, employees)
-- ${count(where(employees, employee => employee.defaultSite.name == location))}
 # SendActivity_v4yQKd()
 [Activity
     Text = ${SendActivity_v4yQKd_text()}

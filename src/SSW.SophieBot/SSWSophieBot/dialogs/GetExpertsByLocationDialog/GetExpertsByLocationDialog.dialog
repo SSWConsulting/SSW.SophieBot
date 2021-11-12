@@ -153,63 +153,19 @@
                   ],
                   "actions": [
                     {
-                      "$kind": "Microsoft.ConfirmInput",
+                      "$kind": "Microsoft.SetProperty",
                       "$designer": {
-                        "id": "V36UxP"
+                        "id": "O3E1as"
                       },
-                      "defaultLocale": "en-us",
-                      "disabled": false,
-                      "maxTurnCount": 0,
-                      "alwaysPrompt": true,
-                      "allowInterruptions": true,
-                      "unrecognizedPrompt": "",
-                      "invalidPrompt": "",
-                      "choiceOptions": {
-                        "inlineOrMore": ", or ",
-                        "inlineOr": " or ",
-                        "inlineSeparator": ", ",
-                        "includeNumbers": true
-                      },
-                      "property": "user.confirmed",
-                      "prompt": "${ConfirmInput_Prompt_V36UxP()}"
+                      "value": "=unique(select(turn.employees, employee => employee.defaultSite.name))",
+                      "property": "turn.locations"
                     },
                     {
-                      "$kind": "Microsoft.IfCondition",
+                      "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "vWyfTc"
+                        "id": "5B8HeB"
                       },
-                      "condition": "=user.confirmed == True",
-                      "actions": [
-                        {
-                          "$kind": "Microsoft.BeginDialog",
-                          "$designer": {
-                            "id": "QdikIE"
-                          },
-                          "activityProcessed": true,
-                          "dialog": "GetPeopleBySkills",
-                          "options": {
-                            "skillEntity": "=dialog.skillEntity"
-                          }
-                        }
-                      ],
-                      "elseActions": [
-                        {
-                          "$kind": "Microsoft.IfCondition",
-                          "$designer": {
-                            "id": "uRqCgy"
-                          },
-                          "condition": "=user.confirmed == false",
-                          "actions": [
-                            {
-                              "$kind": "Microsoft.SendActivity",
-                              "$designer": {
-                                "id": "Qj2YoD"
-                              },
-                              "activity": "${SendActivity_Qj2YoD()}"
-                            }
-                          ]
-                        }
-                      ]
+                      "activity": "${SendActivity_5B8HeB()}"
                     }
                   ]
                 }
