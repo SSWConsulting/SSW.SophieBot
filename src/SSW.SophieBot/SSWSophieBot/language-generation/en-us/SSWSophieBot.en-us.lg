@@ -314,9 +314,9 @@ We love squashing bugs 🥰```
 ]
 
 # SendActivity_Ql6zUr_text()
-- ```Sorry, I could not answer that.  <br/>
-See all queries www.sswsophie.com/SophieBot  <br/>
-Try SSW Intranet [sswcom.sharepoint.com](https://sswcom.sharepoint.com)  <br/>```
+- ```Sorry, I could not answer that 😭 <br/>
+See sample questions ${settings.App.ProductUrl} <br/>
+You can also try SSW Intranet [sswcom.sharepoint.com](${settings.App.SharePointUrl}) <br/>```
 
 # GetExpertsButtons(employees, skill, locations)
 -```

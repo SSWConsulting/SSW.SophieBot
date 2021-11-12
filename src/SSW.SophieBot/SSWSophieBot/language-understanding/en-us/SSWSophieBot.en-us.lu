@@ -150,6 +150,7 @@
 - Who should I report bugs in {@project = TimePro} project?
 - I want to report a bug in {@project = Rules} project
 - I have a bug that needs to be report to {@project = SugarLearning} Team
+- I have a {@project = TimePro} bug to report
 # CheckAvailability
 - is {@contact} ({@available} | {@unavailable})[?]
 - is {@contact} ({@available} | {@unavailable}) or ({@available} | {@unavailable})[?]
