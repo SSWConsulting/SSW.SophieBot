@@ -1,5 +1,7 @@
 ![ssw-banner](./_docs/images/ssw-banner.png)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Build Status](https://github.com/SSWConsulting/SSW.SophieBot/actions/workflows/SSW.SophieBot.prod.yml/badge.svg?branch=master)](https://github.com/SSWConsulting/SSW.SophieBot/actions/workflows/SSW.SophieBot.prod.yml)
+
 # SSW.SophieBot
 
 An Enterprise People Bot.
