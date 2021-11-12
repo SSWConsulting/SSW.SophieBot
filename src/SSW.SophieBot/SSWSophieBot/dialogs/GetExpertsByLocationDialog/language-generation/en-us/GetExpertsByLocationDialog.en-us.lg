@@ -156,19 +156,30 @@
 ]
 
 # SendActivity_WQzWA6_text()
-- Sorry, I couldn't find anyone with ${dialog.skillEntity} skill in ${dialog.locationEntity} office. I will let you in on a secret. No one in the company has ${dialog.skillEntity} skills!
-# ConfirmInput_Prompt_V36UxP()
+- Sorry, I couldn't find anyone with **${dialog.skillEntity}** skill in **${dialog.locationEntity}** office. I will let you in on a secret. No one in the company has **${dialog.skillEntity}** skills!
+# SendActivity_5B8HeB()
 [Activity
-    Text = ${ConfirmInput_Prompt_V36UxP_text()}
+    Attachments = ${json(SendActivity_5B8HeB_attachment_0iePvL(turn.employees, dialog.skillEntity, turn.locations))}
 ]
 
-# ConfirmInput_Prompt_V36UxP_text()
-- Sorry, I couldn't find anyone with ${dialog.skillEntity} skills in ${dialog.locationEntity} office. However, I did find ${turn.employees.count} person in the rest of the company. Do you want to query all offices?
-
-# SendActivity_Qj2YoD()
-[Activity
-    Text = ${SendActivity_Qj2YoD_text()}
-]
-
-# SendActivity_Qj2YoD_text()
-- Bye~
+# SendActivity_5B8HeB_attachment_0iePvL(employees, skill, locations)
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "Sorry, I couldn't find anyone with **${skill}** skills in **${dialog.locationEntity}** office. However, I did find **${employees.count}** ${if(employees.count == 1, 'person', 'people')} in the rest of the company.",
+            "wrap": true
+        },
+        {
+            "type": "TextBlock",
+            "text": "Narrow your search...",
+            "wrap": true
+        },
+        ${GetExpertsButtons(employees, skill, locations)}
+    ]
+}
+```

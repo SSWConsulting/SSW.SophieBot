@@ -317,3 +317,52 @@ We love squashing bugs 🥰```
 - ```Sorry, I could not answer that.  <br/>
 See all queries www.sswsophie.com/SophieBot  <br/>
 Try SSW Intranet [sswcom.sharepoint.com](https://sswcom.sharepoint.com)  <br/>```
+
+# GetExpertsButtons(employees, skill, locations)
+-```
+{
+    "type": "ActionSet",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Show All [${employees.count}]",
+            "data": {
+                "intent": "GetExpertsByLocation",
+                "location": "All",
+                "skill": "${skill}",
+                "msteams": {
+                    "type": "messageBack",
+                    "displayText": "Show All [${count(employees)}]"
+                }
+            }
+        },
+        ${join(select(subArray(locations, 0, if(count(locations) >= 5, 5, count(locations))), location => GetExpertButton(skill, location, Count(location, employees))), ',')}
+    ]
+},
+{
+    "type": "ActionSet",
+    "actions": [
+        ${join(select(if(count(locations) > 5, subArray(locations, 5, count(locations)), []), location => GetExpertButton(skill, location, Count(location, employees))), ',')}
+    ]
+}
+```
+
+# GetExpertButton(skill, location, number)
+-``` 
+{
+    "type": "Action.Submit",
+    "title": "${location} [${number}]",
+    "data": {
+        "intent": "GetExpertsByLocation",
+        "skill": "${skill}",
+        "location": "${location}",
+        "msteams": {
+            "type": "messageBack",
+	        "displayText": "${location} [${number}]"
+        }
+    }
+}
+```
+
+# Count(location, employees)
+- ${count(where(employees, employee => employee.defaultSite.name == location))}
