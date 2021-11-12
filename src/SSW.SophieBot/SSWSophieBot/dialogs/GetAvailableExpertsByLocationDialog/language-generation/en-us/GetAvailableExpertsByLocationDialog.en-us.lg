@@ -137,7 +137,7 @@
 
 # FreeDays(client, freeDays)
 -```
-${freeDays}/28 days
+${freeDays}/20 days
 ```
 
 # BodyColumns(employee)
