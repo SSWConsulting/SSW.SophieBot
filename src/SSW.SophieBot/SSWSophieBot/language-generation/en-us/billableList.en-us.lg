@@ -27,24 +27,15 @@
 # GetFooterActions(isFinalPage, crmId, isProject)
 - IF: ${isFinalPage && length(crmId) > 0}
     - ```
-    ${MoreBookingInfoButton()},
+    ${MoreBookingInfoAction()},
     ${MoreProjectOrClientInfoButton(crmId, isProject)}
     ```
 - ELSEIF: ${isFinalPage}
     - ```
-    ${MoreBookingInfoButton()}
+    ${MoreBookingInfoAction()}
     ```
 - ELSE: 
     - ``````
-
-# MoreBookingInfoButton()
-- ```
-{
-    "type": "Action.OpenUrl",
-    "title": "📈 More Booking Info",
-    "url": "${settings.App.CRMBookingEndpoint}"
-}
-```
 
 # MoreProjectOrClientInfoButton(crmId, isProject)
 - ```
