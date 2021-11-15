@@ -93,11 +93,11 @@
 
 # BookingStatus(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - ``` is booked```
+    - &nbsp;is booked
 - ELSEIF: ${ profile.bookingStatus == 3 }
-    - ``` is on leave```
+    - &nbsp;is on leave
 - ELSE:
-    - ``` is free```
+    - &nbsp;is free
 
 # ClientInfo(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
