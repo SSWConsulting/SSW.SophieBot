@@ -18,6 +18,8 @@
 
 		public string ProductUrl { get; set; }
 
+		public string SharePointUrl { get; set; }
+
 		public string BaseUrl { get; set; }
 	}
 }
