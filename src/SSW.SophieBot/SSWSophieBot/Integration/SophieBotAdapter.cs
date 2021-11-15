@@ -11,14 +11,14 @@ using Microsoft.Extensions.Logging;
 
 namespace SSWSophieBot.Integration
 {
-	public class SSWSophieBotAdapter : CloudAdapter
+	public class SophieBotAdapter : CloudAdapter
 	{
 		protected IBotTelemetryClient AdapterBotTelemetryClient { get; }
 
-		public SSWSophieBotAdapter(
+		public SophieBotAdapter(
 			IConfiguration configuration,
 			IHttpClientFactory httpClientFactory,
-			ILogger<SSWSophieBotAdapter> logger,
+			ILogger<SophieBotAdapter> logger,
 			IEnumerable<IMiddleware> middlewares,
 			IBotTelemetryClient botTelemetryClient)
 			: base(configuration, httpClientFactory, logger)
@@ -36,7 +36,7 @@ namespace SSWSophieBot.Integration
 		protected virtual async Task OnTurnErrorAsync(ITurnContext turnContext, Exception exception)
 		{
 			var properties = new Dictionary<string, string>
-				{{"Bot exception caught in", $"{nameof(SSWSophieBotAdapter)} - {nameof(OnTurnError)}"}};
+				{{"Bot exception caught in", $"{nameof(SophieBotAdapter)} - {nameof(OnTurnError)}"}};
 
 			AdapterBotTelemetryClient.TrackException(exception, properties);
 

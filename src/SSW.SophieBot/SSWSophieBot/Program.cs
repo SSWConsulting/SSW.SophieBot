@@ -6,28 +6,28 @@ using Microsoft.Extensions.Hosting;
 
 namespace SSWSophieBot
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+	public class Program
+	{
+		public static void Main(string[] args)
+		{
+			CreateHostBuilder(args).Build().Run();
+		}
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((hostingContext, builder) =>
-                {
-                    var environmentName = hostingContext.HostingEnvironment.EnvironmentName;
-                    var applicationRoot = AppDomain.CurrentDomain.BaseDirectory;
-                    var settingsDirectory = "settings";
+		public static IHostBuilder CreateHostBuilder(string[] args) =>
+			Host.CreateDefaultBuilder(args)
+				.ConfigureAppConfiguration((hostingContext, builder) =>
+				{
+					var environmentName = hostingContext.HostingEnvironment.EnvironmentName;
+					var applicationRoot = AppDomain.CurrentDomain.BaseDirectory;
+					var settingsDirectory = "settings";
 
-                    builder.AddBotRuntimeConfiguration(applicationRoot, settingsDirectory, environmentName);
+					builder.AddBotRuntimeConfiguration(applicationRoot, settingsDirectory, environmentName);
 
-                    builder.AddCommandLine(args);
-                })
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+					builder.AddCommandLine(args);
+				})
+				.ConfigureWebHostDefaults(webBuilder =>
+				{
+					webBuilder.UseStartup<Startup>();
+				});
+	}
 }

@@ -28,7 +28,7 @@ namespace SSWSophieBot.Components
             {
                 return $"Tomorrow";
             }
-            else if(dateTime.Year == now.Year)
+            else if (dateTime.Year == now.Year)
             {
                 return dateTime.ToString("ddd d MMM");
             }

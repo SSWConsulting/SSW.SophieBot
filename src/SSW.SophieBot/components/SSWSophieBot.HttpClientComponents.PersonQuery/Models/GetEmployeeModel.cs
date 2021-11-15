@@ -1,7 +1,7 @@
-﻿using System;
+﻿using SSWSophieBot.HttpClientComponents.PersonQuery;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using SSWSophieBot.HttpClientComponents.PersonQuery;
 
 namespace SSWSophieBot.HttpClientAction.Models
 {

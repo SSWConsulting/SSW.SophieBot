@@ -6,7 +6,6 @@ using SSWSophieBot.Components.Actions;
 using SSWSophieBot.HttpClientAction.Models;
 using SSWSophieBot.HttpClientComponents.PersonQuery.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;

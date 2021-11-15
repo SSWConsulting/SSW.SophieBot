@@ -3,7 +3,7 @@
 namespace SSWSophieBot.HttpClientComponents.PersonQuery.Models
 {
     public class ProjectWithEmployeesCountModel
-    { 
+    {
         [JsonProperty("crmId")]
         public string CrmId { get; set; }
 

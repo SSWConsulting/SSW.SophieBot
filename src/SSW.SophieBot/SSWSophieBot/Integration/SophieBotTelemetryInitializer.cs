@@ -11,12 +11,12 @@ using SSWSophieBot.settings;
 
 namespace SSWSophieBot.Integration
 {
-	public class SSWSophieBotTelemetryInitializer : ITelemetryInitializer
+	public class SophieBotTelemetryInitializer : ITelemetryInitializer
 	{
 		private readonly IServiceProvider _serviceProvider;
 		private readonly ApplicationSettings _applicationSettings;
 
-		public SSWSophieBotTelemetryInitializer(IServiceProvider serviceProvider, IOptions<ApplicationSettings> options)
+		public SophieBotTelemetryInitializer(IServiceProvider serviceProvider, IOptions<ApplicationSettings> options)
 		{
 			_serviceProvider = serviceProvider;
 			_applicationSettings = options.Value;
