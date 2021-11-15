@@ -290,7 +290,8 @@
         },
         {
             "type": "TextBlock",
-            "text": "(Last Month)",
+            "text": "(Last 30 days)",
+            "size": "Small",
             "wrap": true,
             "spacing": "None",
             "horizontalAlignment": "${alignment}"

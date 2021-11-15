@@ -363,14 +363,8 @@
 
 # NextClient(client, freeDays)
 -```
-Note: Free for ${DaysText(freeDays, false)} for the next 4 weeks. ${ClientInfo(client)}
+Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
 ```
-
-# ClientInfo(client)
-- IF: ${ dialog.fromDate == null }
-    - ${if(client.type == 3, 'On leave', concat('Working for ', client.name))} - ${client.date}.
-- ELSE:
-    -
 
 # SendActivity_pArEiW()
 [Activity
