@@ -32,12 +32,22 @@
                     "width": "stretch",
                     "items": [
                         ${join(createArray(
-                            TextBlockWithClickableName(profile.displayName, profile.firstName, profile.lastName, BookingStatus(profile)), 
-                            TextBlock(ClientInfo(profile)), 
-                            TextBlock(LastSeen(profile))
+                            Status(profile),
+                            ClientInfo(profile),
+                            LastSeen(profile)
                         ), ',')}
                     ],
                     "verticalContentAlignment": "Center"
+                }
+            ]
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.OpenUrl",
+                    "title": "📈 More Booking Info",
+                    "url": "${settings.App.CRMBookingEndpoint}"
                 }
             ]
         }
@@ -45,66 +55,107 @@
 }
 ```
 
-# BookingStatus(profile)
-- IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - is booked.
-- ELSEIF: ${ profile.bookingStatus == 3 }
-    - is on leave.
-- ELSE:
-    - is free.
-
-# ClientInfo(profile)
-- IF: ${!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false}
-    - **Client**: \\\\*\\\\*\\\\*
-- ELSEIF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - **Client**: ${join(profile.clients, ',')}.
-- ELSE:
-    -
-
-# LastSeen(profile)
-- ${if(profile.lastSeenAt != null, LastSeenText(profile.lastSeenAt.siteId, profile.lastSeenTime), '')}
-
-# LastSeenText(location, time)
-- IF: ${ location != null && time != null }
-    - ```**Last seen**: ${location} ${time}.```
-- ELSEIF: ${ location == null }
-    - ```**Last seen**: ${time}.```
-- ELSEIF: ${ time == null }:
-    - ```**Last seen**: ${location}.```
-- ELSE:
-    - 
-
-# TextBlock(text)
--```
-{
-    "type": "TextBlock",
-    "text": "${text}",
-    "wrap": true
-}
-```
-
-# TextBlockWithClickableName(displayName, firstName, lastName, text)
+# Status(profile)
 - ```
 {
     "type": "ColumnSet",
     "columns": [
         {
             "type": "Column",
-            "width": "auto",
-            "spacing": "Small",
-            "items": [${TextBlock('**Today**:')}],
-            "verticalContentAlignment": "Center"
+            "width": "80px",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "**Today:**",
+                    "wrap": true
+                }
+            ]
         },
-        ${ClickableName(displayName, firstName, lastName, 'auto', 'Default', 'Small')},
         {
             "type": "Column",
             "width": "stretch",
-            "spacing": "Small",
-            "items": [${TextBlock(text)}],
-            "verticalContentAlignment": "Center"
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        ${ClickableName(profile.displayName, profile.firstName, profile.lastName, 'auto', 'Default', 'None')},
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "${BookingStatus(profile)}",
+                                    "wrap": true
+                                }
+                            ],
+                            "spacing": "None"
+                        }
+                    ],
+                }
+            ],
+            "spacing": "None"
         }
-    ],
-    "height": "auto"
+    ]
+}
+```
+
+# BookingStatus(profile)
+- IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
+    - ``` is booked```
+- ELSEIF: ${ profile.bookingStatus == 3 }
+    - ``` is on leave```
+- ELSE:
+    - ``` is free```
+
+# ClientInfo(profile)
+- IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
+    - ${if(!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false, ColumnSet('Client', '\\\\*\\\\*\\\\*'), ColumnSet('Client', join(profile.clients, ',')))}
+- ELSE:
+    -
+
+# LastSeen(profile)
+- ${if(profile.lastSeenAt != null, ColumnSet('Last seen',  LastSeenText(profile.lastSeenAt.siteId, profile.lastSeenTime)), '')}
+
+# LastSeenText(location, time)
+- IF: ${ location != null && time != null }
+    - ${location} ${time}
+- ELSEIF: ${ location == null }
+    - ${time}
+- ELSEIF: ${ time == null }:
+    - ${location}
+- ELSE:
+    - 
+
+# ColumnSet(name, value)
+-```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "80px",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "**${name}:**",
+                    "wrap": true
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${value}",
+                    "wrap": true
+                }
+            ],
+            "spacing": "None"
+        }
+    ]
 }
 ```
 
