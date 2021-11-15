@@ -32,11 +32,11 @@ namespace SSWSophieBot
 			services.AddControllers().AddNewtonsoftJson();
 			services.AddBotRuntime(Configuration);
 
-			services.AddSingleton<SSWSophieBotAdapter>();
-			services.Replace(ServiceDescriptor.Singleton<IBotFrameworkHttpAdapter>(sp => sp.GetRequiredService<SSWSophieBotAdapter>()));
-			services.Replace(ServiceDescriptor.Singleton<BotAdapter>(sp => sp.GetRequiredService<SSWSophieBotAdapter>()));
+			services.AddSingleton<SophieBotAdapter>();
+			services.Replace(ServiceDescriptor.Singleton<IBotFrameworkHttpAdapter>(sp => sp.GetRequiredService<SophieBotAdapter>()));
+			services.Replace(ServiceDescriptor.Singleton<BotAdapter>(sp => sp.GetRequiredService<SophieBotAdapter>()));
 
-			services.AddSingleton<ITelemetryInitializer, SSWSophieBotTelemetryInitializer>();
+			services.AddSingleton<ITelemetryInitializer, SophieBotTelemetryInitializer>();
 
 			services.AddSingleton<IMiddleware, TeamsAuthenticationMiddleware>();
 

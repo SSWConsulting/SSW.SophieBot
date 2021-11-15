@@ -5,7 +5,7 @@ using SSWSophieBot.Components.Actions;
 
 namespace SSWSophieBot.Components.Components
 {
-    public class Component : BotComponent
+    public class CommonComponent : BotComponent
     {
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
