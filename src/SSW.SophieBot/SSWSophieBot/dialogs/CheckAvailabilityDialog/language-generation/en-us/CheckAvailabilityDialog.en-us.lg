@@ -41,16 +41,7 @@
                 }
             ]
         },
-        {
-            "type": "ActionSet",
-            "actions": [
-                {
-                    "type": "Action.OpenUrl",
-                    "title": "📈 More Booking Info",
-                    "url": "${settings.App.CRMBookingEndpoint}"
-                }
-            ]
-        }
+        ${MoreBookingInfoButton()}
     ]
 }
 ```

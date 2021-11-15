@@ -158,20 +158,9 @@
 
 # Footer()
 - IF: ${ dialog.foreach.pageindex == ceiling(div(count(turn.employees), float('10.0'))) }
-    - ```
-    {
-        "type": "ActionSet",
-        "actions": [
-            {
-                "type": "Action.OpenUrl",
-                "title": "📈 More Booking Info",
-                "url": "${settings.App.CRMBookingEndpoint}"
-            }
-        ]
-    }
-    ```
+    - ${MoreBookingInfoButton()}
 - ELSE:
-    - ``````
+    -
 
 # PeopleType()
 - IF: ${ dialog.booked }
