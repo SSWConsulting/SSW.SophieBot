@@ -106,8 +106,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
             var resultProjects = resultProjectsDic
                 .Select(pair => new ProjectWithEmployeesCountModel(
-                    pair.Key.Value, 
-                    pair.Key.Key, 
+                    pair.Key.Value,
+                    pair.Key.Key,
                     pair.Value))
                 .ToList();
 

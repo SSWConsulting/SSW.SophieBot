@@ -25,7 +25,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
         }
 
         [JsonProperty("isProject")]
-        public BoolExpression IsProject { get; set; } 
+        public BoolExpression IsProject { get; set; }
 
         [JsonProperty("project")]
         public StringExpression Project { get; set; }
