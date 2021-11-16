@@ -312,5 +312,24 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                     && date.Date.Ticks >= GetTicksFrom(appointment.Start)
                     && date.Date.Ticks <= GetTicksFrom(appointment.End));
         }
+
+        public static string GetFreeDateby(IEnumerable<GetAppointmentModel> appointments, DateTime date)
+        {
+            var currentDate = date.Date;
+            while (true)
+            {
+                var bookedAppointments = GetEnumerableAppointmentsByDate(appointments, currentDate).Where(appointment => !IsOnInternalWorkFunc(appointment)).ToList();
+
+                if (bookedAppointments.Count == 0)
+                {
+                    return currentDate.ToString("ddd, dd/MM/yyyy");
+                }
+
+                do
+                {
+                    currentDate = currentDate.AddDays(1);
+                } while (currentDate.DayOfWeek == DayOfWeek.Saturday || currentDate.DayOfWeek == DayOfWeek.Sunday);
+            }
+        }
     }
 }

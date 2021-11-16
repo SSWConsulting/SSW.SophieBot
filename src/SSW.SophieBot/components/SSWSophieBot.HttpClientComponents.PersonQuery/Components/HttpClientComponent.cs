@@ -26,6 +26,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Components
             services.AddDeclarativeType<GetInternalBookedEmployeesAction>(GetInternalBookedEmployeesAction.Kind);
             services.AddDeclarativeType<GetProfileWithStatusAction>(GetProfileWithStatusAction.Kind);
             services.AddDeclarativeType<GetProfileWithBookingInfoAction>(GetProfileWithBookingInfoAction.Kind);
+            services.AddDeclarativeType<GetEmployeesWithFreeDateAction>(GetEmployeesWithFreeDateAction.Kind);
         }
     }
 }
