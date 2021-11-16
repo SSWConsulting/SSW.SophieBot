@@ -122,20 +122,12 @@
                   ],
                   "elseActions": [
                     {
-                      "$kind": "Microsoft.SetProperties",
+                      "$kind": "GetEmployeesWithFreeDateAction",
                       "$designer": {
-                        "id": "K0iqkG"
+                        "id": "S079Q2"
                       },
-                      "assignments": [
-                        {
-                          "property": "turn.employee",
-                          "value": "=turn.employees[0]"
-                        },
-                        {
-                          "property": "turn.displayName",
-                          "value": "=concat(turn.employee.firstName, \" \", turn.employee.lastName)"
-                        }
-                      ]
+                      "employees": "=turn.employees",
+                      "result": "turn.employees"
                     },
                     {
                       "$kind": "Microsoft.SendActivity",
