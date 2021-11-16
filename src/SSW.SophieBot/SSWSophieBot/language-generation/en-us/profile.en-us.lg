@@ -333,30 +333,6 @@
 }
 ```
 
-# ViewCalendarAction(displayName, bookedDays)
-- ```
-{
-    "type": "Action.Submit",
-    "title": "View Calendar",
-    "data": 
-    {
-        "intent": "GetCalendar",
-        "contact": ${dialog.nameEntity},
-        "msteams": {
-            "type": "messageBack",
-			"displayText": "Show calendar for ${displayName} ${BookedDaysText(bookedDays)}"
-        }
-    },
-    "iconUrl": "${OutlookCalendarIcon()}"
-}
-```
-
-# BookedDaysText(bookedDays)
-- IF: ${bookedDays > 0}
-    - (${bookedDays} days booked 🗓)
-- ELSE:
-    - 
-
 # ViewInPeopleAction(profile)
 - ```
 {
