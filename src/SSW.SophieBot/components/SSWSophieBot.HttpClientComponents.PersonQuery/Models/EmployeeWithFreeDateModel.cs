@@ -17,5 +17,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Models
 
         [JsonProperty("FreeDate")]
         public string FreeDate { get; set; }
+
+        [JsonProperty("bookedDays")]
+        public int BookedDays { get; set; }
     }
 }

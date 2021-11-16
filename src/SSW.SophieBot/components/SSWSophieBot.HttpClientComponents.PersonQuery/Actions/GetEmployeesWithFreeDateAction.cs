@@ -41,7 +41,10 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 DisplayName = $"{e.FirstName} {e.LastName}",
                 FirstName = e.FirstName,
                 LastName = e.LastName,
-                FreeDate = EmployeesHelper.GetFreeDateby(e.Appointments, date)
+                FreeDate = EmployeesHelper.GetFreeDateby(e.Appointments, date),
+                BookedDays = e.Appointments
+                    .Where(appointment => appointment.End.UtcTicks >= date.Ticks)
+                    .Count(appointment => EmployeesHelper.IsOnClientWorkFunc(appointment)),
             })
             .ToList();
 
