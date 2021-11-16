@@ -531,5 +531,5 @@
 # GetFreeDay
 - when will {@contact={@firstname=adam} {@lastname=cogan}} be free
 - when will {@contact={@firstname=adam}} be free?
-- when is {@contact={@firstname=piers}} free
+- when is {@contact={@firstname=calum}} free
 - when is {@contact={@firstname=uly}} free?
