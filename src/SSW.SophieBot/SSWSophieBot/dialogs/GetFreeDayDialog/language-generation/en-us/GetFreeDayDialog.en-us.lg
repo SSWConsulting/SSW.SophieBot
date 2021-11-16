@@ -1,0 +1,38 @@
+[import](common.lg)
+[SSWSophieBot](SSWSophieBot.en-us.lg)
+
+# SendActivity_sm8AiH_text()
+- Please specify a person name to query.
+# SendActivity_sm8AiH()
+[Activity
+    Text = ${SendActivity_sm8AiH_text()}
+]
+
+# SendActivity_CwfI6O()
+[Activity
+    Attachments = ${json(NameButtons('GetFreeDay'))}
+]
+
+# SendActivity_cH9ywD_text()
+- TODO: **${turn.displayName}** will be free at ...
+# SendActivity_cH9ywD()
+[Activity
+    Text = ${SendActivity_cH9ywD_text()}
+]
+
+# SendActivity_72ky16_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
+# SendActivity_DYmdAd_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_DYmdAd()
+[Activity
+    Text = ${SendActivity_DYmdAd_text()}
+]
+
+# SendActivity_x9ehdr()
+[Activity
+    Text = ${SendActivity_x9ehdr_text()}
+]
+
+# SendActivity_x9ehdr_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.

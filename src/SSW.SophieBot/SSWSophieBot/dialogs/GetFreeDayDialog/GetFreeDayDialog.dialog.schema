@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "GetFreeDayDialog",
+  "type": "object",
+  "properties": {
+    "nameEntity": {
+      "title": "Name Entity",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression"
+    }
+  },
+  "$result": {
+    "type": "object",
+    "properties": {}
+  }
+}

@@ -374,3 +374,9 @@ ${IntranetInfo()}
 
 # Count(location, employees)
 - ${count(where(employees, employee => employee.defaultSite.name == location))}
+# SendActivity_LOOiml_text()
+- Getting free day is still a work in progress.
+# SendActivity_LOOiml()
+[Activity
+    Text = ${SendActivity_LOOiml_text()}
+]

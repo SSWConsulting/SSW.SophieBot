@@ -974,7 +974,8 @@
                 "CheckAvailability",
                 "GetPeopleBySkills",
                 "GetPeopleOnClientWork",
-                "GetCurrentEmployeesOnLocation"
+                "GetCurrentEmployeesOnLocation",
+                "GetFreeDay"
               ]
             }
           ]
@@ -1119,6 +1120,61 @@
           }
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "7xP4nj",
+        "name": "OnIntent (GetFreeDay)"
+      },
+      "intent": "GetFreeDay",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "dIt1g1"
+          },
+          "name": "SSWSophieBot.OnIntent_GetFreeDay",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "g7uQ0S"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "e5shlB"
+          },
+          "condition": "=contains($options.implemented, \"GetFreeDay\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "LOOiml"
+              },
+              "activity": "${SendActivity_LOOiml()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "bdHfZJ"
+              },
+              "activityProcessed": true,
+              "dialog": "GetFreeDayDialog",
+              "options": {
+                "nameEntity": "=$options.contactEntity"
+              }
+            }
+          ]
+        }
+      ],
+      "entities": []
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
