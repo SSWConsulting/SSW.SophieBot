@@ -39,7 +39,7 @@
                             "spacing": "None",
                             "isSubtle": true,
                             "wrap": true,
-                            "text": "${profile.title} | $${round(profile.billableRate)} + GST"
+                            "text": "${profile.title}　|　$${round(profile.billableRate)} + GST"
                         }
                     ],
                     "width": "stretch",
@@ -68,11 +68,11 @@
             "columns": [
                 {
                     "type": "Column",
-                    "width": "auto",
+                    "width": "70px",
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "**Today:** ",
+                            "text": "Today:",
                             "color": "Accent",
                             "wrap": true
                         }
@@ -87,7 +87,8 @@
                             "wrap": true,
                             "text": "${Status(profile)}",
                         }
-                    ]
+                    ],
+                    "spacing": "None"
                 }
             ]
         },
@@ -96,11 +97,11 @@
             "columns": [
                 {
                     "type": "Column",
-                    "width": "auto",
+                    "width": "70px",
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "**Last Seen:** ",
+                            "text": "Last Seen:",
                             "color": "Accent",
                             "wrap": true
                         }
@@ -115,7 +116,8 @@
                             "wrap": true,
                             "text": "${if(profile.lastSeenAt != null, LastSeen(profile.lastSeenAt.siteId, profile.defaultSite.name, profile.lastSeenTime), '—')}"
                         }
-                    ]
+                    ],
+                    "spacing": "None"
                 }
             ]
         },
@@ -128,7 +130,7 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "**Skills:** ",
+                            "text": "Skills:",
                             "color": "Accent",
                             "wrap": true
                         }
@@ -181,21 +183,44 @@
             "separator": true
         },
         {
-            "type": "TextBlock",
-            "text": "${SkillsInfo()}",
-            "id": "omittedSkills",
-            "height": "stretch"
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAClklEQVRIie2TS2gTURRAz50pkwShgmBXLrQboQZam12EorX+VlpoQbBCEZOOYIp1LYiCLlxpI03mpUVcuLH0I0W6UcGF4KIWxBJ/FFS0fkCKQjApnXluJpLGxKbYlXhhmHlz35wz914e/I9VQqolEolEfT6fvyMizeU5rfXTYDB4OJlMfrdtO5xOp+eqccxqiebm5gsi0gOEyi8R2bq8vNwWiUS2AbdaW1vnZ2dnn1XiGNUEwWDwPDDtL795ntdmmuYmEdkBvBORXSJyDjBF5GYsFju2JkEymSwsLi4eAaaAjYZhjLmuu8VxnKzrum3Am9JO+JLjNQsARkdHlwKBQLdfyWbgnm3b4ZGRkbdAB/C+THLDtu1wzYJiJYFAoNOXNHied9+27bBSal5E2oEPxb0icql84KsKfMkSMO8vf0kcx3mttW4HFgC01tGBgYHQWgUSj8evAqeBgog8LpVkMplXpmm2Ax+BjlwuN9nb2xusVVCE9wMFrXWnZVm7yyWpVOql53l7gc/AfsuyJhKJRGA1wW/wTCYznc/n27XWO8vbNTw8/NwwjKP++4OFQuEKVD9oFeGxWOyQiEwAAeA68BVo0Vp3RSKRJ1rrJNAAzBmGcXJmZiZXqYJS+JKIdPvwAyIy7sMdpVR/yTlpAB4AYeBFXV3dvnQ6/aVSBeXwLsdxpnz4JBD04acAnc1m3cbGxrFQKNQCbPfhe4aGhj4VgWYVeEFr3amUuuu3pQgfVEolAF38KJvNutFodNx13XrDME6kUqnPK/64+BCPx/uBa3/o+aBS6kwpvJYoncFZABHpWS94uWADgOd5C319fV3rAV8hEJHb/v2R1np0PeBQMuSmpqaHlmX9ACxgUUQuK6Uu/g3834if0l86MvKFLt0AAAAASUVORK5CYII=",
+                            "width": "20px",
+                            "height": "20px"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${SkillsInfo()}",
+                            "id": "omittedSkills",
+                            "height": "stretch"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "${SkillsInfo()}",
+                            "wrap": true,
+                            "id": "allSkills",
+                            "isVisible": false
+                        }
+                    ]
+                }
+            ]
         },
         {
             "type": "TextBlock",
-            "text": "${SkillsInfo()}",
-            "wrap": true,
-            "id": "allSkills",
-            "isVisible": false
-        },
-        {
-            "type": "TextBlock",
-            "text": "**Contact:** ",
+            "text": "Contact:",
             "color": "Accent",
             "wrap": true,
             "separator": true,
@@ -303,7 +328,7 @@
         }
     ],
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "version": "1.3",
+    "version": "1.2",
     "minHeight": "100px"
 }
 ```
@@ -321,7 +346,8 @@
             "type": "messageBack",
 			"displayText": "Show calendar for ${displayName} ${BookedDaysText(bookedDays)}"
         }
-    }
+    },
+    "iconUrl": "${OutlookCalendarIcon()}"
 }
 ```
 
@@ -336,7 +362,8 @@
 {
     "type": "Action.OpenUrl",
     "title": "View in People",
-    "url": "https://www.ssw.com.au/people/${toLower(profile.firstName)}-${toLower(profile.lastName)}"
+    "url": "https://www.ssw.com.au/people/${toLower(profile.firstName)}-${toLower(profile.lastName)}",
+    "iconUrl": "${SSWPeopleIcon()}"
 }
 ```
 
@@ -346,7 +373,8 @@
     {
         "type": "Action.OpenUrl",
         "title": "View in CRM",
-        "url": "${settings.App.CRMUserUrl}&id=${profile.userId}"
+        "url": "${settings.App.CRMUserUrl}&id=${profile.userId}",
+        "iconUrl": "${Dynamics365Icon()}"
     }
     ```
 - ELSE:
