@@ -50,6 +50,9 @@
       "Goodbye": "",
       "GetCalendar": [
         "GetCalendarDialog.en-us"
+      ],
+      "GetFreeDay": [
+        "GetFreeDayDialog.en-us"
       ]
     }
   }

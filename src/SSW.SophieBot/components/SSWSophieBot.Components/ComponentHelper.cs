@@ -12,30 +12,31 @@ namespace SSWSophieBot.Components
             return serverLocalTime.Subtract(utcOffset);
         }
 
-        public static string ToUserFriendlyTime(this DateTime dateTime, DateTime now)
+        public static string ToUserFriendlyDate(this DateTime dateTime, DateTime? now = null)
         {
-            var dateOffset = (dateTime.Date - now.Date).TotalDays;
+            if (now.HasValue)
+            {
+                var dateOffset = (dateTime.Date - now.Value.Date).TotalDays;
 
-            if (dateOffset == 0)
-            {
-                return $"Today";
+                if (dateOffset == 0)
+                {
+                    return $"Today";
+                }
+                else if (dateOffset == -1)
+                {
+                    return $"Yesterday";
+                }
+                else if (dateOffset == 1)
+                {
+                    return $"Tomorrow";
+                }
+                else if (dateTime.Year == now.Value.Year)
+                {
+                    return dateTime.ToString("ddd d MMM");
+                }
             }
-            else if (dateOffset == -1)
-            {
-                return $"Yesterday";
-            }
-            else if (dateOffset == 1)
-            {
-                return $"Tomorrow";
-            }
-            else if (dateTime.Year == now.Year)
-            {
-                return dateTime.ToString("ddd d MMM");
-            }
-            else
-            {
-                return dateTime.ToString("ddd d MMM yyyy");
-            }
+
+            return dateTime.ToString("ddd d MMM yyyy");
         }
 
         public static string ToUserFriendlyDuration(this TimeSpan duration)
