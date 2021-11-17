@@ -49,6 +49,25 @@
         {
           "$kind": "GetProfileAction",
           "$designer": {
+            "id": "UgWFan"
+          },
+          "queryString": [
+            {
+              "value": "=dialog.location",
+              "key": "currentLocation"
+            },
+            {
+              "key": "inoffice",
+              "value": true
+            }
+          ],
+          "statusCodeProperty": "turn.statusCode",
+          "reasonPhraseProperty": "turn.reasonPhrase",
+          "employeesProperty": "turn.employeesInOffice"
+        },
+        {
+          "$kind": "GetProfileAction",
+          "$designer": {
             "id": "rHaphE"
           },
           "statusCodeProperty": "turn.statusCode",

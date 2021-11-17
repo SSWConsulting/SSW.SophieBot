@@ -5,7 +5,7 @@
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2",
     "body": [
-        ${join(where([GetTitle(title), GetSubTitle(subTitle), GetText(text)], t, exists(t) && length(t) > 0), ',')},
+        ${join(where([GetTitle(title), GetSubTitle(subTitle), text], t, exists(t) && length(t) > 0), ',')},
         {
             "type": "TextBlock",
             "text": "Narrow your search..."

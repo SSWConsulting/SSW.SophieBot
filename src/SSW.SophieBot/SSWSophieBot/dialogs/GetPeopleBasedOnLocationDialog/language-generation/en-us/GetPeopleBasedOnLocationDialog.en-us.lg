@@ -40,14 +40,55 @@
 # SendActivity_Jcjj19()
 [Activity
     Attachments = ${json(EmployeesGroupActionCard(GetTitleForAll(dialog.location, count(turn.employees)), 
-    null, TextInfo(), turn.groupedEmployees, dialog.location, GetEntities()))}
+    null, RichTextInfo(), turn.groupedEmployees, dialog.location, GetEntities()))}
 ]
 
 # GetTitleForAll(location, count)
 - ```${location} - All [${count}]```
 
-# TextInfo()
-- There are **${turn.employees.count}** people (${count(where(turn.employees, e, e.inOffice))} in the office today).
+# RichTextInfo()
+-```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "auto",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "There are **${turn.employees.count}** people",
+                    "wrap": true
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": "auto",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "​ (${count(turn.employeesInOffice)} in the office today)",
+                    "wrap": true,
+                    "color": "Accent"
+                }
+            ],
+            "spacing": "None",
+            "selectAction": {
+                "type": "Action.Submit",
+                "data": {
+                    "intent": "GetCurrentEmployeesOnLocation",
+                    "location": "${dialog.location}",
+                    "msteams": {
+                        "type": "messageBack",
+                        "displayText": "Show people who are now in the ${dialog.location} office"
+                    }
+                }
+            }
+        }
+    ]
+}
+```
 
 # GetEntities()
 - ```
