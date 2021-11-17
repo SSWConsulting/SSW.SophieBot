@@ -81,7 +81,7 @@
                     "location": "${dialog.location}",
                     "msteams": {
                         "type": "messageBack",
-                        "displayText": "Show people who are now in the ${dialog.location} office"
+                        "displayText": "Who is in the ${dialog.location} office right now?"
                     }
                 }
             }
