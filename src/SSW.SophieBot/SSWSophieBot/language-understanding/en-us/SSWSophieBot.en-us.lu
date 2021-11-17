@@ -529,7 +529,17 @@
 
 
 # GetFreeDay
+- when will {@contact={@firstname=adam}} be free
 - when will {@contact={@firstname=adam} {@lastname=cogan}} be free
 - when will {@contact={@firstname=adam}} be free?
+- when will {@contact={@firstname=adam} {@lastname=cogan}} be free?
+
 - when is {@contact={@firstname=calum}} free
-- when is {@contact={@firstname=uly}} free?
+- when is {@contact={@firstname=calum} {@lastname=simpson}} free
+- when is {@contact={@firstname=calum}} free?
+- when is {@contact={@firstname=calum} {@lastname=simpson}} free?
+
+- when can I book {@contact={@firstname=piers}} 
+- when can I book {@contact={@firstname=piers} {@lastname=sinclair}} 
+- when can I book {@contact={@firstname=piers}}?
+- when can I book {@contact={@firstname=piers} {@lastname=sinclair}}?
