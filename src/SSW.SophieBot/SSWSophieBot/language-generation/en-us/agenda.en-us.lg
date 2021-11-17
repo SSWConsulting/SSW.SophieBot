@@ -37,7 +37,37 @@
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2",
     "body": [
-        ${MainTitle(concat(displayName, "'s next appointments are"), false)},
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${OutlookCalendarIcon()}",
+                            "width": "25px",
+                            "height": "25px"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${Title(displayName, count(appointments))}",
+                            "wrap": true,
+                            "size": "Medium",
+                            "weight": "Bolder"
+                        }
+                    ],
+                    "verticalContentAlignment": "Center"
+                }
+            ]
+        },
         {
             "type": "ColumnSet",
             "columns": [
@@ -84,19 +114,13 @@
             "minHeight": "30px"
         },
         ${join(select(appointments, appointment, AppointmentTableRow(appointment)), ',')},
-        {
-            "type": "ActionSet",
-            "actions": [
-                {
-                    "type": "Action.OpenUrl",
-                    "title": "Details in CRM",
-                    "url": "${settings.App.CRMBookingEndpoint}"
-                }
-            ]
-        }
+        ${MoreBookingInfoButton()}
     ]
 }
 ```
+
+# Title(displayName, count)
+- ${displayName}'s next appointments [${count}]
 
 # AppointmentTableRow(appointment)
 - ```
@@ -234,16 +258,7 @@
             ],
             "height": "stretch"
         },
-        {
-            "type": "ActionSet",
-            "actions": [
-                {
-                    "type": "Action.OpenUrl",
-                    "title": "Details in CRM",
-                    "url": "${settings.App.CRMBookingEndpoint}"
-                }
-            ]
-        }
+        ${MoreBookingInfoButton()}
     ],
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2",

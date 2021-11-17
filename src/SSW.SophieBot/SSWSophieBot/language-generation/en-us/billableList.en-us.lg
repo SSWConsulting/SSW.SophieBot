@@ -41,8 +41,9 @@
 - ```
 {
     "type": "Action.OpenUrl",
-    "title": "📄 More ${if(isProject, 'Project', 'Client')} Info",
-    "url": "${if(isProject, settings.App.CRMProjectUrl, settings.App.CRMClientUrl)}&id=${crmId}"
+    "title": "More ${if(isProject, 'Project', 'Client')} Info",
+    "url": "${if(isProject, settings.App.CRMProjectUrl, settings.App.CRMClientUrl)}&id=${crmId}",
+    "iconUrl": "${Dynamics365Icon()}"
 }
 ```
 
