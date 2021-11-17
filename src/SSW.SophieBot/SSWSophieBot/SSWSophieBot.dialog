@@ -921,8 +921,16 @@
               "value": "=coalesce(@geographyV2.location, @site, @location, @remote)"
             },
             {
+              "property": "$options.preset.beEntity",
+              "value": "=json(turn.recognized.entities)"
+            },
+            {
+              "property": "$options.preset.be",
+              "value": "=coalesce($options.preset.beEntity.presentBe, $options.preset.beEntity.futureBe)"
+            },
+            {
               "property": "$options.preset.positive",
-              "value": "=if(exists(@presentBe), if(@presentBe=='positive', true, false), true)"
+              "value": "=if(exists($options.preset.be), if(mod(count(where($options.preset.be, be, be[0] == 'negative')), 2) == 0, true, false), true)"
             }
           ]
         },
@@ -1168,7 +1176,9 @@
               "activityProcessed": true,
               "dialog": "GetFreeDayDialog",
               "options": {
-                "nameEntity": "=$options.contactEntity"
+                "nameEntity": "=$options.contactEntity",
+                "booked": "=$options.booked",
+                "isFree": "=length($options.booked) > 0"
               }
             }
           ]

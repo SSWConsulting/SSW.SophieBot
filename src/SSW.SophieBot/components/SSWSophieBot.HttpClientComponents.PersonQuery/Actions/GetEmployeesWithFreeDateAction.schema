@@ -6,6 +6,11 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "isFree": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Is Free",
+      "description": "If set to true, get next date when free, otherwise booked"
+    },
     "employees": {
       "$ref": "schema:#/definitions/arrayExpression",
       "title": "Employees",

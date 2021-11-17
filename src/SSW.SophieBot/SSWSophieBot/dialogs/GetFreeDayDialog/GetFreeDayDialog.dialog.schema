@@ -7,6 +7,11 @@
     "nameEntity": {
       "title": "Name Entity",
       "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression"
+    },
+    "isFree": {
+      "description": "Whether the user is asking for booked date or free date",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/booleanExpression",
+      "title": "Is Free"
     }
   },
   "$result": {

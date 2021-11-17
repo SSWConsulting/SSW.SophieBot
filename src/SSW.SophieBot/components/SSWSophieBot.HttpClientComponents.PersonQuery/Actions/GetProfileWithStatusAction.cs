@@ -59,7 +59,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 Appointments = EmployeesHelper.GetAppointments(e.Appointments, date, 10)
                     .Select(a => new EmployeeProfileAppointment
                     {
-                        Start = a.Start.DateTime.ToUserLocalTime(dc).ToUserFriendlyTime(date),
+                        Start = a.Start.DateTime.ToUserLocalTime(dc).ToUserFriendlyDate(date),
                         Duration = (a.End - a.Start).ToUserFriendlyDuration(),
                         BookingStatus = EmployeesHelper.GetBookingStatus(a),
                         Subject = a.Subject.Trim(),

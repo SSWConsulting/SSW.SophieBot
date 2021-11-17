@@ -24,6 +24,9 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
         }
 
+        [JsonProperty("isFree")]
+        public BoolExpression IsFree { get; set; }
+
         [JsonProperty("employees")]
         public ArrayExpression<GetEmployeeModel> Employees { get; set; }
 
@@ -32,6 +35,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
+            var isFree = dc.GetValue(IsFree);
             var employees = dc.GetValue(Employees);
 
             var date = DateTime.Now.ToUniversalTime();
@@ -41,7 +45,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
                 DisplayName = $"{e.FirstName} {e.LastName}",
                 FirstName = e.FirstName,
                 LastName = e.LastName,
-                FreeDate = EmployeesHelper.GetFreeDateby(e.Appointments, date),
+                FreeDate = EmployeesHelper.GetFreeDate(e.Appointments, date, isFree, date.ToUserLocalTime(dc)),
                 BookedDays = e.Appointments
                     .Where(appointment => appointment.End.UtcTicks >= date.Ticks)
                     .Count(appointment => EmployeesHelper.IsOnClientWorkFunc(appointment)),

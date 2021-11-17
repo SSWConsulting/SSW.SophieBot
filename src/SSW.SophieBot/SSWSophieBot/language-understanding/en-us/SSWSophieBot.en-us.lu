@@ -30,14 +30,19 @@
 		- 're
 	- negative :
 		- not
-		- is not
-		- are not
 		- isn't
 		- aren't
 		- isnt
 		- arent
-		- 's not
-		- 're not
+
+@ list futureBe = 
+	- positive:
+		- will
+		- 'll
+	- negative :
+		- will not
+		- won't
+		- wont
 
 @ list site = 
 	- brisbane:
@@ -152,9 +157,9 @@
 - I have a bug that needs to be report to {@project = SugarLearning} Team
 - I have a {@project = TimePro} bug to report
 # CheckAvailability
-- is {@contact} ({@available} | {@unavailable})[?]
-- is {@contact} ({@available} | {@unavailable}) or ({@available} | {@unavailable})[?]
-- is {@contact} ({@available} | {@unavailable}) or not[?]
+- ^is {@contact} ({@available} | {@unavailable})[?]
+- ^is {@contact} ({@available} | {@unavailable}) or ({@available} | {@unavailable})[?]
+- ^is {@contact} ({@available} | {@unavailable}) or not[?]
 - Is {@contact={@firstname=Anthony}} {@unavailable=booked} or {@available=free}?
 - Is {@contact={@firstname=pat}} {@unavailable=booked} or not?
 - Is {@contact={@firstname=adam}} {@available=free} or not?
@@ -529,17 +534,28 @@
 
 
 # GetFreeDay
-- when will {@contact={@firstname=adam}} be free
-- when will {@contact={@firstname=adam} {@lastname=cogan}} be free
-- when will {@contact={@firstname=adam}} be free?
-- when will {@contact={@firstname=adam} {@lastname=cogan}} be free?
+- when ({@presentBe} | {@futureBe}) [not] {@contact} [be] [not] ({@available} | {@unavailable})[?]
+- when will {@contact={@firstname=adam}} be {@available = free}
+- when will {@contact={@firstname=adam} {@lastname=cogan}} be {@available = available}
+- when will {@contact={@firstname=adam}} be {@available = working for ssw}?
+- when will {@contact={@firstname=adam} {@lastname=cogan}} be {@available = internal}?
 
-- when is {@contact={@firstname=calum}} free
-- when is {@contact={@firstname=calum} {@lastname=simpson}} free
-- when is {@contact={@firstname=calum}} free?
-- when is {@contact={@firstname=calum} {@lastname=simpson}} free?
+- when is {@contact={@firstname=calum}} {@available = free}
+- when is {@contact={@firstname=calum} {@lastname=simpson}} {@available = available}
+- when is {@contact={@firstname=calum}} {@available = working for ssw}?
+- when is {@contact={@firstname=calum} {@lastname=simpson}} {@available = internal}?
 
 - when can I book {@contact={@firstname=piers}} 
 - when can I book {@contact={@firstname=piers} {@lastname=sinclair}} 
 - when can I book {@contact={@firstname=piers}}?
 - when can I book {@contact={@firstname=piers} {@lastname=sinclair}}?
+
+- on which day won't {@contact={@firstname=piers}} be {@available = free}?
+- what date isn't {@contact={@firstname=piers} {@lastname=sinclair}} {@available = free}?
+
+@ phraseList GetFreeDayPhraseList(interchangeable) disabledForAllModels =
+	- when
+	- what date
+	- which day
+	- on which day
+@ intent GetCalendar usesFeature GetFreeDayPhraseList, available, unavailable

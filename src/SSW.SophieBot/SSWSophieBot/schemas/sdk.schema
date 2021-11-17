@@ -1183,6 +1183,11 @@
         }
       },
       "properties": {
+        "isFree": {
+          "$ref": "#/definitions/booleanExpression",
+          "title": "Is Free",
+          "description": "If set to true, get next date when free, otherwise booked"
+        },
         "employees": {
           "$ref": "#/definitions/arrayExpression",
           "title": "Employees",
@@ -1353,6 +1358,11 @@
         "nameEntity": {
           "title": "Name Entity",
           "$ref": "#/definitions/stringExpression"
+        },
+        "booked": {
+          "description": "Whether the user is asking for booked date or free date",
+          "$ref": "#/definitions/booleanExpression",
+          "title": "Booked"
         },
         "$kind": {
           "title": "Kind of dialog object",

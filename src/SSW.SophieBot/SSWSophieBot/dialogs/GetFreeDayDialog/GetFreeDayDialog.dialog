@@ -127,7 +127,8 @@
                         "id": "S079Q2"
                       },
                       "employees": "=turn.employees",
-                      "result": "turn.employees"
+                      "result": "turn.employees",
+                      "isFree": "=dialog.isFree"
                     },
                     {
                       "$kind": "Microsoft.SendActivity",

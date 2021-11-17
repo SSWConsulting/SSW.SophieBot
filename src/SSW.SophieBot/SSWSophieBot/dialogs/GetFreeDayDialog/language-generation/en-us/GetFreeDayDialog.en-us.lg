@@ -53,7 +53,7 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "​​ ${FreeDate(employee.freeDate)}",
+                            "text": "​​ ${AvailabilityText(employee.freeDate, dialog.isFree)}",
                             "wrap": true
                         }
                     ],
@@ -64,15 +64,21 @@
         {
             "type": "ActionSet",
             "actions": [
-                 ${ViewCalendarAction(employee.displayName, employee.bookedDays)}
+                    ${ViewCalendarAction(employee.displayName, employee.bookedDays)}
             ]
         }
     ]
 }
 ```
 
-# FreeDate(date)
-- IF: ${ utcNow('ddd, dd/MM/yyyy') == date}
-    - is free today - ${date}.
+# AvailabilityText(freeDate, isFree)
+- IF: ${length(freeDate) > 0}
+    -  ${AvailabilityDate(freeDate, isFree)}
 - ELSE:
-    - will be free at ${date}.
+    -  seems to have no client work or leave schedule for now.
+
+# AvailabilityDate(date, isFree)
+- IF: ${ utcNow('ddd, dd/MM/yyyy') == date}
+    - is ${if(isFree, 'free', 'not free')} today - ${date}.
+- ELSE:
+    - will ${if(isFree, 'free', 'not be free')} at ${date}.
