@@ -35,6 +35,7 @@
 # SendActivity_x9ehdr_text()
 - Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
 
+> NOTE: Use ZERO WIDTH SPACE + SPACE to achive the space before FreeDate function. It's a workaround for Adaptive Cards in Teams.
 # SendActivity_cH9ywD_attachment_u8CWcb(employee)
 -```
 {
@@ -52,7 +53,7 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "&nbsp;will be free at ${employee.freeDate}",
+                            "text": "​​ ${FreeDate(employee.freeDate)}",
                             "wrap": true
                         }
                     ],
@@ -69,3 +70,9 @@
     ]
 }
 ```
+
+# FreeDate(date)
+- IF: ${ utcNow('ddd, dd/MM/yyyy') == date}
+    - is free today - ${date}.
+- ELSE:
+    - will be free at ${date}.
