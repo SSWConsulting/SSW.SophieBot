@@ -31,11 +31,7 @@
                     "type": "Column",
                     "width": "stretch",
                     "items": [
-                        ${join(createArray(
-                            Status(profile),
-                            ClientInfo(profile),
-                            LastSeen(profile)
-                        ), ',')}
+                        ${join(where(createArray(Status(profile), ClientInfo(profile), LastSeen(profile)), e => e != ''), ',')}
                     ],
                     "verticalContentAlignment": "Center"
                 }
@@ -106,7 +102,10 @@
     -
 
 # LastSeen(profile)
-- ${if(profile.lastSeenAt != null, ColumnSet('Last seen',  LastSeenText(profile.lastSeenAt.siteId, profile.lastSeenTime)), '')}
+- IF: ${ profile.lastSeenAt != null }
+    - ${ColumnSet('Last seen',  LastSeenText(profile.lastSeenAt.siteId, profile.lastSeenTime))}
+- ELSE:
+    -
 
 # LastSeenText(location, time)
 - IF: ${ location != null && time != null }
