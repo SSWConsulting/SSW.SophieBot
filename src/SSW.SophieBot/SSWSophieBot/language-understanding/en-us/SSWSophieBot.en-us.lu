@@ -464,6 +464,8 @@
 - what are {@contact={@firstname=Jason}}'s {@profileProperty={@skillProperty=skills}}
 - what is the {@profileProperty={@skillProperty=expertise}} of {@contact={@firstname=John} {@lastname=Smith}}?
 - what is the {@profileProperty={@skillProperty=specialty}} of {@contact={@firstname=John} {@lastname=Smith}}
+- what's {@contact={@firstname=jims}} {@profileProperty={@skillProperty=skills}}
+- what are {@contact={@firstname=toms}} {@profileProperty={@skillProperty=techs}}
 
 @ intent GetSkills usesFeature contact,SkillInfoPhraseList
 
