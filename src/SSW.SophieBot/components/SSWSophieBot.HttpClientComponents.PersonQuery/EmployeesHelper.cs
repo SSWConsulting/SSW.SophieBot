@@ -1,4 +1,5 @@
 ﻿using Microsoft.Bot.Builder.Dialogs;
+using SSWSophieBot.Components;
 using SSWSophieBot.HttpClientAction.Models;
 using SSWSophieBot.HttpClientComponents.PersonQuery.Models;
 using System;
@@ -309,8 +310,33 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             return appointments
                 .Where(appointment =>
                     !string.IsNullOrWhiteSpace(appointment.Regarding)
-                    && date.Date.Ticks >= GetTicksFrom(appointment.Start)
-                    && date.Date.Ticks <= GetTicksFrom(appointment.End));
+                    && date.Date.Ticks <= GetTicksFrom(appointment.End)
+                    && date.Date.Ticks >= GetTicksFrom(appointment.Start));
+        }
+
+        public static string GetFreeDate(IEnumerable<GetAppointmentModel> appointments, DateTime startTime, bool isFree = true, DateTime? now = null)
+        {
+            var checkDate = startTime.Date;
+
+            var appointmentsEndDate = appointments.Max(appointment => appointment.End);
+
+            while (checkDate <= appointmentsEndDate)
+            {
+                var checkAppointments = GetEnumerableAppointmentsByDate(appointments, checkDate);
+                if (isFree
+                    ? !checkAppointments.Any(appointment => !IsOnInternalWorkFunc(appointment))
+                    : checkAppointments.Any(appointment => !IsOnInternalWorkFunc(appointment)))
+                {
+                    return checkDate.ToUserFriendlyDate(now);
+                }
+
+                do
+                {
+                    checkDate = checkDate.AddDays(1);
+                } while (checkDate.DayOfWeek == DayOfWeek.Saturday || checkDate.DayOfWeek == DayOfWeek.Sunday);
+            }
+
+            return isFree ? appointmentsEndDate.DateTime.AddDays(1).ToUserFriendlyDate() : string.Empty;
         }
     }
 }

@@ -13,16 +13,19 @@ using System.Threading.Tasks;
 
 namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 {
-    public class GetProfileWithStatusAction : ActionBase
+    public class GetEmployeesWithFreeDateAction : ActionBase
     {
         [JsonProperty("$kind")]
-        public const string Kind = "GetProfileWithStatusAction";
+        public const string Kind = "GetEmployeesWithFreeDateAction";
 
-        public GetProfileWithStatusAction([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
+        public GetEmployeesWithFreeDateAction([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
             : base(sourceFilePath, sourceLineNumber)
         {
 
         }
+
+        [JsonProperty("isFree")]
+        public BoolExpression IsFree { get; set; }
 
         [JsonProperty("employees")]
         public ArrayExpression<GetEmployeeModel> Employees { get; set; }
@@ -32,40 +35,20 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
+            var isFree = dc.GetValue(IsFree);
             var employees = dc.GetValue(Employees);
 
             var date = DateTime.Now.ToUniversalTime();
 
-            var result = employees.Select(e => new EmployeeProfileWithStatusModel
+            var result = employees.Select(e => new EmployeeWithFreeDateModel
             {
-                UserId = e.UserId,
-                AvatarUrl = e.AvatarUrl,
                 DisplayName = $"{e.FirstName} {e.LastName}",
-                Title = e.Title,
-                Clients = EmployeesHelper.GetClientsByDate(date, e.Appointments),
-                BookingStatus = EmployeesHelper.GetBookingStatus(e, date),
-                LastSeenAt = e.LastSeenAt,
-                LastSeenTime = EmployeesHelper.GetLastSeen(e),
-                Skills = e.Skills,
-                EmailAddress = e.EmailAddress,
-                MobilePhone = e.MobilePhone,
-                DefaultSite = e.DefaultSite,
                 FirstName = e.FirstName,
                 LastName = e.LastName,
-                BillableRate = e.BillableRate,
+                FreeDate = EmployeesHelper.GetFreeDate(e.Appointments, date, isFree, date.ToUserLocalTime(dc)),
                 BookedDays = e.Appointments
                     .Where(appointment => appointment.End.UtcTicks >= date.Ticks)
                     .Count(appointment => EmployeesHelper.IsOnClientWorkFunc(appointment)),
-                Appointments = EmployeesHelper.GetAppointments(e.Appointments, date, 10)
-                    .Select(a => new EmployeeProfileAppointment
-                    {
-                        Start = a.Start.DateTime.ToUserLocalTime(dc).ToUserFriendlyDate(date),
-                        Duration = (a.End - a.Start).ToUserFriendlyDuration(),
-                        BookingStatus = EmployeesHelper.GetBookingStatus(a),
-                        Subject = a.Subject.Trim(),
-                        Regarding = a.Regarding.Trim()
-                    })
-                    .ToList()
             })
             .ToList();
 
