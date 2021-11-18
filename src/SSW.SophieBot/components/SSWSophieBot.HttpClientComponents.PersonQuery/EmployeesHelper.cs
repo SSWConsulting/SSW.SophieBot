@@ -260,9 +260,9 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 
         public static DateTime ToUserLocalTime(DialogContext dc, DateTime dateTime)
         {
-            var serverLocalTime = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+            var utcDate = dateTime.ToUniversalTime();
             var utcOffset = dc.Context.Activity.LocalTimestamp.GetValueOrDefault().Offset;
-            return serverLocalTime.Subtract(utcOffset);
+            return utcDate.Add(utcOffset);
         }
 
         private static long GetTicksFrom(DateTimeOffset date)

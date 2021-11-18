@@ -7,9 +7,9 @@ namespace SSWSophieBot.Components
     {
         public static DateTime ToUserLocalTime(this DateTime dateTime, DialogContext dc)
         {
-            var serverLocalTime = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+            var utcTime = dateTime.ToUniversalTime();
             var utcOffset = dc.Context.Activity.LocalTimestamp.GetValueOrDefault().Offset;
-            return serverLocalTime.Subtract(utcOffset);
+            return utcTime.Add(utcOffset);
         }
 
         public static string ToUserFriendlyDate(this DateTime dateTime, DateTime? now = null)
