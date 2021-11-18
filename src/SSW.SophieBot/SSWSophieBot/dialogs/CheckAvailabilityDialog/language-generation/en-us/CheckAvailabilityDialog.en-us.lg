@@ -31,7 +31,7 @@
                     "type": "Column",
                     "width": "stretch",
                     "items": [
-                        ${join(where(createArray(Status(profile), ClientInfo(profile), LastSeen(profile)), e => e != ''), ',')}
+                        ${join(createArray(Status(profile), ColumnSet('Client', ClientText(profile)), ColumnSet('Last seen', LastSeen(profile))), ',')}
                     ],
                     "verticalContentAlignment": "Center"
                 }
@@ -95,17 +95,17 @@
 - ELSE:
     - is free
 
-# ClientInfo(profile)
+# ClientText(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - ${if(!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false, ColumnSet('Client', '\\\\*\\\\*\\\\*'), ColumnSet('Client', join(profile.clients, ',')))}
+    - ${if(!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false, '\\\\*\\\\*\\\\*', join(profile.clients, ','))}
 - ELSE:
-    -
+    - ```—```
 
 # LastSeen(profile)
 - IF: ${ profile.lastSeenAt != null }
-    - ${ColumnSet('Last seen',  LastSeenText(profile.lastSeenAt.siteId, profile.lastSeenTime))}
+    - ${LastSeenText(profile.lastSeenAt.siteId, profile.lastSeenTime)}
 - ELSE:
-    -
+    - ```—```
 
 # LastSeenText(location, time)
 - IF: ${ location != null && time != null }
@@ -115,7 +115,7 @@
 - ELSEIF: ${ time == null }:
     - ${location}
 - ELSE:
-    - 
+    - ```—```
 
 # ColumnSet(name, value)
 -```
