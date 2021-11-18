@@ -1,6 +1,4 @@
-[Profile](profile.en-us.lg)
 [BillableList](billableList.en-us.lg)
-[GroupList](groupList.en-us.lg)
 [GetExpertsByLocationDialog](GetExpertsByLocationDialog.en-us.lg)
 
 # SendActivity_5SdoY2()
@@ -29,14 +27,15 @@
 # SendActivity_WXpguy()
 [Activity
     Attachments = ${json(BillableEmployeesList(
-        if(dialog.foreach.pageindex == 1, CradTitle(dialog.locationEntity, count(turn.billableEmployees.employees)), GetNextTitle(dialog.foreach.pageindex, 10)), 
+        if(dialog.foreach.pageindex == 1, CardTitle(dialog.locationEntity, count(turn.billableEmployees.employees)), GetNextTitle(dialog.foreach.pageindex, 10)), 
         turn.clientNow,
         if(dialog.foreach.pageindex == 1, true, false),
         dialog.foreach.page,
         dialog.foreach.pageindex * 10 >= count(turn.billableEmployees.employees),
         '',
-        false))}
+        false,
+        'GetCurrentEmployeesOnLocation'))}
 ]
 
-# CradTitle(location, count)
+# CardTitle(location, count)
 - ```${location} - All [${count}]```
