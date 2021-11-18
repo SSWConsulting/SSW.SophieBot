@@ -136,7 +136,7 @@
 - ELSE:
     - ```—```
 
-# ClickableAvatar(avatarUrl, firstName, lastName, columnWidth, avatarSize)
+# ClickableAvatar(avatarUrl, firstName, lastName, columnWidth, avatarSize, sourceIntent)
 - ```
 {
     "type": "Column",
@@ -155,6 +155,7 @@
         "type": "Action.Submit",
         "data": {
             "intent": "GetProfile",
+            ${IntentRedirectTelemetry('ClickableAvatar', sourceIntent, avatarUrl)},
             "contact": {
                 "firstName": [
                     "${firstName}"
@@ -172,7 +173,7 @@
 }
 ```
 
-# ClickableName(displayName, firstName, lastName, columnWidth, fontSize, spacing)
+# ClickableName(displayName, firstName, lastName, columnWidth, fontSize, spacing, sourceIntent)
 - ```
 {
     "type": "Column",
@@ -191,6 +192,7 @@
         "type": "Action.Submit",
         "data": {
             "intent": "GetProfile",
+            ${IntentRedirectTelemetry('ClickableName', sourceIntent, displayName)},
             "contact": {
                 "firstName": [
                     "${firstName}"
@@ -229,7 +231,7 @@
     - (${10 * (current - 1) + 1}-${10 * (current - 1) + if(total >= current * 10, 10, total - 10 * (current - 1))})
 
 
-# NameButtons(intent)
+# NameButtons(targetIntent, sourceIntent)
 - ```
 {
     "type": "AdaptiveCard",
@@ -242,7 +244,7 @@
         {
             "type": "ActionSet",
             "actions": [
-                ${join(select(take(turn.employees, 6), employee, NameButton(intent, employee.firstName, employee.lastName)), ',')}
+                ${join(select(take(turn.employees, 6), employee, NameButton(targetIntent, sourceIntent, employee.firstName, employee.lastName)), ',')}
             ],
             "height": "stretch"
         }
@@ -252,13 +254,14 @@
 }
 ```
 
-# NameButton(intent, firstName, lastName)
+# NameButton(targetIntent, sourceIntent, firstName, lastName)
 - ```
 {
     "type": "Action.Submit",
     "title": "${firstName} ${lastName}",
     "data": {
-        "intent": "${intent}",
+        "intent": "${targetIntent}",
+        ${IntentRedirectTelemetry('NameButton', sourceIntent, concat(firstName, ' ', lastName))},
         "contact": {
             "firstName": [
                 "${firstName}"
@@ -326,7 +329,7 @@ ${IntranetInfo()}
 - ELSE:
     - 
 
-# GetExpertsButtons(employees, skill, locations)
+# GetExpertsButtons(employees, skill, locations, sourceIntent)
 -```
 {
     "type": "ActionSet",
@@ -336,6 +339,7 @@ ${IntranetInfo()}
             "title": "Show All [${employees.count}]",
             "data": {
                 "intent": "GetExpertsByLocation",
+                ${IntentRedirectTelemetry('Filter', sourceIntent, concat('Show All [', employees.count, ']'))},
                 "location": "All",
                 "skill": "${skill}",
                 "msteams": {
@@ -344,24 +348,25 @@ ${IntranetInfo()}
                 }
             }
         },
-        ${join(select(subArray(locations, 0, if(count(locations) >= 5, 5, count(locations))), location => GetExpertButton(skill, location, Count(location, employees))), ',')}
+        ${join(select(subArray(locations, 0, if(count(locations) >= 5, 5, count(locations))), location => GetExpertButton(skill, location, Count(location, employees), sourceIntent)), ',')}
     ]
 },
 {
     "type": "ActionSet",
     "actions": [
-        ${join(select(if(count(locations) > 5, subArray(locations, 5, count(locations)), []), location => GetExpertButton(skill, location, Count(location, employees))), ',')}
+        ${join(select(if(count(locations) > 5, subArray(locations, 5, count(locations)), []), location => GetExpertButton(skill, location, Count(location, employees), sourceIntent)), ',')}
     ]
 }
 ```
 
-# GetExpertButton(skill, location, number)
+# GetExpertButton(skill, location, number, sourceIntent)
 -``` 
 {
     "type": "Action.Submit",
     "title": "${location} [${number}]",
     "data": {
         "intent": "GetExpertsByLocation",
+        ${IntentRedirectTelemetry('Filter', sourceIntent, concat(location, ' [', number, ']'))},
         "skill": "${skill}",
         "location": "${location}",
         "msteams": {
@@ -380,3 +385,11 @@ ${IntranetInfo()}
 [Activity
     Text = ${SendActivity_LOOiml_text()}
 ]
+
+# LogAction_Text_ZVS43R()
+[Activity
+    Text = ${LogAction_Text_ZVS43R_text()}
+]
+
+# LogAction_Text_ZVS43R_text()
+- ${@redirect}

@@ -1,7 +1,7 @@
 [Icons](icons.en-us.lg)
 [SSWSophieBot](SSWSophieBot.en-us.lg)
 
-# BillableEmployeesList(title, subTitle, isMain, employees, isFinalPage, crmId, isProject)
+# BillableEmployeesList(title, subTitle, isMain, employees, isFinalPage, crmId, isProject, sourceIntent)
 -```
 {
     "type": "AdaptiveCard",
@@ -9,7 +9,7 @@
         ${ListTitle(title, subTitle, isMain)}
         {
             "type": "Container",
-            "items": [${join(select(employees, e, BillableEmployeeRow(e)), ',')}],
+            "items": [${join(select(employees, e, BillableEmployeeRow(e, sourceIntent)), ',')}],
             "bleed": true
         },
         {
@@ -146,13 +146,13 @@
 }
 ```
 
-# BillableEmployeeRow(employee)
+# BillableEmployeeRow(employee, sourceIntent)
 - ```
 {
     "type": "ColumnSet",
     "columns": [
-        ${ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px')},
-        ${ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', 'Small', 'Default')},
+        ${ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', sourceIntent)},
+        ${ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', 'Small', 'Default', sourceIntent)},
         {
             "type": "Column",
             "width": "stretch",

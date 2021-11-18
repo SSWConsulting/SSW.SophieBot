@@ -1,4 +1,3 @@
-[import](common.lg)
 [GetExpertsByLocationDialog](GetExpertsByLocationDialog.en-us.lg)
 
 # SendActivity_52UMzl_text()
@@ -62,7 +61,7 @@
             "text": "Narrow your search...",
             "wrap": true
         },
-        ${GetExpertsButtons(employees, skill, locations)}
+        ${GetExpertsButtons(employees, skill, locations, 'GetPeopleBySkills')}
     ]
 }
 ```

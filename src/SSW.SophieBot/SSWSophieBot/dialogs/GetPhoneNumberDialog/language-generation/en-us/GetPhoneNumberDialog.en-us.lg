@@ -1,4 +1,3 @@
-[import](common.lg)
 [SSWSophieBot](SSWSophieBot.en-us.lg)
 
 # SendActivity_ooStup_text()
@@ -42,5 +41,5 @@
 ]
 # SendActivity_JT0ACh()
 [Activity
-    Attachments = ${json(NameButtons('GetPhoneNumber'))}
+    Attachments = ${json(NameButtons('GetPhoneNumber', 'GetPhoneNumber'))}
 ]
