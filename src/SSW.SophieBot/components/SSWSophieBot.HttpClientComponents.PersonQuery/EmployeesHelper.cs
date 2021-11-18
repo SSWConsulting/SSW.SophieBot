@@ -209,7 +209,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
         public static List<string> GetClientsByDate(DateTime date, List<GetAppointmentModel> appointments)
         {
             var clientAppointments = GetEnumerableAppointmentsByDate(appointments, date)
-                .Where(appointment => !_internalCompanyNames.Contains(appointment.Regarding.ToLower()))
+                .Where(appointment => !_internalCompanyNames.Contains(appointment.Regarding?.ToLower()))
                 .Select(appointment => appointment.Regarding)
                 .Distinct();
 
@@ -226,12 +226,12 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 
         public static bool IsOnClientWorkFunc(GetAppointmentModel appointment)
         {
-            return !_internalCompanyNames.Contains(appointment.Regarding.ToLower());
+            return !_internalCompanyNames.Contains(appointment.Regarding?.ToLower());
         }
 
         public static bool IsOnInternalWorkFunc(GetAppointmentModel appointment)
         {
-            return _internalCompanyNames.Contains(appointment.Regarding.ToLower())
+            return _internalCompanyNames.Contains(appointment.Regarding?.ToLower())
                 && !IsOnLeaveFunc(appointment);
         }
 
@@ -256,13 +256,6 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
         public static bool IsFree(GetEmployeeModel employee, DateTime date)
         {
             return !GetEnumerableAppointmentsByDate(employee.Appointments, date).Any();
-        }
-
-        public static DateTime ToUserLocalTime(DialogContext dc, DateTime dateTime)
-        {
-            var utcDate = dateTime.ToUniversalTime();
-            var utcOffset = dc.Context.Activity.LocalTimestamp.GetValueOrDefault().Offset;
-            return utcDate.Add(utcOffset);
         }
 
         private static long GetTicksFrom(DateTimeOffset date)
@@ -314,7 +307,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                     && date.Date.Ticks >= GetTicksFrom(appointment.Start));
         }
 
-        public static string GetFreeDate(IEnumerable<GetAppointmentModel> appointments, DateTime startTime, bool isFree = true, DateTime? now = null)
+        public static string GetFreeDate(IEnumerable<GetAppointmentModel> appointments, DateTime startTime, bool isFree = true, DateTime? clientNow = null)
         {
             var checkDate = startTime.Date;
 
@@ -327,7 +320,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                     ? !checkAppointments.Any(appointment => !IsOnInternalWorkFunc(appointment))
                     : checkAppointments.Any(appointment => !IsOnInternalWorkFunc(appointment)))
                 {
-                    return checkDate.ToUserFriendlyDate(now);
+                    return checkDate.ToUserFriendlyDate(clientNow);
                 }
 
                 do
