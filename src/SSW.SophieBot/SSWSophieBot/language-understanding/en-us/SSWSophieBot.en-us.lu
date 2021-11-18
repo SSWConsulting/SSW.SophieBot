@@ -86,12 +86,16 @@
 
 @ phraselist SkillInfoPhraseList(interchangeable) disabledForAllModels =
 	- skill,skills,tech,technology,expertise,experience,knowledge,specialty,good at
+	
+@ phraselist CalendarPhraseList(interchangeable) disabledForAllModels =
+	- calendar,schedule,booking info,appointments
 
 @ ml profileProperty
 @ profileProperty = 
 	- @ ml emailAddressProperty usesFeature EmailAddressPhraseList
 	- @ ml phoneNumberProperty usesFeature PhoneNumberPhraseList
 	- @ ml skillProperty usesFeature SkillInfoPhraseList
+	- @ ml calendarProperty usesFeature CalendarPhraseList
 
 @ ml skill
 
@@ -520,20 +524,16 @@
 - let me know when Adam's booked
 
 # GetCalendar
-- show {@contact={@firstname=adam}}'s calendar
-- show calendar for {@contact={@firstname=adam} {@lastname=cogan}}
-- what's {@contact={@firstname=john}}'s calendar?
-- what is the calendar of {@contact={@firstname=talor}}
-- give me {@contact={@firstname=elise}}'s calendar
-- i want to see {@contact={@firstname=michael}}'s appointments
-- do you have {@contact={@firstname=kiki}}'s schedule?
+- show {@contact={@firstname=adam}}'s {@profileProperty={@calendarProperty=calendar}}
+- show me {@contact={@firstname=jacks}} {@profileProperty={@calendarProperty=schedule}}
+- show {@profileProperty={@calendarProperty=calendar}} for {@contact={@firstname=adam} {@lastname=cogan}}
+- what's {@contact={@firstname=john}}'s {@profileProperty={@calendarProperty=calendar}}?
+- what is the {@profileProperty={@calendarProperty=calendar}} of {@contact={@firstname=talor}}
+- give me {@contact={@firstname=elise}}'s {@profileProperty={@calendarProperty=calendar}}
+- i want to see {@contact={@firstname=michael}}'s {@profileProperty={@calendarProperty=appointments}}
+- do you have {@contact={@firstname=kiki}}'s {@profileProperty={@calendarProperty=calendar}}?
 
-@ phraseList CalendarPhraseList(interchangeable) disabledForAllModels =
-	- calendar
-	- schedule
-	- appointments
-@ intent GetCalendar usesFeature CalendarPhraseList
-
+@ intent GetCalendar usesFeature contact, CalendarPhraseList
 
 # GetFreeDay
 - when ({@presentBe} | {@futureBe}) [not] {@contact} [be] [not] ({@available} | {@unavailable})[?]
