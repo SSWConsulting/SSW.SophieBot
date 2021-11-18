@@ -64,7 +64,9 @@
         {
             "type": "ActionSet",
             "actions": [
-                    ${ViewCalendarAction(employee.displayName, employee.bookedDays)}
+                    ${MoreBookingInfoAction()},
+                    ${ViewCalendarAction(employee.displayName, employee.bookedDays)},
+                    ${ViewProfileCardAction(employee.firstName, employee.lastName)}
             ]
         }
     ]
@@ -81,4 +83,4 @@
 - IF: ${ utcNow('ddd, dd/MM/yyyy') == date}
     - is ${if(isFree, 'free', 'not free')} today - ${date}.
 - ELSE:
-    - will ${if(isFree, 'free', 'not be free')} at ${date}.
+    - will ${if(isFree, 'be free', 'not be free')} on ${date}.

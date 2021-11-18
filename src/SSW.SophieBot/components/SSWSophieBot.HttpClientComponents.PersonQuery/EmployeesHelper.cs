@@ -336,7 +336,24 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                 } while (checkDate.DayOfWeek == DayOfWeek.Saturday || checkDate.DayOfWeek == DayOfWeek.Sunday);
             }
 
-            return isFree ? appointmentsEndDate.DateTime.AddDays(1).ToUserFriendlyDate() : string.Empty;
+            return isFree ? GetNextWeekDay(appointmentsEndDate.DateTime).ToUserFriendlyDate() : string.Empty;
+        }
+
+        private static DateTime GetNextWeekDay(DateTime date)
+        {
+            var daysToAdd = 1;
+
+            if (date.DayOfWeek == DayOfWeek.Saturday)
+            {
+                daysToAdd = 2;
+            }
+
+            if (date.DayOfWeek == DayOfWeek.Friday)
+            {
+                daysToAdd = 3;
+            }
+
+            return date.AddDays(daysToAdd);
         }
     }
 }
