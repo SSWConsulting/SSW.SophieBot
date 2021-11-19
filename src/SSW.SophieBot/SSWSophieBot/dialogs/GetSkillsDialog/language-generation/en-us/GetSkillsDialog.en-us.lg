@@ -43,10 +43,3 @@
 He also knows:
 <br/>
 ${turn.intermediateSkills}```
-# LogAction_Text_1PTJ5w()
-[Activity
-    Text = ${LogAction_Text_1PTJ5w_text()}
-]
-
-# LogAction_Text_1PTJ5w_text()
-- ${dialog.nameEntity}

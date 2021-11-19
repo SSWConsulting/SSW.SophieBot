@@ -385,11 +385,3 @@ ${IntranetInfo()}
 [Activity
     Text = ${SendActivity_LOOiml_text()}
 ]
-
-# LogAction_Text_ZVS43R()
-[Activity
-    Text = ${LogAction_Text_ZVS43R_text()}
-]
-
-# LogAction_Text_ZVS43R_text()
-- ${@redirect}
