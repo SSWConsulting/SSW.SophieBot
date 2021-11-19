@@ -35,7 +35,6 @@
 # SendActivity_x9ehdr_text()
 - Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
 
-> NOTE: Use ZERO WIDTH SPACE + SPACE to achive the space before FreeDate function. It's a workaround for Adaptive Cards in Teams.
 # SendActivity_cH9ywD_attachment_u8CWcb(employee)
 -```
 {
@@ -46,14 +45,13 @@
         {
             "type": "ColumnSet",
             "columns": [
-                ${ClickableName(employee.displayName, employee.firstName, employee.lastName, 'auto', 'Default', 'None')},
                 {
                     "type": "Column",
                     "width": "auto",
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "​​ ${AvailabilityText(employee.freeDate, dialog.isFree)}",
+                            "text": "${employee.displayName} ${AvailabilityText(employee.freeDate, dialog.isFree)}",
                             "wrap": true
                         }
                     ],
