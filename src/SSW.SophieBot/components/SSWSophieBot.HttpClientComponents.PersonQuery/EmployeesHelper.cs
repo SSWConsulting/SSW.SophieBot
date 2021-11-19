@@ -209,7 +209,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
         public static List<string> GetClientsByDate(DateTime date, List<GetAppointmentModel> appointments)
         {
             var clientAppointments = GetEnumerableAppointmentsByDate(appointments, date)
-                .Where(appointment => !_internalCompanyNames.Contains(appointment.Regarding.ToLower()))
+                .Where(appointment => !_internalCompanyNames.Contains(appointment.Regarding?.ToLower()))
                 .Select(appointment => appointment.Regarding)
                 .Distinct();
 
@@ -226,12 +226,12 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
 
         public static bool IsOnClientWorkFunc(GetAppointmentModel appointment)
         {
-            return !_internalCompanyNames.Contains(appointment.Regarding.ToLower());
+            return !_internalCompanyNames.Contains(appointment.Regarding?.ToLower());
         }
 
         public static bool IsOnInternalWorkFunc(GetAppointmentModel appointment)
         {
-            return _internalCompanyNames.Contains(appointment.Regarding.ToLower())
+            return _internalCompanyNames.Contains(appointment.Regarding?.ToLower())
                 && !IsOnLeaveFunc(appointment);
         }
 
