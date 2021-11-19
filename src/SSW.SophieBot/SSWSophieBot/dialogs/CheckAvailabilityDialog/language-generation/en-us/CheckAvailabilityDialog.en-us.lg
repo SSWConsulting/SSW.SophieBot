@@ -1,4 +1,4 @@
-[import](common.lg)
+[common](common.en-us.lg)
 [Icons](icons.en-us.lg)
 [SSWSophieBot](SSWSophieBot.en-us.lg)
 
@@ -26,7 +26,7 @@
         {
             "type": "ColumnSet",
             "columns": [
-                ${ClickableAvatar(profile.avatarUrl, profile.firstName, profile.lastName, 'auto', '70px')},
+                ${ClickableAvatar(profile.avatarUrl, profile.firstName, profile.lastName, 'auto', '70px', 'CheckAvailability')},
                 {
                     "type": "Column",
                     "width": "stretch",
@@ -65,7 +65,7 @@
                 {
                     "type": "ColumnSet",
                     "columns": [
-                        ${ClickableName(profile.displayName, profile.firstName, profile.lastName, 'auto', 'Default', 'None')},
+                        ${ClickableName(profile.displayName, profile.firstName, profile.lastName, 'auto', 'Default', 'None', 'CheckAvailability')},
                         {
                             "type": "Column",
                             "width": "auto",
@@ -159,7 +159,7 @@
 
 # SendActivity_27H1kR()
 [Activity
-    Attachments = ${json(NameButtons('CheckAvailability'))}
+    Attachments = ${json(NameButtons('CheckAvailability', 'CheckAvailability'))}
 ]
 
 # SendActivity_FASez8()

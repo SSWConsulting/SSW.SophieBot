@@ -1,4 +1,4 @@
-[import](common.lg)
+[common](common.en-us.lg)
 [SSWSophieBot](SSWSophieBot.en-us.lg)
 
 # SendActivity_sm8AiH_text()
@@ -10,7 +10,7 @@
 
 # SendActivity_CwfI6O()
 [Activity
-    Attachments = ${json(NameButtons('GetFreeDay'))}
+    Attachments = ${json(NameButtons('GetFreeDay', 'GetFreeDay'))}
 ]
 
 # SendActivity_cH9ywD()
@@ -46,7 +46,7 @@
         {
             "type": "ColumnSet",
             "columns": [
-                ${ClickableName(employee.displayName, employee.firstName, employee.lastName, 'auto', 'Default', 'None')},
+                ${ClickableName(employee.displayName, employee.firstName, employee.lastName, 'auto', 'Default', 'None', 'GetFreeDay')},
                 {
                     "type": "Column",
                     "width": "auto",
@@ -64,7 +64,7 @@
         {
             "type": "ActionSet",
             "actions": [
-                    ${ViewCalendarAction(employee.displayName, employee.bookedDays)}
+                    ${ViewCalendarAction(employee.displayName, employee.bookedDays, 'GetFreeDay')}
             ]
         }
     ]

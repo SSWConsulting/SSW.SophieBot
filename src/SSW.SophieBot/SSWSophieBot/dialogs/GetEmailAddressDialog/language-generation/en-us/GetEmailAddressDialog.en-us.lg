@@ -1,4 +1,3 @@
-[import](common.lg)
 [SSWSophieBot](SSWSophieBot.en-us.lg)
 
 # SendActivity_ojOPMX_text()
@@ -43,5 +42,5 @@
 ]
 # SendActivity_3TXOcW()
 [Activity
-    Attachments = ${json(NameButtons('GetEmailAddress'))}
+    Attachments = ${json(NameButtons('GetEmailAddress', 'GetEmailAddress'))}
 ]

@@ -106,6 +106,28 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "6GpwgQ"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "yJh7Ux"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetProfile",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "h88r5H"
@@ -158,6 +180,28 @@
           },
           "name": "SSWSophieBot.OnIntent_GetEmailAddress",
           "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "LTqbpg"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "h36QgH"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetEmailAddress",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -214,6 +258,28 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "x3tHdF"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "jWvyfh"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetPhoneNumber",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "bCD1pL"
@@ -266,6 +332,28 @@
           },
           "name": "SSWSophieBot.OnIntent_GetProfile",
           "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "HpWt5c"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "jUNJfD"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetSkills",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -322,6 +410,28 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "c2sktJ"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "qG8jw8"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetPeopleBasedOnLocation",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "Yl7beK"
@@ -375,6 +485,28 @@
           },
           "name": "SSWSophieBot.OnIntent_GetExpertsByLocation",
           "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ATIN53"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "pdzSoX"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetExpertsByLocation",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -435,6 +567,28 @@
           },
           "name": "SSWSophieBot.OnIntent_GetEmployeesByProject",
           "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "LRUUVE"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "K7tQJE"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetEmployeesOnProject",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -516,6 +670,28 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "JwY7xl"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "rjeADS"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetAvailableExpertsByLocation",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "Phb4f8"
@@ -572,6 +748,28 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ncTwLj"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "6OFpyA"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "CheckAvailability",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "64qiAl"
@@ -624,6 +822,28 @@
           },
           "name": "SSWSophieBot.OnIntent_GetPeopleBySkills",
           "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "g8Qp9U"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "SotIHa"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetPeopleBySkills",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -679,6 +899,28 @@
           },
           "name": "SSWSophieBot.OnIntent_GetPeopleOnClientWork",
           "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "hIiUwf"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "dIiB7E"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetPeopleOnClientWork",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -757,6 +999,28 @@
           "$designer": {
             "id": "CnGhT5"
           }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "mhUz0R"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "sxega6"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetCurrentEmployeesOnLocation",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1107,7 +1371,30 @@
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
             "id": "eL4ML7"
-          }
+          },
+          "name": "SSWSophieBot.OnIntent_GetCalendar"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "hVuS50"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "1qPfSI"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetCalendar",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1144,6 +1431,28 @@
           },
           "name": "SSWSophieBot.OnIntent_GetFreeDay",
           "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "dv12ns"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "C0yHAT"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetFreeDay",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.EmitEvent",

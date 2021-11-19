@@ -1,4 +1,4 @@
-[import](common.lg)
+[common](common.en-us.lg)
 [BillableList](billableList.en-us.lg)
 
 # SendActivity_3tfngC()
@@ -17,7 +17,8 @@
         dialog.foreach.page, 
         dialog.foreach.pageindex * 10 >= count(turn.employees), 
         turn.resultCrmId,
-        turn.isProject))}
+        turn.isProject,
+        'GetEmployeesOnProject'))}
 ]
 
 # CardTitle()

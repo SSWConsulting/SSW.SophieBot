@@ -1,4 +1,3 @@
-[import](common.lg)
 [SSWSophieBot](SSWSophieBot.en-us.lg)
 
 # SendActivity_sOvRvR()
@@ -29,7 +28,7 @@
 
 # SendActivity_14L7mP()
 [Activity
-    Attachments = ${json(NameButtons('GetSkills'))}
+    Attachments = ${json(NameButtons('GetSkills', 'GetSkills'))}
 ]
 # SendActivity_EPfIcV()
 [Activity
@@ -44,10 +43,3 @@
 He also knows:
 <br/>
 ${turn.intermediateSkills}```
-# LogAction_Text_1PTJ5w()
-[Activity
-    Text = ${LogAction_Text_1PTJ5w_text()}
-]
-
-# LogAction_Text_1PTJ5w_text()
-- ${dialog.nameEntity}
