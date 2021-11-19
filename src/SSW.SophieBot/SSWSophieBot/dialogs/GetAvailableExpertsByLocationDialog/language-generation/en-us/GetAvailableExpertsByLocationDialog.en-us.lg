@@ -1,4 +1,4 @@
-[import](common.lg)
+[common](common.en-us.lg)
 [Icons](icons.en-us.lg)
 [SSWSophieBot](SSWSophieBot.en-us.lg)
 
@@ -131,8 +131,8 @@ ${freeDays}/20 days
 
 # BodyColumns(employee)
 - ${join(createArray(
-   ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
-   ClickableName(employee.displayName, employee.firstName, employee.lastName, '100px', 'Small', 'Default'),
+   ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetAvailableExpertsByLocation'), 
+   ClickableName(employee.displayName, employee.firstName, employee.lastName, '100px', 'Small', 'Default', 'GetAvailableExpertsByLocation'),
    BodyColumn(FreeDays(employee.nextClient, employee.freeDays))), ',')}
 
 # BodyColumn(text)

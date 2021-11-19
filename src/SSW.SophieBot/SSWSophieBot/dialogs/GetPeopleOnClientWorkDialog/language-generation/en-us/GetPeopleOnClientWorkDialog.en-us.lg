@@ -1,4 +1,4 @@
-[import](common.lg)
+[common](common.en-us.lg)
 [Icons](icons.en-us.lg)
 [SSWSophieBot](SSWSophieBot.en-us.lg)
 
@@ -46,6 +46,7 @@
                         "intent": "GetPeopleOnClientWork",
                         "available": "${dialog.availableEntity}",
                         "internal": "${dialog.internalEntity}",
+                        ${IntentRedirectTelemetry('Filter', 'GetPeopleOnClientWork', concat('Show All [', count(employees), ']'))},
                         "geographyV2": [
                             {
                                 "location": "",
@@ -88,6 +89,7 @@
         "intent": "GetPeopleOnClientWork",
         "available": "${dialog.availableEntity}",
         "internal": "${dialog.internalEntity}",
+        ${IntentRedirectTelemetry('Filter', 'GetPeopleOnClientWork', concat(location, ' [', number, ']'))},
         "geographyV2": [
             {
                 "location": "${location}",
@@ -263,14 +265,14 @@
 # BodyColumns(employee)
 - IF: ${ dialog.booked }
     - ${join(createArray(
-            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
-            ClickableName(employee.displayName, employee.firstName, employee.lastName, '150px', 'Small', 'Default'),
+            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetPeopleOnClientWork'), 
+            ClickableName(employee.displayName, employee.firstName, employee.lastName, '150px', 'Small', 'Default', 'GetPeopleOnClientWork'),
             ClientColumn(employee.clients, 'stretch', 'Center')
         ), ',')}
 - ELSE:
     - ${join(createArray(
-            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
-            ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', 'Small', 'Default'),
+            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetPeopleOnClientWork'), 
+            ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', 'Small', 'Default', 'GetPeopleOnClientWork'),
             BodyColumn(DaysText(employee.BilledDays, true), 'stretch'), 
             ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), 
             BodyColumn(employee.LastSeen, 'stretch')

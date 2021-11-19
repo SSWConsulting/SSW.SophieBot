@@ -19,7 +19,7 @@
 }
 ```
 
-# ViewCalendarAction(displayName, bookedDays)
+# ViewCalendarAction(displayName, bookedDays, sourceIntent)
 - ```
 {
     "type": "Action.Submit",
@@ -28,6 +28,7 @@
     {
         "intent": "GetCalendar",
         "contact": ${dialog.nameEntity},
+        ${IntentRedirectTelemetry('ViewCalendar', sourceIntent, 'View Calendar')},
         "msteams": {
             "type": "messageBack",
 			"displayText": "Show calendar for ${displayName} ${BookedDaysText(bookedDays)}"
@@ -66,3 +67,12 @@
     - (${bookedDays} days booked 🗓)
 - ELSE:
     - 
+
+# IntentRedirectTelemetry(actionType, sourceIntent, action)
+- ```
+"redirect": {
+    "actionType": "${actionType}",
+    "sourceIntent": "${sourceIntent}",
+    "action": "${action}"
+}
+```

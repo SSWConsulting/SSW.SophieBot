@@ -32,5 +32,5 @@
 
 # SendActivity_1wGn1P()
 [Activity
-    Attachments = ${json(NameButtons('GetProfile'))}
+    Attachments = ${json(NameButtons('GetProfile', 'GetProfile'))}
 ]

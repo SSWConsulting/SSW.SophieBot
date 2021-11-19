@@ -1,4 +1,6 @@
-# EmployeesGroupActionCard(title, subTitle, text, groupedEmployees, location, entities)
+[common](common.en-us.lg)
+
+# EmployeesGroupActionCard(title, subTitle, text, groupedEmployees, location, entities, sourceIntent)
 - ```
 {
     "type": "AdaptiveCard",
@@ -10,7 +12,7 @@
             "type": "TextBlock",
             "text": "Narrow your search..."
         },
-		${join(select(groupedEmployees.sets, set => GetActionSet(set, location, entities)), ',')}
+		${join(select(groupedEmployees.sets, set => GetActionSet(set, location, entities, sourceIntent)), ',')}
     ]
 }
 ```
@@ -55,11 +57,11 @@
 - ELSE: 
     - ``````
 
-# GetActionSet(groupSet, location, entities)
+# GetActionSet(groupSet, location, entities, sourceIntent)
 - ```
 {
     "type": "ActionSet",
-    "actions": [${join(select(groupSet.groups, group => GetAction(group, location, entities)), ',')}],
+    "actions": [${join(select(groupSet.groups, group => GetAction(group, location, entities, sourceIntent)), ',')}],
     "height": "stretch"
 }
 ```
@@ -67,7 +69,7 @@
 # GetOriginalTitle(location, category)
 - ```${location} - ${category}```
 
-# GetAction(group, location, entities)
+# GetAction(group, location, entities, sourceIntent)
 - ```
 {
     "type": "Action.Submit",
@@ -78,6 +80,7 @@
         "skill" : "${group.key}",
         "location": "${location}",
         "title": "${replace(GetOriginalTitle(location, group.title), 'Show ', '')}",
+        ${IntentRedirectTelemetry('Filter', sourceIntent, group.title)},
 		${entities},
         "msteams": {
             "type": "messageBack",

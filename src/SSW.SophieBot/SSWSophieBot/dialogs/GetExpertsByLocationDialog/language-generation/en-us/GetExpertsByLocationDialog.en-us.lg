@@ -1,4 +1,3 @@
-[import](common.lg)
 [Icons](icons.en-us.lg)
 [BillableList](billableList.en-us.lg)
 [SSWSophieBot](SSWSophieBot.en-us.lg)
@@ -24,7 +23,8 @@
         dialog.foreach.page,
         dialog.foreach.pageindex * 10 >= count(turn.billableEmployees.employees),
         '',
-        false))}
+        false,
+        'GetExpertsByLocation'))}
 ]
 
 # GetNextTitle(pageIndex, pageSize)
@@ -107,8 +107,8 @@
 {
     "type": "ColumnSet",
     "columns": [
-        ${ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px')},
-        ${ClickableName(concat(employee.firstName, ' ', employee.lastName), employee.firstName, employee.lastName, 'stretch', 'Small', 'Default')},
+        ${ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetExpertsByLocation')},
+        ${ClickableName(concat(employee.firstName, ' ', employee.lastName), employee.firstName, employee.lastName, 'stretch', 'Small', 'Default', 'GetExpertsByLocation')},
         {
             "type": "Column",
             "width": "stretch",
@@ -179,7 +179,7 @@
             "text": "Narrow your search...",
             "wrap": true
         },
-        ${GetExpertsButtons(employees, skill, locations)}
+        ${GetExpertsButtons(employees, skill, locations, 'GetExpertsByLocation')}
     ]
 }
 ```
