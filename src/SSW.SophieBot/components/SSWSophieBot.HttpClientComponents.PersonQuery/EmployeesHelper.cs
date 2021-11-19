@@ -336,10 +336,10 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                 } while (checkDate.DayOfWeek == DayOfWeek.Saturday || checkDate.DayOfWeek == DayOfWeek.Sunday);
             }
 
-            return isFree ? GetNextWeekDay(appointmentsEndDate.DateTime).ToUserFriendlyDate() : string.Empty;
+            return isFree ? GetNextWeekday(appointmentsEndDate.DateTime).ToUserFriendlyDate() : string.Empty;
         }
 
-        private static DateTime GetNextWeekDay(DateTime date)
+        private static DateTime GetNextWeekday(DateTime date)
         {
             var daysToAdd = 1;
 
