@@ -50,7 +50,7 @@
                     },
                     {
                         "type": "TextBlock",
-                        "text": "${date}",
+                        "text": "Available: ${date}",
                         "wrap": true,
                         "isSubtle": true
                     }
