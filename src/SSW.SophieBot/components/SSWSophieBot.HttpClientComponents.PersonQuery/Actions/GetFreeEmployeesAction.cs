@@ -44,7 +44,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             }
 
             var date = !string.IsNullOrEmpty(dateString)
-                ? DateTime.Parse(dateString).ToUserLocalTime(dc).AddHours(9)
+                ? DateTime.Parse(dateString).FromUserLocalTime(dc).AddHours(9)
                 : DateTime.Now.ToUniversalTime();
 
             var result = EmployeesHelper.FilterDevelopers(employees).Select(employee =>
