@@ -126,6 +126,16 @@
                   "format": "dddd d MMMM",
                   "resultProperty": "turn.formatDate"
                 }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "ClientNowAction",
+                  "$designer": {
+                    "id": "1fqjqj"
+                  },
+                  "resultProperty": "turn.formatDate",
+                  "format": "dddd d MMMM"
+                }
               ]
             },
             {
