@@ -38,6 +38,31 @@
 }
 ```
 
+# ViewProfileCardAction(firstName, lastName, sourceIntent)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "View Profile Card",
+    "data": 
+    {
+        "intent": "GetProfile",
+        ${IntentRedirectTelemetry('ViewProfileCard', sourceIntent, 'View Profile Card')},
+        "contact": {
+            "firstName": [
+                "${firstName}"
+            ],
+            "lastName": [
+                "${lastName}"
+            ]
+        },
+        "msteams": {
+            "type": "messageBack",
+            "displayText": "${firstName} ${lastName}"
+        }
+    }
+}
+```
+
 # BookedDaysText(bookedDays)
 - IF: ${bookedDays > 0}
     - (${bookedDays} days booked 🗓)
