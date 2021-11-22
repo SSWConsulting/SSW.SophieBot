@@ -52,3 +52,6 @@
     "action": "${action}"
 }
 ```
+
+# IsNonEmptyString(str)
+- ${ exists(str) && length(trim(str)) > 0 }
