@@ -1,3 +1,4 @@
+[common](common.en-us.lg)
 [SSWSophieBot](SSWSophieBot.en-us.lg)
 
 # SendActivity_sOvRvR()
@@ -36,10 +37,26 @@
 ]
 
 # SendActivity_EPfIcV_text()
-- ```**${turn.displayName}** knows:
+- IF: ${ IsNonEmptyString(turn.advancedSkills) && IsNonEmptyString(turn.intermediateSkills) }
+    - ```
+**${turn.displayName}** knows: 
 <br/>
-**${turn.advancedSkills}**
+**${turn.advancedSkills}** 
 <br/><br/>
-He also knows:
+He also knows: 
 <br/>
-${turn.intermediateSkills}```
+${turn.intermediateSkills}
+      ```
+- ELSEIF: ${ IsNonEmptyString(turn.advancedSkills) }
+    - ```
+**${turn.displayName}** knows: <br/>
+**${turn.advancedSkills}**
+     ```
+- ELSEIF: ${ IsNonEmptyString(turn.intermediateSkills) }
+    - ```
+**${turn.displayName}** knows: <br/>
+${turn.intermediateSkills}
+     ```
+- ELSE:
+    - **${turn.displayName}** has no skills.
+
