@@ -5,11 +5,18 @@ namespace SSWSophieBot.Components
 {
     public static class ComponentHelper
     {
-        public static DateTime ToUserLocalTime(this DateTime dateTime, DialogContext dc)
+        public static DateTime ToUserLocalTime(this DateTime serverTime, DialogContext dc)
         {
-            var serverLocalTime = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+            serverTime = DateTime.SpecifyKind(serverTime, DateTimeKind.Utc);
             var utcOffset = dc.Context.Activity.LocalTimestamp.GetValueOrDefault().Offset;
-            return serverLocalTime.Subtract(utcOffset);
+            return serverTime.Add(utcOffset);
+        }
+
+        public static DateTime FromUserLocalTime(this DateTime userLocalTime, DialogContext dc)
+        {
+            var utcUserLocalTime = DateTime.SpecifyKind(userLocalTime, DateTimeKind.Utc);
+            var utcOffset = dc.Context.Activity.LocalTimestamp.GetValueOrDefault().Offset;
+            return utcUserLocalTime.Subtract(utcOffset);
         }
 
         public static string ToUserFriendlyDate(this DateTime dateTime, DateTime? now = null)

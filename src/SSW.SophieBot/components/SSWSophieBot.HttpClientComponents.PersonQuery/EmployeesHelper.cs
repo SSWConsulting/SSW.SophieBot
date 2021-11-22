@@ -258,13 +258,6 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             return !GetEnumerableAppointmentsByDate(employee.Appointments, date).Any();
         }
 
-        public static DateTime ToUserLocalTime(DialogContext dc, DateTime dateTime)
-        {
-            var serverLocalTime = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
-            var utcOffset = dc.Context.Activity.LocalTimestamp.GetValueOrDefault().Offset;
-            return serverLocalTime.Subtract(utcOffset);
-        }
-
         private static long GetTicksFrom(DateTimeOffset date)
         {
             return date.UtcDateTime.Date.Ticks;
@@ -314,7 +307,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                     && date.Date.Ticks >= GetTicksFrom(appointment.Start));
         }
 
-        public static string GetFreeDate(IEnumerable<GetAppointmentModel> appointments, DateTime startTime, bool isFree = true, DateTime? now = null)
+        public static string GetFreeDate(IEnumerable<GetAppointmentModel> appointments, DateTime startTime, bool isFree = true, DateTime? clientNow = null)
         {
             var checkDate = startTime.Date;
 
@@ -327,7 +320,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                     ? !checkAppointments.Any(appointment => !IsOnInternalWorkFunc(appointment))
                     : checkAppointments.Any(appointment => !IsOnInternalWorkFunc(appointment)))
                 {
-                    return checkDate.ToUserFriendlyDate(now);
+                    return checkDate.ToUserFriendlyDate(clientNow);
                 }
 
                 do
