@@ -38,7 +38,7 @@
 }
 ```
 
-# ViewProfileCardAction(firstName, lastName)
+# ViewProfileCardAction(firstName, lastName, sourceIntent)
 - ```
 {
     "type": "Action.Submit",
@@ -46,6 +46,7 @@
     "data": 
     {
         "intent": "GetProfile",
+        ${IntentRedirectTelemetry('ViewProfileCard', sourceIntent, 'View Profile Card')},
         "contact": {
             "firstName": [
                 "${firstName}"

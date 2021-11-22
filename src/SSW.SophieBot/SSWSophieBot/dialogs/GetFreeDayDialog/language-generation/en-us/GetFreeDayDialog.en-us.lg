@@ -64,7 +64,7 @@
             "actions": [
                     ${MoreBookingInfoAction()},
                     ${ViewCalendarAction(employee.displayName, employee.bookedDays, 'GetFreeDay')},
-                    ${ViewProfileCardAction(employee.firstName, employee.lastName)}
+                    ${ViewProfileCardAction(employee.firstName, employee.lastName, 'GetFreeDay')}
             ]
         }
     ]
