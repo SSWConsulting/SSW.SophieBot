@@ -253,6 +253,8 @@
 - what's {@contact={@firstname=jon}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
 - whats {@contact={@firstname=mike}}'s {@profileProperty={@emailAddressProperty=email}}?
 - who knows {@contact={@firstname=john}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
+- whats {@contact={@firstname=jims}} {@profileProperty={@emailAddressProperty=emailaddress}}
+- show me {@contact={@firstname=adams}} {@profileProperty={@emailAddressProperty=email}}
 
 @ intent GetEmailAddress usesFeature contact,EmailAddressPhraseList
 
@@ -408,6 +410,8 @@
 - what's {@contact={@firstname=jims}} {@profileProperty={@phoneNumberProperty=phone number}}?
 - what's {@contact={@firstname=Uly}}'s {@profileProperty={@phoneNumberProperty=mobile}}?
 - what is {@contact={@firstname=Uly}}'s {@profileProperty={@phoneNumberProperty=mobile}}?
+- whats {@contact={@firstname=jims}} {@profileProperty={@phoneNumberProperty=mobile}}
+- show me {@contact={@firstname=adams}} {@profileProperty={@phoneNumberProperty=phone number}}
 
 @ intent GetPhoneNumber usesFeature contact,PhoneNumberPhraseList
 
@@ -470,6 +474,8 @@
 - what is the {@profileProperty={@skillProperty=specialty}} of {@contact={@firstname=John} {@lastname=Smith}}
 - what's {@contact={@firstname=jims}} {@profileProperty={@skillProperty=skills}}
 - what are {@contact={@firstname=toms}} {@profileProperty={@skillProperty=techs}}
+- whats {@contact={@firstname=jims}} {@profileProperty={@skillProperty=skills}}?
+- show me {@contact={@firstname=adams}} {@profileProperty={@skillProperty=techs}}
 
 @ intent GetSkills usesFeature contact,SkillInfoPhraseList
 
@@ -532,6 +538,8 @@
 - give me {@contact={@firstname=elise}}'s {@profileProperty={@calendarProperty=calendar}}
 - i want to see {@contact={@firstname=michael}}'s {@profileProperty={@calendarProperty=appointments}}
 - do you have {@contact={@firstname=kiki}}'s {@profileProperty={@calendarProperty=calendar}}?
+- whats {@contact={@firstname=jims}} {@profileProperty={@calendarProperty=calendar}}
+- show me {@contact={@firstname=adams}} {@profileProperty={@calendarProperty=calendar}}
 
 @ intent GetCalendar usesFeature contact, CalendarPhraseList
 

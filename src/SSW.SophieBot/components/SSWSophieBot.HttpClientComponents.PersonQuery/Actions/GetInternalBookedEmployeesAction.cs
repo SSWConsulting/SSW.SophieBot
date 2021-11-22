@@ -37,7 +37,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery.Actions
             var dateString = dc.GetValue(Date);
 
             var date = dateString != null && dateString != ""
-                ? DateTime.Parse(dateString).ToUserLocalTime(dc).AddHours(9)
+                ? DateTime.Parse(dateString).FromUserLocalTime(dc).AddHours(9)
                 : DateTime.Now.ToUniversalTime();
 
             var result = EmployeesHelper.GetInternalBookedEmployees(EmployeesHelper.FilterDevelopers(employees), date);
