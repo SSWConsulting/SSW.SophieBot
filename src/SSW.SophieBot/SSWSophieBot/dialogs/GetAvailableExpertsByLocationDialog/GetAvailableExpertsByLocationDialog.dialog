@@ -25,44 +25,6 @@
           "value": "=null"
         },
         {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "KVcnEG"
-          },
-          "condition": "=toLower(dialog.locationEntity) == 'remote'",
-          "elseActions": [
-            {
-              "$kind": "GetOrganisationsAction",
-              "$designer": {
-                "id": "Dy86UX"
-              },
-              "sitesProperty": "turn.sswSites"
-            },
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "olVGm3"
-              },
-              "condition": "=exists(dialog.locationEntity) && length(dialog.locationEntity) > 0 && exists(turn.sswSites) && contains(select(turn.sswSites, site, site.name), dialog.locationEntity)",
-              "elseActions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "6tkO7W"
-                  },
-                  "activity": "${SendActivity_6tkO7W()}"
-                },
-                {
-                  "$kind": "Microsoft.EndDialog",
-                  "$designer": {
-                    "id": "SUXCbW"
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        {
           "$kind": "GetProfileAction",
           "$designer": {
             "id": "Ny2ohz"

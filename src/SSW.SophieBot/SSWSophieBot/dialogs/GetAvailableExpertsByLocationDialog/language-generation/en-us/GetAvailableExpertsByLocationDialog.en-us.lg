@@ -44,7 +44,7 @@
                 "items": [
                     {
                         "type": "TextBlock",
-                        "text": "${location} - ${skill} [${count(turn.employees)}]",
+                        "text": "${TitleText(location, skill, count(turn.employees))}",
                         "wrap": true,
                         "size": "Large"
                     },
@@ -61,7 +61,13 @@
     }
     ```
 - ELSE:
-    - ``````
+    -
+
+# TitleText(location, skill, count)
+-IF: ${ exists(location) }
+    - ${location} - ${skill} [${count(turn.employees)}]
+- ELSE:
+    - ${skill} [${count(turn.employees)}]
 
 # Footer()
 - IF: ${ dialog.foreach.pageindex == ceiling(div(count(turn.employees), float('15.0'))) }
@@ -160,10 +166,3 @@ ${freeDays}/20 days
 
 # SendActivity_C1DsiX_text()
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
-# SendActivity_6tkO7W()
-[Activity
-    Text = ${SendActivity_6tkO7W_text()}
-]
-
-# SendActivity_6tkO7W_text()
-- Sorry, I don't know the place you are talking about.
