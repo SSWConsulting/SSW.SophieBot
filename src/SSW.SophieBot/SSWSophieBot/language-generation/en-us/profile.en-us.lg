@@ -323,7 +323,7 @@
                 ${join(where([
                     ViewInPeopleAction(profile), 
                     ViewInCRMAction(profile),
-                    ViewCalendarAction(turn.displayName, turn.employees[0].bookedDays, 'GetProfile')], action, exists(action) && length(action) > 0), ',')}
+                    ViewApponitmentsAction(turn.displayName, turn.employees[0].bookedDays, 'GetProfile')], action, exists(action) && length(action) > 0), ',')}
             ]
         }
     ],

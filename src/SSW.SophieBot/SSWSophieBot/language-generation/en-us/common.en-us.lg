@@ -19,22 +19,22 @@
 }
 ```
 
-# ViewCalendarAction(displayName, bookedDays, sourceIntent)
+# ViewApponitmentsAction(displayName, bookedDays, sourceIntent)
 - ```
 {
     "type": "Action.Submit",
-    "title": "View Calendar",
+    "title": "View Appointments",
     "data": 
     {
         "intent": "GetCalendar",
         "contact": ${dialog.nameEntity},
-        ${IntentRedirectTelemetry('ViewCalendar', sourceIntent, 'View Calendar')},
+        ${IntentRedirectTelemetry('ViewAppointments', sourceIntent, 'View Apponitments')},
         "msteams": {
             "type": "messageBack",
-			"displayText": "Show calendar for ${displayName} ${BookedDaysText(bookedDays)}"
+			"displayText": "Show apponitments for ${displayName} ${BookedDaysText(bookedDays)}"
         }
     },
-    "iconUrl": "${OutlookCalendarIcon()}"
+    "iconUrl": "${Dynamics365Icon()}"
 }
 ```
 

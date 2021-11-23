@@ -46,7 +46,7 @@
                     "items": [
                         {
                             "type": "Image",
-                            "url": "${OutlookCalendarIcon()}",
+                            "url": "${Dynamics365Icon()}",
                             "width": "25px",
                             "height": "25px"
                         }

@@ -63,7 +63,7 @@
             "type": "ActionSet",
             "actions": [
                     ${MoreBookingInfoAction()},
-                    ${ViewCalendarAction(employee.displayName, employee.bookedDays, 'GetFreeDay')},
+                    ${ViewApponitmentsAction(employee.displayName, employee.bookedDays, 'GetFreeDay')},
                     ${ViewProfileCardAction(employee.firstName, employee.lastName, 'GetFreeDay')}
             ]
         }
@@ -78,7 +78,7 @@
     -  seems to have no client work or leave schedule for now.
 
 # AvailabilityDate(date, isFree)
-- IF: ${ utcNow('ddd, dd/MM/yyyy') == date}
-    - is ${if(isFree, 'free', 'not free')} today - ${date}.
+- IF: ${ date == 'Today' }
+    - is ${if(isFree, 'free', 'not free')} ${date}.
 - ELSE:
     - will ${if(isFree, 'be free', 'not be free')} on ${date}.
