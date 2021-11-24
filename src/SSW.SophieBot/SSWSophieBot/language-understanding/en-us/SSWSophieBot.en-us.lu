@@ -139,6 +139,8 @@
 	- working for clients
 	- unavailable
 	- booked
+	- next client appointment
+	- next client booking
 
 @ ml available usesFeature AvailablePhraseList
 @ ml unavailable usesFeature UnavailablePhraseList
@@ -448,8 +450,8 @@
 - who is {@contact={@firstname=karl}} at this company
 - who is {@contact={@firstname=leo}} from microsoft?
 - who is mr. {@contact={@lastname=andy}}
-- who is {@contact={@firstname=Kaique}}?
-- who is {@contact={@firstname=Kaique} {lastname=Biancatti}}?
+- who is {@contact={@firstname=Kaique}}
+- who is {@contact={@firstname=Kaique} {lastname=Biancatti}}
 
 @ intent GetProfile usesFeature contact,profileProperty
 
@@ -552,7 +554,15 @@
 - when will {@contact={@firstname=adam} {@lastname=cogan}} be {@available = internal}?
 
 - when is {@contact={@firstname=calum}} {@available = free}
+- when is {@contact={@firstname=calum}} next {@available = free}
+- when is {@contact={@firstname=calum}} next be {@available = free}
+- when is {@contact={@firstname=calum}}'s next {@available = free}
+- when is {@contact={@firstname=calum}} {@available = bookable}
+- when is {@contact={@firstname=calum}} next {@available = bookable}
+- when is {@contact={@firstname=calum}}'s next {@available = bookable}
 - when is {@contact={@firstname=calum} {@lastname=simpson}} {@available = available}
+- when is {@contact={@firstname=calum}}'s next {@available = available}
+- when is {@contact={@firstname=calum}}'s next {@available = availablity}
 - when is {@contact={@firstname=calum}} {@available = working for ssw}?
 - when is {@contact={@firstname=calum} {@lastname=simpson}} {@available = internal}?
 
@@ -564,9 +574,14 @@
 - on which day won't {@contact={@firstname=piers}} be {@available = free}?
 - what date isn't {@contact={@firstname=piers} {@lastname=sinclair}} {@available = free}?
 
+- when will {@contact={@firstname=adam}} be {@unavailable = on client work}?
+- when is {@contact={@firstname=adam}}'s {@unavailable = next client appointment}?
+- when is {@contact={@firstname=adam}}'s {@unavailable = next client booking}?
+
 @ phraseList GetFreeDayPhraseList(interchangeable) disabledForAllModels =
 	- when
 	- what date
 	- which day
 	- on which day
+
 @ intent GetCalendar usesFeature GetFreeDayPhraseList, available, unavailable
