@@ -406,7 +406,7 @@
           "$designer": {
             "id": "WXzsMI"
           },
-          "name": "SSWSophieBot.OnIntent_GetProfile",
+          "name": "SSWSophieBot.OnIntent_GetPeopleBasedOnLocation",
           "value": "=null"
         },
         {
