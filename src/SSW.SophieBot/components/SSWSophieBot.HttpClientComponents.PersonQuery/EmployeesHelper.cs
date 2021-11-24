@@ -317,7 +317,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             {
                 var checkAppointments = GetEnumerableAppointmentsByDate(appointments, checkDate);
                 if (isFree
-                    ? (checkAppointments.Count() == 0 || checkAppointments.Any(appointment => IsOnInternalWorkFunc(appointment)))
+                    ? (checkAppointments.Count() == 0 || !checkAppointments.Any(appointment => !IsOnInternalWorkFunc(appointment)))
                     : checkAppointments.Any(appointment => IsOnClientWorkFunc(appointment)))
                 {
                     return checkDate.ToUserFriendlyDate(clientNow);
@@ -329,24 +329,7 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
                 } while (checkDate.DayOfWeek == DayOfWeek.Saturday || checkDate.DayOfWeek == DayOfWeek.Sunday);
             }
 
-            return isFree ? GetNextWeekday(appointmentsEndDate.DateTime).ToUserFriendlyDate() : string.Empty;
-        }
-
-        private static DateTime GetNextWeekday(DateTime date)
-        {
-            var daysToAdd = 1;
-
-            if (date.DayOfWeek == DayOfWeek.Saturday)
-            {
-                daysToAdd = 2;
-            }
-
-            if (date.DayOfWeek == DayOfWeek.Friday)
-            {
-                daysToAdd = 3;
-            }
-
-            return date.AddDays(daysToAdd);
+            return isFree ? checkDate.ToUserFriendlyDate() : string.Empty;
         }
     }
 }
