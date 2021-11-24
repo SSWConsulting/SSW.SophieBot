@@ -317,8 +317,8 @@ namespace SSWSophieBot.HttpClientComponents.PersonQuery
             {
                 var checkAppointments = GetEnumerableAppointmentsByDate(appointments, checkDate);
                 if (isFree
-                    ? !checkAppointments.Any(appointment => !IsOnInternalWorkFunc(appointment))
-                    : checkAppointments.Any(appointment => !IsOnInternalWorkFunc(appointment)))
+                    ? (checkAppointments.Count() == 0 || checkAppointments.Any(appointment => IsOnInternalWorkFunc(appointment)))
+                    : checkAppointments.Any(appointment => IsOnClientWorkFunc(appointment)))
                 {
                     return checkDate.ToUserFriendlyDate(clientNow);
                 }

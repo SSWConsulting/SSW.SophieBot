@@ -75,10 +75,10 @@
 - IF: ${length(freeDate) > 0}
     -  ${AvailabilityDate(freeDate, isFree)}
 - ELSE:
-    -  seems to have no client work or leave schedule for now.
+    -  seems to have no client work for now.
 
 # AvailabilityDate(date, isFree)
 - IF: ${ date == 'Today' }
-    - is ${if(isFree, 'free', 'not free')} ${date}.
+    - is ${if(isFree, 'free', 'on client')} ${date}.
 - ELSE:
-    - will ${if(isFree, 'be free', 'not be free')} on ${date}.
+    - will ${if(isFree, 'be free', 'be on client work')} on ${date}.
