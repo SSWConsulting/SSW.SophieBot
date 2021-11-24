@@ -130,6 +130,8 @@
 	- on the bench
 	- working on ssw projects
 	- non-booked
+	- bookable
+	- availablity
 
 @ phraselist UnavailablePhraseList(interchangeable) disabledForAllModels = 
 	- on client work
