@@ -139,6 +139,8 @@
 	- working for clients
 	- unavailable
 	- booked
+	- next client appointment
+	- next client booking
 
 @ ml available usesFeature AvailablePhraseList
 @ ml unavailable usesFeature UnavailablePhraseList
@@ -572,12 +574,13 @@
 - what date isn't {@contact={@firstname=piers} {@lastname=sinclair}} {@available = free}?
 
 - when will {@contact={@firstname=adam}} be {@unavailable = on client work}?
-- when is {@contact={@firstname=adam}}'s next {@unavailable = client} appointment?
-- when is {@contact={@firstname=adam}}'s next {@unavailable = client} booking?
+- when is {@contact={@firstname=adam}}'s {@unavailable = next client appointment}?
+- when is {@contact={@firstname=adam}}'s {@unavailable = next client booking}?
 
 @ phraseList GetFreeDayPhraseList(interchangeable) disabledForAllModels =
 	- when
 	- what date
 	- which day
 	- on which day
+
 @ intent GetCalendar usesFeature GetFreeDayPhraseList, available, unavailable
