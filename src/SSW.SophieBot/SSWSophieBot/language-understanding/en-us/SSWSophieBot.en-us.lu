@@ -327,6 +327,9 @@
 - who is good at {@skill = Angular}?
 - {@skill = CSS} expert?
 - who has the most experience in {@skill = wordpress}
+- I need help with {@skill = Azure}
+- Who can I ask for help about {@skill = Azure}
+- who can help me with {@skill = Azure}
 
 @ intent GetPeopleBySkills usesFeature SkilledPhraseList,skill
 
