@@ -19,7 +19,7 @@
 }
 ```
 
-# ViewApponitmentsAction(displayName, bookedDays, sourceIntent)
+# ViewBookingsAction(displayName, bookedDays, sourceIntent)
 - ```
 {
     "type": "Action.Submit",
