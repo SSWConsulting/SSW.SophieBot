@@ -23,18 +23,17 @@
 - ```
 {
     "type": "Action.Submit",
-    "title": "View Appointments",
+    "title": "📅 View Bookings",
     "data": 
     {
         "intent": "GetCalendar",
         "contact": ${dialog.nameEntity},
-        ${IntentRedirectTelemetry('ViewAppointments', sourceIntent, 'View Apponitments')},
+        ${IntentRedirectTelemetry('ViewBookings', sourceIntent, 'View Bookings')},
         "msteams": {
             "type": "messageBack",
-			"displayText": "Show apponitments for ${displayName} ${BookedDaysText(bookedDays)}"
+			"displayText": "Show bookings for ${displayName} ${BookedDaysText(bookedDays)}"
         }
-    },
-    "iconUrl": "${Dynamics365Icon()}"
+    }
 }
 ```
 

@@ -42,23 +42,11 @@
             "columns": [
                 {
                     "type": "Column",
-                    "width": "auto",
-                    "items": [
-                        {
-                            "type": "Image",
-                            "url": "${Dynamics365Icon()}",
-                            "width": "25px",
-                            "height": "25px"
-                        }
-                    ]
-                },
-                {
-                    "type": "Column",
                     "width": "stretch",
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "${Title(displayName, count(appointments))}",
+                            "text": "📅 ${Title(displayName, count(appointments))}",
                             "wrap": true,
                             "size": "Medium",
                             "weight": "Bolder"
