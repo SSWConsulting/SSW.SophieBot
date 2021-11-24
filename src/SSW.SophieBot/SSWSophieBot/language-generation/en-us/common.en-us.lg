@@ -19,22 +19,21 @@
 }
 ```
 
-# ViewCalendarAction(displayName, bookedDays, sourceIntent)
+# ViewBookingsAction(displayName, bookedDays, sourceIntent)
 - ```
 {
     "type": "Action.Submit",
-    "title": "View Calendar",
+    "title": "📅 View Bookings",
     "data": 
     {
         "intent": "GetCalendar",
         "contact": ${dialog.nameEntity},
-        ${IntentRedirectTelemetry('ViewCalendar', sourceIntent, 'View Calendar')},
+        ${IntentRedirectTelemetry('ViewBookings', sourceIntent, 'View Bookings')},
         "msteams": {
             "type": "messageBack",
-			"displayText": "Show calendar for ${displayName} ${BookedDaysText(bookedDays)}"
+			"displayText": "Show bookings for ${displayName} ${BookedDaysText(bookedDays)}"
         }
-    },
-    "iconUrl": "${OutlookCalendarIcon()}"
+    }
 }
 ```
 
