@@ -108,7 +108,7 @@
 ```
 
 # Title(displayName, count)
-- ${displayName}'s next appointments [${count}]
+- ${displayName}'s next bookings [${count}]
 
 # AppointmentTableRow(appointment)
 - ```
