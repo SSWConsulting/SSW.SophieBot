@@ -233,7 +233,7 @@
 - IF: ${ dialog.booked || employee.nextClient == null }
     - ${EmployeeRow(employee)}
 - ELSE:
-    - ${join(createArray(EmployeeRow(employee),  Note(employee)), ',')}
+    - ${join(createArray(EmployeeRow(employee), Note(employee)), ',')}
 
 # EmployeeRow(employee)
 - ```
