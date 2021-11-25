@@ -1,0 +1,8 @@
+{
+  "$kind": "Microsoft.MultiLanguageRecognizer",
+  "id": "LUIS_SSWSophieBot",
+  "recognizers": {
+    "en-us": "SSWSophieBot.en-us.lu",
+    "": "SSWSophieBot.en-us.lu"
+  }
+}

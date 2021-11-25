@@ -1,0 +1,213 @@
+[Icons](icons.en-us.lg)
+[SSWSophieBot](SSWSophieBot.en-us.lg)
+
+# BillableEmployeesList(title, subTitle, isMain, employees, isFinalPage, crmId, isProject, sourceIntent)
+-```
+{
+    "type": "AdaptiveCard",
+    "body": [
+        ${ListTitle(title, subTitle, isMain)}
+        {
+            "type": "Container",
+            "items": [${join(select(employees, e, BillableEmployeeRow(e, sourceIntent)), ',')}],
+            "bleed": true
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                ${GetFooterActions(isFinalPage, crmId, isProject)}
+            ]
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2"
+}
+```
+
+# GetFooterActions(isFinalPage, crmId, isProject)
+- IF: ${isFinalPage && length(crmId) > 0}
+    - ```
+    ${MoreBookingInfoAction()},
+    ${MoreProjectOrClientInfoButton(crmId, isProject)}
+    ```
+- ELSEIF: ${isFinalPage}
+    - ```
+    ${MoreBookingInfoAction()}
+    ```
+- ELSE: 
+    - ``````
+
+# MoreProjectOrClientInfoButton(crmId, isProject)
+- ```
+{
+    "type": "Action.OpenUrl",
+    "title": "More ${if(isProject, 'Project', 'Client')} Info",
+    "url": "${if(isProject, settings.App.CRMProjectUrl, settings.App.CRMClientUrl)}&id=${crmId}",
+    "iconUrl": "${Dynamics365Icon()}"
+}
+```
+
+# LegendAndColumnHeaders()
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "🟢 Booked　⚫ Booked (Internal)　⚪ Free　🔴 Leave",
+                    "wrap": true,
+                    "spacing": "None"
+                }
+            ]
+        }
+    ]
+},
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "50px",
+            "items": []
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": []
+        },
+        ${BilledHeader('Billed ↓', 'stretch', 'Center')},
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Booking",
+                    "weight": "Bolder",
+                    "horizontalAlignment": "Center"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Last Seen",
+                    "wrap": true,
+                    "weight": "Bolder",
+                    "horizontalAlignment": "Center"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        }
+    ],
+    "bleed": true,
+    "style": "default",
+    "height": "stretch",
+    "spacing": "Medium"
+},
+```
+
+# ListTitle(title, subTitle, isMain)
+- IF: ${exists(title) && length(title) > 0}
+    - ```
+    ${join(where([MainTitle(title, isMain), SubTitle(subTitle, isMain)], section, exists(section) && length(section) > 0), ',')},
+    ${if(isMain, LegendAndColumnHeaders(), '')}
+    ```
+- ELSE: 
+    - 
+
+# MainTitle(title, isMain)
+- ```
+{
+    "type": "TextBlock",
+    "size": "${if(isMain, 'ExtraLarge', 'Medium')}",
+    "text": "${coalesce(title, '')}",
+    "wrap": true,
+    "weight": "Bolder"
+}
+```
+
+# SubTitle(subTitle, isMain)
+- ```
+{
+    "type": "TextBlock",
+    "size": "Medium",
+    "text": "${if(isMain, coalesce(subTitle, ''), '')}",
+    "wrap": true,
+    "isSubtle": true
+}
+```
+
+# BillableEmployeeRow(employee, sourceIntent)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        ${ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', sourceIntent)},
+        ${ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', 'Small', 'Default', sourceIntent)},
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "text": "${DaysText(employee.billedDays, true)}",
+                    "size": "Small",
+                    "horizontalAlignment": "Center"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "text": "${GetBookingStatusEmoji(employee)}",
+                    "size": "Small",
+                    "horizontalAlignment": "Center"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "text": "${if(exists(employee.lastSeen) && length(employee.lastSeen) > 0, employee.lastSeen, '—')}",
+                    "size": "Small",
+                    "horizontalAlignment": "Center"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        }
+    ],
+    "bleed": true,
+    "separator": false
+}
+```
+# GetBookingStatusEmoji(employee)
+- IF: ${employee.bookingStatus == 1}
+    - 🟢
+- ELSEIF: ${employee.bookingStatus == 2}
+    - ⚫
+- ELSEIF: ${employee.bookingStatus == 3}
+    - 🔴
+- ELSEIF: ${employee.bookingStatus == 4}
+    - ⚪
+- ELSE: 
+    - ⚪

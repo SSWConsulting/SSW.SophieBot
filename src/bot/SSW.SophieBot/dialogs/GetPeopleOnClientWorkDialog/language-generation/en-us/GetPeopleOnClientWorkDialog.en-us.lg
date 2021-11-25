@@ -1,0 +1,391 @@
+[common](common.en-us.lg)
+[Icons](icons.en-us.lg)
+[SSWSophieBot](SSWSophieBot.en-us.lg)
+
+# SendActivity_7cnUNi()
+[Activity
+    Attachments = ${json(ListCard(turn.firstNames, turn.employees, turn.locations))}
+]
+
+# ListCard(firstNames, employees, locations)
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "${PeopleType()} - All [${count(employees)}]",
+            "wrap": true,
+            "size": "ExtraLarge",
+            "weight": "Bolder"
+        },
+        {
+            "type": "TextBlock",
+            "text": "${if(turn.formatDate != null, turn.formatDate, '')}",
+            "wrap": true
+        },
+        {
+            "type": "TextBlock",
+            "text": "${firstNames}",
+            "wrap": true
+        },
+        {
+            "type": "TextBlock",
+            "text": "Narrow your search...",
+            "wrap": true
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.Submit",
+                    "title": "Show All [${count(employees)}]",
+                    "data": {
+                        "intent": "GetPeopleOnClientWork",
+                        "available": "${dialog.availableEntity}",
+                        "internal": "${dialog.internalEntity}",
+                        ${IntentRedirectTelemetry('Filter', 'GetPeopleOnClientWork', concat('Show All [', count(employees), ']'))},
+                        "geographyV2": [
+                            {
+                                "location": "",
+                                "type": "city"
+                            }
+                        ],
+                        "datetime": [
+                            {
+                            "timex": [
+                                "${dialog.fromDate}"
+                            ],
+                            "type": "date"
+                            }
+                        ],
+                        "msteams": {
+                            "type": "messageBack",
+                            "displayText": "Show All [${count(employees)}]"
+                        }
+                    }
+                },
+                ${join(select(subArray(locations, 0, count(locations) <= 5 ? count(locations) : 5), location => LocationButton(location, Number(location, employees))), ',')}
+            ]
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                ${join(select(if(subArray(locations, 5, count(locations)) != null, subArray(locations, 5, count(locations)), createArray()), location => LocationButton(location, Number(location, employees))), ',')}
+            ]
+        }
+    ]
+}
+```
+
+# LocationButton(location, number)
+-``` 
+{
+    "type": "Action.Submit",
+    "title": "${location} [${number}]",
+    "data": {
+        "intent": "GetPeopleOnClientWork",
+        "available": "${dialog.availableEntity}",
+        "internal": "${dialog.internalEntity}",
+        ${IntentRedirectTelemetry('Filter', 'GetPeopleOnClientWork', concat(location, ' [', number, ']'))},
+        "geographyV2": [
+            {
+                "location": "${location}",
+                "type": "city"
+            }
+        ],
+        "datetime": [
+            {
+            "timex": [
+                "${dialog.fromDate}"
+            ],
+            "type": "date"
+            }
+        ],
+        "msteams": {
+            "type": "messageBack",
+	        "displayText": "${location} [${number}]"
+        }
+    }
+}
+```
+
+# Number(location, employees)
+- ${count(where(employees, employee => employee.defaultSite.name == location))}
+
+# SendActivity_jZGZUb()
+[Activity
+    Text = ${SendActivity_jZGZUb_text()}
+]
+# SendActivity_jZGZUb_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+
+# SendActivity_8Km7yc()
+[Activity
+    Attachments = ${json(EmployeesListCard(dialog.locationEntity, dialog.foreach.page))}
+]
+
+# EmployeesListCard(location, employees)
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        ${join(where(createArray(Header(location), EmployeeList(employees), Footer()), item => item != ''), ',')}
+    ]
+}
+```
+
+# Header(location)
+- IF: ${ dialog.foreach.pageindex == 1 }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${PeopleType()} - ${if(location == '', 'All', location)} [${count(turn.employees)}]",
+        "wrap": true,
+        "size": "ExtraLarge",
+        "weight": "Bolder"
+    },
+    {
+        "type": "TextBlock",
+        "text": "${if(turn.formatDate != null, turn.formatDate, '')}",
+        "wrap": true
+    }
+    ```
+- ELSE:
+    - ${Pagination(dialog.foreach.pageindex, count(turn.employees))}
+
+# Footer()
+- IF: ${ dialog.foreach.pageindex == ceiling(div(count(turn.employees), float('10.0'))) }
+    - ${MoreBookingInfoButton()}
+- ELSE:
+    -
+
+# PeopleType()
+- IF: ${ dialog.booked }
+    - On Client Work
+- ELSE:
+    - On Internal Work
+
+# EmployeeList(employees)
+-```
+{
+    "type": "ColumnSet",
+    "columns": [
+        ${HeaderColumns()}
+    ],
+    "style": "default"
+},
+{
+    "type": "Container",
+    "items": [${join(select(employees, employee => EmployeeSet(employee)), ',')}]
+}
+```
+
+# HeaderColumns
+- IF: ${ dialog.foreach.pageindex != 1 }
+    - 
+- ELSEIF: ${ dialog.booked }
+    - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', '100px', 'Center'), HeaderColumn('Client(s)', 'stretch', 'Center')), ',')}
+- ELSE:
+    - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', 'stretch', 'Center'), BilledHeader('Billed ↓', 'stretch', 'Center'), HeaderColumn('In Office', 'stretch', 'Center'), HeaderColumn('Last Seen', 'stretch', 'Center')), ',')}
+
+# HeaderColumn(text, width, alignment)
+- IF: ${!exists(text) || length(text) == 0}
+    - ```
+    {
+        "type": "Column",
+        "width": "${width}",
+        "items": []
+    }
+    ```
+- ELSE:
+    - ```
+    {
+        "type": "Column",
+        "width": "${width}",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "${text}",
+                "wrap": true,
+                "weight": "Bolder",
+                "horizontalAlignment": "${alignment}"
+            }
+        ]
+    }
+    ```
+
+# EmployeeSet(employee)
+- IF: ${ dialog.booked }
+    - ${EmployeeRow(employee)}
+- ELSE:
+    - ${join(createArray(EmployeeRow(employee), Note(employee)), ',')}
+
+# EmployeeRow(employee)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        ${BodyColumns(employee)}
+    ],
+    "height": "stretch",
+    "separator": false
+}
+```
+
+# Note(employee)
+-```
+{
+    "type": "ColumnSet",
+    "columns": [
+        ${HeaderColumn('', '50px', 'Center')},
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${if(employee.nextClient != null, NextClient(employee.nextClient, employee.freeDays), '')}",
+                    "wrap": true,
+                    "size": "Small",
+                    "isSubtle": true
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        }
+    ],
+    "style": "default"
+}
+```
+
+# BodyColumns(employee)
+- IF: ${ dialog.booked }
+    - ${join(createArray(
+            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetPeopleOnClientWork'), 
+            ClickableName(employee.displayName, employee.firstName, employee.lastName, '150px', 'Small', 'Default', 'GetPeopleOnClientWork'),
+            ClientColumn(employee.clients, 'stretch', 'Center')
+        ), ',')}
+- ELSE:
+    - ${join(createArray(
+            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetPeopleOnClientWork'), 
+            ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', 'Small', 'Default', 'GetPeopleOnClientWork'),
+            BodyColumn(DaysText(employee.BilledDays, true), 'stretch'), 
+            ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), 
+            BodyColumn(employee.LastSeen, 'stretch')
+        ), ',')}
+
+# BodyColumn(text, width)
+-```
+{
+    "type": "Column",
+    "width": "${width}",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${if(text != null && text != '', text, '—')}",
+            "wrap": true,
+            "size": "Small",
+            "horizontalAlignment": "Center"
+        }
+    ],
+    "verticalContentAlignment": "Center"
+}
+```
+
+# ClientColumn(clients, width, alignment)
+-```
+{
+    "type": "Column",
+    "width": "${width}",
+    "items": [
+        ${ClientTextBlock(clients)}
+    ],
+    "verticalContentAlignment": "${alignment}"
+}
+```
+
+# ClientTextBlock(clients)
+- IF: ${!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false}
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "\\\\*\\\\*\\\\*",
+        "wrap": true,
+        "size": "Small",
+        "horizontalAlignment": "Center"
+    }
+    ```
+- ELSE:
+    - ```
+    ${join(select(clients, client => ClientText(client)), ',')}
+    ```
+
+# ClientText(text)
+- ```
+{
+    "type": "TextBlock",
+    "text": "${if(text != null && text != '', text, '—')}",
+    "wrap": true,
+    "size": "Small"
+}
+```
+
+# ImageColumn(url)
+-```
+{
+    "type": "Column",
+    "width": "stretch",
+    "items": [
+        {
+            "type": "Image",
+            "url": "${url}",
+            "width": "17px",
+            "height": "17px",
+            "horizontalAlignment": "Center"
+        }
+    ],
+    "verticalContentAlignment": "Center"
+}
+```
+
+# NextClient(client, freeDays)
+-```
+Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
+```
+
+# SendActivity_pArEiW()
+[Activity
+    Text = ${PeopleNotFound()}
+]
+
+# SendActivity_T25WLi()
+[Activity
+    Text = ${SendActivity_T25WLi_text()}
+]
+
+# SendActivity_T25WLi_text()
+- Please specify a specific date to query.
+
+# SendActivity_x5sCo7()
+[Activity
+    Text = ${PeopleNotFound()}
+]
+
+# PeopleNotFound
+- Sorry, I couldn't find anyone ${Status()}${Date()}.
+
+# Status()
+- IF: ${ dialog.booked }
+    - on client work
+- ELSE:
+    - on internal work
+
+# Date()
+- IF: ${ turn.formatDate != null }
+    - ``` on ${turn.formatDate}```
+- ELSE:
+    - ``````
