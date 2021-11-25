@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - src/SSW.SophieBot.Web/**
+      - src/client/SSW.SophieBot.Web/**
       - .github/workflows/SSW.SophieBot.Web.yml
 
 jobs:
@@ -24,12 +24,12 @@ jobs:
         run: |
           yarn install
           yarn build
-        working-directory: src/SSW.SophieBot.Web
+        working-directory: src/client/SSW.SophieBot.Web
 
       - name: upload to storage account
         uses: bacongobbler/azure-blob-storage-upload@v1.2.0
         with:
-          source_dir: src/SSW.SophieBot.Web/dist
+          source_dir: src/client/SSW.SophieBot.Web/dist
           container_name: "$web"
           connection_string: ${{ secrets.WEBBLOBSTORAGECONNECTIONSTRING }}
           sync: true

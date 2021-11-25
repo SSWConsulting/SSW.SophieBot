@@ -1,0 +1,75 @@
+[GetExpertsByLocationDialog](GetExpertsByLocationDialog.en-us.lg)
+
+# SendActivity_52UMzl_text()
+- ```I couldn't find anyone who knows **${dialog.skillEntity}**. I'm not very good at hide and seek.
+```
+# SendActivity_52UMzl()
+[Activity
+    Text = ${SendActivity_52UMzl_text()}
+]
+
+# SendActivity_CObFyQ_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_CObFyQ()
+[Activity
+    Text = ${SendActivity_CObFyQ_text()}
+]
+
+# SendActivity_R5w2vq()
+[Activity
+    Attachments = ${json(WorkingEmployeesList('', turn.sortedEmployees))}
+]
+
+# SendActivity_R5w2vq_attachment_ukytYp(employees)
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        ${EmployeeList(employees)}
+    ]
+}
+```
+
+# SendActivity_lQMjCh()
+[Activity
+    Attachments = ${json(SendActivity_X1CF9d_attachment_v9gcuo(turn.firstNames, turn.sortedEmployees, dialog.skillEntity, turn.locations))}
+]
+
+# SendActivity_X1CF9d_attachment_v9gcuo(firstNames, employees, skill, locations)
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "${skill} - All [${count(employees)}]",
+            "wrap": true,
+            "size": "ExtraLarge",
+            "weight": "Bolder"
+        },
+        {
+            "type": "TextBlock",
+            "text": "${firstNames}",
+            "wrap": true
+        },
+        {
+            "type": "TextBlock",
+            "text": "Narrow your search...",
+            "wrap": true
+        },
+        ${GetExpertsButtons(employees, skill, locations, 'GetPeopleBySkills')}
+    ]
+}
+```
+
+# SendActivity_v4yQKd()
+[Activity
+    Text = ${SendActivity_v4yQKd_text()}
+]
+
+# SendActivity_v4yQKd_text()
+- Please specify a valid skill to query.

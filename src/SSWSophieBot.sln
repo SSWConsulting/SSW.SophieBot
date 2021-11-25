@@ -1,0 +1,68 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSWSophieBot", "bot\SSWSophieBot\SSWSophieBot.csproj", "{A442AB9C-1784-4921-BC56-A58F3AFB9392}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSWSophieBot.HttpClientComponents.Abstractions", "bot\SSWSophieBot.HttpClientComponents.Abstractions\SSWSophieBot.HttpClientComponents.Abstractions.csproj", "{077DD229-D364-4E0D-9A7A-E15FEFAA0913}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSWSophieBot.HttpClientComponents.PersonQuery", "bot\SSWSophieBot.HttpClientComponents.PersonQuery\SSWSophieBot.HttpClientComponents.PersonQuery.csproj", "{34F6A627-166C-4188-95F5-A10BCB8FC7FE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSWSophieBot.Components", "bot\SSWSophieBot.Components\SSWSophieBot.Components.csproj", "{B5AAF070-CD91-40BE-91AC-D2E71B37E9C0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bot", "bot", "{1EE640B1-7F7D-40DB-B8EF-C075284FDE87}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{92AED336-1BE8-4487-9EFF-09ED2F98EFEA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SSW.SophieBot.Web", "SSW.SophieBot.Web", "{328CB7CF-F64B-4C76-A60C-B6DA1C2385F4}"
+	ProjectSection(SolutionItems) = preProject
+		client\SSW.SophieBot.Web\package.json = client\SSW.SophieBot.Web\package.json
+		client\SSW.SophieBot.Web\README.md = client\SSW.SophieBot.Web\README.md
+		client\SSW.SophieBot.Web\yarn.lock = client\SSW.SophieBot.Web\yarn.lock
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BAB865C0-F997-420F-AA84-2003DA6DCEA1}"
+	ProjectSection(SolutionItems) = preProject
+		client\SSW.SophieBot.Web\src\index.css = client\SSW.SophieBot.Web\src\index.css
+		client\SSW.SophieBot.Web\src\index.html = client\SSW.SophieBot.Web\src\index.html
+		client\SSW.SophieBot.Web\src\index.js = client\SSW.SophieBot.Web\src\index.js
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A442AB9C-1784-4921-BC56-A58F3AFB9392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A442AB9C-1784-4921-BC56-A58F3AFB9392}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A442AB9C-1784-4921-BC56-A58F3AFB9392}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A442AB9C-1784-4921-BC56-A58F3AFB9392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{077DD229-D364-4E0D-9A7A-E15FEFAA0913}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{077DD229-D364-4E0D-9A7A-E15FEFAA0913}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{077DD229-D364-4E0D-9A7A-E15FEFAA0913}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{077DD229-D364-4E0D-9A7A-E15FEFAA0913}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34F6A627-166C-4188-95F5-A10BCB8FC7FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34F6A627-166C-4188-95F5-A10BCB8FC7FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34F6A627-166C-4188-95F5-A10BCB8FC7FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34F6A627-166C-4188-95F5-A10BCB8FC7FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5AAF070-CD91-40BE-91AC-D2E71B37E9C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5AAF070-CD91-40BE-91AC-D2E71B37E9C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5AAF070-CD91-40BE-91AC-D2E71B37E9C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5AAF070-CD91-40BE-91AC-D2E71B37E9C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A442AB9C-1784-4921-BC56-A58F3AFB9392} = {1EE640B1-7F7D-40DB-B8EF-C075284FDE87}
+		{077DD229-D364-4E0D-9A7A-E15FEFAA0913} = {1EE640B1-7F7D-40DB-B8EF-C075284FDE87}
+		{34F6A627-166C-4188-95F5-A10BCB8FC7FE} = {1EE640B1-7F7D-40DB-B8EF-C075284FDE87}
+		{B5AAF070-CD91-40BE-91AC-D2E71B37E9C0} = {1EE640B1-7F7D-40DB-B8EF-C075284FDE87}
+		{328CB7CF-F64B-4C76-A60C-B6DA1C2385F4} = {92AED336-1BE8-4487-9EFF-09ED2F98EFEA}
+		{BAB865C0-F997-420F-AA84-2003DA6DCEA1} = {328CB7CF-F64B-4C76-A60C-B6DA1C2385F4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86E25EDA-9BBD-4C01-99A4-07ABD670C67C}
+	EndGlobalSection
+EndGlobal

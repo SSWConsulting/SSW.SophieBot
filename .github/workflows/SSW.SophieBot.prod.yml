@@ -12,7 +12,7 @@ env:
   WEBAPP_NAME: SSWSophieBot
   SOURCE_DIR: ${{ github.workspace }}
   OUTPUT_DIR: ${{ github.workspace }}/output/deploy
-  BOT_PROJECT_DIR: ${{ github.workspace }}/src/SSW.SophieBot/SSWSophieBot
+  BOT_PROJECT_DIR: ${{ github.workspace }}/src/bot/SSWSophieBot
   BOT_PROJECT_NAME: SSWSophieBot.csproj
   PUBLISHING_PROFILE_NAME: SSW.Bots
   LUIS_AUTHORING_ENDPOINT: https://australiaeast.api.cognitive.microsoft.com/
@@ -46,7 +46,7 @@ jobs:
         with:
           name: "appsettings.json"
           json: ${{ secrets.APPSETTINGS_JSON }}
-          dir: "src/SSW.SophieBot/SSWSophieBot/settings"
+          dir: "src/bot/SSWSophieBot/settings"
 
       # Prepare working folders    
       - name: Prepare working folders
