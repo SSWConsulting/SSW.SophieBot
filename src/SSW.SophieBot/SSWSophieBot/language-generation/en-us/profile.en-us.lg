@@ -334,14 +334,17 @@
 ```
 
 # ViewInPeopleAction(profile)
-- ```
-{
-    "type": "Action.OpenUrl",
-    "title": "View in People",
-    "url": "https://www.ssw.com.au/people/${toLower(profile.firstName)}-${toLower(profile.lastName)}",
-    "iconUrl": "${SSWPeopleIcon()}"
-}
-```
+- IF: ${exists(settings.App.PeopleSiteUrl) && length(settings.App.PeopleSiteUrl) > 0}
+    - ```
+    {
+        "type": "Action.OpenUrl",
+        "title": "View in People",
+        "url": "${settings.App.PeopleSiteUrl}/${toLower(profile.firstName)}-${toLower(profile.lastName)}",
+        "iconUrl": "${SSWPeopleIcon()}"
+    }
+    ```
+- ELSE:
+    -
 
 # ViewInCRMAction(profile)
 - IF: ${exists(settings.App.CRMUserUrl) && length(settings.App.CRMUserUrl) > 0}
