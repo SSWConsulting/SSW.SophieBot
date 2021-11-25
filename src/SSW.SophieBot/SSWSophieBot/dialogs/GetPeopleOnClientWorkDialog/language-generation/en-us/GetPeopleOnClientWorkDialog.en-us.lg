@@ -4,10 +4,10 @@
 
 # SendActivity_7cnUNi()
 [Activity
-    Attachments = ${json(ListCard(turn.firstNames, turn.employees, turn.locations))}
+    Attachments = ${json(OfficeSelectionCard(turn.firstNames, turn.employees, turn.locations))}
 ]
 
-# ListCard(firstNames, employees, locations)
+# OfficeSelectionCard(firstNames, employees, locations)
 -```
 {
     "type": "AdaptiveCard",
@@ -67,29 +67,35 @@
                         }
                     }
                 },
-                ${join(select(subArray(locations, 0, count(locations) <= 5 ? count(locations) : 5), location => LocationButton(location, Number(location, employees))), ',')}
+                ${join(select(subArray(locations, 0, count(locations) <= 5 ? count(locations) : 5), location => LocationButton(location, CountEmployeesByLocation(employees, location))), ',')}
             ]
         },
         {
             "type": "ActionSet",
             "actions": [
-                ${join(select(if(subArray(locations, 5, count(locations)) != null, subArray(locations, 5, count(locations)), createArray()), location => LocationButton(location, Number(location, employees))), ',')}
+                ${join(select(if(subArray(locations, 5, count(locations)) != null, subArray(locations, 5, count(locations)), createArray()), location => LocationButton(location, CountEmployeesByLocation(employees, location))), ',')}
             ]
         }
     ]
 }
 ```
 
-# LocationButton(location, number)
+# PeopleType()
+- IF: ${ dialog.booked }
+    - On Client Work
+- ELSE:
+    - On Internal Work
+
+# LocationButton(location, count)
 -``` 
 {
     "type": "Action.Submit",
-    "title": "${location} [${number}]",
+    "title": "${location} [${count}]",
     "data": {
         "intent": "GetPeopleOnClientWork",
         "available": "${dialog.availableEntity}",
         "internal": "${dialog.internalEntity}",
-        ${IntentRedirectTelemetry('Filter', 'GetPeopleOnClientWork', concat(location, ' [', number, ']'))},
+        ${IntentRedirectTelemetry('Filter', 'GetPeopleOnClientWork', concat(location, ' [', count, ']'))},
         "geographyV2": [
             {
                 "location": "${location}",
@@ -106,13 +112,13 @@
         ],
         "msteams": {
             "type": "messageBack",
-	        "displayText": "${location} [${number}]"
+	        "displayText": "${location} [${count}]"
         }
     }
 }
 ```
 
-# Number(location, employees)
+# CountEmployeesByLocation(employees, location)
 - ${count(where(employees, employee => employee.defaultSite.name == location))}
 
 # SendActivity_jZGZUb()
@@ -163,12 +169,6 @@
     - ${MoreBookingInfoButton()}
 - ELSE:
     -
-
-# PeopleType()
-- IF: ${ dialog.booked }
-    - On Client Work
-- ELSE:
-    - On Internal Work
 
 # EmployeeList(employees)
 -```
