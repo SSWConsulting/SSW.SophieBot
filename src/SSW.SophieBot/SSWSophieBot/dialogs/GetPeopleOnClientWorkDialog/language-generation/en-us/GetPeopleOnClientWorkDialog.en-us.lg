@@ -189,9 +189,19 @@
 - IF: ${ dialog.foreach.pageindex != 1 }
     - 
 - ELSEIF: ${ dialog.booked }
-    - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', '100px', 'Center'), HeaderColumn('Client(s)', 'stretch', 'Center')), ',')}
+    - ${join(createArray(
+            HeaderColumn('', '50px', 'Center'), 
+            HeaderColumn('', '100px', 'Center'), 
+            HeaderColumn('Client(s)', 'stretch', 'Center')
+        ), ',')}
 - ELSE:
-    - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', 'stretch', 'Center'), BilledHeader('Billed ↓', 'stretch', 'Center'), HeaderColumn('In Office', 'stretch', 'Center'), HeaderColumn('Last Seen', 'stretch', 'Center')), ',')}
+    - ${join(createArray(
+            HeaderColumn('', '50px', 'Center'), 
+            HeaderColumn('', 'stretch', 'Center'), 
+            BilledHeader('Billed ↓', 'stretch', 'Center'), 
+            HeaderColumn('In Office', 'stretch', 'Center'), 
+            HeaderColumn('Last Seen', 'stretch', 'Center')
+        ), ',')}
 
 # HeaderColumn(text, width, alignment)
 - IF: ${!exists(text) || length(text) == 0}
@@ -220,10 +230,10 @@
     ```
 
 # EmployeeSet(employee)
-- IF: ${ dialog.booked }
+- IF: ${ dialog.booked || employee.nextClient == null }
     - ${EmployeeRow(employee)}
 - ELSE:
-    - ${join(createArray(EmployeeRow(employee), Note(employee)), ',')}
+    - ${join(createArray(EmployeeRow(employee),  Note(employee)), ',')}
 
 # EmployeeRow(employee)
 - ```
@@ -249,7 +259,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "${if(employee.nextClient != null, NextClient(employee.nextClient, employee.freeDays), '')}",
+                    "text": "${NextClient(employee.nextClient, employee.freeDays)}",
                     "wrap": true,
                     "size": "Small",
                     "isSubtle": true
@@ -388,4 +398,4 @@ Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
 - IF: ${ turn.formatDate != null }
     - ``` on ${turn.formatDate}```
 - ELSE:
-    - ``````
+    -
