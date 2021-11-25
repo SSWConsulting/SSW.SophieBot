@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30503.244
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot", "bot\SSW.SophieBot\SSW.SophieBot.csproj", "{A442AB9C-1784-4921-BC56-A58F3AFB9392}"
 EndProject
@@ -28,6 +28,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BAB865C0-F99
 		client\SSW.SophieBot.Web\src\index.js = client\SSW.SophieBot.Web\src\index.js
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "luis", "luis", "{18058327-A1AF-4A3D-BDC9-DA25745D5AFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSW.SophieBot.LUIS.Core", "luis\SSW.SophieBot.LUIS.Core\SSW.SophieBot.LUIS.Core.csproj", "{1C28D721-54B5-4CB5-BD8D-3182AC108D27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSW.SophieBot.LUIS.Model", "luis\SSW.SophieBot.LUIS.Model\SSW.SophieBot.LUIS.Model.csproj", "{1E4CD97B-F5BE-48DC-BD4C-39DC9F75ABF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSW.SophieBot.LUIS.Sync", "luis\SSW.SophieBot.LUIS.Sync\SSW.SophieBot.LUIS.Sync.csproj", "{1462406B-7E2A-4672-A2BD-C189B7575FF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +58,18 @@ Global
 		{B5AAF070-CD91-40BE-91AC-D2E71B37E9C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5AAF070-CD91-40BE-91AC-D2E71B37E9C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5AAF070-CD91-40BE-91AC-D2E71B37E9C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C28D721-54B5-4CB5-BD8D-3182AC108D27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C28D721-54B5-4CB5-BD8D-3182AC108D27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C28D721-54B5-4CB5-BD8D-3182AC108D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C28D721-54B5-4CB5-BD8D-3182AC108D27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E4CD97B-F5BE-48DC-BD4C-39DC9F75ABF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E4CD97B-F5BE-48DC-BD4C-39DC9F75ABF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E4CD97B-F5BE-48DC-BD4C-39DC9F75ABF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E4CD97B-F5BE-48DC-BD4C-39DC9F75ABF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1462406B-7E2A-4672-A2BD-C189B7575FF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1462406B-7E2A-4672-A2BD-C189B7575FF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1462406B-7E2A-4672-A2BD-C189B7575FF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1462406B-7E2A-4672-A2BD-C189B7575FF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +81,9 @@ Global
 		{B5AAF070-CD91-40BE-91AC-D2E71B37E9C0} = {1EE640B1-7F7D-40DB-B8EF-C075284FDE87}
 		{328CB7CF-F64B-4C76-A60C-B6DA1C2385F4} = {92AED336-1BE8-4487-9EFF-09ED2F98EFEA}
 		{BAB865C0-F997-420F-AA84-2003DA6DCEA1} = {328CB7CF-F64B-4C76-A60C-B6DA1C2385F4}
+		{1C28D721-54B5-4CB5-BD8D-3182AC108D27} = {18058327-A1AF-4A3D-BDC9-DA25745D5AFD}
+		{1E4CD97B-F5BE-48DC-BD4C-39DC9F75ABF8} = {18058327-A1AF-4A3D-BDC9-DA25745D5AFD}
+		{1462406B-7E2A-4672-A2BD-C189B7575FF0} = {18058327-A1AF-4A3D-BDC9-DA25745D5AFD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {86E25EDA-9BBD-4C01-99A4-07ABD670C67C}
