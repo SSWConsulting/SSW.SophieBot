@@ -275,13 +275,13 @@
 # BodyColumns(employee)
 - IF: ${ dialog.booked }
     - ${join(createArray(
-            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetPeopleOnClientWork'), 
+            Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
             ClickableName(employee.displayName, employee.firstName, employee.lastName, '150px', 'Small', 'Default', 'GetPeopleOnClientWork'),
             ClientColumn(employee.clients, 'stretch', 'Center')
         ), ',')}
 - ELSE:
     - ${join(createArray(
-            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetPeopleOnClientWork'), 
+            Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
             ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', 'Small', 'Default', 'GetPeopleOnClientWork'),
             BodyColumn(DaysText(employee.BilledDays, true), 'stretch'), 
             ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), 
@@ -363,9 +363,10 @@
 ```
 
 # NextClient(client, freeDays)
--```
-Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
-```
+- IF: ${ freeDays == 0 }
+    - Note: No free days over next 4 weeks.
+- ELSE:
+    - Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
 
 # SendActivity_pArEiW()
 [Activity
