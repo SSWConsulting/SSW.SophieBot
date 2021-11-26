@@ -107,7 +107,7 @@
 {
     "type": "ColumnSet",
     "columns": [
-        ${ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetExpertsByLocation')},
+        ${Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px')},
         ${ClickableName(concat(employee.firstName, ' ', employee.lastName), employee.firstName, employee.lastName, 'stretch', 'Small', 'Default', 'GetExpertsByLocation')},
         {
             "type": "Column",
