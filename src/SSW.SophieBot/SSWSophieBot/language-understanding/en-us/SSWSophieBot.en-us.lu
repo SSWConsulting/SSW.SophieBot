@@ -88,7 +88,13 @@
 	- skill,skills,tech,technology,expertise,experience,knowledge,specialty,good at
 	
 @ phraselist CalendarPhraseList(interchangeable) disabledForAllModels =
-	- calendar,schedule,booking info,appointments
+	- calendar
+	- schedule
+	- agenda
+	- bookings
+	- booking info
+	- next booking
+	- appointments
 
 @ ml profileProperty
 @ profileProperty = 
@@ -539,9 +545,12 @@
 
 # GetCalendar
 - show {@contact={@firstname=adam}}'s {@profileProperty={@calendarProperty=calendar}}
+- show {@contact={@firstname=json}}'s {@profileProperty={@calendarProperty=bookings}}
+- show {@contact={@firstname=json}}'s {@profileProperty={@calendarProperty=next booking}}
 - show me {@contact={@firstname=jacks}} {@profileProperty={@calendarProperty=schedule}}
 - show {@profileProperty={@calendarProperty=calendar}} for {@contact={@firstname=adam} {@lastname=cogan}}
 - what's {@contact={@firstname=john}}'s {@profileProperty={@calendarProperty=calendar}}?
+- what is {@contact={@firstname=jason}}'s {@profileProperty={@calendarProperty=agenda}}
 - what is the {@profileProperty={@calendarProperty=calendar}} of {@contact={@firstname=talor}}
 - give me {@contact={@firstname=elise}}'s {@profileProperty={@calendarProperty=calendar}}
 - i want to see {@contact={@firstname=michael}}'s {@profileProperty={@calendarProperty=appointments}}
