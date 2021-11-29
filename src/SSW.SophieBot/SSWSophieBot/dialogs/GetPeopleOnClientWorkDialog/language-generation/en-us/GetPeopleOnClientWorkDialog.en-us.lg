@@ -133,7 +133,7 @@
 # SendActivity_jZGZUb_text()
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
 
-# SendActivity_FNh2mx()
+# SendActivity_7xYZ37()
 [Activity
     Attachments = ${json(EmployeesListCard(dialog.locationEntity, dialog.foreach.page))}
 ]
@@ -401,7 +401,7 @@ Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
 - ELSE:
     - ``````
 
-# SendActivity_7xYZ37()
+# SendActivity_FNh2mx()
 [Activity
     Attachments = ${json(SendActivity_7xYZ37_attachment_D05HYI(turn.formatDate, dialog.skillEntity, dialog.locationEntity, dialog.foreach.page))}
 ]

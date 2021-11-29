@@ -263,7 +263,7 @@
                           "$designer": {
                             "id": "FQx5cT"
                           },
-                          "condition": "=dialog.skillsEntity != ''",
+                          "condition": "=dialog.skillEntity != \"\"",
                           "actions": [
                             {
                               "$kind": "Microsoft.SendActivity",

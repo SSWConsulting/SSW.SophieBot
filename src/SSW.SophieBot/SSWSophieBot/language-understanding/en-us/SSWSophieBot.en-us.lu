@@ -368,7 +368,7 @@
 - show list of {@available=non-booked} employees with {@skill = wordpress} skills tomorrow in hangzhou
 
 
-@ intent GetPeopleOnClientWork usesFeature available,unavailable,datetimeV2,geographyV2,skill
+@ intent GetPeopleOnClientWork usesFeature available,unavailable,datetimeV2,geographyV2,SkilledPhraseList,skill
 
 # GetPhoneNumber
 - can you find me {@contact={@firstname=noe}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
