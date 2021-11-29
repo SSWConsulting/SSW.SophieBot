@@ -137,7 +137,7 @@ ${freeDays}/20 days
 
 # BodyColumns(employee)
 - ${join(createArray(
-   ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetAvailableExpertsByLocation'), 
+   Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
    ClickableName(employee.displayName, employee.firstName, employee.lastName, '100px', 'Small', 'Default', 'GetAvailableExpertsByLocation'),
    BodyColumn(FreeDays(employee.nextClient, employee.freeDays))), ',')}
 

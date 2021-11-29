@@ -4,10 +4,10 @@
 
 # SendActivity_7cnUNi()
 [Activity
-    Attachments = ${json(ListCard(turn.firstNames, turn.employees, turn.locations))}
+    Attachments = ${json(OfficeSelectionCard(turn.firstNames, turn.employees, turn.locations))}
 ]
 
-# ListCard(firstNames, employees, locations)
+# OfficeSelectionCard(firstNames, employees, locations)
 -```
 {
     "type": "AdaptiveCard",
@@ -67,29 +67,35 @@
                         }
                     }
                 },
-                ${join(select(subArray(locations, 0, count(locations) <= 5 ? count(locations) : 5), location => LocationButton(location, Number(location, employees))), ',')}
+                ${join(select(subArray(locations, 0, count(locations) <= 5 ? count(locations) : 5), location => LocationButton(location, CountEmployeesByLocation(employees, location))), ',')}
             ]
         },
         {
             "type": "ActionSet",
             "actions": [
-                ${join(select(if(subArray(locations, 5, count(locations)) != null, subArray(locations, 5, count(locations)), createArray()), location => LocationButton(location, Number(location, employees))), ',')}
+                ${join(select(if(subArray(locations, 5, count(locations)) != null, subArray(locations, 5, count(locations)), createArray()), location => LocationButton(location, CountEmployeesByLocation(employees, location))), ',')}
             ]
         }
     ]
 }
 ```
 
-# LocationButton(location, number)
+# PeopleType()
+- IF: ${ dialog.booked }
+    - On Client Work
+- ELSE:
+    - On Internal Work
+
+# LocationButton(location, count)
 -``` 
 {
     "type": "Action.Submit",
-    "title": "${location} [${number}]",
+    "title": "${location} [${count}]",
     "data": {
         "intent": "GetPeopleOnClientWork",
         "available": "${dialog.availableEntity}",
         "internal": "${dialog.internalEntity}",
-        ${IntentRedirectTelemetry('Filter', 'GetPeopleOnClientWork', concat(location, ' [', number, ']'))},
+        ${IntentRedirectTelemetry('Filter', 'GetPeopleOnClientWork', concat(location, ' [', count, ']'))},
         "geographyV2": [
             {
                 "location": "${location}",
@@ -106,13 +112,13 @@
         ],
         "msteams": {
             "type": "messageBack",
-	        "displayText": "${location} [${number}]"
+	        "displayText": "${location} [${count}]"
         }
     }
 }
 ```
 
-# Number(location, employees)
+# CountEmployeesByLocation(employees, location)
 - ${count(where(employees, employee => employee.defaultSite.name == location))}
 
 # SendActivity_jZGZUb()
@@ -164,12 +170,6 @@
 - ELSE:
     -
 
-# PeopleType()
-- IF: ${ dialog.booked }
-    - On Client Work
-- ELSE:
-    - On Internal Work
-
 # EmployeeList(employees)
 -```
 {
@@ -189,9 +189,19 @@
 - IF: ${ dialog.foreach.pageindex != 1 }
     - 
 - ELSEIF: ${ dialog.booked }
-    - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', '100px', 'Center'), HeaderColumn('Client(s)', 'stretch', 'Center')), ',')}
+    - ${join(createArray(
+            HeaderColumn('', '50px', 'Center'), 
+            HeaderColumn('', '100px', 'Center'), 
+            HeaderColumn('Client(s)', 'stretch', 'Center')
+        ), ',')}
 - ELSE:
-    - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', 'stretch', 'Center'), BilledHeader('Billed ↓', 'stretch', 'Center'), HeaderColumn('In Office', 'stretch', 'Center'), HeaderColumn('Last Seen', 'stretch', 'Center')), ',')}
+    - ${join(createArray(
+            HeaderColumn('', '50px', 'Center'), 
+            HeaderColumn('', 'stretch', 'Center'), 
+            BilledHeader('Billed ↓', 'stretch', 'Center'), 
+            HeaderColumn('In Office', 'stretch', 'Center'), 
+            HeaderColumn('Last Seen', 'stretch', 'Center')
+        ), ',')}
 
 # HeaderColumn(text, width, alignment)
 - IF: ${!exists(text) || length(text) == 0}
@@ -220,7 +230,7 @@
     ```
 
 # EmployeeSet(employee)
-- IF: ${ dialog.booked }
+- IF: ${ dialog.booked || employee.nextClient == null }
     - ${EmployeeRow(employee)}
 - ELSE:
     - ${join(createArray(EmployeeRow(employee), Note(employee)), ',')}
@@ -249,7 +259,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "${if(employee.nextClient != null, NextClient(employee.nextClient, employee.freeDays), '')}",
+                    "text": "${NextClient(employee.nextClient, employee.freeDays)}",
                     "wrap": true,
                     "size": "Small",
                     "isSubtle": true
@@ -265,13 +275,13 @@
 # BodyColumns(employee)
 - IF: ${ dialog.booked }
     - ${join(createArray(
-            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetPeopleOnClientWork'), 
+            Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
             ClickableName(employee.displayName, employee.firstName, employee.lastName, '150px', 'Small', 'Default', 'GetPeopleOnClientWork'),
             ClientColumn(employee.clients, 'stretch', 'Center')
         ), ',')}
 - ELSE:
     - ${join(createArray(
-            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetPeopleOnClientWork'), 
+            Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
             ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', 'Small', 'Default', 'GetPeopleOnClientWork'),
             BodyColumn(DaysText(employee.BilledDays, true), 'stretch'), 
             ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), 
@@ -353,9 +363,10 @@
 ```
 
 # NextClient(client, freeDays)
--```
-Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
-```
+- IF: ${ freeDays == 0 }
+    - Note: No free days over next 4 weeks.
+- ELSE:
+    - Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
 
 # SendActivity_pArEiW()
 [Activity
@@ -388,4 +399,4 @@ Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
 - IF: ${ turn.formatDate != null }
     - ``` on ${turn.formatDate}```
 - ELSE:
-    - ``````
+    -
