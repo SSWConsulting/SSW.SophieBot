@@ -26,7 +26,7 @@
         {
             "type": "ColumnSet",
             "columns": [
-                ${ClickableAvatar(profile.avatarUrl, profile.firstName, profile.lastName, 'auto', '70px', 'CheckAvailability')},
+                ${Avatar(profile.avatarUrl, profile.firstName, profile.lastName, 'auto', '70px')},
                 {
                     "type": "Column",
                     "width": "stretch",

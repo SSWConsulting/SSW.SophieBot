@@ -79,3 +79,21 @@
 
 # IsNonEmptyString(str)
 - ${ exists(str) && length(trim(str)) > 0 }
+
+# Avatar(avatarUrl, firstName, lastName, columnWidth, avatarSize)
+- ```
+{
+    "type": "Column",
+    "width": "${columnWidth}",
+    "items": [
+        {
+            "type": "Image",
+            "url": "${if(avatarUrl != null, avatarUrl, BlankAvatar())}",
+            "width": "${avatarSize}",
+            "height": "${avatarSize}",
+            "style": "Person"
+        }
+    ],
+    "verticalContentAlignment": "Center"
+}
+```

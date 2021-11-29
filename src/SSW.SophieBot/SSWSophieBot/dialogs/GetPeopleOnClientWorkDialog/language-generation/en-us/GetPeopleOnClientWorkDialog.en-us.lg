@@ -67,13 +67,13 @@
                         }
                     }
                 },
-                ${join(select(subArray(locations, 0, count(locations) <= 5 ? count(locations) : 5), location => LocationButton(location, Number(location, employees))), ',')}
+                ${join(select(subArray(locations, 0, count(locations) <= 5 ? count(locations) : 5), location => LocationButton(location, CountEmployeesByLocation(employees, location))), ',')}
             ]
         },
         {
             "type": "ActionSet",
             "actions": [
-                ${join(select(if(subArray(locations, 5, count(locations)) != null, subArray(locations, 5, count(locations)), createArray()), location => LocationButton(location, Number(location, employees))), ',')}
+                ${join(select(if(subArray(locations, 5, count(locations)) != null, subArray(locations, 5, count(locations)), createArray()), location => LocationButton(location, CountEmployeesByLocation(employees, location))), ',')}
             ]
         }
     ]
@@ -91,7 +91,7 @@
 -``` 
 {
     "type": "Action.Submit",
-    "title": "${location} [${number}]",
+    "title": "${location} [${count}]",
     "data": {
         "intent": "GetPeopleOnClientWork",
         ${IntentRedirectTelemetry('Filter', 'GetPeopleOnClientWork', concat(location, ' [', number, ']'))},
@@ -113,13 +113,13 @@
         ],
         "msteams": {
             "type": "messageBack",
-	        "displayText": "${location} [${number}]"
+	        "displayText": "${location} [${count}]"
         }
     }
 }
 ```
 
-# Number(location, employees)
+# CountEmployeesByLocation(employees, location)
 - ${count(where(employees, employee => employee.defaultSite.name == location))}
 
 # SendActivity_jZGZUb()
@@ -201,9 +201,19 @@
 - ELSEIF: ${ IsNonEmptyString(dialog.skillEntity) }
     - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', '100px', 'Center'), HeaderColumn('Availability for next 4 weeks', 'stretch', 'Center')), ',')}
 - ELSEIF: ${ dialog.booked }
-    - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', '100px', 'Center'), HeaderColumn('Client(s)', 'stretch', 'Center')), ',')}
+    - ${join(createArray(
+            HeaderColumn('', '50px', 'Center'), 
+            HeaderColumn('', '100px', 'Center'), 
+            HeaderColumn('Client(s)', 'stretch', 'Center')
+        ), ',')}
 - ELSE:
-    - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', 'stretch', 'Center'), BilledHeader('Billed ↓', 'stretch', 'Center'), HeaderColumn('In Office', 'stretch', 'Center'), HeaderColumn('Last Seen', 'stretch', 'Center')), ',')}
+    - ${join(createArray(
+            HeaderColumn('', '50px', 'Center'), 
+            HeaderColumn('', 'stretch', 'Center'), 
+            BilledHeader('Billed ↓', 'stretch', 'Center'), 
+            HeaderColumn('In Office', 'stretch', 'Center'), 
+            HeaderColumn('Last Seen', 'stretch', 'Center')
+        ), ',')}
 
 # HeaderColumn(text, width, alignment)
 - IF: ${!exists(text) || length(text) == 0}
@@ -232,7 +242,7 @@
     ```
 
 # EmployeeSet(employee)
-- IF: ${ dialog.booked }
+- IF: ${ dialog.booked || employee.nextClient == null }
     - ${EmployeeRow(employee)}
 - ELSE:
     - ${join(createArray(EmployeeRow(employee), Note(employee)), ',')}
@@ -261,7 +271,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "${if(employee.nextClient != null, NextClient(employee.nextClient, employee.freeDays), '')}",
+                    "text": "${NextClient(employee.nextClient, employee.freeDays)}",
                     "wrap": true,
                     "size": "Small",
                     "isSubtle": true
@@ -288,13 +298,13 @@ Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
         ), ',')}
 - ELSEIF: ${ dialog.booked }
     - ${join(createArray(
-            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetPeopleOnClientWork'), 
+            Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
             ClickableName(employee.displayName, employee.firstName, employee.lastName, '150px', 'Small', 'Default', 'GetPeopleOnClientWork'),
             ClientColumn(employee.clients, 'stretch', 'Center')
         ), ',')}
 - ELSE:
     - ${join(createArray(
-            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetPeopleOnClientWork'), 
+            Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
             ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', 'Small', 'Default', 'GetPeopleOnClientWork'),
             BodyColumn(DaysText(employee.BilledDays, true), 'stretch'), 
             ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), 
@@ -428,5 +438,4 @@ Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
 - IF: ${ turn.formatDate != null }
     - ``` on ${turn.formatDate}```
 - ELSE:
-    - ``````
-    
+    -
