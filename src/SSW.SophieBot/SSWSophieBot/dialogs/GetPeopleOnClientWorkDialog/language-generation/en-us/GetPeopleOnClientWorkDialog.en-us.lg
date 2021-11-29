@@ -16,7 +16,7 @@
     "body": [
         {
             "type": "TextBlock",
-            "text": "${PeopleType()} - All [${count(employees)}]",
+            "text": "${ListCardTitle()} - All [${count(employees)}]",
             "wrap": true,
             "size": "ExtraLarge",
             "weight": "Bolder"
@@ -81,14 +81,10 @@
 ```
 
 # SubTitle(date, skill)
-- IF: ${ IsNonEmptyString(date) && IsNonEmptyString(skill) }
-    - ${date} | ${skill}
-- ELSEIF: ${ IsNonEmptyString(date) }
-    - ${date}
-- ELSEIF: ${ IsNonEmptyString(skill) }
-    - ${skill}
+- IF: ${ IsNonEmptyString(skill) }
+    - Available: ${date}
 - ELSE:
-    - 
+    - ${date}
     
 
 # LocationButton(location, number)
@@ -133,7 +129,7 @@
 # SendActivity_jZGZUb_text()
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
 
-# SendActivity_7xYZ37()
+# SendActivity_CDte9G()
 [Activity
     Attachments = ${json(EmployeesListCard(dialog.locationEntity, dialog.foreach.page))}
 ]
@@ -155,14 +151,14 @@
     - ```
     {
         "type": "TextBlock",
-        "text": "${PeopleType()} - ${if(location == '', 'All', location)} [${count(turn.employees)}]",
+        "text": "${ListCardTitle()} - ${if(location == '', 'All', location)} [${count(turn.employees)}]",
         "wrap": true,
         "size": "ExtraLarge",
         "weight": "Bolder"
     },
     {
         "type": "TextBlock",
-        "text": "${if(turn.formatDate != null, turn.formatDate, '')}",
+        "text": "${SubTitle(turn.formatDate, dialog.skillEntity)}",
         "wrap": true
     }
     ```
@@ -175,11 +171,14 @@
 - ELSE:
     -
 
-# PeopleType()
-- IF: ${ dialog.booked }
+# ListCardTitle()
+- IF: ${ IsNonEmptyString(dialog.skillEntity) }
+    - ${dialog.skillEntity}
+- ELSEIF: ${ dialog.booked }
     - On Client Work
 - ELSE:
     - On Internal Work
+
 
 # EmployeeList(employees)
 -```
@@ -199,6 +198,8 @@
 # HeaderColumns
 - IF: ${ dialog.foreach.pageindex != 1 }
     - 
+- ELSEIF: ${ IsNonEmptyString(dialog.skillEntity) }
+    - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', '100px', 'Center'), HeaderColumn('Availability for next 4 weeks', 'stretch', 'Center')), ',')}
 - ELSEIF: ${ dialog.booked }
     - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', '100px', 'Center'), HeaderColumn('Client(s)', 'stretch', 'Center')), ',')}
 - ELSE:
@@ -273,8 +274,19 @@
 }
 ```
 
+# NextClient(client, freeDays)
+-```
+Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
+```
+
 # BodyColumns(employee)
-- IF: ${ dialog.booked }
+- IF: ${ IsNonEmptyString(dialog.skillEntity) }
+    - ${join(createArray(
+            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetPeopleOnClientWork'), 
+            ClickableName(employee.displayName, employee.firstName, employee.lastName, '100px', 'Small', 'Default', 'GetPeopleOnClientWork'),
+            SkillBodyColumn(FreeDays(employee.nextClient, employee.freeDays))
+        ), ',')}
+- ELSEIF: ${ dialog.booked }
     - ${join(createArray(
             ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetPeopleOnClientWork'), 
             ClickableName(employee.displayName, employee.firstName, employee.lastName, '150px', 'Small', 'Default', 'GetPeopleOnClientWork'),
@@ -289,15 +301,15 @@
             BodyColumn(employee.LastSeen, 'stretch')
         ), ',')}
 
-# BodyColumn(text, width)
+# SkillBodyColumn(text)
 -```
 {
     "type": "Column",
-    "width": "${width}",
+    "width": "stretch",
     "items": [
         {
             "type": "TextBlock",
-            "text": "${if(text != null && text != '', text, '—')}",
+            "text": "${text}",
             "wrap": true,
             "size": "Small",
             "horizontalAlignment": "Center"
@@ -306,6 +318,10 @@
     "verticalContentAlignment": "Center"
 }
 ```
+
+# FreeDays(client, freeDays)
+- ${freeDays}/20 days
+
 
 # ClientColumn(clients, width, alignment)
 -```
@@ -345,6 +361,24 @@
 }
 ```
 
+# BodyColumn(text, width)
+-```
+{
+    "type": "Column",
+    "width": "${width}",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${if(text != null && text != '', text, '—')}",
+            "wrap": true,
+            "size": "Small",
+            "horizontalAlignment": "Center"
+        }
+    ],
+    "verticalContentAlignment": "Center"
+}
+```
+
 # ImageColumn(url)
 -```
 {
@@ -361,11 +395,6 @@
     ],
     "verticalContentAlignment": "Center"
 }
-```
-
-# NextClient(client, freeDays)
--```
-Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
 ```
 
 # SendActivity_pArEiW()
@@ -400,135 +429,4 @@ Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
     - ``` on ${turn.formatDate}```
 - ELSE:
     - ``````
-
-# SendActivity_FNh2mx()
-[Activity
-    Attachments = ${json(SendActivity_7xYZ37_attachment_D05HYI(turn.formatDate, dialog.skillEntity, dialog.locationEntity, dialog.foreach.page))}
-]
-
-# SendActivity_7xYZ37_attachment_D05HYI(date, skill, location, employees)
-- ```
-{
-    "type": "AdaptiveCard",
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "version": "1.2",
-    "body": [
-        ${join(where(createArray(Title(date, skill, location), EmployeesList(employees), Footer()), item => item != ''), ',')}
-    ]
-}
-```
-
-
-# Title(date, skill, location)
-- IF: ${ dialog.foreach.pageindex == 1 }
-    - ```
-    {
-        "type": "ColumnSet",
-        "columns": [
-            {
-                "type": "Column",
-                "items": [
-                    {
-                        "type": "TextBlock",
-                        "text": "${skill} - ${if(location == '', 'All', location)} [${count(turn.employees)}]",
-                        "wrap": true,
-                        "size": "Large"
-                    },
-                    {
-                        "type": "TextBlock",
-                        "text": "Available: ${date}",
-                        "wrap": true,
-                        "isSubtle": true
-                    }
-                ],
-                "width": "stretch"
-            }
-        ]
-    }
-    ```
-- ELSE:
-    -
-
-# EmployeesList(employees)
-- ```
-{
-    "type": "ColumnSet",
-    "columns": [
-        ${SkillHeaderColumns()}
-    ],
-    "style": "default"
-},
-{
-    "type": "Container",
-    "items": [${join(select(employees, employee => SkillEmployeeRow(employee)), ',')}]
-}
-```
-
-# SkillHeaderColumns()
--```
-{
-    "type": "Column",
-    "width": "50px",
-    "items": []
-},
-{
-    "type": "Column",
-    "width": "100px",
-    "items": []
-},
-{
-    "type": "Column",
-    "width": "stretch",
-    "items": [
-        {
-            "type": "TextBlock",
-            "text": "Availability for next 4 weeks",
-            "wrap": true,
-            "weight": "Bolder",
-            "horizontalAlignment": "Center"
-        }
-    ],
-    "verticalContentAlignment": "Center"
-}
-```
-
-# SkillEmployeeRow(employee)
-- ```
-{
-    "type": "ColumnSet",
-    "columns": [
-        ${SkillBodyColumns(employee)}
-    ],
-    "height": "stretch",
-    "separator": false
-}
-```
-
-# FreeDays(client, freeDays)
--```
-${freeDays}/20 days
-```
-
-# SkillBodyColumns(employee)
-- ${join(createArray(
-   ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetAvailableExpertsByLocation'), 
-   ClickableName(employee.displayName, employee.firstName, employee.lastName, '100px', 'Small', 'Default', 'GetAvailableExpertsByLocation'),
-   SkillBodyColumn(FreeDays(employee.nextClient, employee.freeDays))), ',')}
-
-# SkillBodyColumn(text)
--```
-{
-    "type": "Column",
-    "width": "stretch",
-    "items": [
-        {
-            "type": "TextBlock",
-            "text": "${text}",
-            "wrap": true,
-            "size": "Small",
-            "horizontalAlignment": "Center"
-        }
-    ],
-    "verticalContentAlignment": "Center"
-}
-```
+    

@@ -259,29 +259,11 @@
                       "itemsProperty": "turn.employees",
                       "actions": [
                         {
-                          "$kind": "Microsoft.IfCondition",
+                          "$kind": "Microsoft.SendActivity",
                           "$designer": {
-                            "id": "FQx5cT"
+                            "id": "CDte9G"
                           },
-                          "condition": "=dialog.skillEntity != \"\"",
-                          "actions": [
-                            {
-                              "$kind": "Microsoft.SendActivity",
-                              "$designer": {
-                                "id": "FNh2mx"
-                              },
-                              "activity": "${SendActivity_FNh2mx()}"
-                            }
-                          ],
-                          "elseActions": [
-                            {
-                              "$kind": "Microsoft.SendActivity",
-                              "$designer": {
-                                "id": "7xYZ37"
-                              },
-                              "activity": "${SendActivity_7xYZ37()}"
-                            }
-                          ]
+                          "activity": "${SendActivity_CDte9G()}"
                         }
                       ]
                     }
