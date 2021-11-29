@@ -87,6 +87,10 @@
             {
               "key": "location",
               "value": "=dialog.location"
+            },
+            {
+              "key": "skills",
+              "value": "=dialog.skillEntity"
             }
           ],
           "statusCodeProperty": "turn.statusCode",
@@ -255,11 +259,29 @@
                       "itemsProperty": "turn.employees",
                       "actions": [
                         {
-                          "$kind": "Microsoft.SendActivity",
+                          "$kind": "Microsoft.IfCondition",
                           "$designer": {
-                            "id": "8Km7yc"
+                            "id": "FQx5cT"
                           },
-                          "activity": "${SendActivity_8Km7yc()}"
+                          "condition": "=dialog.skillsEntity != ''",
+                          "actions": [
+                            {
+                              "$kind": "Microsoft.SendActivity",
+                              "$designer": {
+                                "id": "FNh2mx"
+                              },
+                              "activity": "${SendActivity_FNh2mx()}"
+                            }
+                          ],
+                          "elseActions": [
+                            {
+                              "$kind": "Microsoft.SendActivity",
+                              "$designer": {
+                                "id": "7xYZ37"
+                              },
+                              "activity": "${SendActivity_7xYZ37()}"
+                            }
+                          ]
                         }
                       ]
                     }

@@ -15,6 +15,10 @@
     "availableEntity": {
       "$ref": "#/definitions/stringExpression",
       "title": "Available Entity"
+    },
+    "skillEntity": {
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Skill Entity"
     }
   },
   "$result": {

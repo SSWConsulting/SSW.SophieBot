@@ -4,10 +4,10 @@
 
 # SendActivity_7cnUNi()
 [Activity
-    Attachments = ${json(ListCard(turn.firstNames, turn.employees, turn.locations))}
+    Attachments = ${json(OfficeSelectionCard(turn.firstNames, turn.employees, turn.locations))}
 ]
 
-# ListCard(firstNames, employees, locations)
+# OfficeSelectionCard(firstNames, employees, locations)
 -```
 {
     "type": "AdaptiveCard",
@@ -23,7 +23,7 @@
         },
         {
             "type": "TextBlock",
-            "text": "${if(turn.formatDate != null, turn.formatDate, '')}",
+            "text": "${SubTitle(turn.formatDate, dialog.skillEntity)}",
             "wrap": true
         },
         {
@@ -44,9 +44,9 @@
                     "title": "Show All [${count(employees)}]",
                     "data": {
                         "intent": "GetPeopleOnClientWork",
-                        "available": "${dialog.availableEntity}",
-                        "internal": "${dialog.internalEntity}",
                         ${IntentRedirectTelemetry('Filter', 'GetPeopleOnClientWork', concat('Show All [', count(employees), ']'))},
+                        "available": "${dialog.availableEntity}",
+                        "skill": "${dialog.skillEntity}",
                         "geographyV2": [
                             {
                                 "location": "",
@@ -80,6 +80,17 @@
 }
 ```
 
+# SubTitle(date, skill)
+- IF: ${ IsNonEmptyString(date) && IsNonEmptyString(skill) }
+    - ${date} | ${skill}
+- ELSEIF: ${ IsNonEmptyString(date) }
+    - ${date}
+- ELSEIF: ${ IsNonEmptyString(skill) }
+    - ${skill}
+- ELSE:
+    - 
+    
+
 # LocationButton(location, number)
 -``` 
 {
@@ -87,9 +98,9 @@
     "title": "${location} [${number}]",
     "data": {
         "intent": "GetPeopleOnClientWork",
-        "available": "${dialog.availableEntity}",
-        "internal": "${dialog.internalEntity}",
         ${IntentRedirectTelemetry('Filter', 'GetPeopleOnClientWork', concat(location, ' [', number, ']'))},
+        "available": "${dialog.availableEntity}",
+        "skill": "${dialog.skillEntity}",
         "geographyV2": [
             {
                 "location": "${location}",
@@ -122,7 +133,7 @@
 # SendActivity_jZGZUb_text()
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
 
-# SendActivity_8Km7yc()
+# SendActivity_FNh2mx()
 [Activity
     Attachments = ${json(EmployeesListCard(dialog.locationEntity, dialog.foreach.page))}
 ]
@@ -389,3 +400,135 @@ Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
     - ``` on ${turn.formatDate}```
 - ELSE:
     - ``````
+
+# SendActivity_7xYZ37()
+[Activity
+    Attachments = ${json(SendActivity_7xYZ37_attachment_D05HYI(turn.formatDate, dialog.skillEntity, dialog.locationEntity, dialog.foreach.page))}
+]
+
+# SendActivity_7xYZ37_attachment_D05HYI(date, skill, location, employees)
+- ```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        ${join(where(createArray(Title(date, skill, location), EmployeesList(employees), Footer()), item => item != ''), ',')}
+    ]
+}
+```
+
+
+# Title(date, skill, location)
+- IF: ${ dialog.foreach.pageindex == 1 }
+    - ```
+    {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "${skill} - ${if(location == '', 'All', location)} [${count(turn.employees)}]",
+                        "wrap": true,
+                        "size": "Large"
+                    },
+                    {
+                        "type": "TextBlock",
+                        "text": "Available: ${date}",
+                        "wrap": true,
+                        "isSubtle": true
+                    }
+                ],
+                "width": "stretch"
+            }
+        ]
+    }
+    ```
+- ELSE:
+    -
+
+# EmployeesList(employees)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        ${SkillHeaderColumns()}
+    ],
+    "style": "default"
+},
+{
+    "type": "Container",
+    "items": [${join(select(employees, employee => SkillEmployeeRow(employee)), ',')}]
+}
+```
+
+# SkillHeaderColumns()
+-```
+{
+    "type": "Column",
+    "width": "50px",
+    "items": []
+},
+{
+    "type": "Column",
+    "width": "100px",
+    "items": []
+},
+{
+    "type": "Column",
+    "width": "stretch",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "Availability for next 4 weeks",
+            "wrap": true,
+            "weight": "Bolder",
+            "horizontalAlignment": "Center"
+        }
+    ],
+    "verticalContentAlignment": "Center"
+}
+```
+
+# SkillEmployeeRow(employee)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        ${SkillBodyColumns(employee)}
+    ],
+    "height": "stretch",
+    "separator": false
+}
+```
+
+# FreeDays(client, freeDays)
+-```
+${freeDays}/20 days
+```
+
+# SkillBodyColumns(employee)
+- ${join(createArray(
+   ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetAvailableExpertsByLocation'), 
+   ClickableName(employee.displayName, employee.firstName, employee.lastName, '100px', 'Small', 'Default', 'GetAvailableExpertsByLocation'),
+   SkillBodyColumn(FreeDays(employee.nextClient, employee.freeDays))), ',')}
+
+# SkillBodyColumn(text)
+-```
+{
+    "type": "Column",
+    "width": "stretch",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${text}",
+            "wrap": true,
+            "size": "Small",
+            "horizontalAlignment": "Center"
+        }
+    ],
+    "verticalContentAlignment": "Center"
+}
+```

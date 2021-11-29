@@ -30,9 +30,6 @@
         "GetPeopleOnClientWorkDialog.en-us",
         "GetEmployeesByProjectDialog.en-us"
       ],
-      "GetAvailableExpertsByLocation": [
-        "GetAvailableExpertsByLocationDialog.en-us"
-      ],
       "CheckAvailability": [
         "CheckAvailabilityDialog.en-us"
       ],
@@ -40,8 +37,7 @@
         "GetPeopleBySkills.en-us"
       ],
       "GetPeopleOnClientWork": [
-        "GetPeopleOnClientWorkDialog.en-us",
-        "GetAvailableExpertsByLocationDialog.en-us"
+        "GetPeopleOnClientWorkDialog.en-us"
       ],
       "GetCurrentEmployeesOnLocation": [
         "GetCurrentEmployeesOnLocationDialog.en-us"

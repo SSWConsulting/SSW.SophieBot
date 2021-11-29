@@ -656,84 +656,6 @@
     {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
-        "id": "wDay2D",
-        "name": "OnIntent (GetAvailableExpertsByLocation)"
-      },
-      "intent": "GetAvailableExpertsByLocation",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "TkSkT5"
-          },
-          "name": "SSWSophieBot.OnIntent_GetAvailableExpertsByLocation",
-          "value": "=null"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "JwY7xl"
-          },
-          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
-          "actions": [
-            {
-              "$kind": "Microsoft.TelemetryTrackEventAction",
-              "$designer": {
-                "id": "rjeADS"
-              },
-              "eventName": "IntentRedirect",
-              "properties": {
-                "SourceIntent": "=@redirect.sourceIntent",
-                "TargetIntent": "GetAvailableExpertsByLocation",
-                "Action": "=@redirect.action",
-                "ActionType": "=@redirect.actionType"
-              }
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "Phb4f8"
-          },
-          "eventName": "SetOptions"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "HZcKlV"
-          },
-          "condition": "=contains($options.implemented, \"GetAvailableExpertsByLocation\")",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "r27Nrj"
-              },
-              "activity": "${SendActivity_r27Nrj()}"
-            }
-          ],
-          "actions": [
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "2vgi8C"
-              },
-              "activityProcessed": true,
-              "dialog": "GetAvailableExpertsByLocationDialog",
-              "options": {
-                "skillEntity": "=$options.skill",
-                "locationEntity": "=$options.location",
-                "dateEntity": "=$options.datetime"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
         "id": "mm9uIt",
         "name": "OnIntent (CheckAvailability)"
       },
@@ -946,41 +868,18 @@
           ],
           "actions": [
             {
-              "$kind": "Microsoft.IfCondition",
+              "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "8hukyY"
+                "id": "10NTzH"
               },
-              "condition": "=exists($options.skill)",
-              "elseActions": [
-                {
-                  "$kind": "Microsoft.BeginDialog",
-                  "$designer": {
-                    "id": "Sje0tC"
-                  },
-                  "activityProcessed": true,
-                  "dialog": "GetPeopleOnClientWorkDialog",
-                  "options": {
-                    "dateEntity": "=$options.datetime",
-                    "locationEntity": "=$options.location",
-                    "availableEntity": "=$options.booked"
-                  }
-                }
-              ],
-              "actions": [
-                {
-                  "$kind": "Microsoft.BeginDialog",
-                  "$designer": {
-                    "id": "38ruYx"
-                  },
-                  "activityProcessed": true,
-                  "dialog": "GetAvailableExpertsByLocationDialog",
-                  "options": {
-                    "dateEntity": "=$options.datetime",
-                    "locationEntity": "=$options.location",
-                    "skillEntity": "=$options.skill"
-                  }
-                }
-              ]
+              "activityProcessed": true,
+              "dialog": "GetPeopleOnClientWorkDialog",
+              "options": {
+                "dateEntity": "=$options.datetime",
+                "locationEntity": "=$options.location",
+                "availableEntity": "=$options.booked",
+                "skillEntity": "=$options.skill"
+              }
             }
           ]
         }
