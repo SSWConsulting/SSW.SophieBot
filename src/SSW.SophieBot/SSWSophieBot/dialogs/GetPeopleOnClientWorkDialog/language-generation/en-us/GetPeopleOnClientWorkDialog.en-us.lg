@@ -87,14 +87,14 @@
     - ${date}
     
 
-# LocationButton(location, number)
+# LocationButton(location, count)
 -``` 
 {
     "type": "Action.Submit",
     "title": "${location} [${count}]",
     "data": {
         "intent": "GetPeopleOnClientWork",
-        ${IntentRedirectTelemetry('Filter', 'GetPeopleOnClientWork', concat(location, ' [', number, ']'))},
+        ${IntentRedirectTelemetry('Filter', 'GetPeopleOnClientWork', concat(location, ' [', count, ']'))},
         "available": "${dialog.availableEntity}",
         "skill": "${dialog.skillEntity}",
         "geographyV2": [
@@ -292,7 +292,7 @@ Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
 # BodyColumns(employee)
 - IF: ${ IsNonEmptyString(dialog.skillEntity) }
     - ${join(createArray(
-            ClickableAvatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px', 'GetPeopleOnClientWork'), 
+            Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
             ClickableName(employee.displayName, employee.firstName, employee.lastName, '100px', 'Small', 'Default', 'GetPeopleOnClientWork'),
             SkillBodyColumn(FreeDays(employee.nextClient, employee.freeDays))
         ), ',')}
