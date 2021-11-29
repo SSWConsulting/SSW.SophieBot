@@ -23,7 +23,7 @@
         },
         {
             "type": "TextBlock",
-            "text": "${SubTitle(turn.formatDate, dialog.skillEntity)}",
+            "text": "${Subtitle(turn.formatDate, dialog.skillEntity)}",
             "wrap": true
         },
         {
@@ -80,7 +80,7 @@
 }
 ```
 
-# SubTitle(date, skill)
+# Subtitle(date, skill)
 - IF: ${ IsNonEmptyString(skill) }
     - Available: ${date}
 - ELSE:
@@ -158,7 +158,7 @@
     },
     {
         "type": "TextBlock",
-        "text": "${SubTitle(turn.formatDate, dialog.skillEntity)}",
+        "text": "${Subtitle(turn.formatDate, dialog.skillEntity)}",
         "wrap": true
     }
     ```
