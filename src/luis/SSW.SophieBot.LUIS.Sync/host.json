@@ -1,0 +1,20 @@
+{
+  "version": "2.0",
+  "extensions": {
+    "serviceBus": {
+      "prefetchCount": 50,
+      "maxMessages": 50
+    }
+  },
+  "logging": {
+    "applicationInsights": {
+      "samplingSettings": {
+        "isEnabled": true,
+        "excludedTypes": "Request"
+      }
+    },
+    "logLevel": {
+      "SSW.SophieBot.LUIS.Sync.Functions.ListEntitySync": "Information"
+    }
+  }
+}

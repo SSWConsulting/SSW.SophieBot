@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SSW.SophieBot.LUIS.Core\SSW.SophieBot.LUIS.Core.csproj" />
+  </ItemGroup>
+
+</Project>
