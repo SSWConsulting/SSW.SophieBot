@@ -73,7 +73,7 @@
                         {
                             "type": "TextBlock",
                             "text": "Today:",
-                            "color": "Accent",
+                            "color": "Attention",
                             "wrap": true
                         }
                     ]
@@ -102,7 +102,7 @@
                         {
                             "type": "TextBlock",
                             "text": "Last Seen:",
-                            "color": "Accent",
+                            "color": "Attention",
                             "wrap": true
                         }
                     ]
@@ -131,7 +131,7 @@
                         {
                             "type": "TextBlock",
                             "text": "Skills:",
-                            "color": "Accent",
+                            "color": "Attention",
                             "wrap": true
                         }
                     ]
@@ -146,34 +146,86 @@
                                 {
                                     "type": "Column",
                                     "width": "stretch",
+									"selectAction": {
+										"type": "Action.ToggleVisibility",
+										"targetElements": [
+											"showMore",
+											"showLess",
+											"omittedSkills",
+											"allSkills"
+										]
+									},
                                     "items": [
                                         {
-                                            "type": "TextBlock",
-                                            "wrap": true,
-                                            "text": "More ∨",
-                                            "color": "Accent",
                                             "id": "showMore",
-                                            "horizontalAlignment": "Right"
+                                            "type": "ColumnSet",
+                                            "columns": [
+                                                {
+                                                    "type": "Column",
+                                                    "width": "stretch",
+                                                    "items": [
+                                                        {
+                                                            "type": "TextBlock",
+                                                            "text": "More",
+                                                            "wrap": true,
+                                                            "color": "Attention"
+                                                        }
+                                                    ],
+                                                    "verticalContentAlignment": "Center",
+                                                    "horizontalAlignment": "Right"
+                                                },
+                                                {
+                                                    "type": "Column",
+                                                    "width": "auto",
+                                                    "items": [
+                                                        {
+                                                            "type": "Image",
+                                                            "url": "${ExpandArrowIcon()}",
+                                                            "width": "20px",
+                                                            "height": "20px"
+                                                        }
+                                                    ],
+                                                    "spacing": "None",
+                                                    "minHeight": "12px"
+                                                }
+                                            ]
                                         },
                                         {
-                                            "type": "TextBlock",
-                                            "text": "Less ∧",
-                                            "wrap": true,
-                                            "color": "Accent",
                                             "id": "showLess",
-                                            "horizontalAlignment": "Right",
-                                            "isVisible": false
+                                            "isVisible": false,
+                                            "type": "ColumnSet",
+                                            "columns": [
+                                                {
+                                                    "type": "Column",
+                                                    "width": "stretch",
+                                                    "items": [
+                                                        {
+                                                            "type": "TextBlock",
+                                                            "text": "Less",
+                                                            "wrap": true,
+                                                            "color": "Attention"
+                                                        }
+                                                    ],
+                                                    "horizontalAlignment": "Right",
+                                                    "verticalContentAlignment": "Center"
+                                                },
+                                                {
+                                                    "type": "Column",
+                                                    "width": "auto",
+                                                    "items": [
+                                                        {
+                                                            "type": "Image",
+                                                            "url": "${CollapseArrowIcon()}",
+                                                            "width": "20px",
+                                                            "height": "20px"
+                                                        }
+                                                    ],
+                                                    "spacing": "None"
+                                                }
+                                            ],
+                                            "spacing": "None"
                                         }
-                                    ],
-                                    "selectAction": {
-                                        "type": "Action.ToggleVisibility",
-                                        "targetElements": [
-                                            "showMore",
-                                            "showLess",
-                                            "omittedSkills",
-                                            "allSkills"
-                                        ]
-                                    }
+                                    ]
                                 }
                             ]
                         }
@@ -221,7 +273,7 @@
         {
             "type": "TextBlock",
             "text": "Contact:",
-            "color": "Accent",
+            "color": "Attention",
             "wrap": true,
             "separator": true,
             "height": "stretch"
