@@ -1,0 +1,36 @@
+[Common](common.en-us.lg)
+[Profile](profile.en-us.lg)
+[SSWSophieBot](SSWSophieBot.en-us.lg)
+
+# SendActivity_Ut9mVe()
+[Activity
+    Text = ${SendActivity_Ut9mVe_text()}
+]
+
+# SendActivity_Ut9mVe_text()
+- ${notFound()}
+# SendActivity_D9w7zc()
+[Activity
+    Attachments = ${json(ProfileCardWithSSWPeopleAPI(dialog.foreach.value))}
+]
+
+# SendActivity_E1qghn()
+[Activity
+    Text = ${SendActivity_E1qghn_text()}
+]
+
+# SendActivity_E1qghn_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+
+# SendActivity_H4LLV0()
+[Activity
+    Text = ${SendActivity_H4LLV0_text()}
+]
+
+# SendActivity_H4LLV0_text()
+- Please specify a person name to query.
+
+# SendActivity_1wGn1P()
+[Activity
+    Attachments = ${json(NameButtons('GetProfile', 'GetProfile'))}
+]

@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - src/SSW.SophieBot/**
+      - src/bot/**
       - .github/workflows/SSW.SophieBot.dev.yml
       - .github/workflows/scripts/**
 
@@ -19,8 +19,8 @@ env:
   WEBAPP_NAME: SSWSophieBotDev
   SOURCE_DIR: ${{ github.workspace }}
   OUTPUT_DIR: ${{ github.workspace }}/output/deploy
-  BOT_PROJECT_DIR: ${{ github.workspace }}/src/SSW.SophieBot/SSWSophieBot
-  BOT_PROJECT_NAME: SSWSophieBot.csproj
+  BOT_PROJECT_DIR: ${{ github.workspace }}/src/bot/SSW.SophieBot
+  BOT_PROJECT_NAME: SSW.SophieBot.csproj
   PUBLISHING_PROFILE_NAME: SSW.Bots.Dev
   LUIS_AUTHORING_ENDPOINT: https://australiaeast.api.cognitive.microsoft.com/
   LUIS_AUTHORING_REGION: australiaeast
@@ -53,7 +53,7 @@ jobs:
         with:
           name: "appsettings.json"
           json: ${{ secrets.APPSETTINGS_JSON }}
-          dir: "src/SSW.SophieBot/SSWSophieBot/settings"
+          dir: "src/bot/SSW.SophieBot/SSW.SophieBot/settings"
 
       # Prepare working folders    
       - name: Prepare working folders
