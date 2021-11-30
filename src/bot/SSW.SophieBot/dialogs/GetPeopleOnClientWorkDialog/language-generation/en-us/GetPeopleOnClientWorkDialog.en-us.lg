@@ -16,14 +16,14 @@
     "body": [
         {
             "type": "TextBlock",
-            "text": "${PeopleType()} - All [${count(employees)}]",
+            "text": "${ListCardTitle()} - All [${count(employees)}]",
             "wrap": true,
             "size": "ExtraLarge",
             "weight": "Bolder"
         },
         {
             "type": "TextBlock",
-            "text": "${if(turn.formatDate != null, turn.formatDate, '')}",
+            "text": "${Subtitle(turn.formatDate, dialog.skillEntity)}",
             "wrap": true
         },
         {
@@ -44,9 +44,9 @@
                     "title": "Show All [${count(employees)}]",
                     "data": {
                         "intent": "GetPeopleOnClientWork",
-                        "available": "${dialog.availableEntity}",
-                        "internal": "${dialog.internalEntity}",
                         ${IntentRedirectTelemetry('Filter', 'GetPeopleOnClientWork', concat('Show All [', count(employees), ']'))},
+                        "available": "${dialog.availableEntity}",
+                        "skill": "${dialog.skillEntity}",
                         "geographyV2": [
                             {
                                 "location": "",
@@ -80,11 +80,12 @@
 }
 ```
 
-# PeopleType()
-- IF: ${ dialog.booked }
-    - On Client Work
+# Subtitle(date, skill)
+- IF: ${ IsNonEmptyString(skill) }
+    - Available: ${date}
 - ELSE:
-    - On Internal Work
+    - ${date}
+    
 
 # LocationButton(location, count)
 -``` 
@@ -93,9 +94,9 @@
     "title": "${location} [${count}]",
     "data": {
         "intent": "GetPeopleOnClientWork",
-        "available": "${dialog.availableEntity}",
-        "internal": "${dialog.internalEntity}",
         ${IntentRedirectTelemetry('Filter', 'GetPeopleOnClientWork', concat(location, ' [', count, ']'))},
+        "available": "${dialog.availableEntity}",
+        "skill": "${dialog.skillEntity}",
         "geographyV2": [
             {
                 "location": "${location}",
@@ -128,7 +129,7 @@
 # SendActivity_jZGZUb_text()
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
 
-# SendActivity_8Km7yc()
+# SendActivity_CDte9G()
 [Activity
     Attachments = ${json(EmployeesListCard(dialog.locationEntity, dialog.foreach.page))}
 ]
@@ -150,14 +151,14 @@
     - ```
     {
         "type": "TextBlock",
-        "text": "${PeopleType()} - ${if(location == '', 'All', location)} [${count(turn.employees)}]",
+        "text": "${ListCardTitle()} - ${if(location == '', 'All', location)} [${count(turn.employees)}]",
         "wrap": true,
         "size": "ExtraLarge",
         "weight": "Bolder"
     },
     {
         "type": "TextBlock",
-        "text": "${if(turn.formatDate != null, turn.formatDate, '')}",
+        "text": "${Subtitle(turn.formatDate, dialog.skillEntity)}",
         "wrap": true
     }
     ```
@@ -169,6 +170,15 @@
     - ${MoreBookingInfoButton()}
 - ELSE:
     -
+
+# ListCardTitle()
+- IF: ${ IsNonEmptyString(dialog.skillEntity) }
+    - ${dialog.skillEntity}
+- ELSEIF: ${ dialog.booked }
+    - On Client Work
+- ELSE:
+    - On Internal Work
+
 
 # EmployeeList(employees)
 -```
@@ -188,6 +198,8 @@
 # HeaderColumns
 - IF: ${ dialog.foreach.pageindex != 1 }
     - 
+- ELSEIF: ${ IsNonEmptyString(dialog.skillEntity) }
+    - ${join(createArray(HeaderColumn('', '50px', 'Center'), HeaderColumn('', '100px', 'Center'), HeaderColumn('Availability for next 4 weeks', 'stretch', 'Center')), ',')}
 - ELSEIF: ${ dialog.booked }
     - ${join(createArray(
             HeaderColumn('', '50px', 'Center'), 
@@ -272,8 +284,19 @@
 }
 ```
 
+# NextClient(client, freeDays)
+-```
+Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
+```
+
 # BodyColumns(employee)
-- IF: ${ dialog.booked }
+- IF: ${ IsNonEmptyString(dialog.skillEntity) }
+    - ${join(createArray(
+            Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
+            ClickableName(employee.displayName, employee.firstName, employee.lastName, '100px', 'Small', 'Default', 'GetPeopleOnClientWork'),
+            SkillBodyColumn(FreeDays(employee.nextClient, employee.freeDays))
+        ), ',')}
+- ELSEIF: ${ dialog.booked }
     - ${join(createArray(
             Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
             ClickableName(employee.displayName, employee.firstName, employee.lastName, '150px', 'Small', 'Default', 'GetPeopleOnClientWork'),
@@ -288,15 +311,15 @@
             BodyColumn(employee.LastSeen, 'stretch')
         ), ',')}
 
-# BodyColumn(text, width)
+# SkillBodyColumn(text)
 -```
 {
     "type": "Column",
-    "width": "${width}",
+    "width": "stretch",
     "items": [
         {
             "type": "TextBlock",
-            "text": "${if(text != null && text != '', text, '—')}",
+            "text": "${text}",
             "wrap": true,
             "size": "Small",
             "horizontalAlignment": "Center"
@@ -305,6 +328,10 @@
     "verticalContentAlignment": "Center"
 }
 ```
+
+# FreeDays(client, freeDays)
+- ${freeDays}/20 days
+
 
 # ClientColumn(clients, width, alignment)
 -```
@@ -344,6 +371,24 @@
 }
 ```
 
+# BodyColumn(text, width)
+-```
+{
+    "type": "Column",
+    "width": "${width}",
+    "items": [
+        {
+            "type": "TextBlock",
+            "text": "${if(text != null && text != '', text, '—')}",
+            "wrap": true,
+            "size": "Small",
+            "horizontalAlignment": "Center"
+        }
+    ],
+    "verticalContentAlignment": "Center"
+}
+```
+
 # ImageColumn(url)
 -```
 {
@@ -361,12 +406,6 @@
     "verticalContentAlignment": "Center"
 }
 ```
-
-# NextClient(client, freeDays)
-- IF: ${ freeDays == 0 }
-    - Note: No free days over next 4 weeks.
-- ELSE:
-    - Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
 
 # SendActivity_pArEiW()
 [Activity

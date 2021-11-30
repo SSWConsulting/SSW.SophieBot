@@ -188,19 +188,6 @@
 
 @ intent CheckAvailability usesFeature contact,available,unavailable
 
-# GetAvailableExpertsByLocation
-- who is {@available=free} next Friday in Melbourne with {@skill = Angular} skills?
-- who is not {@unavailable=booked} tomorrow in Remote with {@skill = .NET} skills?
-- who is {@available=available} next Thursday in Sydney with {@skill = .NET Core} skills?
-- i need a {@skill = React} expert in NewCastle next Wednesday
-- show me {@skill = Vue} devs available next Wednesday in Brisbane
-- book an {@skill = Azure Devops} expert next Tuesday in China
-- i need {@skill = SQL} developers in remote tomorrow
-- i want to book a {@skill = Playwright} dev tomorrow in newcastle
-- show list of {@available=non-booked} employees with {@skill = wordpress} skills tomorrow in hangzhou
-
-@ intent GetAvailableExpertsByLocation usesFeature available,unavailable,datetimeV2,geographyV2,skill
-
 # GetCurrentEmployeesOnLocation
 - who is in brisbane right now
 - who is in newcastle right now
@@ -370,7 +357,18 @@
 - Who is {@available = working for SSW} in China?
 - Who is {@available = working for SSW} remotely next Friday?
 
-@ intent GetPeopleOnClientWork usesFeature available,unavailable,datetimeV2
+- who is {@available=free} next Friday in Melbourne with {@skill = Angular} skills?
+- who is not {@unavailable=booked} tomorrow in Remote with {@skill = .NET} skills?
+- who is {@available=available} next Thursday in Sydney with {@skill = .NET Core} skills?
+- i need a {@skill = React} expert in NewCastle next Wednesday
+- show me {@skill = Vue} devs available next Wednesday in Brisbane
+- book an {@skill = Azure Devops} expert next Tuesday in China
+- i need {@skill = SQL} developers in remote tomorrow
+- i want to book a {@skill = Playwright} dev tomorrow in newcastle
+- show list of {@available=non-booked} employees with {@skill = wordpress} skills tomorrow in hangzhou
+
+
+@ intent GetPeopleOnClientWork usesFeature available,unavailable,datetimeV2,geographyV2,SkilledPhraseList,skill
 
 # GetPhoneNumber
 - can you find me {@contact={@firstname=noe}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
