@@ -129,11 +129,20 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 return Math.Max(1, (int)Math.Floor(value));
             }
 
-            var lastSeenDateTimeValue = lastSeenDateTime.Value;
             var now = DateTimeOffset.UtcNow;
+            var timeOffset = now - lastSeenDateTime.Value;
 
-            var timeOffset = now - lastSeenDateTimeValue;
-            if (timeOffset.TotalDays < 1)
+            if (timeOffset.TotalMinutes < 1)
+            {
+                var seconds = GetInteger(timeOffset.TotalSeconds);
+                return $"{seconds} {(seconds == 1 ? "second" : "seconds")} ago";
+            }
+            else if (timeOffset.TotalHours < 1)
+            {
+                var minutes = GetInteger(timeOffset.TotalMinutes);
+                return $"{minutes} {(minutes == 1 ? "minute" : "minutes")} ago";
+            }
+            else if (timeOffset.TotalDays < 1)
             {
                 var hours = GetInteger(timeOffset.TotalHours);
                 return $"{hours} {(hours == 1 ? "hour" : "hours")} ago";
