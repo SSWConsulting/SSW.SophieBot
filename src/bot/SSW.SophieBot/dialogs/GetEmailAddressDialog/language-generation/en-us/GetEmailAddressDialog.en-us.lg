@@ -1,0 +1,46 @@
+[SSWSophieBot](SSWSophieBot.en-us.lg)
+
+# SendActivity_ojOPMX_text()
+- **${dialog.displayName}**'s email address is:<br/>**<${dialog.emailAddress}>**
+# SendActivity_ojOPMX()
+[Activity
+    Text = ${SendActivity_ojOPMX_text()}
+]
+
+# SendActivity_mrti0A_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_mrti0A()
+[Activity
+    Text = ${SendActivity_mrti0A_text()}
+]
+
+
+# SendActivity_N0ap4L()
+[Activity
+    Text = ${SendActivity_N0ap4L_text()}
+]
+
+# SendActivity_N0ap4L_text()
+- Please specify a person name to query.
+# SendActivity_ItqJV9()
+[Activity
+    Text = ${SendActivity_ItqJV9_text()}
+]
+
+# SendActivity_ItqJV9_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
+# SendActivity_KKT6Ev()
+[Activity
+    Text = ${SendActivity_KKT6Ev_text()}
+]
+
+# SendActivity_KKT6Ev_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
+# SendActivity_LcfbHZ()
+[Activity
+    Text = ${SendActivity_ojOPMX_text()}
+]
+# SendActivity_3TXOcW()
+[Activity
+    Attachments = ${json(NameButtons('GetEmailAddress', 'GetEmailAddress'))}
+]
