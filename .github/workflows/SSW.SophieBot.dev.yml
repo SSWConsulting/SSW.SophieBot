@@ -53,7 +53,7 @@ jobs:
         with:
           name: "appsettings.json"
           json: ${{ secrets.APPSETTINGS_JSON }}
-          dir: "src/bot/SSW.SophieBot/SSW.SophieBot/settings"
+          dir: "src/bot/SSW.SophieBot/settings"
 
       # Prepare working folders    
       - name: Prepare working folders
