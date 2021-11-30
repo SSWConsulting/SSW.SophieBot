@@ -29,5 +29,11 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Models
 
         [JsonProperty("lastSeenTime")]
         public string LastSeenTime { get; set; }
+
+        [JsonProperty("emailAddress")]
+        public string EmailAddress { get; set; }
+
+        [JsonProperty("bookedDays")]
+        public int BookedDays { get; set; }
     }
 }

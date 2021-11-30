@@ -34,10 +34,33 @@
                         ${join(createArray(Status(profile), ColumnSet('Client', ClientText(profile)), ColumnSet('Last seen', LastSeen(profile))), ',')}
                     ],
                     "verticalContentAlignment": "Center"
+                },
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${ChatIcon()}",
+                            "horizontalAlignment": "Right",
+                            "selectAction": {
+                                "type": "Action.OpenUrl",
+                                "url": "sip:${profile.emailAddress}"
+                            },
+                            "altText": "Contact now",
+                            "width": "18px",
+                            "height": "18px"
+                        }
+                    ]
                 }
             ]
         },
-        ${MoreBookingInfoButton()}
+        {
+            "type": "ActionSet",
+            "actions": [
+                    ${ViewBookingsAction(employee.displayName, employee.bookedDays, 'GetFreeDay')}
+            ]
+        }
     ]
 }
 ```
@@ -48,13 +71,23 @@
     "type": "ColumnSet",
     "columns": [
         {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch"
+                }
+            ]
+        },
+        {
             "type": "Column",
             "width": "80px",
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "**Today:**",
-                    "wrap": true
+                    "text": "Today:",
+                    "wrap": true,
+                    "color": "Attention"
                 }
             ]
         },
@@ -128,8 +161,9 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "**${name}:**",
-                    "wrap": true
+                    "text": "${name}:",
+                    "wrap": true,
+                    "color": "Attention"
                 }
             ]
         },
