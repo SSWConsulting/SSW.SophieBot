@@ -11,6 +11,7 @@ generated/
 *.user
 *.userosscache
 *.sln.docstates
+local.settings.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
