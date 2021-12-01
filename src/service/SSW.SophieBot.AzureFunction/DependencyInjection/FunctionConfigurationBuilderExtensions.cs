@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
+// TODO: Refactor file structure and namespaces in this project
 namespace SSW.SophieBot.AzureFunction.DependencyInjection
 {
     public static class FunctionConfigurationBuilderExtensions

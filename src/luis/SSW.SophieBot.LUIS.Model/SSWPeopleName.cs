@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SSW.SophieBot.DataSync.Domain;
+using System;
 
 namespace SSW.SophieBot.LUIS.Model
 {
@@ -12,6 +13,6 @@ namespace SSW.SophieBot.LUIS.Model
 
         public string? Nickname { get; set; }
 
-        public ChangeMode ChangeMode { get; set; }
+        public SyncMode SyncMode { get; set; }
     }
 }
