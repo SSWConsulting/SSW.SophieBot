@@ -14,6 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using SSW.SophieBot.AzureFunction.System;
 using Microsoft.AspNetCore.WebUtilities;
+using SSW.SophieBot.DataSync.Domain.Dto;
 
 namespace SSW.SophieBot.DataSync.Crm.HttpClients
 {
@@ -45,7 +46,7 @@ namespace SSW.SophieBot.DataSync.Crm.HttpClients
             _httpClient.DefaultRequestHeaders.Add(HeaderNames.Authorization, string.Empty);
         }
 
-        public async Task<OdataPagedResponse<CrmEmployee>> GetPagedEmployeesAsync(string nextLink = null, CancellationToken cancellationToken = default)
+        public virtual async Task<OdataPagedResponse<CrmEmployee>> GetPagedEmployeesAsync(string nextLink = null, CancellationToken cancellationToken = default)
         {
             await AddHeadersAsync(cancellationToken);
 

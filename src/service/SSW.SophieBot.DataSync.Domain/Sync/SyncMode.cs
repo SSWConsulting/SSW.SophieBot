@@ -1,4 +1,4 @@
-﻿namespace SSW.SophieBot.DataSync.Domain
+﻿namespace SSW.SophieBot.DataSync.Domain.Sync
 {
     public enum SyncMode
     {

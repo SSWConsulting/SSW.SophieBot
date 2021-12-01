@@ -6,8 +6,9 @@ using Microsoft.Extensions.Options;
 using SSW.SophieBot.AzureFunction.System;
 using SSW.SophieBot.DataSync.Crm.Config;
 using SSW.SophieBot.DataSync.Crm.HttpClients;
-using SSW.SophieBot.DataSync.Domain;
+using SSW.SophieBot.DataSync.Domain.Dto;
 using SSW.SophieBot.DataSync.Domain.Employees;
+using SSW.SophieBot.DataSync.Domain.Sync;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,41 +52,45 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
             }
 
             var container = _cosmosClient.GetContainer(_syncOptions.EmployeeSync.DatabaseId, _syncOptions.EmployeeSync.ContainerId);
-            var employeesSyncData = new SyncListData<MqMessage<Employee>>();
             await using var serviceBusSender = _serviceBusClient.CreateSender(_syncOptions.EmployeeSync.TopicName);
 
             var loop = true;
             var nextLink = string.Empty;
+            var isVersionUpdated = true;
+            var syncVersion = Guid.NewGuid().ToString();
 
             while (loop)
             {
                 var crmEmployeesOdata = await _crmClient.GetPagedEmployeesAsync(nextLink, cancellationToken);
-                if (crmEmployeesOdata?.Value.IsNullOrEmpty() ?? true)
+                if (crmEmployeesOdata?.Value?.IsNullOrEmpty() ?? true)
                 {
+                    isVersionUpdated = false;
                     break;
                 }
 
                 // calculate and perform upsert on employees, and send out messages
-                employeesSyncData = await PerformUpsertAsync(crmEmployeesOdata, container, serviceBusSender, cancellationToken);
+                var employeesSyncData = await PerformUpsertionAsync(crmEmployeesOdata, container, serviceBusSender, syncVersion, cancellationToken);
+                isVersionUpdated = isVersionUpdated && employeesSyncData.IsVersionUpdated;
 
                 nextLink = crmEmployeesOdata.OdataNextLink;
                 loop = crmEmployeesOdata.HasNext();
             }
 
             // if sync version was successfully updated, query and perform delete on out-dated employees, and send out messages
-            if (employeesSyncData.IsVersionUpdated)
+            if (isVersionUpdated)
             {
-                await PerformDeletionAsync(employeesSyncData.SyncVersion, container, serviceBusSender, cancellationToken);
+                await PerformDeletionAsync(syncVersion, container, serviceBusSender, cancellationToken);
             }
         }
 
-        private async Task<SyncListData<MqMessage<Employee>>> PerformUpsertAsync(
+        private async Task<SyncListData<MqMessage<Employee>>> PerformUpsertionAsync(
             OdataPagedResponse<CrmEmployee> crmEmployeesOdata,
             Container container,
             ServiceBusSender sender,
+            string syncVersion,
             CancellationToken cancellationToken)
         {
-            var employeesSyncData = await GetUpsertEmployeesAsync(crmEmployeesOdata, container, cancellationToken);
+            var employeesSyncData = await GetUpsertEmployeesAsync(crmEmployeesOdata, container, syncVersion, cancellationToken);
             var upsertedEmployees = await UpdateSnapshotAsync(employeesSyncData.Data, container, cancellationToken);
             await SendMessagesAsync(upsertedEmployees, sender, cancellationToken);
 
@@ -125,6 +130,7 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
         private async Task<SyncListData<MqMessage<Employee>>> GetUpsertEmployeesAsync(
             OdataPagedResponse<CrmEmployee> crmEmployeesOdata,
             Container container,
+            string syncVersion,
             CancellationToken cancellationToken)
         {
             if (!crmEmployeesOdata.Value.Any())
@@ -138,7 +144,6 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
                 return $"SELECT * FROM c WHERE c.organizationId={_syncOptions.OrganizationId} AND c.id IN ({string.Join(",", formattedIds)})";
             }
 
-            var syncVersion = Guid.NewGuid().ToString();
             var crmEmployeeIds = crmEmployeesOdata.Value.Select(crmEmployee => crmEmployee.Systemuserid);
             var queryDefinition = new QueryDefinition(GetSqlQueryText(crmEmployeeIds));
 

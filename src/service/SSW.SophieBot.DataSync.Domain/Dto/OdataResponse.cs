@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.Json.Serialization;
 
-namespace SSW.SophieBot.DataSync.Domain
+namespace SSW.SophieBot.DataSync.Domain.Dto
 {
     public class OdataResponse<T>
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SSW.SophieBot.DataSync.Domain.Sync;
+using System;
 using System.Collections.Generic;
 
 namespace SSW.SophieBot.DataSync.Domain.Employees

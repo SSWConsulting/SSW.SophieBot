@@ -1,6 +1,7 @@
-﻿using System;
+﻿using SSW.SophieBot.DataSync.Domain.Sync;
+using System;
 
-namespace SSW.SophieBot.DataSync.Domain
+namespace SSW.SophieBot.DataSync.Domain.Dto
 {
     public class MqMessage<T>
     {
