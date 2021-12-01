@@ -73,3 +73,48 @@
 
 # SendActivity_v4yQKd_text()
 - Please specify a valid skill to query.
+
+# SendActivity_Eyk2OR()
+[Activity
+    Attachments = ${json(SkillSelectionCard('GetPeopleBySkills', 'GetPeopleBySkills'))}
+]
+
+# SkillSelectionCard(targetIntent, sourceIntent)
+- ```
+{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "TextBlock",
+            "wrap": true,
+            "text": "There seems to be more than one skills relate to **${titleCase(dialog.skillEntity)}**. Which one were you looking for?"
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                ${join(select(take(turn.matchedSkills, 5), skill => SkillButton(targetIntent, sourceIntent, skill)), ',')}
+            ],
+            "height": "stretch"
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2"
+}
+```
+
+# SkillButton(targetIntent, sourceIntent, skill)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${skill}",
+    "data": {
+        "intent": "${targetIntent}",
+        ${IntentRedirectTelemetry('SkillButton', sourceIntent, skill)},
+        "skill" : "${skill}",
+        "msteams": {
+            "type": "messageBack",
+            "displayText": "${Skill}"
+        }
+    }
+}
+```
