@@ -1,4 +1,4 @@
-﻿using SSW.SophieBot.DataSync.Domain.Sync;
+﻿using SSW.SophieBot.DataSync.Domain.Persistence;
 using System;
 using System.Collections.Generic;
 

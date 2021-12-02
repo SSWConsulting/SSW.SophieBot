@@ -1,10 +1,9 @@
-﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
 using System.Reflection;
 
-namespace SSW.SophieBot.AzureFunction.DependencyInjection
+namespace Microsoft.Azure.Functions.Extensions.DependencyInjection
 {
     public static class FunctionsHostBuilderExtensions
     {

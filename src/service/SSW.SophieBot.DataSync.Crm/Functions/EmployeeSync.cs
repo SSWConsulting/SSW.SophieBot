@@ -1,18 +1,14 @@
-using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using SSW.SophieBot.AzureFunction.System;
 using SSW.SophieBot.DataSync.Crm.Config;
-using SSW.SophieBot.DataSync.Crm.HttpClients;
-using SSW.SophieBot.DataSync.Domain.Dto;
 using SSW.SophieBot.DataSync.Domain.Employees;
+using SSW.SophieBot.DataSync.Domain.Persistence;
 using SSW.SophieBot.DataSync.Domain.Sync;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,22 +16,22 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
 {
     public class EmployeeSync
     {
-        private readonly CrmClient _crmClient;
-        private readonly CosmosClient _cosmosClient;
-        private readonly ServiceBusClient _serviceBusClient;
+        private readonly IPagedOdataSyncService<CrmEmployee> _employeeOdataService;
+        private readonly ITransactionalBulkRepository<SyncSnapshot, PatchOperation> _syncSnapshotRepository;
+        private readonly IBatchMessageService<MqMessage<Employee>, string> _serviceBusService;
         private readonly SyncOptions _syncOptions;
         private readonly ILogger<EmployeeSync> _logger;
 
         public EmployeeSync(
-            CrmClient crmClient,
-            CosmosClient cosmosClient,
-            ServiceBusClient serviceBusClient,
+            IPagedOdataSyncService<CrmEmployee> employeeOdataService,
+            ITransactionalBulkRepository<SyncSnapshot, PatchOperation> syncSnapshotRepository,
+            IBatchMessageService<MqMessage<Employee>, string> serviceBusService,
             IOptions<SyncOptions> syncOptions,
             ILogger<EmployeeSync> logger)
         {
-            _crmClient = crmClient;
-            _cosmosClient = cosmosClient;
-            _serviceBusClient = serviceBusClient;
+            _employeeOdataService = employeeOdataService;
+            _syncSnapshotRepository = syncSnapshotRepository;
+            _serviceBusService = serviceBusService;
             _syncOptions = syncOptions.Value;
             _logger = logger;
         }
@@ -51,17 +47,12 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
                 return;
             }
 
-            var container = _cosmosClient.GetContainer(_syncOptions.EmployeeSync.DatabaseId, _syncOptions.EmployeeSync.ContainerId);
-            await using var serviceBusSender = _serviceBusClient.CreateSender(_syncOptions.EmployeeSync.TopicName);
-
-            var loop = true;
-            var nextLink = string.Empty;
             var isVersionUpdated = true;
             var syncVersion = Guid.NewGuid().ToString();
 
-            while (loop)
+            do
             {
-                var crmEmployeesOdata = await _crmClient.GetPagedEmployeesAsync(nextLink, cancellationToken);
+                var crmEmployeesOdata = await _employeeOdataService.GetNextAsync(cancellationToken);
                 if (crmEmployeesOdata?.Value?.IsNullOrEmpty() ?? true)
                 {
                     isVersionUpdated = false;
@@ -69,67 +60,54 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
                 }
 
                 // calculate and perform upsert on employees, and send out messages
-                var employeesSyncData = await PerformUpsertionAsync(crmEmployeesOdata, container, serviceBusSender, syncVersion, cancellationToken);
+                var employeesSyncData = await PerformUpsertionAsync(crmEmployeesOdata, syncVersion, cancellationToken);
                 isVersionUpdated = isVersionUpdated && employeesSyncData.IsVersionUpdated;
-
-                nextLink = crmEmployeesOdata.OdataNextLink;
-                loop = crmEmployeesOdata.HasNext();
             }
+            while (_employeeOdataService.HasMoreResults);
 
             // if sync version was successfully updated, query and perform delete on out-dated employees, and send out messages
             if (isVersionUpdated)
             {
-                await PerformDeletionAsync(syncVersion, container, serviceBusSender, cancellationToken);
+                await PerformDeletionAsync(syncVersion, cancellationToken);
             }
         }
 
         private async Task<SyncListData<MqMessage<Employee>>> PerformUpsertionAsync(
             OdataPagedResponse<CrmEmployee> crmEmployeesOdata,
-            Container container,
-            ServiceBusSender sender,
             string syncVersion,
             CancellationToken cancellationToken)
         {
-            var employeesSyncData = await GetUpsertEmployeesAsync(crmEmployeesOdata, container, syncVersion, cancellationToken);
-            var upsertedEmployees = await UpdateSnapshotAsync(employeesSyncData.Data, container, cancellationToken);
-            await SendMessagesAsync(upsertedEmployees, sender, cancellationToken);
+            var employeesSyncData = await GetUpsertEmployeesAsync(crmEmployeesOdata, syncVersion, cancellationToken);
+            var upsertedEmployees = await UpdateSnapshotAsync(employeesSyncData.Data, cancellationToken);
+            await SendMessagesAsync(upsertedEmployees, cancellationToken);
 
             return employeesSyncData;
         }
 
-        private async Task PerformDeletionAsync(
-            string syncVersion,
-            Container container,
-            ServiceBusSender sender,
-            CancellationToken cancellationToken)
+        private async Task PerformDeletionAsync(string syncVersion, CancellationToken cancellationToken)
         {
             string GetSqlQueryText()
             {
                 return $"SELECT * FROM c WHERE c.organizationId={_syncOptions.OrganizationId} AND c.syncVersion != '{syncVersion}'";
             }
 
-            var queryDefinition = new QueryDefinition(GetSqlQueryText());
-
-            using var snapshotsIterator = container.GetItemQueryIterator<SyncSnapshot>(queryDefinition);
-
-            while (snapshotsIterator.HasMoreResults)
+            do
             {
-                var deleteEmployees = (await snapshotsIterator.ReadNextAsync(cancellationToken))
-                    .Select(snapshot => new MqMessage<Employee>(
-                        new Employee(snapshot.Id, snapshot.OrganizationId),
-                        SyncMode.Delete,
-                        snapshot.Modifiedon,
-                        snapshot.SyncVersion));
+                var deleteSnapshots = await _syncSnapshotRepository.GetNextAsync(GetSqlQueryText(), cancellationToken);
+                var deleteEmployees = deleteSnapshots.Select(snapshot => new MqMessage<Employee>(
+                    new Employee(snapshot.Id, snapshot.OrganizationId),
+                    SyncMode.Delete,
+                    snapshot.Modifiedon,
+                    snapshot.SyncVersion));
 
-                await UpdateSnapshotAsync(deleteEmployees, container, cancellationToken); // ignore snapshot deletion failure
-
-                await SendMessagesAsync(deleteEmployees, sender, cancellationToken);
+                await UpdateSnapshotAsync(deleteEmployees, cancellationToken); // ignore snapshot deletion failure
+                await SendMessagesAsync(deleteEmployees, cancellationToken);
             }
+            while (_syncSnapshotRepository.HasMoreResults);
         }
 
         private async Task<SyncListData<MqMessage<Employee>>> GetUpsertEmployeesAsync(
             OdataPagedResponse<CrmEmployee> crmEmployeesOdata,
-            Container container,
             string syncVersion,
             CancellationToken cancellationToken)
         {
@@ -145,20 +123,9 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
             }
 
             var crmEmployeeIds = crmEmployeesOdata.Value.Select(crmEmployee => crmEmployee.Systemuserid);
-            var queryDefinition = new QueryDefinition(GetSqlQueryText(crmEmployeeIds));
 
-            using var crmEmployeeSnapshotsIterator = container.GetItemQueryIterator<SyncSnapshot>(queryDefinition);
-            var crmEmployeeSnapshots = new List<SyncSnapshot>();
+            var crmEmployeeSnapshots = await _syncSnapshotRepository.GetAllAsync(GetSqlQueryText(crmEmployeeIds), cancellationToken);
             var syncedSnapshotIds = new List<string>();
-
-            while (crmEmployeeSnapshotsIterator.HasMoreResults)
-            {
-                var currentSnapshotSet = await crmEmployeeSnapshotsIterator.ReadNextAsync(cancellationToken);
-                foreach (var snapshot in currentSnapshotSet)
-                {
-                    crmEmployeeSnapshots.Add(snapshot);
-                }
-            }
 
             var upsertEmployees = new List<MqMessage<Employee>>();
             foreach (var crmEmployee in crmEmployeesOdata.Value)
@@ -181,36 +148,26 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
             }
 
             // update sync version
-            var syncVersionOperations = new List<PatchOperation>
-            {
-                PatchOperation.Set("/syncVersion", syncVersion)
-            };
+            var transactionBatch = await _syncSnapshotRepository.BeginTransactionAsync(cancellationToken);
+            var syncVersionOperation = PatchOperation.Set("/syncVersion", syncVersion);
 
-            var patitionKey = new PartitionKey(crmEmployeesOdata.Value.First().Organizationid);
-            var batch = container.CreateTransactionalBatch(patitionKey);
             foreach (var syncedSnapshotId in syncedSnapshotIds)
             {
-                batch.PatchItem(syncedSnapshotId, syncVersionOperations);
+                transactionBatch.Patch(syncedSnapshotId, syncVersionOperation);
             }
 
-            using var batchResponse = await batch.ExecuteAsync(cancellationToken);
-            if (!batchResponse.IsSuccessStatusCode)
-            {
-                _logger.LogError("Failed to batch update sync version: [{StatusCode}] {Message}", batchResponse.StatusCode, batchResponse.ErrorMessage);
-            }
-
-            return new SyncListData<MqMessage<Employee>>(upsertEmployees, syncVersion, batchResponse.IsSuccessStatusCode);
+            var transactionSaved = await transactionBatch.SaveChangesAsync();
+            return new SyncListData<MqMessage<Employee>>(upsertEmployees, syncVersion, transactionSaved);
         }
 
         private async Task<List<MqMessage<Employee>>> UpdateSnapshotAsync(
             IEnumerable<MqMessage<Employee>> employees,
-            Container container,
             CancellationToken cancellationToken)
         {
             var tasks = new List<Task>();
             var successfulEmployees = new List<MqMessage<Employee>>();
 
-            Action<Task<ItemResponse<SyncSnapshot>>> GetContinueAction(MqMessage<Employee> employee)
+            Action<Task> GetContinueAction(MqMessage<Employee> employee)
             {
                 return itemResponse =>
                 {
@@ -236,58 +193,33 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
                 };
             }
 
+            _syncSnapshotRepository.BeginBulk();
             foreach (var employee in employees)
             {
-                var patitionKey = new PartitionKey(employee.Message.OrganisationId);
-
                 if (employee.SyncMode == SyncMode.Create || employee.SyncMode == SyncMode.Update)
                 {
                     var snapshot = employee.Message.ToSnapshot(employee.ModifiedOn, employee.SyncVersion);
-                    tasks.Add(container.UpsertItemAsync(
-                        snapshot,
-                        patitionKey,
-                        cancellationToken: cancellationToken)
-                        .ContinueWith(GetContinueAction(employee), cancellationToken));
+                    await _syncSnapshotRepository.BulkUpdateAsync(snapshot, GetContinueAction(employee), cancellationToken);
                 }
                 else if (employee.SyncMode == SyncMode.Delete)
                 {
-                    tasks.Add(container.DeleteItemAsync<SyncSnapshot>(
-                        employee.Message.UserId,
-                        patitionKey,
-                        cancellationToken: cancellationToken)
-                        .ContinueWith(GetContinueAction(employee), cancellationToken));
+                    var snapshotId = employee.Message.UserId;
+                    await _syncSnapshotRepository.BulkDeleteAsync(snapshotId, GetContinueAction(employee), cancellationToken);
                 }
             }
-
-            await Task.WhenAll(tasks);
+            await _syncSnapshotRepository.ExecuteBulkAsync();
 
             return successfulEmployees;
         }
 
-        private async Task SendMessagesAsync(IEnumerable<MqMessage<Employee>> messages, ServiceBusSender sender, CancellationToken cancellationToken)
+        private async Task SendMessagesAsync(IEnumerable<MqMessage<Employee>> messages, CancellationToken cancellationToken)
         {
             if (!messages.Any())
             {
                 return;
             }
 
-            using ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync(cancellationToken);
-            var jsonSerializeOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
-
-            var totalMessageCount = messages.Count();
-            var addedMessageCount = totalMessageCount;
-            foreach (var message in messages)
-            {
-                if (!messageBatch.TryAddMessage(new ServiceBusMessage(BinaryData.FromObjectAsJson(message, jsonSerializeOptions))))
-                {
-                    _logger.LogError("Failed to add message to batch: {Message}", message);
-                    addedMessageCount--;
-                }
-            }
-
-            await sender.SendMessagesAsync(messageBatch, cancellationToken);
-            _logger.LogInformation($"A batch of {addedMessageCount}/{totalMessageCount} messages " +
-                $"has been published to the topic {_syncOptions.EmployeeSync.TopicName}.");
+            await _serviceBusService.SendMessageAsync(messages, _syncOptions.EmployeeSync.TopicName, cancellationToken);
         }
     }
 }

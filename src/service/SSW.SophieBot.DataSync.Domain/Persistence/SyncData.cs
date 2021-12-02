@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SSW.SophieBot.DataSync.Domain.Sync
+namespace SSW.SophieBot.DataSync.Domain.Persistence
 {
     public class SyncData<T>
     {

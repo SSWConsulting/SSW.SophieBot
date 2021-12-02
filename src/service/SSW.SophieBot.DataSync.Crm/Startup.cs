@@ -5,9 +5,13 @@ using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using SSW.SophieBot.AzureFunction.DependencyInjection;
 using SSW.SophieBot.DataSync.Crm.Config;
 using SSW.SophieBot.DataSync.Crm.HttpClients;
+using SSW.SophieBot.DataSync.Crm.Persistence;
+using SSW.SophieBot.DataSync.Crm.Sync;
+using SSW.SophieBot.DataSync.Domain.Employees;
+using SSW.SophieBot.DataSync.Domain.Persistence;
+using SSW.SophieBot.DataSync.Domain.Sync;
 
 [assembly: FunctionsStartup(typeof(SSW.SophieBot.DataSync.Crm.Startup))]
 namespace SSW.SophieBot.DataSync.Crm
@@ -18,8 +22,9 @@ namespace SSW.SophieBot.DataSync.Crm
         {
             builder.AddSerilog();
 
-            ConfigureCrm(builder);
+            ConfigureSyncServices(builder);
             ConfigureSyncFunctions(builder);
+            ConfigureSyncPersistence(builder);
             ConfigureAzureServices(builder);
         }
 
@@ -28,7 +33,7 @@ namespace SSW.SophieBot.DataSync.Crm
             builder.AddAppsettings();
         }
 
-        private static void ConfigureCrm(IFunctionsHostBuilder builder)
+        private static void ConfigureSyncServices(IFunctionsHostBuilder builder)
         {
             builder.Services.AddOptions<CrmOptions>()
                 .Configure<IConfiguration>((settings, configuration) =>
@@ -38,6 +43,13 @@ namespace SSW.SophieBot.DataSync.Crm
 
             builder.Services.AddHttpClient<AuthClient>();
             builder.Services.AddHttpClient<CrmClient>();
+
+            builder.Services.AddSingleton(typeof(IPersistenceMigrator<,>), typeof(NullPersistenceMigrator<,>));
+            builder.Services.AddSingleton<IPersistenceMigrator<Container, SyncFunctionOptions>, CosmosMigrator>();
+
+            builder.Services.AddTransient(typeof(IOdataSyncService<>), typeof(NullOdataSyncService<>));
+            builder.Services.AddTransient(typeof(IPagedOdataSyncService<>), typeof(NullPagedOdataSyncService<>));
+            builder.Services.AddTransient<IPagedOdataSyncService<CrmEmployee>, EmployeeOdataService>();
         }
 
         private static void ConfigureSyncFunctions(IFunctionsHostBuilder builder)
@@ -48,6 +60,11 @@ namespace SSW.SophieBot.DataSync.Crm
                     settings.OrganizationId = configuration["OrganizationId"];
                     configuration.GetSection("EmployeeSync").Bind(settings.EmployeeSync);
                 });
+        }
+
+        private static void ConfigureSyncPersistence(IFunctionsHostBuilder builder)
+        {
+            builder.Services.AddTransient<ITransactionalBulkRepository<SyncSnapshot, PatchOperation>, SyncSnapshotRepository>();
         }
 
         private static void ConfigureAzureServices(IFunctionsHostBuilder builder)
@@ -64,6 +81,8 @@ namespace SSW.SophieBot.DataSync.Crm
                 );
                 builder.AddServiceBusClient(serviceBusConString);
             });
+
+            builder.Services.AddTransient<IBatchMessageService<MqMessage<Employee>, string>, ServiceBusMessageService>();
         }
     }
 }

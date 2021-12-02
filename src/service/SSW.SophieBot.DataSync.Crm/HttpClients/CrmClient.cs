@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using SSW.SophieBot.DataSync.Crm.Config;
-using SSW.SophieBot.DataSync.Domain;
 using SSW.SophieBot.DataSync.Domain.Employees;
+using SSW.SophieBot.DataSync.Domain.Sync;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,6 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using SSW.SophieBot.AzureFunction.System;
-using Microsoft.AspNetCore.WebUtilities;
-using SSW.SophieBot.DataSync.Domain.Dto;
 
 namespace SSW.SophieBot.DataSync.Crm.HttpClients
 {
@@ -60,7 +58,7 @@ namespace SSW.SophieBot.DataSync.Crm.HttpClients
                 apiUrl = new Uri(new Uri(_crmOptions.BaseUri), "systemusers");
 
                 var crmSitesOdata = await GetSitesAsync(cancellationToken);
-                if(crmSitesOdata.Value != null && crmSitesOdata.Value.Any())
+                if (crmSitesOdata.Value != null && crmSitesOdata.Value.Any())
                 {
                     var siteIds = crmSitesOdata.Value.Select(site => site.Siteid.EnsureSurroundsWith("'"));
                     var queryStrings = new Dictionary<string, string>

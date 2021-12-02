@@ -1,18 +1,15 @@
 ﻿using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using SSW.SophieBot.DataSync.Crm.Config;
-using SSW.SophieBot.DataSync.Crm.HttpClients;
-using SSW.SophieBot.DataSync.Domain.Dto;
 using SSW.SophieBot.DataSync.Domain.Employees;
+using SSW.SophieBot.DataSync.Domain.Persistence;
 using SSW.SophieBot.DataSync.Domain.Sync;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,7 +17,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
 {
     public class EmployeeSyncMock
     {
-        public List<CrmEmployee> _crmEmployees = new()
+        public List<CrmEmployee> CrmEmployees = new()
         {
             new CrmEmployee
             {
@@ -64,128 +61,102 @@ namespace SSW.SophieBot.DataSync.Crm.Test
             },
             new CrmEmployee
             {
-                Systemuserid = "c",
+                Systemuserid = "g",
                 Organizationid = "ssw",
                 Firstname = "Taya",
                 Lastname = "Northwind",
                 Fullname = "Taya Northwind"
+            },
+            new CrmEmployee
+            {
+                Systemuserid = "h",
+                Organizationid = "ssw",
+                Firstname = "Nick",
+                Lastname = "Northwind",
+                Fullname = "Nick Northwind"
             }
         };
 
-        public List<SyncSnapshot> _initialSnapshots = new();
-
-        public CrmClient MockCrmClient()
+        public List<SyncSnapshot> InitialSnapshots = new()
         {
-            var mock = new Mock<CrmClient>();
-            mock.Setup(client => client.GetPagedEmployeesAsync(
-                It.IsAny<string>(),
-                It.IsAny<CancellationToken>()).Result)
-                .Returns((string nextLink, CancellationToken _) =>
+            
+        };
+
+        public IPagedOdataSyncService<CrmEmployee> MockEmployeeOdataSyncService()
+        {
+            var mock = new Mock<IPagedOdataSyncService<CrmEmployee>>();
+            mock.SetupSequence(service => service.HasMoreResults)
+                .Returns(true)
+                .Returns(false);
+            mock.SetupSequence(service => service.GetNextAsync(It.IsAny<CancellationToken>()).Result)
+                .Returns(new OdataPagedResponse<CrmEmployee>
                 {
-                    if (string.IsNullOrEmpty(nextLink))
-                    {
-                        return new OdataPagedResponse<CrmEmployee>
-                        {
-                            Value = _crmEmployees.Take(3).ToList(),
-                            OdataNextLink = "next page"
-                        };
-                    }
-                    else
-                    {
-                        return new OdataPagedResponse<CrmEmployee>
-                        {
-                            Value = _crmEmployees.Skip(3).ToList()
-                        };
-                    }
+                    Value = CrmEmployees.Take(3).ToList(),
+                    OdataNextLink = "next page"
+                })
+                .Returns(new OdataPagedResponse<CrmEmployee>
+                {
+                    Value = CrmEmployees.Skip(3).ToList()
                 });
 
             return mock.Object;
         }
 
-        public CosmosClient MockCosmosClient(string syncVersion)
+        public ITransactionalBulkRepository<SyncSnapshot, PatchOperation> MockUpsertSyncSnapshotRepository()
         {
-            var feedResponseMock = new Mock<FeedResponse<SyncSnapshot>>();
-            feedResponseMock.Setup(feedResponse => feedResponse.GetEnumerator()).Returns(_initialSnapshots.GetEnumerator());
-            //feedResponseMock.Setup(feedResponse => ((IEnumerable)feedResponse).GetEnumerator()).Returns(_initialSnapshots.GetEnumerator());
+            var mock = new Mock<ITransactionalBulkRepository<SyncSnapshot, PatchOperation>>();
+            mock.Setup(repo => repo.GetAllAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()).Result).Returns(InitialSnapshots);
 
-            var iteratorMock = new Mock<FeedIterator<SyncSnapshot>>();
-            var retrived = true;
-            iteratorMock.SetupGet(iterator => iterator.HasMoreResults)
-                .Callback(() => retrived = false)
-                .Returns(retrived);
-            iteratorMock.Setup(iterator => iterator.ReadNextAsync(It.IsAny<CancellationToken>()).Result)
-                .Returns(feedResponseMock.Object);
+            mock.Setup(repo => repo.GetNextAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()).Result).Returns(InitialSnapshots);
+            mock.SetupGet(repo => repo.HasMoreResults).Returns(false);
 
-            var batchResMock = new Mock<TransactionalBatchResponse>();
-            batchResMock.SetupGet(res => res.IsSuccessStatusCode).Returns(true);
-
-            var itemResMock = new Mock<ItemResponse<SyncSnapshot>>();
-            var itemResTaskMock = Task.FromResult(itemResMock.Object);
-
-            var transactionBatchMock = new Mock<TransactionalBatch>();
-            transactionBatchMock.Setup(batch => batch.PatchItem(
-                It.IsAny<string>(),
-                It.IsAny<IReadOnlyList<PatchOperation>>(),
-                It.IsAny<TransactionalBatchPatchItemRequestOptions>()))
-                .Callback((string id, IReadOnlyList<PatchOperation> _, TransactionalBatchPatchItemRequestOptions _) =>
+            Action<SyncSnapshot, Action<Task>, CancellationToken> upsertCallback = (SyncSnapshot snapshot, Action<Task> action, CancellationToken _) =>
+            {
+                var oldSnapshot = InitialSnapshots.FirstOrDefault(s => s.Id == snapshot.Id);
+                if (oldSnapshot != null)
                 {
-                    var snapShot = _initialSnapshots.FirstOrDefault(snapshot => snapshot.Id == id);
-                    if (snapShot != null)
-                    {
-                        snapShot.SyncVersion = syncVersion;
-                    }
-                });
-            transactionBatchMock.Setup(batch => batch.ExecuteAsync(It.IsAny<CancellationToken>()).Result)
-                .Returns(batchResMock.Object);
-
-            var containerMock = new Mock<Container>();
-            containerMock.Setup(container => container.GetItemQueryIterator<SyncSnapshot>(
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<QueryRequestOptions>()))
-                .Returns(iteratorMock.Object);
-            containerMock.Setup(container => container.CreateTransactionalBatch(It.IsAny<PartitionKey>()))
-                .Returns(transactionBatchMock.Object);
-            containerMock.Setup(container => container.UpsertItemAsync(
-                It.IsAny<SyncSnapshot>(),
-                It.IsAny<PartitionKey>(),
-                It.IsAny<ItemRequestOptions>(),
-                It.IsAny<CancellationToken>()))
-                .Callback((SyncSnapshot snapshot, PartitionKey _, ItemRequestOptions _, CancellationToken _) =>
+                    oldSnapshot.OrganizationId = snapshot.OrganizationId;
+                    oldSnapshot.Modifiedon = snapshot.Modifiedon;
+                    oldSnapshot.SyncVersion = snapshot.SyncVersion;
+                }
+                else
                 {
-                    var oldSnapshot = _initialSnapshots.FirstOrDefault(s => s.Id == snapshot.Id);
-                    if (oldSnapshot != null)
-                    {
-                        oldSnapshot.Modifiedon = snapshot.Modifiedon;
-                        oldSnapshot.SyncVersion = snapshot.SyncVersion;
-                    }
-                    else
-                    {
-                        _initialSnapshots.Add(snapshot);
-                    }
-                })
-                .Returns(itemResTaskMock);
-            containerMock.Setup(container => container.DeleteItemAsync<SyncSnapshot>(
-                It.IsAny<string>(),
-                It.IsAny<PartitionKey>(),
-                It.IsAny<ItemRequestOptions>(),
-                It.IsAny<CancellationToken>()))
-                .Callback((string id, PartitionKey _, ItemRequestOptions _, CancellationToken _) =>
-                {
-                    _initialSnapshots.RemoveAll(s => s.Id == id);
-                })
-                .Returns(itemResTaskMock);
+                    InitialSnapshots.Add(snapshot);
+                }
 
-            var clientMock = new Mock<CosmosClient>();
-            clientMock.Setup(client => client.GetContainer(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(containerMock.Object);
+                action?.Invoke(Task.CompletedTask);
+            };
 
-            return clientMock.Object;
+            Action<string, Action<Task>, CancellationToken> deleteCallback = (string id, Action<Task> action, CancellationToken _) =>
+            {
+                var oldSnapshot = InitialSnapshots.RemoveAll(s => s.Id == id);
+                action?.Invoke(Task.CompletedTask);
+            };
+
+            var batchMock = new Mock<ITransactionBatch<PatchOperation>>();
+            batchMock.Setup(batch => batch.SaveChangesAsync()).Callback(() =>
+            {
+                var newVersion = Guid.NewGuid().ToString();
+                InitialSnapshots.ForEach(snapshot => snapshot.SyncVersion = newVersion);
+            });
+            mock.Setup(repo => repo.BeginTransactionAsync(It.IsAny<CancellationToken>()).Result).Returns(batchMock.Object);
+
+            mock.Setup(repo => repo.BulkInsertAsync(It.IsAny<SyncSnapshot>(), It.IsAny<Action<Task>>(), It.IsAny<CancellationToken>()))
+                .Callback(upsertCallback)
+                .Returns(Task.CompletedTask);
+            mock.Setup(repo => repo.BulkUpdateAsync(It.IsAny<SyncSnapshot>(), It.IsAny<Action<Task>>(), It.IsAny<CancellationToken>()))
+                .Callback(upsertCallback)
+                .Returns(Task.CompletedTask);
+            mock.Setup(repo => repo.BulkDeleteAsync(It.IsAny<string>(), It.IsAny<Action<Task>>(), It.IsAny<CancellationToken>()))
+                .Callback(deleteCallback)
+                .Returns(Task.CompletedTask);
+
+            return mock.Object;
         }
 
-        public ServiceBusClient MockServiceBusClient()
+        public IBatchMessageService<MqMessage<Employee>, string> MockServiceBusClient()
         {
-            var mock = new Mock<ServiceBusClient>();
+            var mock = new Mock<IBatchMessageService<MqMessage<Employee>, string>>();
             return mock.Object;
         }
 
@@ -202,9 +173,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
 
         public TimerInfo MockTimerInfo()
         {
-            var mock = new Mock<TimerInfo>();
-            mock.SetupGet(timer => timer.IsPastDue).Returns(false);
-            return mock.Object;
+            return new TimerInfo(null, null);
         }
     }
 }

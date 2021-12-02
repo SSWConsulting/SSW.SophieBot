@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace SSW.SophieBot.AzureFunction.System
+namespace System.Collections.Generic
 {
-    public static class EnumerableExtensions
+    public static class CollectionExtensions
     {
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> data)
         {

@@ -1,9 +1,7 @@
-﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using System.IO;
 
-// TODO: Refactor file structure and namespaces in this project
-namespace SSW.SophieBot.AzureFunction.DependencyInjection
+namespace Microsoft.Azure.Functions.Extensions.DependencyInjection
 {
     public static class FunctionConfigurationBuilderExtensions
     {

@@ -1,6 +1,7 @@
-﻿using Microsoft.Extensions.Logging.Abstractions;
+﻿using Microsoft.Azure.WebJobs;
+using Microsoft.Extensions.Logging.Abstractions;
+using Shouldly;
 using SSW.SophieBot.DataSync.Crm.Functions;
-using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -11,16 +12,22 @@ namespace SSW.SophieBot.DataSync.Crm.Test
         [Fact]
         public async Task Should_Sync_All_Profiles_When_No_Snapshot()
         {
-            var mock = new EmployeeSyncMock();
-            var syncVersion = Guid.NewGuid().ToString();
-            var function = new EmployeeSync(
-                mock.MockCrmClient(),
-                mock.MockCosmosClient(syncVersion),
-                mock.MockServiceBusClient(),
-                mock.MockSyncOptions(),
-                NullLogger<EmployeeSync>.Instance);
+            var function = GetEmployeesSyncFunction(out var mockInstance, out var timerInfoMock);
+            await function.SyncEmployeeProfileAsync(timerInfoMock, default);
 
-            await function.SyncEmployeeProfileAsync(mock.MockTimerInfo(), default);
+            mockInstance.InitialSnapshots.Count.ShouldBe(7);
+        }
+
+        private static EmployeeSync GetEmployeesSyncFunction(out EmployeeSyncMock mockInstance, out TimerInfo timerInfoMock)
+        {
+            mockInstance = new EmployeeSyncMock();
+            var employeeOdataServiceMock = mockInstance.MockEmployeeOdataSyncService();
+            var snapshotRepoMock = mockInstance.MockUpsertSyncSnapshotRepository();
+            var serviceBusMock = mockInstance.MockServiceBusClient();
+            var syncOptionsMock = mockInstance.MockSyncOptions();
+            timerInfoMock = mockInstance.MockTimerInfo();
+
+            return new EmployeeSync(employeeOdataServiceMock, snapshotRepoMock, serviceBusMock, syncOptionsMock, NullLogger<EmployeeSync>.Instance);
         }
     }
 }

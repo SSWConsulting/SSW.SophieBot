@@ -14,7 +14,7 @@
     <PackageReference Include="System.Linq.Async" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SSW.SophieBot.AzureFunction\SSW.SophieBot.AzureFunction.csproj" />
+    <ProjectReference Include="..\..\framework\SSW.SophieBot.AzureFunction\SSW.SophieBot.AzureFunction.csproj" />
     <ProjectReference Include="..\SSW.SophieBot.DataSync.Domain\SSW.SophieBot.DataSync.Domain.csproj" />
   </ItemGroup>
   <ItemGroup>

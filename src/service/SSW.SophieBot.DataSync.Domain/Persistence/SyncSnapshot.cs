@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SSW.SophieBot.DataSync.Domain.Sync
+namespace SSW.SophieBot.DataSync.Domain.Persistence
 {
     public class SyncSnapshot
     {

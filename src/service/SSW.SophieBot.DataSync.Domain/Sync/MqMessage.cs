@@ -1,7 +1,7 @@
-﻿using SSW.SophieBot.DataSync.Domain.Sync;
+﻿using SSW.SophieBot.DataSync.Domain.Persistence;
 using System;
 
-namespace SSW.SophieBot.DataSync.Domain.Dto
+namespace SSW.SophieBot.DataSync.Domain.Sync
 {
     public class MqMessage<T>
     {

@@ -1,4 +1,4 @@
-﻿using SSW.SophieBot.DataSync.Domain.Sync;
+﻿using SSW.SophieBot.DataSync.Domain.Persistence;
 using System;
 
 namespace SSW.SophieBot.LUIS.Model
