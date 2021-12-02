@@ -83,6 +83,15 @@
 # Avatar(avatarUrl, firstName, lastName, columnWidth, avatarSize)
 - ```
 {
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "stretch"
+        }
+    ]
+},
+{
     "type": "Column",
     "width": "${columnWidth}",
     "items": [

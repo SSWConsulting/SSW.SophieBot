@@ -51,7 +51,7 @@
                     "items": [
                         {
                             "type": "Image",
-                            "url": "${Chat()}",
+                            "url": "${ChatIcon()}",
                             "horizontalAlignment": "Right",
                             "selectAction": {
                                 "type": "Action.OpenUrl",
@@ -73,7 +73,7 @@
                         {
                             "type": "TextBlock",
                             "text": "Today:",
-                            "color": "Accent",
+                            "color": "Attention",
                             "wrap": true
                         }
                     ]
@@ -102,7 +102,7 @@
                         {
                             "type": "TextBlock",
                             "text": "Last Seen:",
-                            "color": "Accent",
+                            "color": "Attention",
                             "wrap": true
                         }
                     ]
@@ -131,7 +131,7 @@
                         {
                             "type": "TextBlock",
                             "text": "Skills:",
-                            "color": "Accent",
+                            "color": "Attention",
                             "wrap": true
                         }
                     ]
@@ -146,34 +146,86 @@
                                 {
                                     "type": "Column",
                                     "width": "stretch",
+									"selectAction": {
+										"type": "Action.ToggleVisibility",
+										"targetElements": [
+											"showMore",
+											"showLess",
+											"omittedSkills",
+											"allSkills"
+										]
+									},
                                     "items": [
                                         {
-                                            "type": "TextBlock",
-                                            "wrap": true,
-                                            "text": "More ∨",
-                                            "color": "Accent",
                                             "id": "showMore",
-                                            "horizontalAlignment": "Right"
+                                            "type": "ColumnSet",
+                                            "columns": [
+                                                {
+                                                    "type": "Column",
+                                                    "width": "stretch",
+                                                    "items": [
+                                                        {
+                                                            "type": "TextBlock",
+                                                            "text": "More",
+                                                            "wrap": true,
+                                                            "color": "Attention",
+                                                            "horizontalAlignment": "Right"
+                                                        }
+                                                    ],
+                                                    "verticalContentAlignment": "Center"
+                                                },
+                                                {
+                                                    "type": "Column",
+                                                    "width": "auto",
+                                                    "items": [
+                                                        {
+                                                            "type": "Image",
+                                                            "url": "${ExpandArrowIcon()}",
+                                                            "width": "20px",
+                                                            "height": "20px"
+                                                        }
+                                                    ],
+                                                    "spacing": "None",
+                                                    "minHeight": "12px"
+                                                }
+                                            ]
                                         },
                                         {
-                                            "type": "TextBlock",
-                                            "text": "Less ∧",
-                                            "wrap": true,
-                                            "color": "Accent",
                                             "id": "showLess",
-                                            "horizontalAlignment": "Right",
-                                            "isVisible": false
+                                            "isVisible": false,
+                                            "type": "ColumnSet",
+                                            "columns": [
+                                                {
+                                                    "type": "Column",
+                                                    "width": "stretch",
+                                                    "items": [
+                                                        {
+                                                            "type": "TextBlock",
+                                                            "text": "Less",
+                                                            "wrap": true,
+                                                            "color": "Attention",
+                                                            "horizontalAlignment": "Right"
+                                                        }
+                                                    ],
+                                                    "verticalContentAlignment": "Center"
+                                                },
+                                                {
+                                                    "type": "Column",
+                                                    "width": "auto",
+                                                    "items": [
+                                                        {
+                                                            "type": "Image",
+                                                            "url": "${CollapseArrowIcon()}",
+                                                            "width": "20px",
+                                                            "height": "20px"
+                                                        }
+                                                    ],
+                                                    "spacing": "None"
+                                                }
+                                            ],
+                                            "spacing": "None"
                                         }
-                                    ],
-                                    "selectAction": {
-                                        "type": "Action.ToggleVisibility",
-                                        "targetElements": [
-                                            "showMore",
-                                            "showLess",
-                                            "omittedSkills",
-                                            "allSkills"
-                                        ]
-                                    }
+                                    ]
                                 }
                             ]
                         }
@@ -191,7 +243,7 @@
                     "items": [
                         {
                             "type": "Image",
-                            "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAClklEQVRIie2TS2gTURRAz50pkwShgmBXLrQboQZam12EorX+VlpoQbBCEZOOYIp1LYiCLlxpI03mpUVcuLH0I0W6UcGF4KIWxBJ/FFS0fkCKQjApnXluJpLGxKbYlXhhmHlz35wz914e/I9VQqolEolEfT6fvyMizeU5rfXTYDB4OJlMfrdtO5xOp+eqccxqiebm5gsi0gOEyi8R2bq8vNwWiUS2AbdaW1vnZ2dnn1XiGNUEwWDwPDDtL795ntdmmuYmEdkBvBORXSJyDjBF5GYsFju2JkEymSwsLi4eAaaAjYZhjLmuu8VxnKzrum3Am9JO+JLjNQsARkdHlwKBQLdfyWbgnm3b4ZGRkbdAB/C+THLDtu1wzYJiJYFAoNOXNHied9+27bBSal5E2oEPxb0icql84KsKfMkSMO8vf0kcx3mttW4HFgC01tGBgYHQWgUSj8evAqeBgog8LpVkMplXpmm2Ax+BjlwuN9nb2xusVVCE9wMFrXWnZVm7yyWpVOql53l7gc/AfsuyJhKJRGA1wW/wTCYznc/n27XWO8vbNTw8/NwwjKP++4OFQuEKVD9oFeGxWOyQiEwAAeA68BVo0Vp3RSKRJ1rrJNAAzBmGcXJmZiZXqYJS+JKIdPvwAyIy7sMdpVR/yTlpAB4AYeBFXV3dvnQ6/aVSBeXwLsdxpnz4JBD04acAnc1m3cbGxrFQKNQCbPfhe4aGhj4VgWYVeEFr3amUuuu3pQgfVEolAF38KJvNutFodNx13XrDME6kUqnPK/64+BCPx/uBa3/o+aBS6kwpvJYoncFZABHpWS94uWADgOd5C319fV3rAV8hEJHb/v2R1np0PeBQMuSmpqaHlmX9ACxgUUQuK6Uu/g3834if0l86MvKFLt0AAAAASUVORK5CYII=",
+                            "url": "${SkillIcon()}",
                             "width": "20px",
                             "height": "20px"
                         }
@@ -221,7 +273,7 @@
         {
             "type": "TextBlock",
             "text": "Contact:",
-            "color": "Accent",
+            "color": "Attention",
             "wrap": true,
             "separator": true,
             "height": "stretch"
@@ -238,7 +290,7 @@
                             "altText": "email",
                             "width": "20px",
                             "height": "20px",
-                            "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABm0lEQVRIie2UsWrbUBSGvyPbGAppMd3cZG+GQoc2D9CttJS+QcFYR8bEnTOKTilkKC2YXlleunrokCGPkCXpO5TGeAn2EgrGjk4XKQi7dhJsKIV8IJDuOff7OVdCcMe/RrIbVX0FOODRis4zM9NOp3ME4OUKX9cgB9gUEZc9FPMFgCiKZG7LLVBVA7b+FgBAEASH0+l0t9vt/ryNuFarVYvF4qfZ9bkAM3tdKBReBEHwYTgcHvR6vctl4jAMvcFgUDezA2Bjtu7NLojIG+DczPYrlcpJo9HYWST3ff9pv98/NjMHXIjIu2sDnHOHwLaZfQSeJElyrKqu1Wrdz3pU9Z7v+/siciIiz4CoXC4/ds59m/XNHRFAFEW/gb16vd7zPC8CdDwev1TV92nLZxHZAn4kSaJxHJ8umnJugjxxHJ9Wq9XnIhIAD4Dv6fVQRPZGo9HOMvnCCfKEYZgAUbPZPJpMJl8ASqVSq91u/7pu740CMlLh25v2Zyw9onXw/wfk38EZsJn+S1bl6gO4msDMNA1ZWS4iugbPHWviD11fh8+hcqtaAAAAAElFTkSuQmCC"
+                            "url": "${EmailIcon()}"
                         }
                     ]
                 },
@@ -267,7 +319,7 @@
                         {
                             "type": "Image",
                             "altText": "phone number",
-                            "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABxklEQVRIie2Rv2tTURTHP19fnim04KAGVxGCgz/KM1MRKrpVUBBXhww3gSBuIojCQxdH13dTMvUvaOngINJBdEhCKqKTIrg5KKiYal7edbCRZ/JKappNv9M953zP9wP3wH+NkdKFMeaJpHOp1g9JV6MoWpsUsO8PmrQwNN/vnFucNHwEAHweNkg6OE3Au2GDc+7U1ACSXmZ45mu12txUAEmSbGR4OoVCYWsqgDiO14FeqvU6SZKlMAzjSQFeuuh0Ot+CIDgj6TjwptfrnW00Gh8mDYfRI+Oce7D9PJLP52f3Ep4JWF5efg6sA7P9fv/h1AEAnufdAL5KulytVm/tBeBlNZvN5qdSqfQeuAJcCILgbbvdfjHsC8MwVywWZ1qtVm805Ze00wDAGHNf0h3AAbettYP7UC6XD/u+/wg4DWxK2kyS5COwUa/XV3cFAGSMubcNAVjN5XLXu93ulu/7j4GTGTvfrbUzgyLzBim5er1+V9I14AtwKY7jV77vP9shHCCfLsYBAIiiaMXzvHlgDZgDju1mD8Z/0YiMMQuSbgIXAT/LY639nfvXgIEqlcohSUvOuUXn3AlJR4EDwFNr7flJc/9B/QT46YL539BpLgAAAABJRU5ErkJggg==",
+                            "url": "${PhoneIcon()}",
                             "width": "20px",
                             "height": "20px"
                         }
@@ -297,7 +349,7 @@
                         {
                             "type": "Image",
                             "altText": "location",
-                            "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAACaElEQVRIidWUQUgUURjHf9/Mzm5d1oi6dSnXe6SH6NAlCYIwQjAjIkX3TSJdokNEBIle65LivFGwgqAUQZDs3FWUupp2qk5G69FtZ74OzcKyzOhaJ/+3977/9/+9783w4LBL9jMYY06IyD1VvQqUAETki6ouAy+stdv/DCiXy9dFZA4oZlh2ROROEARLWRnOPuELQFFEluM4vlSr1Yq1Wq0oIt2q+h5oU9VF3/evHWiCwcHBk57nbSYnf2ytncg4xBMReQpUPM8rTU5O/mz25NIaPc8brZ88CIIJgIGBgWOFQqEPQFXfWmt3wjAcM8acB65Uq9VRYKw5K+uKegCiKHpeD8/n8+uqGqhqAKwbY9oS2DMAx3F60oKyAO0AcRyvAhQKhX7gdEP9jIjcABCR1QRUOgjgdwJwk3XcbFDVOJnSbexpFbAB4HleF8Du7u474GtDfQuYB3Bdt6uxp1XACkD9Gubm5irAOVU1qmqATmvtTuLtT7wraUGpv+nQ0FDJdd0NoOo4Tvv09PT3NN/w8PApx3G2AA/osNZutTTB7OzsJrAEFKIoup8xJa7rPgDywGJaeCYAII7jcUBFZMQY095c932/Q1V9IFbV8aycTMDMzMyaqr4GjgJTzXVVnQKOAC/DMPx0YACAiDwEKsBl3/dv1vfL5fJtoBuo5HK5R3tm7FWsh4nIK6ASRdFZEYkcx/kMHAduWWvf/BcAwBizAPQCH5Oti8C8tbZvv97Uxy5Fd4ELSTDAD8/zRlpp3PMb1GWt3RaRXqAK1OI47k97mtPk7m/5q7W1tW+dnZ2/gA9hGC602nf49Qd/ROaNppsWuQAAAABJRU5ErkJggg==",
+                            "url": "${LocationIcon()}",
                             "width": "20px",
                             "height": "20px"
                         }
