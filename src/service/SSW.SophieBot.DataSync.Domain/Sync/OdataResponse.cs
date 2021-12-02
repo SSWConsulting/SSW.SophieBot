@@ -19,6 +19,9 @@ namespace SSW.SophieBot.DataSync.Domain.Sync
             Value = new List<T>();
         }
 
-        public bool HasNext() => !string.IsNullOrEmpty(OdataNextLink) && Value.Any();
+        public bool HasNext()
+        {
+            return !string.IsNullOrEmpty(OdataNextLink) && Value.Any();
+        }
     }
 }

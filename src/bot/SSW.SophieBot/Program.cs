@@ -13,8 +13,9 @@ namespace SSW.SophieBot
 			CreateHostBuilder(args).Build().Run();
 		}
 
-		public static IHostBuilder CreateHostBuilder(string[] args) =>
-			Host.CreateDefaultBuilder(args)
+		public static IHostBuilder CreateHostBuilder(string[] args)
+		{
+			return Host.CreateDefaultBuilder(args)
 				.ConfigureAppConfiguration((hostingContext, builder) =>
 				{
 					var environmentName = hostingContext.HostingEnvironment.EnvironmentName;
@@ -29,5 +30,6 @@ namespace SSW.SophieBot
 				{
 					webBuilder.UseStartup<Startup>();
 				});
+		}
 	}
 }

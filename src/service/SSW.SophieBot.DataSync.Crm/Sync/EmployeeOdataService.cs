@@ -19,7 +19,7 @@ namespace SSW.SophieBot.DataSync.Crm.Sync
 
         public EmployeeOdataService(CrmClient crmClient) : base(crmClient)
         {
-            
+
         }
 
         public async Task<OdataPagedResponse<CrmEmployee>> GetNextAsync(CancellationToken cancellationToken = default)

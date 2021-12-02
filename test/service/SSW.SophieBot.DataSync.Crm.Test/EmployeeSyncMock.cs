@@ -1,5 +1,4 @@
-﻿using Azure.Messaging.ServiceBus;
-using Microsoft.Azure.Cosmos;
+﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -79,7 +78,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
 
         public List<SyncSnapshot> InitialSnapshots = new()
         {
-            
+
         };
 
         public IPagedOdataSyncService<CrmEmployee> MockEmployeeOdataSyncService()
