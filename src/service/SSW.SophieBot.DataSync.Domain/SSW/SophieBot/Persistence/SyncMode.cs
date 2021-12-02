@@ -1,4 +1,4 @@
-﻿namespace SSW.SophieBot.DataSync.Domain.Persistence
+﻿namespace SSW.SophieBot.Persistence
 {
     public enum SyncMode
     {

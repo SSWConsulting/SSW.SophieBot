@@ -3,9 +3,9 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Options;
 using Moq;
 using SSW.SophieBot.DataSync.Crm.Config;
-using SSW.SophieBot.DataSync.Domain.Employees;
-using SSW.SophieBot.DataSync.Domain.Persistence;
-using SSW.SophieBot.DataSync.Domain.Sync;
+using SSW.SophieBot.Employees;
+using SSW.SophieBot.Persistence;
+using SSW.SophieBot.Sync;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +24,8 @@ namespace SSW.SophieBot.DataSync.Crm.Test
                 Organizationid = "ssw",
                 Firstname = "Jim",
                 Lastname = "Northwind",
-                Fullname = "Jim Northwind"
+                Fullname = "Jim Northwind",
+                Modifiedon = DateTime.MinValue
             },
             new CrmEmployee
             {
@@ -32,7 +33,8 @@ namespace SSW.SophieBot.DataSync.Crm.Test
                 Organizationid = "ssw",
                 Firstname = "Jack",
                 Lastname = "Northwind",
-                Fullname = "Jack Northwind"
+                Fullname = "Jack Northwind",
+                Modifiedon = DateTime.MinValue
             },
             new CrmEmployee
             {
@@ -40,7 +42,8 @@ namespace SSW.SophieBot.DataSync.Crm.Test
                 Organizationid = "ssw",
                 Firstname = "John",
                 Lastname = "Northwind",
-                Fullname = "John Northwind"
+                Fullname = "John Northwind",
+                Modifiedon = DateTime.MinValue
             },
             new CrmEmployee
             {
@@ -48,7 +51,8 @@ namespace SSW.SophieBot.DataSync.Crm.Test
                 Organizationid = "ssw",
                 Firstname = "Hans",
                 Lastname = "Northwind",
-                Fullname = "Hans Northwind"
+                Fullname = "Hans Northwind",
+                Modifiedon = DateTime.MinValue
             },
             new CrmEmployee
             {
@@ -56,7 +60,8 @@ namespace SSW.SophieBot.DataSync.Crm.Test
                 Organizationid = "ssw",
                 Firstname = "Alex",
                 Lastname = "Northwind",
-                Fullname = "Alex Northwind"
+                Fullname = "Alex Northwind",
+                Modifiedon = DateTime.MinValue
             },
             new CrmEmployee
             {
@@ -64,7 +69,8 @@ namespace SSW.SophieBot.DataSync.Crm.Test
                 Organizationid = "ssw",
                 Firstname = "Taya",
                 Lastname = "Northwind",
-                Fullname = "Taya Northwind"
+                Fullname = "Taya Northwind",
+                Modifiedon = DateTime.MinValue
             },
             new CrmEmployee
             {
@@ -72,7 +78,8 @@ namespace SSW.SophieBot.DataSync.Crm.Test
                 Organizationid = "ssw",
                 Firstname = "Nick",
                 Lastname = "Northwind",
-                Fullname = "Nick Northwind"
+                Fullname = "Nick Northwind",
+                Modifiedon = DateTime.MinValue
             }
         };
 
@@ -80,6 +87,13 @@ namespace SSW.SophieBot.DataSync.Crm.Test
         {
 
         };
+
+        public ISyncVersionGenerator MockSyncVersionGenerator(string syncVersion)
+        {
+            var mock = new Mock<ISyncVersionGenerator>();
+            mock.Setup(generator => generator.GenerateAsync(It.IsAny<CancellationToken>()).Result).Returns(syncVersion);
+            return mock.Object;
+        }
 
         public IPagedOdataSyncService<CrmEmployee> MockEmployeeOdataSyncService()
         {
@@ -101,7 +115,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
             return mock.Object;
         }
 
-        public ITransactionalBulkRepository<SyncSnapshot, PatchOperation> MockUpsertSyncSnapshotRepository()
+        public ITransactionalBulkRepository<SyncSnapshot, PatchOperation> MockUpsertSyncSnapshotRepository(string syncVersion)
         {
             var mock = new Mock<ITransactionalBulkRepository<SyncSnapshot, PatchOperation>>();
             mock.Setup(repo => repo.GetAllAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()).Result).Returns(InitialSnapshots);
@@ -135,8 +149,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
             var batchMock = new Mock<ITransactionBatch<PatchOperation>>();
             batchMock.Setup(batch => batch.SaveChangesAsync()).Callback(() =>
             {
-                var newVersion = Guid.NewGuid().ToString();
-                InitialSnapshots.ForEach(snapshot => snapshot.SyncVersion = newVersion);
+                InitialSnapshots.ForEach(snapshot => snapshot.SyncVersion = syncVersion);
             });
             mock.Setup(repo => repo.BeginTransactionAsync(It.IsAny<CancellationToken>()).Result).Returns(batchMock.Object);
 

@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace SSW.SophieBot.DataSync.Domain.Persistence
+namespace SSW.SophieBot.Persistence
 {
     public class SyncData<T>
     {
         public T Data { get; set; }
-
-        public string SyncVersion { get; set; }
 
         public bool IsVersionUpdated { get; set; }
 
@@ -15,10 +13,9 @@ namespace SSW.SophieBot.DataSync.Domain.Persistence
 
         }
 
-        public SyncData(T data, string syncVersion, bool isVersionUpdated = true)
+        public SyncData(T data, bool isVersionUpdated = true)
         {
             Data = data;
-            SyncVersion = syncVersion;
             IsVersionUpdated = isVersionUpdated;
         }
     }
@@ -30,7 +27,7 @@ namespace SSW.SophieBot.DataSync.Domain.Persistence
             Data = new List<T>();
         }
 
-        public SyncListData(List<T> data, string syncVersion, bool isVersionUpdated = true) : base(data, syncVersion, isVersionUpdated)
+        public SyncListData(List<T> data, bool isVersionUpdated = true) : base(data, isVersionUpdated)
         {
 
         }

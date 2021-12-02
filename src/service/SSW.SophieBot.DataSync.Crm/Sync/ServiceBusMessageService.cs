@@ -1,7 +1,7 @@
 ﻿using Azure.Messaging.ServiceBus;
 using Microsoft.Extensions.Logging;
-using SSW.SophieBot.DataSync.Domain.Employees;
-using SSW.SophieBot.DataSync.Domain.Sync;
+using SSW.SophieBot.Employees;
+using SSW.SophieBot.Sync;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,8 +1,8 @@
-﻿using SSW.SophieBot.DataSync.Domain.Persistence;
+﻿using SSW.SophieBot.Persistence;
 using System;
 using System.Collections.Generic;
 
-namespace SSW.SophieBot.DataSync.Domain.Employees
+namespace SSW.SophieBot.Employees
 {
     public class Employee
     {

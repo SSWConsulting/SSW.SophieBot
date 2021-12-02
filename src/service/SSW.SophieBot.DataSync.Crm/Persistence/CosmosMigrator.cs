@@ -1,7 +1,7 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.DependencyInjection;
 using SSW.SophieBot.DataSync.Crm.Config;
-using SSW.SophieBot.DataSync.Domain.Persistence;
+using SSW.SophieBot.Persistence;
 using System;
 using System.Net;
 using System.Threading;

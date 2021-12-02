@@ -1,4 +1,4 @@
-﻿namespace SSW.SophieBot.DataSync.Domain.Sync
+﻿namespace SSW.SophieBot.Sync
 {
     public interface IOdataSyncService<T> : ISyncService<OdataResponse<T>>
     {

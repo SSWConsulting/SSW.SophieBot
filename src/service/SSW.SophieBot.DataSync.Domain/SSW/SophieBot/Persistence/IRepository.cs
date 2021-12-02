@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SSW.SophieBot.DataSync.Domain.Persistence
+namespace SSW.SophieBot.Persistence
 {
     public interface IRepository<T>
     {

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SSW.SophieBot.DataSync.Crm.Config;
-using SSW.SophieBot.DataSync.Domain.Persistence;
+using SSW.SophieBot.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;

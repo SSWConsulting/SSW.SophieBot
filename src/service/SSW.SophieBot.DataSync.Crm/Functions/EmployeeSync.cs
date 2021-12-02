@@ -3,9 +3,9 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SSW.SophieBot.DataSync.Crm.Config;
-using SSW.SophieBot.DataSync.Domain.Employees;
-using SSW.SophieBot.DataSync.Domain.Persistence;
-using SSW.SophieBot.DataSync.Domain.Sync;
+using SSW.SophieBot.Employees;
+using SSW.SophieBot.Persistence;
+using SSW.SophieBot.Sync;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +19,7 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
         private readonly IPagedOdataSyncService<CrmEmployee> _employeeOdataService;
         private readonly ITransactionalBulkRepository<SyncSnapshot, PatchOperation> _syncSnapshotRepository;
         private readonly IBatchMessageService<MqMessage<Employee>, string> _serviceBusService;
+        private readonly ISyncVersionGenerator _syncVersionGenerator;
         private readonly SyncOptions _syncOptions;
         private readonly ILogger<EmployeeSync> _logger;
 
@@ -26,12 +27,14 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
             IPagedOdataSyncService<CrmEmployee> employeeOdataService,
             ITransactionalBulkRepository<SyncSnapshot, PatchOperation> syncSnapshotRepository,
             IBatchMessageService<MqMessage<Employee>, string> serviceBusService,
+            ISyncVersionGenerator syncVersionGenerator,
             IOptions<SyncOptions> syncOptions,
             ILogger<EmployeeSync> logger)
         {
             _employeeOdataService = employeeOdataService;
             _syncSnapshotRepository = syncSnapshotRepository;
             _serviceBusService = serviceBusService;
+            _syncVersionGenerator = syncVersionGenerator;
             _syncOptions = syncOptions.Value;
             _logger = logger;
         }
@@ -48,7 +51,7 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
             }
 
             var isVersionUpdated = true;
-            var syncVersion = Guid.NewGuid().ToString();
+            var syncVersion = await _syncVersionGenerator.GenerateAsync(cancellationToken);
 
             do
             {
@@ -132,11 +135,6 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
             {
                 var previousSnapshot = crmEmployeeSnapshots.FirstOrDefault(snapshot => snapshot.Id == crmEmployee.Systemuserid);
 
-                if (previousSnapshot != null)
-                {
-                    syncedSnapshotIds.Add(previousSnapshot.Id);
-                }
-
                 if (previousSnapshot == null || previousSnapshot.Modifiedon < crmEmployee.Modifiedon)
                 {
                     upsertEmployees.Add(new MqMessage<Employee>(
@@ -144,6 +142,10 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
                         previousSnapshot == null ? SyncMode.Create : SyncMode.Update,
                         crmEmployee.Modifiedon,
                         syncVersion));
+                }
+                else
+                {
+                    syncedSnapshotIds.Add(previousSnapshot.Id);
                 }
             }
 
@@ -157,7 +159,7 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
             }
 
             var transactionSaved = await transactionBatch.SaveChangesAsync();
-            return new SyncListData<MqMessage<Employee>>(upsertEmployees, syncVersion, transactionSaved);
+            return new SyncListData<MqMessage<Employee>>(upsertEmployees, transactionSaved);
         }
 
         private async Task<List<MqMessage<Employee>>> UpdateSnapshotAsync(

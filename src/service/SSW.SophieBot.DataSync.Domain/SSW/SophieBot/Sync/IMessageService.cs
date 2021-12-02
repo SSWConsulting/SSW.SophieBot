@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SSW.SophieBot.DataSync.Domain.Sync
+namespace SSW.SophieBot.Sync
 {
     public interface IMessageService<TMessage, TOptions>
     {

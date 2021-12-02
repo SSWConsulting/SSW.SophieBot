@@ -1,4 +1,4 @@
-﻿namespace SSW.SophieBot.DataSync.Domain.Employees
+﻿namespace SSW.SophieBot.Employees
 {
     public class Location
     {

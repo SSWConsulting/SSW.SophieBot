@@ -1,6 +1,6 @@
 ﻿using SSW.SophieBot.DataSync.Crm.HttpClients;
-using SSW.SophieBot.DataSync.Domain.Employees;
-using SSW.SophieBot.DataSync.Domain.Sync;
+using SSW.SophieBot.Employees;
+using SSW.SophieBot.Sync;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

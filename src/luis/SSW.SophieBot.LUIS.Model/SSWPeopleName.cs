@@ -1,11 +1,11 @@
-﻿using SSW.SophieBot.DataSync.Domain.Persistence;
+﻿using SSW.SophieBot.Persistence;
 using System;
 
 namespace SSW.SophieBot.LUIS.Model
 {
     public class SSWPeopleName
     {
-        public string UserId { get; set; } = String.Empty;
+        public string UserId { get; set; } = string.Empty;
 
         public string? FirstName { get; set; }
 

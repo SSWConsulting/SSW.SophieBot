@@ -1,7 +1,8 @@
 ﻿using System;
 
-namespace SSW.SophieBot.DataSync.Domain.Persistence
+namespace SSW.SophieBot.Persistence
 {
+    // TODO: override object.Equals
     public class SyncSnapshot
     {
         public string Id { get; set; }

@@ -9,9 +9,9 @@ using SSW.SophieBot.DataSync.Crm.Config;
 using SSW.SophieBot.DataSync.Crm.HttpClients;
 using SSW.SophieBot.DataSync.Crm.Persistence;
 using SSW.SophieBot.DataSync.Crm.Sync;
-using SSW.SophieBot.DataSync.Domain.Employees;
-using SSW.SophieBot.DataSync.Domain.Persistence;
-using SSW.SophieBot.DataSync.Domain.Sync;
+using SSW.SophieBot.Employees;
+using SSW.SophieBot.Persistence;
+using SSW.SophieBot.Sync;
 
 [assembly: FunctionsStartup(typeof(SSW.SophieBot.DataSync.Crm.Startup))]
 namespace SSW.SophieBot.DataSync.Crm
@@ -24,7 +24,6 @@ namespace SSW.SophieBot.DataSync.Crm
 
             ConfigureSyncServices(builder);
             ConfigureSyncFunctions(builder);
-            ConfigureSyncPersistence(builder);
             ConfigureAzureServices(builder);
         }
 
@@ -44,12 +43,11 @@ namespace SSW.SophieBot.DataSync.Crm
             builder.Services.AddHttpClient<AuthClient>();
             builder.Services.AddHttpClient<CrmClient>();
 
-            builder.Services.AddSingleton(typeof(IPersistenceMigrator<,>), typeof(NullPersistenceMigrator<,>));
-            builder.Services.AddSingleton<IPersistenceMigrator<Container, SyncFunctionOptions>, CosmosMigrator>();
+            builder.Services.AddDefaultDataSync();
 
-            builder.Services.AddTransient(typeof(IOdataSyncService<>), typeof(NullOdataSyncService<>));
-            builder.Services.AddTransient(typeof(IPagedOdataSyncService<>), typeof(NullPagedOdataSyncService<>));
+            builder.Services.AddSingleton<IPersistenceMigrator<Container, SyncFunctionOptions>, CosmosMigrator>();
             builder.Services.AddTransient<IPagedOdataSyncService<CrmEmployee>, EmployeeOdataService>();
+            builder.Services.AddTransient<ITransactionalBulkRepository<SyncSnapshot, PatchOperation>, SyncSnapshotRepository>();
         }
 
         private static void ConfigureSyncFunctions(IFunctionsHostBuilder builder)
@@ -62,15 +60,10 @@ namespace SSW.SophieBot.DataSync.Crm
                 });
         }
 
-        private static void ConfigureSyncPersistence(IFunctionsHostBuilder builder)
-        {
-            builder.Services.AddTransient<ITransactionalBulkRepository<SyncSnapshot, PatchOperation>, SyncSnapshotRepository>();
-        }
-
         private static void ConfigureAzureServices(IFunctionsHostBuilder builder)
         {
-            var serviceBusConString = builder.GetContext().Configuration.GetConnectionString("ServiceBus");
-            var cosmosConString = builder.GetContext().Configuration.GetConnectionString("CosmosDb");
+            string serviceBusConString = builder.GetContext().Configuration.GetConnectionString("ServiceBus");
+            string cosmosConString = builder.GetContext().Configuration.GetConnectionString("CosmosDb");
             builder.Services.AddAzureClients(builder =>
             {
                 builder.AddClient((SyncOptions _) => new CosmosClientBuilder(cosmosConString)

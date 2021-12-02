@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace SSW.SophieBot.DataSync.Domain.Persistence
+namespace SSW.SophieBot.Persistence
 {
     public sealed class NullPersistenceMigrator<TClient, TOptions> : IPersistenceMigrator<TClient, TOptions>
     {
