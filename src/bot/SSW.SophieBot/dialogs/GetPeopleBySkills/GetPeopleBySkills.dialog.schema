@@ -7,6 +7,10 @@
     "skillEntity": {
       "$ref": "#/definitions/stringExpression",
       "title": "Skill Entity"
+    },
+    "locationEntity": {
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Location Entity"
     }
   },
   "$result": {

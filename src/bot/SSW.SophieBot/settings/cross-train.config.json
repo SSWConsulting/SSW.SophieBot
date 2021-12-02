@@ -23,9 +23,6 @@
       "GetPeopleBasedOnLocation": [
         "GetPeopleBasedOnLocationDialog.en-us"
       ],
-      "GetExpertsByLocation": [
-        "GetExpertsByLocationDialog.en-us"
-      ],
       "GetEmployeesOnProject": [
         "GetPeopleOnClientWorkDialog.en-us",
         "GetEmployeesByProjectDialog.en-us"

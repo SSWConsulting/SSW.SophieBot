@@ -58,6 +58,10 @@
             {
               "value": "=dialog.skillEntity",
               "key": "skills"
+            },
+            {
+              "key": "location",
+              "value": "=if(dialog.locationEntity == 'All', '', dialog.locationEntity)"
             }
           ]
         },
@@ -100,15 +104,6 @@
                   },
                   "property": "turn.matchedSkills",
                   "value": "=where(unique(flatten(select(turn.employees, e => select(e.skills, skill => skill.technology)))), skill => contains(toLower(skill), toLower(dialog.skillEntity)))"
-                },
-                {
-                  "$kind": "Microsoft.LogAction",
-                  "$designer": {
-                    "id": "LqZhSz"
-                  },
-                  "text": "${LogAction_Text_LqZhSz()}",
-                  "label": "turn.matchedSkills",
-                  "traceActivity": true
                 },
                 {
                   "$kind": "Microsoft.IfCondition",
@@ -170,15 +165,6 @@
                   ]
                 },
                 {
-                  "$kind": "Microsoft.LogAction",
-                  "$designer": {
-                    "id": "eXA4Dz"
-                  },
-                  "text": "${LogAction_Text_eXA4Dz()}",
-                  "label": "dialog.skillEntity",
-                  "traceActivity": true
-                },
-                {
                   "$kind": "Microsoft.Foreach",
                   "$designer": {
                     "id": "btx2ri"
@@ -210,22 +196,34 @@
                   "$designer": {
                     "id": "GEPlwI"
                   },
-                  "condition": "turn.sortedEmployees.count <= 10",
+                  "condition": "= exists(dialog.locationEntity) && dialog.locationEntity != ''",
                   "actions": [
                     {
                       "$kind": "GetEmployeesByBillableAction",
                       "$designer": {
-                        "id": "SmBZvX"
+                        "id": "0bFJ06"
                       },
                       "employees": "=turn.sortedEmployees",
                       "workingEmployeesProperty": "turn.billableEmployees"
                     },
                     {
-                      "$kind": "Microsoft.SendActivity",
+                      "$kind": "Microsoft.ForeachPage",
                       "$designer": {
-                        "id": "R5w2vq"
+                        "id": "ja2ZgT"
                       },
-                      "activity": "${SendActivity_R5w2vq()}"
+                      "pageIndex": "dialog.foreach.pageindex",
+                      "page": "dialog.foreach.page",
+                      "pageSize": 10,
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "RgIw3E"
+                          },
+                          "activity": "${SendActivity_RgIw3E()}"
+                        }
+                      ],
+                      "itemsProperty": "turn.sortedEmployees"
                     }
                   ],
                   "elseActions": [
