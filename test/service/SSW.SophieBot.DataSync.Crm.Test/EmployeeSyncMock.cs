@@ -88,6 +88,8 @@ namespace SSW.SophieBot.DataSync.Crm.Test
 
         };
 
+        public List<MqMessage<Employee>> MqMessages = new();
+
         public ISyncVersionGenerator MockSyncVersionGenerator(string syncVersion)
         {
             var mock = new Mock<ISyncVersionGenerator>();
@@ -95,33 +97,22 @@ namespace SSW.SophieBot.DataSync.Crm.Test
             return mock.Object;
         }
 
-        public IPagedOdataSyncService<CrmEmployee> MockEmployeeOdataSyncService()
-        {
-            var mock = new Mock<IPagedOdataSyncService<CrmEmployee>>();
-            mock.SetupSequence(service => service.HasMoreResults)
-                .Returns(true)
-                .Returns(false);
-            mock.SetupSequence(service => service.GetNextAsync(It.IsAny<CancellationToken>()).Result)
-                .Returns(new OdataPagedResponse<CrmEmployee>
-                {
-                    Value = CrmEmployees.Take(3).ToList(),
-                    OdataNextLink = "next page"
-                })
-                .Returns(new OdataPagedResponse<CrmEmployee>
-                {
-                    Value = CrmEmployees.Skip(3).ToList()
-                });
-
-            return mock.Object;
-        }
-
-        public ITransactionalBulkRepository<SyncSnapshot, PatchOperation> MockUpsertSyncSnapshotRepository(string syncVersion)
+        public Mock<ITransactionalBulkRepository<SyncSnapshot, PatchOperation>> GetBasicSyncSnapshotRepositoryMock(string syncVersion)
         {
             var mock = new Mock<ITransactionalBulkRepository<SyncSnapshot, PatchOperation>>();
-            mock.Setup(repo => repo.GetAllAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()).Result).Returns(InitialSnapshots);
+            mock.Setup(repo => repo.GetAllAsync(
+                It.IsAny<string>(),
+                It.IsAny<IEnumerable<(string, object)>>(),
+                It.IsAny<CancellationToken>()).Result)
+                .Returns(() => InitialSnapshots);
 
-            mock.Setup(repo => repo.GetNextAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()).Result).Returns(InitialSnapshots);
-            mock.SetupGet(repo => repo.HasMoreResults).Returns(false);
+            mock.Setup(repo => repo.GetNextAsync(
+                It.IsAny<string>(),
+                It.IsAny<IEnumerable<(string, object)>>(),
+                It.IsAny<CancellationToken>()).Result)
+                .Returns(() => InitialSnapshots.Where(snapshot => snapshot.SyncVersion != syncVersion).ToList());
+            mock.Setup(repo => repo.HasMoreResults)
+                .Returns(false);
 
             Action<SyncSnapshot, Action<Task>, CancellationToken> upsertCallback = (SyncSnapshot snapshot, Action<Task> action, CancellationToken _) =>
             {
@@ -142,15 +133,15 @@ namespace SSW.SophieBot.DataSync.Crm.Test
 
             Action<string, Action<Task>, CancellationToken> deleteCallback = (string id, Action<Task> action, CancellationToken _) =>
             {
-                var oldSnapshot = InitialSnapshots.RemoveAll(s => s.Id == id);
+                InitialSnapshots.RemoveAll(s => s.Id == id);
                 action?.Invoke(Task.CompletedTask);
             };
 
             var batchMock = new Mock<ITransactionBatch<PatchOperation>>();
-            batchMock.Setup(batch => batch.SaveChangesAsync()).Callback(() =>
+            batchMock.Setup(batch => batch.SaveChangesAsync().Result).Callback(() =>
             {
                 InitialSnapshots.ForEach(snapshot => snapshot.SyncVersion = syncVersion);
-            });
+            }).Returns(true);
             mock.Setup(repo => repo.BeginTransactionAsync(It.IsAny<CancellationToken>()).Result).Returns(batchMock.Object);
 
             mock.Setup(repo => repo.BulkInsertAsync(It.IsAny<SyncSnapshot>(), It.IsAny<Action<Task>>(), It.IsAny<CancellationToken>()))
@@ -163,12 +154,40 @@ namespace SSW.SophieBot.DataSync.Crm.Test
                 .Callback(deleteCallback)
                 .Returns(Task.CompletedTask);
 
+            return mock;
+        }
+
+        public IPagedOdataSyncService<CrmEmployee> MockEmployeeOdataSyncService()
+        {
+            var mock = new Mock<IPagedOdataSyncService<CrmEmployee>>();
+            mock.SetupSequence(service => service.HasMoreResults)
+                .Returns(true)
+                .Returns(false);
+            mock.SetupSequence(service => service.GetNextAsync(It.IsAny<CancellationToken>()).Result)
+                .Returns(() => new OdataPagedResponse<CrmEmployee>
+                {
+                    Value = CrmEmployees.Take(3).ToList(),
+                    OdataNextLink = "next page"
+                })
+                .Returns(() => new OdataPagedResponse<CrmEmployee>
+                {
+                    Value = CrmEmployees.Skip(3).ToList()
+                });
+
             return mock.Object;
         }
 
         public IBatchMessageService<MqMessage<Employee>, string> MockServiceBusClient()
         {
             var mock = new Mock<IBatchMessageService<MqMessage<Employee>, string>>();
+            mock.Setup(service => service.SendMessageAsync(
+                It.IsAny<IEnumerable<MqMessage<Employee>>>(),
+                It.IsAny<string>(),
+                It.IsAny<CancellationToken>()))
+                .Callback((IEnumerable<MqMessage<Employee>> messages, string _, CancellationToken _) =>
+                {
+                    MqMessages = MqMessages.Concat(messages).ToList();
+                });
             return mock.Object;
         }
 

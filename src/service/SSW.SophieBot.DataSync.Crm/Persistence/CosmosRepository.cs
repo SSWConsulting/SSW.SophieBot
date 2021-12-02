@@ -38,17 +38,20 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
 
         public virtual async Task<ITransactionBatch<PatchOperation>> BeginTransactionAsync(CancellationToken cancellationToken = default)
         {
-            var container = await GetContainerAsync(cancellationToken);
+            var container = await GetContainerAsync();
             var partitionKey = new PartitionKey(Options.OrganizationId);
             var cosmosBatch = container.CreateTransactionalBatch(partitionKey);
 
             return new CosmosTransactionBatch(cosmosBatch, Logger, cancellationToken);
         }
 
-        public async Task<List<TDocument>> GetAllAsync(string query, CancellationToken cancellationToken = default)
+        public async Task<List<TDocument>> GetAllAsync(
+            string query, 
+            IEnumerable<(string name, object value)> parameters, 
+            CancellationToken cancellationToken = default)
         {
-            var container = await GetContainerAsync(cancellationToken);
-            var queryDefinition = new QueryDefinition(query);
+            var container = await GetContainerAsync();
+            var queryDefinition = GetQueryDefinition(query, parameters);
 
             using var snapshotsIterator = container.GetItemQueryIterator<TDocument>(queryDefinition);
             var snapshots = new List<TDocument>();
@@ -66,13 +69,16 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
             return snapshots;
         }
 
-        public async Task<List<TDocument>> GetNextAsync(string query, CancellationToken cancellationToken = default)
+        public async Task<List<TDocument>> GetNextAsync(
+            string query, 
+            IEnumerable<(string name, object value)> parameters, 
+            CancellationToken cancellationToken = default)
         {
-            var container = await GetContainerAsync(cancellationToken);
+            var container = await GetContainerAsync();
 
             if (_currentIterator == null || _currentQuery != query)
             {
-                var queryDefinition = new QueryDefinition(query);
+                var queryDefinition = GetQueryDefinition(query, parameters);
                 _currentIterator = container.GetItemQueryIterator<TDocument>(queryDefinition);
             }
 
@@ -102,7 +108,7 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
             CancellationToken cancellationToken = default)
         {
             AssertAllowBulk();
-            var container = await GetContainerAsync(cancellationToken);
+            var container = await GetContainerAsync();
             var partitionKey = new PartitionKey(Options.OrganizationId);
 
             _currentBulk.Add(container.UpsertItemAsync(
@@ -126,7 +132,7 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
             CancellationToken cancellationToken = default)
         {
             AssertAllowBulk();
-            var container = await GetContainerAsync(cancellationToken);
+            var container = await GetContainerAsync();
             var partitionKey = new PartitionKey(Options.OrganizationId);
 
             _currentBulk.Add(container.DeleteItemAsync<TDocument>(
@@ -151,7 +157,18 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
             _currentIterator?.Dispose();
         }
 
-        protected abstract Task<Container> GetContainerAsync(CancellationToken cancellationToken = default);
+        protected abstract Task<Container> GetContainerAsync();
+
+        protected virtual QueryDefinition GetQueryDefinition(string query, IEnumerable<(string name, object value)> parameters)
+        {
+            var queryDefinition = new QueryDefinition(query);
+            foreach (var (name, value) in parameters)
+            {
+                queryDefinition = queryDefinition.WithParameter(name, value);
+            }
+
+            return queryDefinition;
+        }
 
         private void AssertAllowBulk()
         {

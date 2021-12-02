@@ -12,7 +12,6 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
     public class CosmosMigrator : IPersistenceMigrator<Container, SyncFunctionOptions>
     {
         private readonly IServiceProvider _serviceProvider;
-        private Container _container = null;
 
         public CosmosMigrator(IServiceProvider serviceProvider)
         {
@@ -21,11 +20,6 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
 
         public async Task<Container> MigrateAsync(SyncFunctionOptions options, CancellationToken cancellationToken = default)
         {
-            if (_container != null)
-            {
-                return _container;
-            }
-
             using var scope = _serviceProvider.CreateScope();
             var cosmosClient = scope.ServiceProvider.GetRequiredService<CosmosClient>();
 
@@ -51,9 +45,7 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
                 throw new SophieBotDataSyncCrmException($"Failed to migrate Cosmos DB on container creation: {containerResponse.Resource.Id}");
             }
 
-            _container = containerResponse.Container;
-
-            return _container;
+            return containerResponse.Container;
         }
     }
 }

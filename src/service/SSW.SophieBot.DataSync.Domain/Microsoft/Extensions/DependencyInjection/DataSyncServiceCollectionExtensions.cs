@@ -8,7 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddDefaultDataSync(this IServiceCollection services)
         {
-            services.TryAddSingleton(typeof(IPersistenceMigrator<,>), typeof(NullPersistenceMigrator<,>));
+            services.TryAddTransient(typeof(IPersistenceMigrator<,>), typeof(NullPersistenceMigrator<,>));
 
             services.TryAddTransient(typeof(IOdataSyncService<>), typeof(NullOdataSyncService<>));
             services.TryAddTransient(typeof(IPagedOdataSyncService<>), typeof(NullPagedOdataSyncService<>));

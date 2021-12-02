@@ -16,6 +16,9 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
 {
     public class EmployeeSync
     {
+        public const string UpsertSqlQueryText = "SELECT * FROM c WHERE c.organizationId=@organizationId AND c.id IN @ids";
+        public const string DeleteSqlQueryText = "SELECT * FROM c WHERE c.organizationId=@organizationId AND c.syncVersion != @syncVersion";
+
         private readonly IPagedOdataSyncService<CrmEmployee> _employeeOdataService;
         private readonly ITransactionalBulkRepository<SyncSnapshot, PatchOperation> _syncSnapshotRepository;
         private readonly IBatchMessageService<MqMessage<Employee>, string> _serviceBusService;
@@ -89,19 +92,19 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
 
         private async Task PerformDeletionAsync(string syncVersion, CancellationToken cancellationToken)
         {
-            string GetSqlQueryText()
-            {
-                return $"SELECT * FROM c WHERE c.organizationId={_syncOptions.OrganizationId} AND c.syncVersion != '{syncVersion}'";
-            }
-
             do
             {
-                var deleteSnapshots = await _syncSnapshotRepository.GetNextAsync(GetSqlQueryText(), cancellationToken);
+                var queryParameters = new List<(string, object)>
+                {
+                    ("@organizationId", _syncOptions.OrganizationId),
+                    ("@syncVersion", syncVersion)
+                };
+                var deleteSnapshots = await _syncSnapshotRepository.GetNextAsync(DeleteSqlQueryText, queryParameters, cancellationToken);
                 var deleteEmployees = deleteSnapshots.Select(snapshot => new MqMessage<Employee>(
                     new Employee(snapshot.Id, snapshot.OrganizationId),
                     SyncMode.Delete,
                     snapshot.Modifiedon,
-                    snapshot.SyncVersion));
+                    snapshot.SyncVersion)).ToList();
 
                 await UpdateSnapshotAsync(deleteEmployees, cancellationToken); // ignore snapshot deletion failure
                 await SendMessagesAsync(deleteEmployees, cancellationToken);
@@ -119,15 +122,13 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
                 return new SyncListData<MqMessage<Employee>>();
             }
 
-            string GetSqlQueryText(IEnumerable<string> ids)
+            var crmEmployeeIds = crmEmployeesOdata.Value.Select(crmEmployee => crmEmployee.Systemuserid).ToArray();
+            var queryParameters = new List<(string, object)>
             {
-                var formattedIds = ids.Select(id => id.EnsureSurroundsWith("'"));
-                return $"SELECT * FROM c WHERE c.organizationId={_syncOptions.OrganizationId} AND c.id IN ({string.Join(",", formattedIds)})";
-            }
-
-            var crmEmployeeIds = crmEmployeesOdata.Value.Select(crmEmployee => crmEmployee.Systemuserid);
-
-            var crmEmployeeSnapshots = await _syncSnapshotRepository.GetAllAsync(GetSqlQueryText(crmEmployeeIds), cancellationToken);
+                ("@organizationId", _syncOptions.OrganizationId),
+                ("@ids", crmEmployeeIds)
+            };
+            var crmEmployeeSnapshots = await _syncSnapshotRepository.GetAllAsync(UpsertSqlQueryText, queryParameters, cancellationToken);
             var syncedSnapshotIds = new List<string>();
 
             var upsertEmployees = new List<MqMessage<Employee>>();

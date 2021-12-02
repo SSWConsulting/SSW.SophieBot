@@ -8,6 +8,6 @@ namespace SSW.SophieBot.Persistence
     {
         bool HasMoreResults { get; }
 
-        Task<List<T>> GetNextAsync(string query, CancellationToken cancellationToken = default);
+        Task<List<T>> GetNextAsync(string query, IEnumerable<(string name, object value)> parameters, CancellationToken cancellationToken = default);
     }
 }
