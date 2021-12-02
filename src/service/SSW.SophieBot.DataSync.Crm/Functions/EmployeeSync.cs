@@ -44,7 +44,11 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
 
         [FunctionName(nameof(SyncEmployeeProfileAsync))]
         public async Task SyncEmployeeProfileAsync(
-            [TimerTrigger("%EmployeeSync:Timer%")] TimerInfo timer,
+            [TimerTrigger("%EmployeeSync:Timer%"
+#if DEBUG
+            , RunOnStartup = true
+#endif
+            )] TimerInfo timer,
             CancellationToken cancellationToken)
         {
             if (timer.IsPastDue)

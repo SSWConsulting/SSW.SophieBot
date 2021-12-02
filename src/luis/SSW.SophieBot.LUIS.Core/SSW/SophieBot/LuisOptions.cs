@@ -1,4 +1,4 @@
-﻿namespace SSW.SophieBot.LUIS.Core
+﻿namespace SSW.SophieBot
 {
     public class LuisOptions
     {

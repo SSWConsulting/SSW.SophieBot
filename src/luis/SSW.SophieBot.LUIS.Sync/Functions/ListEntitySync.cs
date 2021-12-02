@@ -1,8 +1,8 @@
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using SSW.SophieBot.LUIS.Core;
-using SSW.SophieBot.LUIS.Model;
+using SSW.SophieBot.Employees;
+using SSW.SophieBot.Sync;
 using System.Linq;
 
 namespace SSW.SophieBot.LUIS.Sync.Functions
@@ -24,9 +24,10 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
         public void SyncSSWPeopleNames([ServiceBusTrigger(
             "%ServiceBus:SswPeopleNames:Topic%",
             "%ServiceBus:SswPeopleNames:Subscription%",
-            Connection = SbConnectionStringName)] SSWPeopleName[] peopleNames)
+            Connection = SbConnectionStringName)] MqMessage<Employee>[] employees)
         {
-            _logger.LogInformation($"C# ServiceBus topic trigger function processed message: {string.Join(", ", peopleNames.Select(name => name.FirstName))}");
+            _logger.LogInformation($"C# ServiceBus topic trigger function processed message: " +
+                $"{string.Join(", ", employees.Select(employee => employee.Message.FirstName))}");
         }
     }
 }

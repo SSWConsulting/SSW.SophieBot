@@ -9,7 +9,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\framework\SSW.SophieBot.AzureFunction\SSW.SophieBot.AzureFunction.csproj" />
-    <ProjectReference Include="..\SSW.SophieBot.LUIS.Model\SSW.SophieBot.LUIS.Model.csproj" />
+    <ProjectReference Include="..\..\service\SSW.SophieBot.DataSync.Domain\SSW.SophieBot.DataSync.Domain.csproj" />
+    <ProjectReference Include="..\SSW.SophieBot.LUIS.Core\SSW.SophieBot.LUIS.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">

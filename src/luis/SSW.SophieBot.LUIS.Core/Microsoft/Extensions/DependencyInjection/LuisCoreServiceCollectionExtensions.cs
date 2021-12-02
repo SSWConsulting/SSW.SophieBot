@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using SSW.SophieBot;
 
-namespace SSW.SophieBot.LUIS.Core.DependencyInjection
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class LuisCoreServiceCollectionExtensions
     {

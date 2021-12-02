@@ -129,6 +129,8 @@ namespace SSW.SophieBot.DataSync.Crm.Test
             employeeSyncMock.MqMessages.Single().SyncMode.ShouldBe(SyncMode.Delete);
         }
 
+        // TODO: composite sync test
+
         private static void ManuallySyncSnapshots(EmployeeSyncMock mockInstance, string syncVersion)
         {
             mockInstance.InitialSnapshots = mockInstance.CrmEmployees.Select(employee => new SyncSnapshot

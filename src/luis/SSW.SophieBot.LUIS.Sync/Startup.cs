@@ -1,6 +1,6 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using SSW.SophieBot.LUIS.Core.DependencyInjection;
 
 [assembly: FunctionsStartup(typeof(SSW.SophieBot.LUIS.Sync.Startup))]
 namespace SSW.SophieBot.LUIS.Sync
