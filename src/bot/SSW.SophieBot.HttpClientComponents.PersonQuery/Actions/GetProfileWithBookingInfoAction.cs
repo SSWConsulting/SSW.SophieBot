@@ -46,6 +46,10 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
                 Clients = EmployeesHelper.GetClientsByDate(date, employee.Appointments),
                 LastSeenAt = employee.LastSeenAt,
                 LastSeenTime = EmployeesHelper.GetLastSeen(employee),
+                EmailAddress = employee.EmailAddress,
+                BookedDays = employee.Appointments
+                    .Where(appointment => appointment.End.UtcTicks >= date.Ticks)
+                    .Count(appointment => EmployeesHelper.IsOnClientWorkFunc(appointment)),
             })
             .ToList();
 
