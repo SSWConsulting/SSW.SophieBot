@@ -13,7 +13,6 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
 {
     public abstract class CosmosRepository<TDocument> : ITransactionalBulkRepository<TDocument, PatchOperation>, IDisposable
     {
-        private List<Task> _currentBulk = null;
         private FeedIterator<TDocument> _currentIterator = null;
         private string _currentQuery = null;
         private bool _internalHasMoreResults = true;
@@ -36,18 +35,9 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
             Logger = logger;
         }
 
-        public virtual async Task<ITransactionBatch<PatchOperation>> BeginTransactionAsync(CancellationToken cancellationToken = default)
-        {
-            var container = await GetContainerAsync();
-            var partitionKey = new PartitionKey(Options.OrganizationId);
-            var cosmosBatch = container.CreateTransactionalBatch(partitionKey);
-
-            return new CosmosTransactionBatch(cosmosBatch, Logger, cancellationToken);
-        }
-
         public async Task<List<TDocument>> GetAllAsync(
-            string query, 
-            IEnumerable<(string name, object value)> parameters, 
+            string query,
+            IEnumerable<(string name, object value)> parameters,
             CancellationToken cancellationToken = default)
         {
             var container = await GetContainerAsync();
@@ -70,8 +60,8 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
         }
 
         public async Task<List<TDocument>> GetNextAsync(
-            string query, 
-            IEnumerable<(string name, object value)> parameters, 
+            string query,
+            IEnumerable<(string name, object value)> parameters,
             CancellationToken cancellationToken = default)
         {
             var container = await GetContainerAsync();
@@ -81,6 +71,8 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
                 var queryDefinition = GetQueryDefinition(query, parameters);
                 _currentIterator = container.GetItemQueryIterator<TDocument>(queryDefinition);
             }
+
+            var currentSnapshotSet = await _currentIterator.ReadNextAsync(cancellationToken);
 
             _internalHasMoreResults = _currentIterator.HasMoreResults;
 
@@ -92,64 +84,21 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
                 return new List<TDocument>();
             }
 
-            var currentSnapshotSet = await _currentIterator.ReadNextAsync(cancellationToken);
-
             return currentSnapshotSet.ToList();
         }
 
-        public void BeginBulk()
+        public async Task<IBulkOperations<TDocument>> BeginBulkAsync()
         {
-            _currentBulk = new List<Task>();
+            return new CosmosBulkOperations(await GetContainerAsync(), Options.OrganizationId, Logger);
         }
 
-        public async Task BulkInsertAsync(
-            TDocument item,
-            Action<Task> callbackAction = null,
-            CancellationToken cancellationToken = default)
+        public virtual async Task<ITransactionBatch<PatchOperation>> BeginTransactionAsync(CancellationToken cancellationToken = default)
         {
-            AssertAllowBulk();
             var container = await GetContainerAsync();
             var partitionKey = new PartitionKey(Options.OrganizationId);
+            var cosmosBatch = container.CreateTransactionalBatch(partitionKey);
 
-            _currentBulk.Add(container.UpsertItemAsync(
-                item,
-                partitionKey,
-                cancellationToken: cancellationToken)
-                .ContinueWith(callbackAction, cancellationToken));
-        }
-
-        public async Task BulkUpdateAsync(
-            TDocument item,
-            Action<Task> callbackAction = null,
-            CancellationToken cancellationToken = default)
-        {
-            await BulkInsertAsync(item, callbackAction, cancellationToken);
-        }
-
-        public async Task BulkDeleteAsync(
-            string id,
-            Action<Task> callbackAction = null,
-            CancellationToken cancellationToken = default)
-        {
-            AssertAllowBulk();
-            var container = await GetContainerAsync();
-            var partitionKey = new PartitionKey(Options.OrganizationId);
-
-            _currentBulk.Add(container.DeleteItemAsync<TDocument>(
-                id,
-                partitionKey,
-                cancellationToken: cancellationToken)
-                .ContinueWith(callbackAction, cancellationToken));
-        }
-
-        public async Task ExecuteBulkAsync()
-        {
-            if (!_currentBulk.IsNullOrEmpty())
-            {
-                await Task.WhenAll(_currentBulk);
-            }
-
-            _currentBulk = null;
+            return new CosmosTransactionBatch(cosmosBatch, Logger, cancellationToken);
         }
 
         public void Dispose()
@@ -170,11 +119,84 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
             return queryDefinition;
         }
 
-        private void AssertAllowBulk()
+        public class CosmosBulkOperations : IBulkOperations<TDocument>
         {
-            if (_currentBulk == null)
+            private readonly List<Task<ItemResponse<TDocument>>> _itemResponses = new();
+            private readonly Container _container;
+            private readonly PartitionKey _partitionKey;
+            private readonly ILogger _logger;
+
+            public CosmosBulkOperations(Container container, string partitionKey, ILogger logger)
             {
-                throw new InvalidOperationException($"Please use {nameof(BeginBulk)} before bulk operations");
+                _container = container ?? throw new ArgumentNullException(nameof(container));
+                _partitionKey = new PartitionKey(partitionKey ?? throw new ArgumentNullException(nameof(partitionKey)));
+                _logger = logger;
+            }
+
+            public void BulkInsert(TDocument item, CancellationToken cancellationToken = default)
+            {
+                _itemResponses.Add(_container.UpsertItemAsync(
+                    item,
+                    _partitionKey,
+                    cancellationToken: cancellationToken)
+                    .ContinueWith(GetBulkOperationContinueFunc(), cancellationToken));
+            }
+
+            public void BulkUpdate(TDocument item, CancellationToken cancellationToken = default)
+            {
+                BulkInsert(item, cancellationToken);
+            }
+
+            public void BulkDelete(string id, CancellationToken cancellationToken = default)
+            {
+                _itemResponses.Add(_container.DeleteItemAsync<TDocument>(
+                    id,
+                    _partitionKey,
+                    cancellationToken: cancellationToken)
+                    .ContinueWith(GetBulkOperationContinueFunc(), cancellationToken));
+            }
+
+            public async Task<List<TDocument>> ExecuteBulkAsync()
+            {
+                var successfulDocuments = new List<TDocument>();
+
+                if (!_itemResponses.IsNullOrEmpty())
+                {
+                    await Task.WhenAll(_itemResponses);
+
+                    successfulDocuments = _itemResponses
+                        .Where(task => task.IsCompletedSuccessfully)
+                        .Select(task => task.Result.Resource)
+                        .ToList();
+
+                    _itemResponses.Clear();
+                }
+
+                return successfulDocuments;
+            }
+
+            private Func<Task<ItemResponse<TDocument>>, ItemResponse<TDocument>> GetBulkOperationContinueFunc()
+            {
+                return responseTask =>
+                {
+                    if (!responseTask.IsCompletedSuccessfully)
+                    {
+                        var innerExceptions = responseTask.Exception.Flatten();
+                        if (innerExceptions.InnerExceptions.FirstOrDefault(innerEx => innerEx is CosmosException) is CosmosException cosmosException)
+                        {
+                            _logger?.LogError("Error occurred during Cosmos DB bulk operation: [{StatusCode}] {Message}",
+                                cosmosException.StatusCode,
+                                cosmosException.Message);
+                        }
+                        else
+                        {
+                            _logger?.LogError("Error occurred during Cosmos DB bulk operation: {Exception}",
+                                innerExceptions.InnerExceptions.FirstOrDefault());
+                        }
+                    }
+
+                    return responseTask.Result;
+                };
             }
         }
 

@@ -4,7 +4,7 @@
     {
         public string OrganizationId { get; set; }
 
-        public SyncFunctionOptions EmployeeSync { get; set; }
+        public SyncFunctionOptions EmployeeSync { get; set; } = new SyncFunctionOptions();
     }
 
     public class SyncFunctionOptions

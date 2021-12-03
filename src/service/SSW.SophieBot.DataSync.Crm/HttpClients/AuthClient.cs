@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.Net.Http.Headers;
 using SSW.SophieBot.DataSync.Crm.Config;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -28,8 +28,7 @@ namespace SSW.SophieBot.DataSync.Crm.HttpClients
 
             _httpClient.BaseAddress = new Uri(_crmOptions.GetFormatedTokenEndpoint());
 
-            _httpClient.DefaultRequestHeaders.Add(
-                HeaderNames.Accept, "application/json");
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             if (!string.IsNullOrWhiteSpace(_crmOptions.AppId) && !string.IsNullOrWhiteSpace(_crmOptions.AppSecret))
             {
@@ -58,11 +57,12 @@ namespace SSW.SophieBot.DataSync.Crm.HttpClients
                 ["scope"] = _crmOptions.AccessTokenScope
             };
 
+            var request = new HttpRequestMessage(HttpMethod.Post, string.Empty);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", _encodedCreds);
             var content = new FormUrlEncodedContent(body);
-            content.Headers.Add(HeaderNames.Authorization, $"Basic {_encodedCreds}");
-            content.Headers.Add(HeaderNames.ContentType, "application/x-www-form-urlencoded");
+            request.Content = content;
 
-            using var accessTokenResponse = await _httpClient.PostAsync("", content, cancellationToken);
+            using var accessTokenResponse = await _httpClient.SendAsync(request, cancellationToken);
 
             accessTokenResponse.EnsureSuccessStatusCode();
 

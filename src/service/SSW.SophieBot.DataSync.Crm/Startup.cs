@@ -53,10 +53,10 @@ namespace SSW.SophieBot.DataSync.Crm
         private static void ConfigureSyncFunctions(IFunctionsHostBuilder builder)
         {
             builder.Services.AddOptions<SyncOptions>()
-                .Configure<IConfiguration>((settings, configuration) =>
+                .Configure<IConfiguration>((options, configuration) =>
                 {
-                    settings.OrganizationId = configuration["OrganizationId"];
-                    configuration.GetSection("EmployeeSync").Bind(settings.EmployeeSync);
+                    options.OrganizationId = configuration["OrganizationId"];
+                    configuration.GetSection("EmployeeSync").Bind(options.EmployeeSync);
                 });
         }
 
@@ -70,7 +70,7 @@ namespace SSW.SophieBot.DataSync.Crm
                     .WithSerializerOptions(new CosmosSerializationOptions
                     {
                         PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase
-                    })
+                    }).Build()
                 );
                 builder.AddServiceBusClient(serviceBusConString);
             });

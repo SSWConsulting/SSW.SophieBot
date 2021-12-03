@@ -13,7 +13,7 @@ namespace SSW.SophieBot.Employees
         public string Address1Telephone1 { get; set; }
 
         [JsonPropertyName("address2_shippingmethodcode")]
-        public int Address2Shippingmethodcode { get; set; }
+        public int? Address2Shippingmethodcode { get; set; }
 
         [JsonPropertyName("address1_addressid")]
         public string Address1Addressid { get; set; }
@@ -28,7 +28,7 @@ namespace SSW.SophieBot.Employees
         public string Address1Postalcode { get; set; }
 
         [JsonPropertyName("address1_addresstypecode")]
-        public int Address1Addresstypecode { get; set; }
+        public int? Address1Addresstypecode { get; set; }
 
         [JsonPropertyName("address1_fax")]
         public string Address1Fax { get; set; }
@@ -43,16 +43,16 @@ namespace SSW.SophieBot.Employees
         public string Address1Line3 { get; set; }
 
         [JsonPropertyName("address1_shippingmethodcode")]
-        public int Address1Shippingmethodcode { get; set; }
+        public int? Address1Shippingmethodcode { get; set; }
 
         [JsonPropertyName("emailaddress")]
         public string Emailaddress { get; set; }
 
         [JsonPropertyName("address2_addresstypecode")]
-        public int Address2Addresstypecode { get; set; }
+        public int? Address2Addresstypecode { get; set; }
 
         [JsonPropertyName("versionnumber")]
-        public int Versionnumber { get; set; }
+        public int? Versionnumber { get; set; }
 
         [JsonPropertyName("_modifiedby_value")]
         public string ModifiedbyValue { get; set; }
@@ -61,7 +61,7 @@ namespace SSW.SophieBot.Employees
         public DateTimeOffset Modifiedon { get; set; }
 
         [JsonPropertyName("timezonecode")]
-        public int Timezonecode { get; set; }
+        public int? Timezonecode { get; set; }
 
         [JsonPropertyName("_createdby_value")]
         public string CreatedbyValue { get; set; }
@@ -181,7 +181,7 @@ namespace SSW.SophieBot.Employees
         public string Address1Utcoffset { get; set; }
 
         [JsonPropertyName("msdyn_migrationstatus")]
-        public string MsdynMigrationstatus { get; set; }
+        public int? MsdynMigrationstatus { get; set; }
 
         [JsonPropertyName("address2_telephone3")]
         public string Address2Telephone3 { get; set; }

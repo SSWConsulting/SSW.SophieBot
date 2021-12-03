@@ -4,6 +4,7 @@ using SSW.SophieBot.DataSync.Crm.Config;
 using SSW.SophieBot.Persistence;
 using System;
 using System.Net;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,9 +31,10 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
                 options.DatabaseId,
                 cancellationToken: cancellationToken);
 
-            if (dbResponse.StatusCode != HttpStatusCode.OK)
+            if (!HttpClientHelper.IsSuccessStatusCode(dbResponse.StatusCode))
             {
-                throw new SophieBotDataSyncCrmException($"Failed to migrate Cosmos DB on database creation: {dbResponse.Resource.Id}");
+                throw new SophieBotDataSyncCrmException($"Failed to migrate Cosmos DB on database creation: {dbResponse.Resource.Id}, " +
+                    $"status code: {dbResponse.StatusCode}");
             }
 
             var containerResponse = await dbResponse.Database.CreateContainerIfNotExistsAsync(
@@ -40,9 +42,10 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
                 "/organizationId",
                 cancellationToken: cancellationToken);
 
-            if (containerResponse.StatusCode != HttpStatusCode.OK)
+            if (!HttpClientHelper.IsSuccessStatusCode(containerResponse.StatusCode))
             {
-                throw new SophieBotDataSyncCrmException($"Failed to migrate Cosmos DB on container creation: {containerResponse.Resource.Id}");
+                throw new SophieBotDataSyncCrmException($"Failed to migrate Cosmos DB on container creation: {containerResponse.Resource.Id}, " +
+                    $"status code: {containerResponse.StatusCode}");
             }
 
             return containerResponse.Container;

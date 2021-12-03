@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.Net.Http.Headers;
 using SSW.SophieBot.DataSync.Crm.Config;
 using SSW.SophieBot.Employees;
 using SSW.SophieBot.Sync;
@@ -9,8 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -37,11 +38,7 @@ namespace SSW.SophieBot.DataSync.Crm.HttpClients
             _syncOptions = syncOptions.Value;
             _logger = logger;
 
-            _httpClient.DefaultRequestHeaders.Add(
-                HeaderNames.ContentType, "application/json;charset=utf8");
-            _httpClient.DefaultRequestHeaders.Add(
-                HeaderNames.Accept, "application/json");
-            _httpClient.DefaultRequestHeaders.Add(HeaderNames.Authorization, string.Empty);
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         public virtual async Task<OdataPagedResponse<CrmEmployee>> GetPagedEmployeesAsync(string nextLink = null, CancellationToken cancellationToken = default)
@@ -79,7 +76,7 @@ namespace SSW.SophieBot.DataSync.Crm.HttpClients
 
             var crmEmployeesOdata = await _httpClient.GetFromJsonAsync<OdataPagedResponse<CrmEmployee>>(
                 apiUrl,
-                new JsonSerializerOptions(JsonSerializerDefaults.Web),
+                HttpClientHelper.SystemTextJsonSerializerOptions,
                 cancellationToken);
 
             return crmEmployeesOdata ?? new OdataPagedResponse<CrmEmployee>();
@@ -88,11 +85,11 @@ namespace SSW.SophieBot.DataSync.Crm.HttpClients
         public async Task<OdataResponse<List<CrmSite>>> GetSitesAsync(CancellationToken cancellationToken = default)
         {
             await AddHeadersAsync(cancellationToken);
-            var apiUrl = new Uri(new Uri(_crmOptions.BaseUri), "sites");
+            var apiUrl = new Uri(new Uri(_crmOptions.BaseUri.EnsureEndsWith("/")), "sites");
 
             var crmSitesOdata = await _httpClient.GetFromJsonAsync<OdataResponse<List<CrmSite>>>(
                 apiUrl,
-                new JsonSerializerOptions(JsonSerializerDefaults.Web),
+                HttpClientHelper.SystemTextJsonSerializerOptions,
                 cancellationToken);
 
             return crmSitesOdata ?? new OdataResponse<List<CrmSite>>();
@@ -107,12 +104,7 @@ namespace SSW.SophieBot.DataSync.Crm.HttpClients
                 _logger.LogWarning("Failed to get access token for Crm.");
             }
 
-            if (_httpClient.DefaultRequestHeaders.Contains(HeaderNames.Authorization))
-            {
-                _httpClient.DefaultRequestHeaders.Remove(HeaderNames.Authorization);
-            }
-
-            _httpClient.DefaultRequestHeaders.Add(HeaderNames.Authorization, accessToken);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             if (!_httpClient.DefaultRequestHeaders.Contains("Prefer"))
             {

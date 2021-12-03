@@ -7,7 +7,7 @@ namespace SSW.SophieBot.Employees
     public class CrmEmployee
     {
         [JsonPropertyName("ssw_jobtitle")]
-        public int SswJobtitle { get; set; }
+        public int? SswJobtitle { get; set; }
 
         [JsonPropertyName("mobilephone")]
         public string Mobilephone { get; set; }
@@ -16,22 +16,22 @@ namespace SSW.SophieBot.Employees
         public string Address1Country { get; set; }
 
         [JsonPropertyName("islicensed")]
-        public bool Islicensed { get; set; }
+        public bool? Islicensed { get; set; }
 
         [JsonPropertyName("personalemailaddress")]
         public string Personalemailaddress { get; set; }
 
         [JsonPropertyName("ssw_dateofbirth")]
-        public DateTime SswDateofbirth { get; set; }
+        public DateTime? SswDateofbirth { get; set; }
 
         [JsonPropertyName("ssw_tshirtsize")]
-        public int SswTshirtsize { get; set; }
+        public int? SswTshirtsize { get; set; }
 
         [JsonPropertyName("accessmode")]
-        public int Accessmode { get; set; }
+        public int? Accessmode { get; set; }
 
         [JsonPropertyName("exchangerate")]
-        public int Exchangerate { get; set; }
+        public double? Exchangerate { get; set; }
 
         [JsonPropertyName("ssw_delveurl")]
         public string SswDelveurl { get; set; }
@@ -46,10 +46,10 @@ namespace SSW.SophieBot.Employees
         public string SswPublicprofileurl { get; set; }
 
         [JsonPropertyName("outgoingemaildeliverymethod")]
-        public int Outgoingemaildeliverymethod { get; set; }
+        public int? Outgoingemaildeliverymethod { get; set; }
 
         [JsonPropertyName("address2_shippingmethodcode")]
-        public int Address2Shippingmethodcode { get; set; }
+        public int? Address2Shippingmethodcode { get; set; }
 
         [JsonPropertyName("title")]
         public string Title { get; set; }
@@ -64,13 +64,13 @@ namespace SSW.SophieBot.Employees
         public DateTime Modifiedon { get; set; }
 
         [JsonPropertyName("preferredaddresscode")]
-        public int Preferredaddresscode { get; set; }
+        public int? Preferredaddresscode { get; set; }
 
         [JsonPropertyName("preferredemailcode")]
-        public int Preferredemailcode { get; set; }
+        public int? Preferredemailcode { get; set; }
 
         [JsonPropertyName("address1_shippingmethodcode")]
-        public int Address1Shippingmethodcode { get; set; }
+        public int? Address1Shippingmethodcode { get; set; }
 
         [JsonPropertyName("address1_composite")]
         public string Address1Composite { get; set; }
@@ -82,7 +82,7 @@ namespace SSW.SophieBot.Employees
         public string SswBlogurl { get; set; }
 
         [JsonPropertyName("caltype")]
-        public int Caltype { get; set; }
+        public int? Caltype { get; set; }
 
         [JsonPropertyName("ssw_githuburl")]
         public string SswGithuburl { get; set; }
@@ -94,7 +94,7 @@ namespace SSW.SophieBot.Employees
         public string Firstname { get; set; }
 
         [JsonPropertyName("userlicensetype")]
-        public int Userlicensetype { get; set; }
+        public int? Userlicensetype { get; set; }
 
         [JsonPropertyName("yomifullname")]
         public string Yomifullname { get; set; }
@@ -103,19 +103,19 @@ namespace SSW.SophieBot.Employees
         public string BusinessunitidValue { get; set; }
 
         [JsonPropertyName("incomingemaildeliverymethod")]
-        public int Incomingemaildeliverymethod { get; set; }
+        public int? Incomingemaildeliverymethod { get; set; }
 
         [JsonPropertyName("ssw_defaultrate")]
-        public int SswDefaultrate { get; set; }
+        public double? SswDefaultrate { get; set; }
 
         [JsonPropertyName("issyncwithdirectory")]
-        public bool Issyncwithdirectory { get; set; }
+        public bool? Issyncwithdirectory { get; set; }
 
         [JsonPropertyName("middlename")]
         public string Middlename { get; set; }
 
         [JsonPropertyName("setupuser")]
-        public bool Setupuser { get; set; }
+        public bool? Setupuser { get; set; }
 
         [JsonPropertyName("fullname")]
         public string Fullname { get; set; }
@@ -124,13 +124,13 @@ namespace SSW.SophieBot.Employees
         public string Employeeid { get; set; }
 
         [JsonPropertyName("timezoneruleversionnumber")]
-        public int Timezoneruleversionnumber { get; set; }
+        public int? Timezoneruleversionnumber { get; set; }
 
         [JsonPropertyName("address1_addressid")]
         public string Address1Addressid { get; set; }
 
         [JsonPropertyName("createdon")]
-        public DateTime Createdon { get; set; }
+        public DateTime? Createdon { get; set; }
 
         [JsonPropertyName("ssw_twitterusername")]
         public string SswTwitterusername { get; set; }
@@ -139,10 +139,10 @@ namespace SSW.SophieBot.Employees
         public string Address1Stateorprovince { get; set; }
 
         [JsonPropertyName("deletedstate")]
-        public int Deletedstate { get; set; }
+        public int? Deletedstate { get; set; }
 
         [JsonPropertyName("defaultfilterspopulated")]
-        public bool Defaultfilterspopulated { get; set; }
+        public bool? Defaultfilterspopulated { get; set; }
 
         [JsonPropertyName("defaultodbfoldername")]
         public string Defaultodbfoldername { get; set; }
@@ -151,10 +151,10 @@ namespace SSW.SophieBot.Employees
         public string DefaultmailboxValue { get; set; }
 
         [JsonPropertyName("invitestatuscode")]
-        public int Invitestatuscode { get; set; }
+        public int? Invitestatuscode { get; set; }
 
         [JsonPropertyName("versionnumber")]
-        public int Versionnumber { get; set; }
+        public int? Versionnumber { get; set; }
 
         [JsonPropertyName("azureactivedirectorystringid")]
         public string Azureactivedirectorystringid { get; set; }
@@ -163,22 +163,22 @@ namespace SSW.SophieBot.Employees
         public string Address1Line1 { get; set; }
 
         [JsonPropertyName("address1_addresstypecode")]
-        public int Address1Addresstypecode { get; set; }
+        public int? Address1Addresstypecode { get; set; }
 
         [JsonPropertyName("isintegrationuser")]
-        public bool Isintegrationuser { get; set; }
+        public bool? Isintegrationuser { get; set; }
 
         [JsonPropertyName("ssw_profilecategory")]
-        public int SswProfilecategory { get; set; }
+        public int? SswProfilecategory { get; set; }
 
         [JsonPropertyName("_transactioncurrencyid_value")]
         public string TransactioncurrencyidValue { get; set; }
 
         [JsonPropertyName("utcconversiontimezonecode")]
-        public int Utcconversiontimezonecode { get; set; }
+        public int? Utcconversiontimezonecode { get; set; }
 
         [JsonPropertyName("ssw_smartphoneos")]
-        public int SswSmartphoneos { get; set; }
+        public int? SswSmartphoneos { get; set; }
 
         [JsonPropertyName("ssw_publicphotoalbumurl")]
         public string SswPublicphotoalbumurl { get; set; }
@@ -193,7 +193,7 @@ namespace SSW.SophieBot.Employees
         public string ModifiedbyValue { get; set; }
 
         [JsonPropertyName("ssw_lastsyncdate")]
-        public DateTime SswLastsyncdate { get; set; }
+        public DateTime? SswLastsyncdate { get; set; }
 
         [JsonPropertyName("_createdby_value")]
         public string CreatedbyValue { get; set; }
@@ -202,10 +202,10 @@ namespace SSW.SophieBot.Employees
         public string Address1City { get; set; }
 
         [JsonPropertyName("preferredphonecode")]
-        public int Preferredphonecode { get; set; }
+        public int? Preferredphonecode { get; set; }
 
         [JsonPropertyName("address2_addresstypecode")]
-        public int Address2Addresstypecode { get; set; }
+        public int? Address2Addresstypecode { get; set; }
 
         [JsonPropertyName("domainname")]
         public string Domainname { get; set; }
@@ -217,19 +217,19 @@ namespace SSW.SophieBot.Employees
         public string Userpuid { get; set; }
 
         [JsonPropertyName("ssw_datestarted")]
-        public DateTime SswDatestarted { get; set; }
+        public DateTime? SswDatestarted { get; set; }
 
         [JsonPropertyName("identityid")]
-        public int Identityid { get; set; }
+        public int? Identityid { get; set; }
 
         [JsonPropertyName("isdisabled")]
-        public bool Isdisabled { get; set; }
+        public bool? Isdisabled { get; set; }
 
         [JsonPropertyName("address2_addressid")]
         public string Address2Addressid { get; set; }
 
         [JsonPropertyName("emailrouteraccessapproval")]
-        public int Emailrouteraccessapproval { get; set; }
+        public int? Emailrouteraccessapproval { get; set; }
 
         [JsonPropertyName("organizationid")]
         public string Organizationid { get; set; }
@@ -238,25 +238,25 @@ namespace SSW.SophieBot.Employees
         public string Internalemailaddress { get; set; }
 
         [JsonPropertyName("displayinserviceviews")]
-        public bool Displayinserviceviews { get; set; }
+        public bool? Displayinserviceviews { get; set; }
 
         [JsonPropertyName("_parentsystemuserid_value")]
         public string ParentsystemuseridValue { get; set; }
 
         [JsonPropertyName("isemailaddressapprovedbyo365admin")]
-        public bool Isemailaddressapprovedbyo365Admin { get; set; }
+        public bool? Isemailaddressapprovedbyo365Admin { get; set; }
 
         [JsonPropertyName("_queueid_value")]
         public string QueueidValue { get; set; }
 
         [JsonPropertyName("ssw_defaultrate_base")]
-        public int SswDefaultrateBase { get; set; }
+        public double? SswDefaultrateBase { get; set; }
 
         [JsonPropertyName("ssw_category")]
-        public int SswCategory { get; set; }
+        public int? SswCategory { get; set; }
 
         [JsonPropertyName("ssw_istimeproemp")]
-        public bool SswIstimeproemp { get; set; }
+        public bool? SswIstimeproemp { get; set; }
 
         [JsonPropertyName("ownerid")]
         public string Ownerid { get; set; }
@@ -295,7 +295,7 @@ namespace SSW.SophieBot.Employees
         public string Sharepointemailaddress { get; set; }
 
         [JsonPropertyName("entityimage_timestamp")]
-        public string EntityimageTimestamp { get; set; }
+        public long? EntityimageTimestamp { get; set; }
 
         [JsonPropertyName("ssw_datefinished")]
         public string SswDatefinished { get; set; }
@@ -418,13 +418,13 @@ namespace SSW.SophieBot.Employees
         public string Address2Upszone { get; set; }
 
         [JsonPropertyName("ssw_sameasjobtitle")]
-        public string SswSameasjobtitle { get; set; }
+        public bool? SswSameasjobtitle { get; set; }
 
         [JsonPropertyName("address2_name")]
         public string Address2Name { get; set; }
 
         [JsonPropertyName("msdyn_gdproptout")]
-        public string MsdynGdproptout { get; set; }
+        public bool? MsdynGdproptout { get; set; }
 
         [JsonPropertyName("traversedpath")]
         public string Traversedpath { get; set; }
@@ -457,7 +457,7 @@ namespace SSW.SophieBot.Employees
         public string SswDetails { get; set; }
 
         [JsonPropertyName("ssw_hideprofile")]
-        public string SswHideprofile { get; set; }
+        public bool? SswHideprofile { get; set; }
 
         [JsonPropertyName("ssw_chinaid")]
         public string SswChinaid { get; set; }
@@ -511,7 +511,7 @@ namespace SSW.SophieBot.Employees
         public string Yammeruserid { get; set; }
 
         [JsonPropertyName("msdyn_migrationstatus")]
-        public string MsdynMigrationstatus { get; set; }
+        public int? MsdynMigrationstatus { get; set; }
 
         [JsonPropertyName("address2_utcoffset")]
         public string Address2Utcoffset { get; set; }

@@ -90,6 +90,8 @@ namespace SSW.SophieBot.DataSync.Crm.Test
 
         public List<MqMessage<Employee>> MqMessages = new();
 
+        private readonly List<SyncSnapshot> _successfulBulkSnapshots = new();
+
         public ISyncVersionGenerator MockSyncVersionGenerator(string syncVersion)
         {
             var mock = new Mock<ISyncVersionGenerator>();
@@ -114,7 +116,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
             mock.Setup(repo => repo.HasMoreResults)
                 .Returns(false);
 
-            Action<SyncSnapshot, Action<Task>, CancellationToken> upsertCallback = (SyncSnapshot snapshot, Action<Task> action, CancellationToken _) =>
+            var upsertCallback = (SyncSnapshot snapshot, CancellationToken _) =>
             {
                 var oldSnapshot = InitialSnapshots.FirstOrDefault(s => s.Id == snapshot.Id);
                 if (oldSnapshot != null)
@@ -128,13 +130,16 @@ namespace SSW.SophieBot.DataSync.Crm.Test
                     InitialSnapshots.Add(snapshot);
                 }
 
-                action?.Invoke(Task.CompletedTask);
+                _successfulBulkSnapshots.Add(snapshot);
             };
 
-            Action<string, Action<Task>, CancellationToken> deleteCallback = (string id, Action<Task> action, CancellationToken _) =>
+            var deleteCallback = (string id, CancellationToken _) =>
             {
                 InitialSnapshots.RemoveAll(s => s.Id == id);
-                action?.Invoke(Task.CompletedTask);
+                _successfulBulkSnapshots.Add(new SyncSnapshot
+                {
+                    Id = id
+                });
             };
 
             var batchMock = new Mock<ITransactionBatch<PatchOperation>>();
@@ -144,15 +149,18 @@ namespace SSW.SophieBot.DataSync.Crm.Test
             }).Returns(true);
             mock.Setup(repo => repo.BeginTransactionAsync(It.IsAny<CancellationToken>()).Result).Returns(batchMock.Object);
 
-            mock.Setup(repo => repo.BulkInsertAsync(It.IsAny<SyncSnapshot>(), It.IsAny<Action<Task>>(), It.IsAny<CancellationToken>()))
-                .Callback(upsertCallback)
-                .Returns(Task.CompletedTask);
-            mock.Setup(repo => repo.BulkUpdateAsync(It.IsAny<SyncSnapshot>(), It.IsAny<Action<Task>>(), It.IsAny<CancellationToken>()))
-                .Callback(upsertCallback)
-                .Returns(Task.CompletedTask);
-            mock.Setup(repo => repo.BulkDeleteAsync(It.IsAny<string>(), It.IsAny<Action<Task>>(), It.IsAny<CancellationToken>()))
-                .Callback(deleteCallback)
-                .Returns(Task.CompletedTask);
+            var bulkMock = new Mock<IBulkOperations<SyncSnapshot>>();
+            bulkMock.Setup(bulk => bulk.BulkInsert(It.IsAny<SyncSnapshot>(), It.IsAny<CancellationToken>()))
+                .Callback(upsertCallback);
+            bulkMock.Setup(bulk => bulk.BulkUpdate(It.IsAny<SyncSnapshot>(), It.IsAny<CancellationToken>()))
+                .Callback(upsertCallback);
+            bulkMock.Setup(bulk => bulk.BulkDelete(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Callback(deleteCallback);
+            bulkMock.Setup(bulk => bulk.ExecuteBulkAsync().Result).Returns(() => _successfulBulkSnapshots);
+
+            mock.Setup(repo => repo.BeginBulkAsync().Result)
+                .Callback(() => _successfulBulkSnapshots.Clear())
+                .Returns(bulkMock.Object);
 
             return mock;
         }
