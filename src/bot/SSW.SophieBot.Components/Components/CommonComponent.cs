@@ -15,6 +15,7 @@ namespace SSW.SophieBot.Components.Components
             services.AddDeclarativeType<ClientNowAction>(ClientNowAction.Kind);
             services.AddDeclarativeType<TimeFormatAction>(TimeFormatAction.Kind);
             services.AddDeclarativeType<TimeDifferenceAction>(TimeDifferenceAction.Kind);
+            services.AddDeclarativeType<EnrichDatatimeAction>(EnrichDatatimeAction.Kind);
         }
     }
 }

@@ -1098,6 +1098,33 @@
           ]
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "roR7IR"
+          },
+          "condition": "=exists(@datetime)",
+          "actions": [
+            {
+              "$kind": "EnrichDatatimeAction",
+              "$designer": {
+                "id": "BxpzvI"
+              },
+              "datetime": "=@datetime",
+              "resultProperty": "turn.datetime"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "WwaJNu"
+              },
+              "property": "turn.datetime",
+              "value": "=@datetime"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
             "id": "JGABEb"
@@ -1125,7 +1152,7 @@
             },
             {
               "property": "$options.datetime",
-              "value": "=@datetime"
+              "value": "=turn.datetime"
             },
             {
               "property": "$options.booked",

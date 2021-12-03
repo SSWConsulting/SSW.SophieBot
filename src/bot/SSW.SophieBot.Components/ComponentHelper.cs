@@ -19,6 +19,18 @@ namespace SSW.SophieBot.Components
             return utcUserLocalTime.Subtract(utcOffset);
         }
 
+        public static DateTime GetDateByDayOfWeek(this DateTime date, DayOfWeek dayOfWeek)
+        {
+            int diff = dayOfWeek - date.DayOfWeek;
+
+            if (dayOfWeek == DayOfWeek.Sunday)
+            {
+                diff += 7;
+            }
+
+            return date.AddDays(diff).Date;
+        }
+
         public static string ToUserFriendlyDate(this DateTime dateTime, DateTime? now = null)
         {
             if (now.HasValue)

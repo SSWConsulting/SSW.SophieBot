@@ -36,7 +36,7 @@
             },
             {
               "key": "fromDate",
-              "value": "=dialog.dateEntity.timex[0]"
+              "value": "=dialog.dateEntity.value"
             },
             {
               "key": "location",
@@ -80,7 +80,7 @@
                 },
                 {
                   "key": "fromDate",
-                  "value": "=dialog.dateEntity.timex[0]"
+                  "value": "=dialog.dateEntity.value"
                 },
                 {
                   "value": "=dialog.locationEntity",
@@ -116,7 +116,7 @@
                   "$designer": {
                     "id": "7KxZvy"
                   },
-                  "datetime": "=dialog.dateEntity.timex[0]",
+                  "datetime": "=dialog.dateEntity.value",
                   "format": "dddd d MMMM",
                   "resultProperty": "turn.formatDate"
                 },
@@ -127,7 +127,7 @@
                   },
                   "employees": "=turn.internalbookedEmployees",
                   "result": "turn.internalbookedEmployees",
-                  "date": "=dialog.dateEntity.timex[0]"
+                  "date": "=dialog.dateEntity.value"
                 },
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -163,7 +163,7 @@
                   },
                   "employees": "=turn.employees",
                   "result": "turn.employees",
-                  "date": "=dialog.dateEntity.timex[0]"
+                  "date": "=dialog.dateEntity.value"
                 },
                 {
                   "$kind": "Microsoft.IfCondition",
