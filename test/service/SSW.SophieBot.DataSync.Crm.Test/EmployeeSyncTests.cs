@@ -40,7 +40,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
             _testServiceBusClient = new TestServiceBusClient();
             _testSyncVersionGenerator = new TestSyncVersionGenerator(_syncVersion);
 
-            CreateEmployeeSync();
+            SetEmployeeSyncInstance();
         }
 
         [Fact]
@@ -132,7 +132,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
             mockSyncSnapshotRepository.Setup(func => func.BeginTransactionAsync(It.IsAny<CancellationToken>()).Result).Returns(batchMock.Object);
 
             _testSyncSnapshotRepository = mockSyncSnapshotRepository.Object;
-            CreateEmployeeSync();
+            SetEmployeeSyncInstance();
 
             ManuallySyncSnapshots(firstVersion);
 
@@ -150,7 +150,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
 
         // TODO: composite sync test
 
-        private void CreateEmployeeSync()
+        private void SetEmployeeSyncInstance()
         {
             _employeeSync = new EmployeeSync(
                 _testEmployeeOdataService,

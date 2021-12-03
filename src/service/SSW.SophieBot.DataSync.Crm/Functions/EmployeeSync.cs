@@ -68,8 +68,9 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
                     break;
                 }
 
-                // calculate and perform upsert on employees, and send out messages
                 _logger.LogDebug("Retrieved employee odata: {Count}", crmEmployees.Count());
+
+                // calculate and perform upsert on employees, and send out messages
                 var employeesSyncData = await PerformUpsertionAsync(crmEmployees, syncVersion, cancellationToken);
                 isVersionUpdated = isVersionUpdated && employeesSyncData.IsVersionUpdated;
             }
@@ -98,11 +99,12 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
             string syncVersion,
             CancellationToken cancellationToken)
         {
-            if (!crmEmployeesOdata.Any())
+            if (crmEmployeesOdata.IsNullOrEmpty())
             {
                 return new SyncListData<MqMessage<Employee>>();
             }
 
+            // calculate upsert employees
             var crmEmployeeIds = crmEmployeesOdata.Select(crmEmployee => crmEmployee.Systemuserid).ToArray();
             var queryParameters = new List<(string, object)>
             {
@@ -168,8 +170,8 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
                     bulkOperations.BulkDelete(snapshotId, cancellationToken);
                 }
             }
-
             var updatedSnapshots = await bulkOperations.ExecuteBulkAsync();
+
             var updatedEmployeeIds = updatedSnapshots.Select(snapshot => snapshot.Id);
             var updatedEmployees = employees.Where(employee => updatedEmployeeIds.Contains(employee.Message.UserId)).ToList();
 
@@ -187,7 +189,7 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
             var snapshotPages = _syncSnapshotRepository.GetAsyncPages(DeleteSqlQueryText, queryParameters, cancellationToken);
             await foreach (var snapshots in snapshotPages)
             {
-                if (snapshots.Any())
+                if (!snapshots.IsNullOrEmpty())
                 {
                     var deleteEmployees = snapshots.Select(snapshot => new MqMessage<Employee>(
                         new Employee(snapshot.Id, snapshot.OrganizationId),
@@ -205,7 +207,7 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
 
         private async Task SendMessagesAsync(IEnumerable<MqMessage<Employee>> messages, CancellationToken cancellationToken)
         {
-            if (!messages.Any())
+            if (messages.IsNullOrEmpty())
             {
                 return;
             }
