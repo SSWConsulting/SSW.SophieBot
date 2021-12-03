@@ -3,8 +3,10 @@ using Microsoft.Bot.Builder.Dialogs;
 using Newtonsoft.Json;
 using SSW.SophieBot.Components.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,7 +30,11 @@ namespace SSW.SophieBot.Components.Actions
         [JsonProperty("resultProperty")]
         public StringExpression ResultProperty { get; set; }
 
-        private static readonly string _dayOfWeekPrefix = "XXXX-WXX-";
+        private static readonly Regex _dayOfWeekRegex = new Regex("^XXXX-WXX-(?<index>[1-7])$");
+
+        private static readonly Regex _dayRegex = new Regex("^XXXX-(?<dayString>\\d{2}-\\d{2})$");
+
+        private static readonly string _dateFormat = "yyyy-MM-dd";
 
         private static readonly DayOfWeek[] _dayOfWeek = new[]
        {
@@ -50,25 +56,33 @@ namespace SSW.SophieBot.Components.Actions
                 throw new ArgumentNullException(nameof(Datetime));
             }
 
-            var timex = datetime.Timex;
-            string value;
+            static string GetValueFrom(List<string> timex)
+            {
+                var dateString = timex.FirstOrDefault();
 
-            if (timex.FirstOrDefault() != null && timex[0].StartsWith(_dayOfWeekPrefix))
-            {
-                var indexOfWeek = Int32.Parse(timex[0].Last().ToString()) - 1;
-                var dayOfWeek = _dayOfWeek.ElementAtOrDefault(indexOfWeek);
-                value = DateTime.Now.Date.ToUniversalTime().GetDateByDayOfWeek(dayOfWeek).ToString("yyyy-MM-dd");
-            }
-            else
-            {
-                value = timex.FirstOrDefault();
+                var dayOfWeekMatches = _dayOfWeekRegex.Match(dateString);
+                if (dayOfWeekMatches.Success)
+                {
+                    var indexOfWeek = Int32.Parse(dayOfWeekMatches.Groups["index"].Value) - 1;
+                    var dayOfWeek = _dayOfWeek.ElementAtOrDefault(indexOfWeek);
+                    return DateTime.Now.Date.ToUniversalTime().GetDateByDayOfWeek(dayOfWeek).ToString(_dateFormat);
+                }
+
+                var dayMatches = _dayRegex.Match(dateString);
+                if (dayMatches.Success)
+                {
+                    var dayString = dayMatches.Groups["dayString"].Value;
+                    return DateTime.Parse(dayString).ToString(_dateFormat);
+                }
+
+                return dateString;
             }
 
             var result = new EnrichedDatetime
             {
                 Timex = datetime.Timex,
                 Type = datetime.Type,
-                Value = value
+                Value = GetValueFrom(datetime.Timex)
             };
 
             if (ResultProperty != null)
