@@ -9,5 +9,7 @@ namespace SSW.SophieBot.Persistence
             string query,
             IEnumerable<(string name, object value)> parameters,
             CancellationToken cancellationToken = default);
+
+        // TODO: GetAllAsync in IQueryable version
     }
 }

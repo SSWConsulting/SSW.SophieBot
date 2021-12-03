@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace SSW.SophieBot.DataSync.Crm.Test
+namespace SSW.SophieBot.DataSync.Crm.Test.Data
 {
     // TODO: put mock data into a XData class, and create test implementation classes as possible instead of using Moq
     public class EmployeeSyncMockHelper
@@ -92,7 +92,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
 
         private readonly List<SyncSnapshot> _successfulBulkSnapshots = new();
 
-        public ISyncVersionGenerator MockSyncVersionGenerator(string syncVersion)
+        public static ISyncVersionGenerator MockSyncVersionGenerator(string syncVersion)
         {
             var mock = new Mock<ISyncVersionGenerator>();
             mock.Setup(generator => generator.GenerateAsync(It.IsAny<CancellationToken>()).Result).Returns(syncVersion);
@@ -164,11 +164,6 @@ namespace SSW.SophieBot.DataSync.Crm.Test
                 .Returns(bulkMock.Object);
 
             return mock;
-        }
-
-        public IPagedSyncService<CrmEmployee> MockEmployeeOdataSyncService()
-        {
-            return new TestEmployeeOdataService(this);
         }
 
         public IBatchMessageService<MqMessage<Employee>, string> MockServiceBusClient()
