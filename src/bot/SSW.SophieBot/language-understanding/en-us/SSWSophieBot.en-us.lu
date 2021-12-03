@@ -274,18 +274,6 @@
 	- working,involved,involved in,booked for,busy on,doing
 @ intent GetEmployeesOnProject usesFeature WorkingPhraseList,project,ssw
 
-# GetExpertsByLocation
-- I need to talk to a {@skill = DevOps} expert in Melbourne
-- I need to talk to an {@skill = Angular} expert in Sydney
-- Who is the {@skill = Chinafy} expert in China
-- I want a {@skill = Azure Stream Analytics} expert in Hangzhou
-- Show me the {@skill = .NET Core} expert in Brisbane
-- Who is advanced at {@skill = SQL} in Newcastle
-- Who is good at {@skill = Node.js} remotely
-- I need {@skill = Sql Server} experts in Sydney
-- who knows {@skill = sql server} in Melbourne
-
-@ intent GetExpertsByLocation usesFeature skill,geographyV2
 
 # GetPeopleBasedOnLocation
 - melbourne staff
@@ -318,6 +306,8 @@
 - Who know {@skill = Docker}?
 - who knows {@skill = Azure DevOps}
 - who knows {@skill = Azure Bot Service}
+- who knows {@skill = Dynamics}
+- who knows {@skill = Dynamics 365 - CRM}
 - who knows {@skill = Azure Bot Service}?
 - best {@skill = angular} developer
 - Who has {@skill = DevOps} experience?
@@ -328,7 +318,18 @@
 - Who can I ask for help about {@skill = Azure}
 - who can help me with {@skill = Azure}
 
-@ intent GetPeopleBySkills usesFeature SkilledPhraseList,skill
+- I need to talk to a {@skill = DevOps} expert in Melbourne
+- I need to talk to an {@skill = Angular} expert in Sydney
+- Who is the {@skill = Chinafy} expert in China
+- I want a {@skill = Azure Stream Analytics} expert in Hangzhou
+- Show me the {@skill = .NET Core} expert in Brisbane
+- Who is advanced at {@skill = SQL} in Newcastle
+- Who is good at {@skill = Node.js} remotely
+- I need {@skill = Sql Server} experts in Sydney
+- who knows {@skill = sql server} in Melbourne
+
+
+@ intent GetPeopleBySkills usesFeature SkilledPhraseList,skill,geographyV2
 
 # GetPeopleOnClientWork
 - Who {@presentBe} ({@available} | {@unavailable})[?]

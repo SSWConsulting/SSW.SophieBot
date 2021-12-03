@@ -58,6 +58,10 @@
             {
               "value": "=dialog.skillEntity",
               "key": "skills"
+            },
+            {
+              "key": "location",
+              "value": "=if(dialog.locationEntity == 'All', '', dialog.locationEntity)"
             }
           ]
         },
@@ -94,6 +98,73 @@
               ],
               "actions": [
                 {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "8BhNES"
+                  },
+                  "property": "turn.matchedSkills",
+                  "value": "=where(unique(flatten(select(turn.employees, e => select(e.skills, skill => skill.technology)))), skill => contains(toLower(skill), toLower(dialog.skillEntity)))"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "AgcKBS"
+                  },
+                  "condition": "=count(turn.matchedSkills) == 1",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "mRZWjL"
+                      },
+                      "property": "dialog.skillEntity",
+                      "value": "=turn.matchedSkills[0]"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "rfqy9y"
+                      },
+                      "property": "turn.exactMatchedSkills",
+                      "value": "=where(turn.matchedSkills, skill => toLower(skill) == toLower(dialog.skillEntity))"
+                    },
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "RiuC87"
+                      },
+                      "condition": "=count(turn.exactMatchedSkills) == 1",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "7eQS3V"
+                          },
+                          "property": "dialog.skillEntity",
+                          "value": "=turn.exactMatchedSkills[0]"
+                        }
+                      ],
+                      "elseActions": [
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "Eyk2OR"
+                          },
+                          "activity": "${SendActivity_Eyk2OR()}"
+                        },
+                        {
+                          "$kind": "Microsoft.EndDialog",
+                          "$designer": {
+                            "id": "tssW8k"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
                   "$kind": "Microsoft.Foreach",
                   "$designer": {
                     "id": "btx2ri"
@@ -125,22 +196,34 @@
                   "$designer": {
                     "id": "GEPlwI"
                   },
-                  "condition": "turn.sortedEmployees.count <= 10",
+                  "condition": "= exists(dialog.locationEntity) && dialog.locationEntity != ''",
                   "actions": [
                     {
                       "$kind": "GetEmployeesByBillableAction",
                       "$designer": {
-                        "id": "SmBZvX"
+                        "id": "0bFJ06"
                       },
                       "employees": "=turn.sortedEmployees",
                       "workingEmployeesProperty": "turn.billableEmployees"
                     },
                     {
-                      "$kind": "Microsoft.SendActivity",
+                      "$kind": "Microsoft.ForeachPage",
                       "$designer": {
-                        "id": "R5w2vq"
+                        "id": "ja2ZgT"
                       },
-                      "activity": "${SendActivity_R5w2vq()}"
+                      "pageIndex": "dialog.foreach.pageindex",
+                      "page": "dialog.foreach.page",
+                      "pageSize": 10,
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SendActivity",
+                          "$designer": {
+                            "id": "RgIw3E"
+                          },
+                          "activity": "${SendActivity_RgIw3E()}"
+                        }
+                      ],
+                      "itemsProperty": "turn.sortedEmployees"
                     }
                   ],
                   "elseActions": [
