@@ -3,8 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using SSW.SophieBot.DataSync.Crm.Config;
 using SSW.SophieBot.Persistence;
 using System;
-using System.Net;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
