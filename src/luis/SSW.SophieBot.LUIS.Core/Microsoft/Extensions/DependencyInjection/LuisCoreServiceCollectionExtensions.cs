@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SSW.SophieBot;
+using Microsoft.Extensions.Azure;
+using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -7,7 +9,16 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddLuis(this IServiceCollection services)
         {
-            return services.ConfigureLuis();
+            services.ConfigureLuis();
+            services.AddAzureClients(builder =>
+            {
+                builder.AddClient((LuisOptions options) => new LUISAuthoringClient(new ApiKeyServiceClientCredentials(options.AuthoringKey))
+                {
+                    Endpoint = options.AuthoringEndpoint
+                });
+            });
+
+            return services;
         }
 
         public static IServiceCollection ConfigureLuis(this IServiceCollection services)

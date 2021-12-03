@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace SSW.SophieBot.LUIS.Sync.Functions
 {
+    // see https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitiveservices/Language.LUIS.Authoring/tests/Luis/ModelClosedListsTests.cs for samples
     public class ListEntitySync
     {
         private const string SbConnectionStringName = "SophieBotServiceBus";
