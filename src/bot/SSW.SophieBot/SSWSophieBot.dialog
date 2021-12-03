@@ -798,7 +798,8 @@
               "activityProcessed": true,
               "dialog": "GetPeopleBySkills",
               "options": {
-                "skillEntity": "=$options.skill"
+                "skillEntity": "=$options.skill",
+                "locationEntity": "=$options.location"
               }
             }
           ]

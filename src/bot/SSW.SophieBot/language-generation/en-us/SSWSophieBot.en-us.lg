@@ -284,7 +284,7 @@ ${IntranetInfo()}
 - ELSE:
     - 
 
-# GetExpertsButtons(employees, skill, locations, sourceIntent)
+# GetExpertsButtons(employees, skill, locations, sourceIntent, targetIntent)
 -```
 {
     "type": "ActionSet",
@@ -293,7 +293,7 @@ ${IntranetInfo()}
             "type": "Action.Submit",
             "title": "Show All [${employees.count}]",
             "data": {
-                "intent": "GetExpertsByLocation",
+                "intent": "${targetIntent}",
                 ${IntentRedirectTelemetry('Filter', sourceIntent, concat('Show All [', employees.count, ']'))},
                 "location": "All",
                 "skill": "${skill}",
@@ -303,24 +303,24 @@ ${IntranetInfo()}
                 }
             }
         },
-        ${join(select(subArray(locations, 0, if(count(locations) >= 5, 5, count(locations))), location => GetExpertButton(skill, location, Count(location, employees), sourceIntent)), ',')}
+        ${join(select(subArray(locations, 0, if(count(locations) >= 5, 5, count(locations))), location => GetExpertButton(skill, location, Count(location, employees), sourceIntent, targetIntent)), ',')}
     ]
 },
 {
     "type": "ActionSet",
     "actions": [
-        ${join(select(if(count(locations) > 5, subArray(locations, 5, count(locations)), []), location => GetExpertButton(skill, location, Count(location, employees), sourceIntent)), ',')}
+        ${join(select(if(count(locations) > 5, subArray(locations, 5, count(locations)), []), location => GetExpertButton(skill, location, Count(location, employees), sourceIntent, targetIntent)), ',')}
     ]
 }
 ```
 
-# GetExpertButton(skill, location, number, sourceIntent)
+# GetExpertButton(skill, location, number, sourceIntent, targetIntent)
 -``` 
 {
     "type": "Action.Submit",
     "title": "${location} [${number}]",
     "data": {
-        "intent": "GetExpertsByLocation",
+        "intent": "${targetIntent}",
         ${IntentRedirectTelemetry('Filter', sourceIntent, concat(location, ' [', number, ']'))},
         "skill": "${skill}",
         "location": "${location}",

@@ -11,7 +11,7 @@
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
 # SendActivity_LcKuck()
 [Activity
-    Attachments = ${json(WorkingEmployeesList(dialog.locationEntity, dialog.foreach.page))}
+    Attachments = ${json(WorkingEmployeesList(dialog.locationEntity, dialog.foreach.page, count(turn.sortedEmployees)))}
 ]
 
 # SendActivity_WXSOyK()
@@ -30,31 +30,31 @@
 # GetNextTitle(pageIndex, pageSize)
 - ${PaginationText(pageIndex, count(turn.employees))}
 
-# WorkingEmployeesList(location, employees)
+# WorkingEmployeesList(location, employees, total)
 -```
 {
     "type": "AdaptiveCard",
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2",
     "body": [
-        ${join(where(createArray(SkillCardHeader(location, count(turn.employees)), EmployeeList(employees)), item => item != ''), ',')}
+        ${join(where(createArray(SkillCardHeader(location, total), EmployeeList(employees)), item => item != ''), ',')}
     ]
 }
 ```
 
-# SkillCardHeader(location, count)
-- IF: ${ dialog.foreach.pageindex == 1 || count <= 10 }
+# SkillCardHeader(location, total)
+- IF: ${ dialog.foreach.pageindex == 1 }
     - ```
     {
         "type": "TextBlock",
-        "text": "${dialog.skillEntity} - ${if(location != null, titleCase(location), 'All')} [${count}]",
+        "text": "${dialog.skillEntity} - ${if(location != null, titleCase(location), 'All')} [${total}]",
         "wrap": true,
         "size": "ExtraLarge",
         "weight": "Bolder"
     }
     ```
 - ELSE:
-    - ${Pagination(dialog.foreach.pageindex, count(turn.employees))}
+    - ${Pagination(dialog.foreach.pageindex, total)}
 
 # EmployeeList(employees)
 -```
@@ -179,7 +179,7 @@
             "text": "Narrow your search...",
             "wrap": true
         },
-        ${GetExpertsButtons(employees, skill, locations, 'GetExpertsByLocation')}
+        ${GetExpertsButtons(employees, skill, locations, 'GetExpertsByLocation', 'GetExpertsByLocation')}
     ]
 }
 ```
