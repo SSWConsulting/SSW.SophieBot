@@ -108,13 +108,14 @@ namespace SSW.SophieBot.DataSync.Crm.Test
                 It.IsAny<CancellationToken>()).Result)
                 .Returns(() => InitialSnapshots);
 
-            mock.Setup(repo => repo.GetNextAsync(
+            mock.Setup(repo => repo.GetAsyncPages(
                 It.IsAny<string>(),
                 It.IsAny<IEnumerable<(string, object)>>(),
-                It.IsAny<CancellationToken>()).Result)
-                .Returns(() => InitialSnapshots.Where(snapshot => snapshot.SyncVersion != syncVersion).ToList());
-            mock.Setup(repo => repo.HasMoreResults)
-                .Returns(false);
+                It.IsAny<CancellationToken>()))
+                .Returns(() => new List<IEnumerable<SyncSnapshot>>
+                {
+                    InitialSnapshots.Where(snapshot => snapshot.SyncVersion != syncVersion)
+                }.ToAsyncEnumerable());
 
             var upsertCallback = (SyncSnapshot snapshot, CancellationToken _) =>
             {

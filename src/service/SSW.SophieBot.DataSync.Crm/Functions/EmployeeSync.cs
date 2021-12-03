@@ -133,10 +133,10 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
                 }
             }
 
+            // update sync version
             var transactionSaved = true;
             if (syncedSnapshotIds.Any())
             {
-                // update sync version
                 var transactionBatch = await _syncSnapshotRepository.BeginTransactionAsync(cancellationToken);
                 var syncVersionOperation = PatchOperation.Set("/syncVersion", syncVersion);
 
@@ -181,29 +181,28 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
 
         private async Task PerformDeletionAsync(string syncVersion, CancellationToken cancellationToken)
         {
-            do
-            {
-                var queryParameters = new List<(string, object)>
+            var queryParameters = new List<(string, object)>
                 {
                     ("@organizationId", _syncOptions.OrganizationId),
                     ("@syncVersion", syncVersion)
                 };
-                var deleteSnapshots = await _syncSnapshotRepository.GetNextAsync(DeleteSqlQueryText, queryParameters, cancellationToken);
-                if (deleteSnapshots.Any())
+            var snapshotPages = _syncSnapshotRepository.GetAsyncPages(DeleteSqlQueryText, queryParameters, cancellationToken);
+            await foreach (var snapshots in snapshotPages)
+            {
+                if (snapshots.Any())
                 {
-                    var deleteEmployees = deleteSnapshots.Select(snapshot => new MqMessage<Employee>(
-                    new Employee(snapshot.Id, snapshot.OrganizationId),
-                    SyncMode.Delete,
-                    snapshot.Modifiedon,
-                    snapshot.SyncVersion)).ToList();
+                    var deleteEmployees = snapshots.Select(snapshot => new MqMessage<Employee>(
+                        new Employee(snapshot.Id, snapshot.OrganizationId),
+                        SyncMode.Delete,
+                        snapshot.Modifiedon,
+                        snapshot.SyncVersion)).ToList();
 
-                    _logger.LogDebug("Snapshot to delete: {Count}", deleteSnapshots.Count);
+                    _logger.LogDebug("Snapshot to delete: {Count}", snapshots.Count());
 
                     await UpdateSnapshotAsync(deleteEmployees, cancellationToken); // ignore snapshot deletion failure
                     await SendMessagesAsync(deleteEmployees, cancellationToken);
                 }
             }
-            while (_syncSnapshotRepository.HasMoreResults);
         }
 
         private async Task SendMessagesAsync(IEnumerable<MqMessage<Employee>> messages, CancellationToken cancellationToken)
@@ -214,7 +213,7 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
             }
 
             _logger.LogDebug("Send out messages: {Count}", messages.Count());
-            //await _serviceBusService.SendMessageAsync(messages, _syncOptions.EmployeeSync.TopicName, cancellationToken);
+            await _serviceBusService.SendMessageAsync(messages, _syncOptions.EmployeeSync.TopicName, cancellationToken);
         }
     }
 }
