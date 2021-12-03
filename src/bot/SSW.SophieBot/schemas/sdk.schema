@@ -11,6 +11,9 @@
       "$ref": "#/definitions/ClientNowAction"
     },
     {
+      "$ref": "#/definitions/EnrichDatatimeAction"
+    },
+    {
       "$ref": "#/definitions/GetAvailableExpertsByLocationDialog.dialog"
     },
     {
@@ -699,6 +702,46 @@
         }
       ]
     },
+    "EnrichDatatimeAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "EnrichDatatimeAction",
+      "description": "This will enrich the prebuilt datetime.",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "datetime": {
+          "$ref": "#/definitions/objectExpression",
+          "title": "datetime",
+          "description": "Raw prebuilt datetime"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result property",
+          "description": "The property that enriched datetime is assigned to."
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "EnrichDatatimeAction"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "equalsExpression": {
       "$role": "expression",
       "type": "string",
@@ -1359,10 +1402,10 @@
           "title": "Name Entity",
           "$ref": "#/definitions/stringExpression"
         },
-        "booked": {
+        "isFree": {
           "description": "Whether the user is asking for booked date or free date",
           "$ref": "#/definitions/booleanExpression",
-          "title": "Booked"
+          "title": "Is Free"
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -1808,6 +1851,10 @@
         "availableEntity": {
           "$ref": "#/definitions/GetPeopleOnClientWorkDialog.dialog/definitions/stringExpression",
           "title": "Available Entity"
+        },
+        "skillEntity": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Skill Entity"
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -8070,6 +8117,9 @@
         },
         {
           "$ref": "#/definitions/ClientNowAction"
+        },
+        {
+          "$ref": "#/definitions/EnrichDatatimeAction"
         },
         {
           "$ref": "#/definitions/GetAvailableExpertsByLocationDialog.dialog"
