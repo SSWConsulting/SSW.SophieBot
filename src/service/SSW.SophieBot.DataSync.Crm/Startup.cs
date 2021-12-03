@@ -46,7 +46,7 @@ namespace SSW.SophieBot.DataSync.Crm
             builder.Services.AddDefaultDataSync();
 
             builder.Services.AddTransient<IPersistenceMigrator<Container, SyncFunctionOptions>, CosmosMigrator>();
-            builder.Services.AddTransient<IPagedOdataSyncService<CrmEmployee>, EmployeeOdataService>();
+            builder.Services.AddTransient<IPagedSyncService<CrmEmployee>, EmployeeOdataService>();
             builder.Services.AddTransient<ITransactionalBulkRepository<SyncSnapshot, PatchOperation>, SyncSnapshotRepository>();
         }
 

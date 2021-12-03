@@ -19,7 +19,7 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
         public const string UpsertSqlQueryText = "SELECT * FROM c WHERE c.organizationId=@organizationId AND ARRAY_CONTAINS(@ids, c.id)=true";
         public const string DeleteSqlQueryText = "SELECT * FROM c WHERE c.organizationId=@organizationId AND c.syncVersion != @syncVersion";
 
-        private readonly IPagedOdataSyncService<CrmEmployee> _employeeOdataService;
+        private readonly IPagedSyncService<CrmEmployee> _employeeOdataService;
         private readonly ITransactionalBulkRepository<SyncSnapshot, PatchOperation> _syncSnapshotRepository;
         private readonly IBatchMessageService<MqMessage<Employee>, string> _serviceBusService;
         private readonly ISyncVersionGenerator _syncVersionGenerator;
@@ -27,7 +27,7 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
         private readonly ILogger<EmployeeSync> _logger;
 
         public EmployeeSync(
-            IPagedOdataSyncService<CrmEmployee> employeeOdataService,
+            IPagedSyncService<CrmEmployee> employeeOdataService,
             ITransactionalBulkRepository<SyncSnapshot, PatchOperation> syncSnapshotRepository,
             IBatchMessageService<MqMessage<Employee>, string> serviceBusService,
             ISyncVersionGenerator syncVersionGenerator,
@@ -60,21 +60,19 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
             var isVersionUpdated = true;
             var syncVersion = await _syncVersionGenerator.GenerateAsync(cancellationToken);
 
-            do
+            await foreach (var crmEmployees in _employeeOdataService.GetAsyncPage(cancellationToken))
             {
-                var crmEmployeesOdata = await _employeeOdataService.GetNextAsync(cancellationToken);
-                if (crmEmployeesOdata?.Value?.IsNullOrEmpty() ?? true)
+                if (crmEmployees.IsNullOrEmpty())
                 {
                     isVersionUpdated = false;
                     break;
                 }
 
                 // calculate and perform upsert on employees, and send out messages
-                _logger.LogDebug("Retrieved employee odata: {Count}", crmEmployeesOdata.Value.Count);
-                var employeesSyncData = await PerformUpsertionAsync(crmEmployeesOdata, syncVersion, cancellationToken);
+                _logger.LogDebug("Retrieved employee odata: {Count}", crmEmployees.Count());
+                var employeesSyncData = await PerformUpsertionAsync(crmEmployees, syncVersion, cancellationToken);
                 isVersionUpdated = isVersionUpdated && employeesSyncData.IsVersionUpdated;
             }
-            while (_employeeOdataService.HasMoreResults);
 
             // if sync version was successfully updated, query and perform delete on out-dated employees, and send out messages
             if (isVersionUpdated)
@@ -84,7 +82,7 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
         }
 
         private async Task<SyncListData<MqMessage<Employee>>> PerformUpsertionAsync(
-            OdataPagedResponse<CrmEmployee> crmEmployeesOdata,
+            IEnumerable<CrmEmployee> crmEmployeesOdata,
             string syncVersion,
             CancellationToken cancellationToken)
         {
@@ -96,16 +94,16 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
         }
 
         private async Task<SyncListData<MqMessage<Employee>>> GetUpsertEmployeesAsync(
-            OdataPagedResponse<CrmEmployee> crmEmployeesOdata,
+            IEnumerable<CrmEmployee> crmEmployeesOdata,
             string syncVersion,
             CancellationToken cancellationToken)
         {
-            if (!crmEmployeesOdata.Value.Any())
+            if (!crmEmployeesOdata.Any())
             {
                 return new SyncListData<MqMessage<Employee>>();
             }
 
-            var crmEmployeeIds = crmEmployeesOdata.Value.Select(crmEmployee => crmEmployee.Systemuserid).ToArray();
+            var crmEmployeeIds = crmEmployeesOdata.Select(crmEmployee => crmEmployee.Systemuserid).ToArray();
             var queryParameters = new List<(string, object)>
             {
                 ("@organizationId", _syncOptions.OrganizationId),
@@ -115,7 +113,7 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
             var syncedSnapshotIds = new List<string>();
 
             var upsertEmployees = new List<MqMessage<Employee>>();
-            foreach (var crmEmployee in crmEmployeesOdata.Value)
+            foreach (var crmEmployee in crmEmployeesOdata)
             {
                 var previousSnapshot = crmEmployeeSnapshots.FirstOrDefault(snapshot => snapshot.Id == crmEmployee.Systemuserid);
 

@@ -1,32 +1,42 @@
 ﻿using SSW.SophieBot.DataSync.Crm.HttpClients;
 using SSW.SophieBot.Employees;
 using SSW.SophieBot.Sync;
-using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SSW.SophieBot.DataSync.Crm.Sync
 {
-    public class EmployeeOdataService : CrmOdataService, IPagedOdataSyncService<CrmEmployee>
+    public class EmployeeOdataService : CrmOdataService, IPagedSyncService<CrmEmployee>
     {
-        private const string InitialNextLink = "_next";
-
-        private string _internalNextLink = InitialNextLink;
-
-        public string NextLink => _internalNextLink == InitialNextLink ? null : _internalNextLink;
-
-        public bool HasMoreResults => !_internalNextLink.IsNullOrWhiteSpace();
-
         public EmployeeOdataService(CrmClient crmClient) : base(crmClient)
         {
 
         }
 
-        public async Task<OdataPagedResponse<CrmEmployee>> GetNextAsync(CancellationToken cancellationToken = default)
+        public async IAsyncEnumerable<IEnumerable<CrmEmployee>> GetAsyncPage([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            var odataResponse = await CrmClient.GetPagedEmployeesAsync(NextLink, cancellationToken);
-            _internalNextLink = odataResponse.OdataNextLink;
-            return odataResponse;
+            var odataResponse = await CrmClient.GetPagedEmployeesAsync(cancellationToken: cancellationToken);
+            yield return odataResponse.Value;
+
+            while (odataResponse.HasMoreResults)
+            {
+                odataResponse = await CrmClient.GetPagedEmployeesAsync(odataResponse.OdataNextLink, cancellationToken);
+                yield return odataResponse.Value;
+            }
+        }
+
+        public async Task<IEnumerable<CrmEmployee>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            var crmEmployees = new List<CrmEmployee>();
+
+            await foreach (var page in GetAsyncPage(cancellationToken))
+            {
+                crmEmployees.AddRange(page);
+            }
+
+            return crmEmployees;
         }
     }
 }

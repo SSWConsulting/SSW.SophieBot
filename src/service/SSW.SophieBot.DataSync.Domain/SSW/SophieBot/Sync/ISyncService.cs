@@ -1,12 +1,16 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SSW.SophieBot.Sync
 {
     public interface ISyncService<T>
     {
-        bool HasMoreResults { get; }
+        Task<T> GetAllAsync(CancellationToken cancellationToken = default);
+    }
 
-        Task<T> GetNextAsync(CancellationToken cancellationToken = default);
+    public interface IPagedSyncService<T> : ISyncService<IEnumerable<T>>
+    {
+        IAsyncEnumerable<IEnumerable<T>> GetAsyncPage(CancellationToken cancellationToken = default);
     }
 }

@@ -20,7 +20,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
         public async Task Should_Sync_All_Profiles_Initially()
         {
             // Arrange
-            var employeeSyncMock = new EmployeeSyncMock();
+            var employeeSyncMock = new EmployeeSyncMockHelper();
             var function = GetEmployeesSyncFunction(employeeSyncMock, null, Guid.NewGuid().ToString(), out var timerInfoMock);
 
             // Act
@@ -36,7 +36,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
         public async Task Should_Sync_New_Profile()
         {
             // Arrange
-            var employeeSyncMock = new EmployeeSyncMock();
+            var employeeSyncMock = new EmployeeSyncMockHelper();
             var firstVersion = Guid.NewGuid().ToString();
             var syncVersion = Guid.NewGuid().ToString();
             var newId = Guid.NewGuid().ToString();
@@ -67,7 +67,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
         public async Task Should_Sync_Modified_Profile()
         {
             // Arrange
-            var employeeSyncMock = new EmployeeSyncMock();
+            var employeeSyncMock = new EmployeeSyncMockHelper();
             var firstVersion = Guid.NewGuid().ToString();
             var syncVersion = Guid.NewGuid().ToString();
 
@@ -98,7 +98,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
         public async Task Should_Sync_Deleted_Profile()
         {
             // Arrange
-            var employeeSyncMock = new EmployeeSyncMock();
+            var employeeSyncMock = new EmployeeSyncMockHelper();
             var firstVersion = Guid.NewGuid().ToString();
             var syncVersion = Guid.NewGuid().ToString();
 
@@ -131,7 +131,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
 
         // TODO: composite sync test
 
-        private static void ManuallySyncSnapshots(EmployeeSyncMock mockInstance, string syncVersion)
+        private static void ManuallySyncSnapshots(EmployeeSyncMockHelper mockInstance, string syncVersion)
         {
             mockInstance.InitialSnapshots = mockInstance.CrmEmployees.Select(employee => new SyncSnapshot
             {
@@ -143,7 +143,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
         }
 
         private static EmployeeSync GetEmployeesSyncFunction(
-            EmployeeSyncMock mockInstance,
+            EmployeeSyncMockHelper mockInstance,
             Action<Mock<ITransactionalBulkRepository<SyncSnapshot, PatchOperation>>> snapshotRepoAction,
             string syncVersion,
             out TimerInfo timerInfoMock)

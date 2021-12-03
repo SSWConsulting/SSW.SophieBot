@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace SSW.SophieBot.DataSync.Crm.HttpClients
 {
+    // TODO: do polly
     public class AuthClient
     {
         private readonly HttpClient _httpClient;

@@ -33,22 +33,13 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
             IEnumerable<(string name, object value)> parameters,
             CancellationToken cancellationToken = default)
         {
-            var container = await GetContainerAsync();
-            var queryDefinition = GetQueryDefinition(query, parameters);
-
-            using var snapshotsIterator = container.GetItemQueryIterator<TDocument>(queryDefinition);
-            var snapshots = new List<TDocument>();
-
-            while (snapshotsIterator.HasMoreResults)
+            var documents = new List<TDocument>();
+            await foreach (var page in GetAsyncPages(query, parameters, cancellationToken))
             {
-                var currentSnapshotSet = await snapshotsIterator.ReadNextAsync(cancellationToken);
-                foreach (var snapshot in currentSnapshotSet)
-                {
-                    snapshots.Add(snapshot);
-                }
+                documents.AddRange(page);
             }
 
-            return snapshots;
+            return documents;
         }
 
         public async IAsyncEnumerable<IEnumerable<TDocument>> GetAsyncPages(
@@ -60,7 +51,7 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
             var queryDefinition = GetQueryDefinition(query, parameters);
             var iterator = container.GetItemQueryIterator<TDocument>(queryDefinition);
 
-            if (iterator.HasMoreResults)
+            while (iterator.HasMoreResults)
             {
                 yield return await iterator.ReadNextAsync(cancellationToken);
             }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace SSW.SophieBot.Sync
@@ -14,14 +13,12 @@ namespace SSW.SophieBot.Sync
         [JsonPropertyName("@odata.nextLink")]
         public string OdataNextLink { get; set; }
 
+        [JsonIgnore]
+        public bool HasMoreResults => !string.IsNullOrEmpty(OdataNextLink);
+
         public OdataPagedResponse()
         {
             Value = new List<T>();
-        }
-
-        public bool HasNext()
-        {
-            return !string.IsNullOrEmpty(OdataNextLink) && Value.Any();
         }
     }
 }

@@ -10,11 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SSW.SophieBot.DataSync.Crm.Test
 {
-    public class EmployeeSyncMock
+    // TODO: put mock data into a XData class, and create test implementation classes as possible instead of using Moq
+    public class EmployeeSyncMockHelper
     {
         public List<CrmEmployee> CrmEmployees = new()
         {
@@ -166,24 +166,9 @@ namespace SSW.SophieBot.DataSync.Crm.Test
             return mock;
         }
 
-        public IPagedOdataSyncService<CrmEmployee> MockEmployeeOdataSyncService()
+        public IPagedSyncService<CrmEmployee> MockEmployeeOdataSyncService()
         {
-            var mock = new Mock<IPagedOdataSyncService<CrmEmployee>>();
-            mock.SetupSequence(service => service.HasMoreResults)
-                .Returns(true)
-                .Returns(false);
-            mock.SetupSequence(service => service.GetNextAsync(It.IsAny<CancellationToken>()).Result)
-                .Returns(() => new OdataPagedResponse<CrmEmployee>
-                {
-                    Value = CrmEmployees.Take(3).ToList(),
-                    OdataNextLink = "next page"
-                })
-                .Returns(() => new OdataPagedResponse<CrmEmployee>
-                {
-                    Value = CrmEmployees.Skip(3).ToList()
-                });
-
-            return mock.Object;
+            return new TestEmployeeOdataService(this);
         }
 
         public IBatchMessageService<MqMessage<Employee>, string> MockServiceBusClient()
