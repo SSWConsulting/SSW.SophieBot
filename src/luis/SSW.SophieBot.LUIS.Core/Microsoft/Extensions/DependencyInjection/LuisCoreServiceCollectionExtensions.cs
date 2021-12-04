@@ -12,10 +12,11 @@ namespace Microsoft.Extensions.DependencyInjection
             services.ConfigureLuis();
             services.AddAzureClients(builder =>
             {
-                builder.AddClient((LuisOptions options) => new LUISAuthoringClient(new ApiKeyServiceClientCredentials(options.AuthoringKey))
-                {
-                    Endpoint = options.AuthoringEndpoint
-                });
+                builder.AddClient<ILUISAuthoringClient, LuisOptions>(options => 
+                    new LUISAuthoringClient(new ApiKeyServiceClientCredentials(options.AuthoringKey))
+                    {
+                        Endpoint = options.AuthoringEndpoint
+                    });
             });
 
             return services;

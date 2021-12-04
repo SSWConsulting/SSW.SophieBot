@@ -44,7 +44,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
         }
 
         [Fact]
-        public async Task Should_Sync_All_Profiles_Initially()
+        public async void Should_Sync_All_Profiles_Initially()
         {
             // Act
             await _employeeSync.SyncEmployeeProfileAsync(_testTimerInfo, default);
@@ -56,7 +56,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
         }
 
         [Fact]
-        public async Task Should_Sync_New_Profile()
+        public async void Should_Sync_New_Profile()
         {
             // Arrange
             var firstVersion = Guid.NewGuid().ToString();
@@ -84,7 +84,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
         }
 
         [Fact]
-        public async Task Should_Sync_Modified_Profile()
+        public async void Should_Sync_Modified_Profile()
         {
             // Arrange
             const string NewFullName = "NewFullName";
@@ -112,7 +112,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
         }
 
         [Fact]
-        public async Task Should_Sync_Deleted_Profile()
+        public async void Should_Sync_Deleted_Profile()
         {
             // Arrange
             var firstVersion = Guid.NewGuid().ToString();
