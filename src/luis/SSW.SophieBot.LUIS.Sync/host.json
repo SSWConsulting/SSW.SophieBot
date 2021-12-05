@@ -2,8 +2,8 @@
   "version": "2.0",
   "extensions": {
     "serviceBus": {
-      "prefetchCount": 50,
-      "maxMessages": 50
+      "prefetchCount": 100,
+      "maxMessages": 100
     }
   },
   "logging": {
@@ -14,7 +14,7 @@
       }
     },
     "logLevel": {
-      "SSW.SophieBot.LUIS.Sync.Functions.ListEntitySync": "Information"
+      "SSW.SophieBot.LUIS.Sync.Functions.ListEntitySync": "Debug"
     }
   }
 }

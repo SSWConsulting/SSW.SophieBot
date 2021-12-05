@@ -35,9 +35,9 @@ namespace SSW.SophieBot.DataSync.Crm
         private static void ConfigureSyncServices(IFunctionsHostBuilder builder)
         {
             builder.Services.AddOptions<CrmOptions>()
-                .Configure<IConfiguration>((settings, configuration) =>
+                .Configure<IConfiguration>((options, configuration) =>
                 {
-                    configuration.GetSection("Crm").Bind(settings);
+                    configuration.GetSection("Crm").Bind(options);
                 });
 
             builder.Services.AddHttpClient<AuthClient>();
@@ -64,6 +64,7 @@ namespace SSW.SophieBot.DataSync.Crm
         {
             var serviceBusConString = builder.GetContext().Configuration.GetConnectionString("ServiceBus");
             var cosmosConString = builder.GetContext().Configuration.GetConnectionString("CosmosDb");
+
             builder.Services.AddAzureClients(builder =>
             {
                 builder.AddClient((SyncOptions _) => new CosmosClientBuilder(cosmosConString)

@@ -66,13 +66,14 @@ namespace SSW.SophieBot.ClosedListEntity
 
         public virtual IList<string> GetSubList(Employee employee)
         {
+            var fullName = employee.FullName.IsNullOrWhiteSpace() ? $"{employee.FirstName} {employee.LastName}" : employee.FullName;
             var nameList = new List<string>
             {
                 employee.FirstName,
                 employee.LastName,
-                employee.FullName,
-                $"{employee.FullName}s",
-                $"{employee.FirstName}s"
+                $"{employee.FirstName}s",
+                fullName,
+                $"{fullName}s"
             };
 
             if (!employee.NickName.IsNullOrWhiteSpace())

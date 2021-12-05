@@ -118,13 +118,14 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
                 updateObject,
                 cancellationToken);
 
-            if (updateResponse.Code != OperationStatusType.Success)
-            {
-                _logger.LogError(
-                    "Failed to update closed list entity: {EntityName}, {Message}",
-                    _sswPeopleNamesClEntity.EntityName,
-                    updateResponse.Message);
-            }
+            // LUIS SDK v3-preview has a bug in UpdateClosedListAsync, which will always cause an empty response 
+            //if (updateResponse.Code != OperationStatusType.Success)
+            //{
+            //    _logger.LogError(
+            //        "Failed to update closed list entity: {EntityName}, {Message}",
+            //        _sswPeopleNamesClEntity.EntityName,
+            //        updateResponse.Message);
+            //}
         }
     }
 }

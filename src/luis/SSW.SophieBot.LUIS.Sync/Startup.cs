@@ -11,7 +11,10 @@ namespace SSW.SophieBot.LUIS.Sync
         public override void Configure(IFunctionsHostBuilder builder)
         {
             builder.AddSerilog();
-            builder.Services.AddLuis();
+
+            var configuration = builder.GetContext().Configuration;
+            builder.Services.AddLuis(configuration);
+
             builder.Services.AddEntities<EntityBase>();
         }
 
