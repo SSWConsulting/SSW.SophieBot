@@ -21,7 +21,7 @@ namespace SSW.SophieBot.LUIS.Sync.Test
         {
             _testData = new TestData();
             _luisAuthoringClient = new TestLUISAuthoringClient(_testData);
-            _sswPeopleNamesClEntity = new TestSswPeopleNamesClEntity();
+            _sswPeopleNamesClEntity = new TestSswPeopleNamesClEntity(new TestPeopleClient());
             _listEntitySync = new ListEntitySync(
                 _luisAuthoringClient,
                 _sswPeopleNamesClEntity,

@@ -48,7 +48,7 @@ namespace SSW.SophieBot.LUIS.Sync.Test.Data
 
         public TestData()
         {
-            var testSswPeopleNamesClEntity = new TestSswPeopleNamesClEntity();
+            var testSswPeopleNamesClEntity = new TestSswPeopleNamesClEntity(new TestPeopleClient());
             SswPeopleNames.SubLists = MqEmployees
                 .Select(mqEmployee =>
                 {
