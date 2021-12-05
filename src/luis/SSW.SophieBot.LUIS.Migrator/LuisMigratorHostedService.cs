@@ -46,8 +46,11 @@ namespace SSW.SophieBot.LUIS.Migrator
 
             if (!clEntityId.HasValue)
             {
-                _logger.LogWarning("Failed to get target closed list entity: {EntityName}", _sswPeopleNamesClEntity.EntityName);
-                return;
+                clEntityId = await _luisAuthoringClient.Model.AddClosedListAsync(
+                    appId,
+                    activeVersion,
+                    new ClosedListModelCreateObject(new List<WordListObject>(), _sswPeopleNamesClEntity.EntityName),
+                    cancellationToken);
             }
 
             var employeePages = _peopleClient.GetAsyncPagedEmployees(cancellationToken);
