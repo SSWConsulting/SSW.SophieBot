@@ -44,14 +44,16 @@ namespace SSW.SophieBot.LUIS.Migrator
             var activeVersion = await _luisAuthoringClient.GetActiveVersionAsync(appId, cancellationToken);
             var clEntityId = await _luisAuthoringClient.GetClEntityIdAsync(appId, _sswPeopleNamesClEntity.EntityName, activeVersion, cancellationToken);
 
-            if (!clEntityId.HasValue)
+            if (clEntityId.HasValue)
             {
-                clEntityId = await _luisAuthoringClient.Model.AddClosedListAsync(
-                    appId,
-                    activeVersion,
-                    new ClosedListModelCreateObject(new List<WordListObject>(), _sswPeopleNamesClEntity.EntityName),
-                    cancellationToken);
+                await _luisAuthoringClient.Model.DeleteClosedListAsync(appId, activeVersion, clEntityId.Value, cancellationToken);
             }
+
+            clEntityId = await _luisAuthoringClient.Model.AddClosedListAsync(
+                appId,
+                activeVersion,
+                new ClosedListModelCreateObject(new List<WordListObject>(), _sswPeopleNamesClEntity.EntityName),
+                cancellationToken);
 
             var employeePages = _peopleClient.GetAsyncPagedEmployees(cancellationToken);
             var subLists = new List<WordListObject>();
