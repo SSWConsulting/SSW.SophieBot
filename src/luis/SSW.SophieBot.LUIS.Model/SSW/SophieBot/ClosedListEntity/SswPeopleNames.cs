@@ -2,14 +2,42 @@
 using SSW.SophieBot.Employees;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace SSW.SophieBot.Entities
+namespace SSW.SophieBot.ClosedListEntity
 {
     public class SswPeopleNames : ClosedListEntityBase
     {
         private const string _entityName = "sswPeopleNames";
-
         public override string EntityName => _entityName;
+
+        private readonly IPeopleClient _peopleClient;
+
+        public SswPeopleNames(IPeopleClient peopleClient)
+        {
+            _peopleClient = peopleClient;
+        }
+
+        public override async Task FillSubListsAsync(CancellationToken cancellationToken = default)
+        {
+            SubLists.Clear();
+
+            var employeePages = _peopleClient.GetAsyncPagedEmployees(cancellationToken);
+
+            await foreach (var employees in employeePages)
+            {
+                if (!employees.IsNullOrEmpty())
+                {
+                    var subLists = employees.Select(employee => CreateWordList(employee));
+                    foreach (var subList in subLists)
+                    {
+                        SubLists.Add(subList);
+                    }
+                }
+            }
+        }
 
         public virtual WordListObject CreateWordList(Employee employee)
         {

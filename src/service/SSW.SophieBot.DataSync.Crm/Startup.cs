@@ -62,8 +62,8 @@ namespace SSW.SophieBot.DataSync.Crm
 
         private static void ConfigureAzureServices(IFunctionsHostBuilder builder)
         {
-            string serviceBusConString = builder.GetContext().Configuration.GetConnectionString("ServiceBus");
-            string cosmosConString = builder.GetContext().Configuration.GetConnectionString("CosmosDb");
+            var serviceBusConString = builder.GetContext().Configuration.GetConnectionString("ServiceBus");
+            var cosmosConString = builder.GetContext().Configuration.GetConnectionString("CosmosDb");
             builder.Services.AddAzureClients(builder =>
             {
                 builder.AddClient((SyncOptions _) => new CosmosClientBuilder(cosmosConString)

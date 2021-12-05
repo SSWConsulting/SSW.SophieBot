@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SSW.SophieBot.Entities;
+using SSW.SophieBot;
 using SSW.SophieBot.Reflection;
 using System.Collections.Generic;
 using System.Linq;

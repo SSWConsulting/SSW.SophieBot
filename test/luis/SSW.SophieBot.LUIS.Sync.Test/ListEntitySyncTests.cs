@@ -1,9 +1,10 @@
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring;
 using Microsoft.Extensions.Logging.Abstractions;
 using Shouldly;
-using SSW.SophieBot.Entities;
+using SSW.SophieBot.ClosedListEntity;
 using SSW.SophieBot.LUIS.Sync.Functions;
 using SSW.SophieBot.LUIS.Sync.Test.Data;
+using SSW.SophieBot.Persistence;
 using System.Linq;
 using Xunit;
 
@@ -40,15 +41,18 @@ namespace SSW.SophieBot.LUIS.Sync.Test
         public async void Should_Update_SubLists()
         {
             // Arrange
-            var upsertCanonicalForms = _testData.MqEmployees.Select(mqEmployee => 
-                _sswPeopleNamesClEntity.GetCanonicalForm(mqEmployee.Message));
+            var upsertCanonicalForms = _testData.MqEmployees
+                .Where(mqEmployee => mqEmployee.SyncMode != SyncMode.Delete)
+                .Select(mqEmployee => 
+                    _sswPeopleNamesClEntity.GetCanonicalForm(mqEmployee.Message));
 
             //Act
             await _listEntitySync.SyncSswPeopleNames(_testData.MqEmployees, default);
+            var newUpsertCanonicalForms = _testData.SswPeopleNames.SubLists.Select(subList => subList.CanonicalForm);
 
             // Assert
-            _testData.SswPeopleNames.SubLists.Count.ShouldBe(2);
-            _testData.SswPeopleNames.SubLists.All(subList => upsertCanonicalForms.Contains(subList.CanonicalForm)).ShouldBeTrue();
+            _testData.SswPeopleNames.SubLists.Count.ShouldBe(3);
+            upsertCanonicalForms.All(form => newUpsertCanonicalForms.Contains(form)).ShouldBeTrue();
         }
     }
 }

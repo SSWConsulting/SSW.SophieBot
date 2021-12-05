@@ -9,6 +9,8 @@ namespace SSW.SophieBot.Sync
 
         public SyncMode SyncMode { get; set; }
 
+        public BatchMode BatchMode { get; set; }
+
         public DateTime ModifiedOn { get; set; }
 
         public string SyncVersion { get; set; }
@@ -18,12 +20,31 @@ namespace SSW.SophieBot.Sync
             SyncMode = SyncMode.None;
         }
 
-        public MqMessage(T message, SyncMode syncMode, DateTime modifiedOn, string syncVersion)
+        public MqMessage(T message, SyncMode syncMode, BatchMode batchMode, DateTime modifiedOn, string syncVersion)
         {
             Message = message;
             SyncMode = syncMode;
+            BatchMode = batchMode;
             ModifiedOn = modifiedOn;
             SyncVersion = syncVersion;
+        }
+
+        public static MqMessage<T> BatchStart(T message = default)
+        {
+            return new MqMessage<T>
+            {
+                Message = message,
+                BatchMode = BatchMode.BatchStart
+            };
+        }
+
+        public static MqMessage<T> BatchEnd(T message = default)
+        {
+            return new MqMessage<T>
+            {
+                Message = message,
+                BatchMode = BatchMode.BatchEnd
+            };
         }
     }
 }

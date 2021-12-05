@@ -69,5 +69,36 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 yield return clEntities ?? Enumerable.Empty<ClosedListEntityExtractor>();
             }
         }
+
+        public static async Task<bool> TrainAndPublishAppAsync(
+            this ILUISAuthoringClient client, 
+            Guid appId,
+            string version,
+            CancellationToken cancellationToken = default)
+        {
+            const int maxWaitSeconds = 30;
+            var finishStates = new string[] { "Success", "UpToDate" };
+
+            await client.Train.TrainVersionAsync(appId, version, cancellationToken);
+            var modelResults = await client.Train.GetStatusAsync(appId, version, cancellationToken);
+
+            var waitSeconds = 0;
+            while (!modelResults.All(modelResult => finishStates.Contains(modelResult.Details.Status)))
+            {
+                if (waitSeconds > maxWaitSeconds)
+                {
+                    return false;
+                }
+
+                await Task.Delay(1000);
+                waitSeconds++;
+
+                modelResults = await client.Train.GetStatusAsync(appId, version, cancellationToken);
+            }
+
+            await client.Apps.PublishAsync(appId, new ApplicationPublishObject(version), cancellationToken);
+
+            return true;
+        }
     }
 }

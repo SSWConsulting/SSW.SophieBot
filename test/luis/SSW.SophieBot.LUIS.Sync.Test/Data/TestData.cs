@@ -29,21 +29,21 @@ namespace SSW.SophieBot.LUIS.Sync.Test.Data
                 LastName = "Northwind",
                 FullName = "Jim Northwind",
                 NickName = "Jimmy"
-            }, SyncMode.Create, DateTime.MinValue, string.Empty),
+            }, SyncMode.Create, BatchMode.BatchContent, DateTime.MinValue, string.Empty),
             new MqMessage<Employee>(new Employee
             {
                 UserId = Guid.NewGuid().ToString(),
                 FirstName = "Jack",
                 LastName = "Northwind",
                 FullName = "Jack Northwind"
-            }, SyncMode.Update, DateTime.MinValue, string.Empty),
+            }, SyncMode.Update, BatchMode.BatchContent, DateTime.MinValue, string.Empty),
             new MqMessage<Employee>(new Employee
             {
                 UserId = Guid.NewGuid().ToString(),
                 FirstName = "John",
                 LastName = "Northwind",
                 FullName = "John Northwind"
-            }, SyncMode.Delete, DateTime.MinValue, string.Empty)
+            }, SyncMode.Delete, BatchMode.BatchContent, DateTime.MinValue, string.Empty)
         };
 
         public TestData()
@@ -59,6 +59,12 @@ namespace SSW.SophieBot.LUIS.Sync.Test.Data
                     }
                     return new SubClosedListResponse(response.CanonicalForm, response.List);
                 })
+                .Append(new SubClosedListResponse("Alex", new List<string>
+                {
+                    "Alexs",
+                    "Alex Northwind",
+                    "Alex Northwinds"
+                }))
                 .ToList();
         }
     }

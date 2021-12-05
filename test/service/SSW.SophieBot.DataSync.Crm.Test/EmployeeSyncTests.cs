@@ -7,7 +7,9 @@ using SSW.SophieBot.DataSync.Crm.Functions;
 using SSW.SophieBot.DataSync.Crm.Test.Data;
 using SSW.SophieBot.Employees;
 using SSW.SophieBot.Persistence;
+using SSW.SophieBot.Sync;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -51,8 +53,10 @@ namespace SSW.SophieBot.DataSync.Crm.Test
 
             // Assert
             _testData.Snapshots.Count.ShouldBe(7);
-            _testServiceBusClient.MqMessages.Count.ShouldBe(7);
-            _testServiceBusClient.MqMessages.All(message => message.SyncMode == SyncMode.Create).ShouldBeTrue();
+
+            var batchContent = AssertBatchMode();
+            batchContent.Count.ShouldBe(7);
+            batchContent.All(message => message.SyncMode == SyncMode.Create).ShouldBeTrue();
         }
 
         [Fact]
@@ -80,7 +84,9 @@ namespace SSW.SophieBot.DataSync.Crm.Test
             _testData.Snapshots.Count.ShouldBe(8);
             _testData.Snapshots.Single(snapshot => snapshot.Id == newId).ShouldNotBeNull();
             _testData.Snapshots.All(snapshot => snapshot.SyncVersion == _syncVersion).ShouldBeTrue();
-            _testServiceBusClient.MqMessages.Single().SyncMode.ShouldBe(SyncMode.Create);
+
+            var batchContent = AssertBatchMode();
+            batchContent.Single().SyncMode.ShouldBe(SyncMode.Create);
         }
 
         [Fact]
@@ -107,8 +113,10 @@ namespace SSW.SophieBot.DataSync.Crm.Test
                 .OrganizationId
                 .ShouldBe(NewOrganizationId);
             _testData.Snapshots.All(snapshot => snapshot.SyncVersion == _syncVersion).ShouldBeTrue();
-            _testServiceBusClient.MqMessages.Single().SyncMode.ShouldBe(SyncMode.Update);
-            _testServiceBusClient.MqMessages.Single().Message.FullName.ShouldBe(NewFullName);
+
+            var batchContent = AssertBatchMode();
+            batchContent.Single().SyncMode.ShouldBe(SyncMode.Update);
+            batchContent.Single().Message.FullName.ShouldBe(NewFullName);
         }
 
         [Fact]
@@ -145,7 +153,9 @@ namespace SSW.SophieBot.DataSync.Crm.Test
             _testData.Snapshots.Count.ShouldBe(6);
             _testData.Snapshots.All(snapshot => snapshot.SyncVersion == _syncVersion).ShouldBeTrue();
             _testData.Snapshots.Any(snapshot => snapshot.Id == employeeToDelete.Systemuserid).ShouldBeFalse();
-            _testServiceBusClient.MqMessages.Single().SyncMode.ShouldBe(SyncMode.Delete);
+
+            var batchContent = AssertBatchMode();
+            batchContent.Single().SyncMode.ShouldBe(SyncMode.Delete);
         }
 
         // TODO: composite sync test
@@ -171,6 +181,20 @@ namespace SSW.SophieBot.DataSync.Crm.Test
                 Modifiedon = employee.Modifiedon,
                 SyncVersion = syncVersion
             }).ToList();
+        }
+
+        private List<MqMessage<Employee>> AssertBatchMode()
+        {
+            var batch = _testServiceBusClient.MqMessages ?? Enumerable.Empty<MqMessage<Employee>>();
+
+            batch.Count(message => message.BatchMode == BatchMode.BatchStart || message.BatchMode == BatchMode.BatchEnd).ShouldBe(2);
+            batch.First().BatchMode.ShouldBe(BatchMode.BatchStart);
+            batch.Last().BatchMode.ShouldBe(BatchMode.BatchEnd);
+
+            var batchContent = batch.Where(message => message.BatchMode == BatchMode.BatchContent).ToList();
+            batchContent.Count.ShouldBe(batch.Count() - 2);
+
+            return batchContent;
         }
     }
 }

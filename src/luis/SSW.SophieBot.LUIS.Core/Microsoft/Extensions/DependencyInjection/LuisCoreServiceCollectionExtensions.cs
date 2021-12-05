@@ -9,7 +9,15 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddLuis(this IServiceCollection services)
         {
-            services.ConfigureLuis();
+            //var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
+            //services.Configure<LuisOptions>(configuration.GetSection("Luis"));
+
+            services.AddOptions<LuisOptions>()
+                .Configure<IConfiguration>((options, configuration) =>
+                {
+                    configuration.GetSection("Luis").Bind(options);
+                });
+
             services.AddAzureClients(builder =>
             {
                 builder.AddClient<ILUISAuthoringClient, LuisOptions>(options => 
@@ -18,17 +26,6 @@ namespace Microsoft.Extensions.DependencyInjection
                         Endpoint = options.AuthoringEndpoint
                     });
             });
-
-            return services;
-        }
-
-        public static IServiceCollection ConfigureLuis(this IServiceCollection services)
-        {
-            services.AddOptions<LuisOptions>()
-                .Configure<IConfiguration>((settings, configuration) =>
-                {
-                    configuration.GetSection("Luis").Bind(settings);
-                });
 
             return services;
         }

@@ -51,7 +51,7 @@ namespace SSW.SophieBot.DataSync.Crm.HttpClients
             }
             else
             {
-                apiUrl = new Uri(new Uri(_crmOptions.BaseUri), "systemusers");
+                apiUrl = new Uri(new Uri(_crmOptions.BaseUri.EnsureEndsWith("/")), "systemusers");
 
                 var crmSitesOdata = await GetSitesAsync(cancellationToken);
                 if (crmSitesOdata.Value != null && crmSitesOdata.Value.Any())

@@ -57,6 +57,8 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
                 return;
             }
 
+            await _serviceBusService.SendBatchStartAsync(_syncOptions.EmployeeSync.TopicName, cancellationToken);
+
             var isVersionUpdated = true;
             var syncVersion = await _syncVersionGenerator.GenerateAsync(cancellationToken);
 
@@ -80,6 +82,8 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
             {
                 await PerformDeletionAsync(syncVersion, cancellationToken);
             }
+
+            await _serviceBusService.SendBatchEndAsync(_syncOptions.EmployeeSync.TopicName, cancellationToken);
         }
 
         private async Task<SyncListData<MqMessage<Employee>>> PerformUpsertionAsync(
@@ -124,6 +128,7 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
                     upsertEmployees.Add(new MqMessage<Employee>(
                         Employee.FromCrmEmployee(crmEmployee),
                         previousSnapshot == null ? SyncMode.Create : SyncMode.Update,
+                        BatchMode.BatchContent,
                         crmEmployee.Modifiedon,
                         syncVersion));
                 }
@@ -194,6 +199,7 @@ namespace SSW.SophieBot.DataSync.Crm.Functions
                     var deleteEmployees = snapshots.Select(snapshot => new MqMessage<Employee>(
                         new Employee(snapshot.Id, snapshot.OrganizationId),
                         SyncMode.Delete,
+                        BatchMode.BatchContent,
                         snapshot.Modifiedon,
                         snapshot.SyncVersion)).ToList();
 

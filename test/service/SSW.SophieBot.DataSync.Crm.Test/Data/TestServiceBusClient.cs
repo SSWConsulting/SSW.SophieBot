@@ -16,5 +16,17 @@ namespace SSW.SophieBot.DataSync.Crm.Test.Data
             MqMessages = MqMessages.Concat(messages).ToList();
             return Task.CompletedTask;
         }
+
+        public Task SendBatchEndAsync(string topicName, CancellationToken cancellationToken = default)
+        {
+            MqMessages.Add(MqMessage<Employee>.BatchEnd());
+            return Task.CompletedTask;
+        }
+
+        public Task SendBatchStartAsync(string topicName, CancellationToken cancellationToken = default)
+        {
+            MqMessages.Add(MqMessage<Employee>.BatchStart());
+            return Task.CompletedTask;
+        }
     }
 }

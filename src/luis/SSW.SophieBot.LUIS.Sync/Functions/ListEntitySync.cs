@@ -3,8 +3,8 @@ using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SSW.SophieBot.ClosedListEntity;
 using SSW.SophieBot.Employees;
-using SSW.SophieBot.Entities;
 using SSW.SophieBot.Persistence;
 using SSW.SophieBot.Sync;
 using System;
@@ -44,13 +44,36 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
             Connection = SbConnectionStringName)] IEnumerable<MqMessage<Employee>> employees,
             CancellationToken cancellationToken)
         {
+            _logger.LogDebug("Received employees from service bus: {Count}", employees.Count());
+
             var appId = _options.GetGuidAppId();
             if (appId == Guid.Empty)
             {
+                _logger.LogWarning("Failed to get LUIS app ID from configuration, end execution");
                 return;
             }
 
             var activeVersion = await _luisAuthoringClient.GetActiveVersionAsync(appId, cancellationToken);
+
+            var batchContentEmployees = employees.Where(employee => employee.BatchMode == BatchMode.BatchContent);
+
+            if (batchContentEmployees.Any())
+            {
+                await UpdateClosedListEntityAsync(batchContentEmployees, appId, activeVersion, cancellationToken);
+            }
+
+            if (employees.Any(employee => employee.BatchMode == BatchMode.BatchEnd))
+            {
+                await _luisAuthoringClient.TrainAndPublishAppAsync(appId, activeVersion, cancellationToken);
+            }
+        }
+
+        private async Task UpdateClosedListEntityAsync(
+            IEnumerable<MqMessage<Employee>> employees,
+            Guid appId,
+            string activeVersion,
+            CancellationToken cancellationToken = default)
+        {
             var clEntityId = await _luisAuthoringClient.GetClEntityIdAsync(appId, _sswPeopleNamesClEntity.EntityName, activeVersion, cancellationToken);
 
             if (!clEntityId.HasValue)
@@ -62,8 +85,16 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
                 return;
             }
 
+            _logger.LogDebug("Retrived LUIS app active version: {ActiveVersion}", activeVersion);
+            _logger.LogDebug("Retrived closed entity ID for {EntityName}: {ClEntityId}", _sswPeopleNamesClEntity.EntityName, clEntityId);
+
+            // TODO: We are currently retriving all sub lists from LUIS in a single call due to the limitation of the REST API. 
+            // May be a bottleneck here but it's of low priority
             var clEntity = await _luisAuthoringClient.Model.GetClosedListAsync(appId, activeVersion, clEntityId.Value, cancellationToken);
             var sublist = clEntity.SubLists;
+
+            _logger.LogDebug("Retrived closed entity sublists for {EntityName}: {Count}", _sswPeopleNamesClEntity.EntityName, sublist.Count);
+
             var newSubList = sublist?.Select(item => new WordListObject(item.CanonicalForm, item.List))?.ToList() ?? new List<WordListObject>();
 
             foreach (var employee in employees)
@@ -76,6 +107,8 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
                     newSubList.Add(_sswPeopleNamesClEntity.CreateWordList(employee.Message));
                 }
             }
+
+            _logger.LogDebug("Calculated new closed entity sublists for {EntityName}: {Count}", _sswPeopleNamesClEntity.EntityName, newSubList.Count);
 
             var updateObject = new ClosedListModelUpdateObject(newSubList, _sswPeopleNamesClEntity.EntityName);
             var updateResponse = await _luisAuthoringClient.Model.UpdateClosedListAsync(

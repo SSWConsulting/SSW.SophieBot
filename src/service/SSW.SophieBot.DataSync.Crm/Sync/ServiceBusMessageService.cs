@@ -11,21 +11,17 @@ using System.Threading.Tasks;
 
 namespace SSW.SophieBot.DataSync.Crm.Sync
 {
-    public class ServiceBusMessageService : IBatchMessageService<MqMessage<Employee>, string>, IDisposable
+    public class ServiceBusMessageService : BatchMessageServiceBase<MqMessage<Employee>, string>
     {
-        private readonly ServiceBusClient _serviceBusClient;
-        private ServiceBusSender _currentSender;
-        private readonly ILogger<ServiceBusMessageService> _logger;
-
         public ServiceBusMessageService(
             ServiceBusClient serviceBusClient,
             ILogger<ServiceBusMessageService> logger)
+            : base(serviceBusClient, logger)
         {
-            _serviceBusClient = serviceBusClient;
-            _logger = logger;
+
         }
 
-        public async Task SendMessageAsync(
+        public override async Task SendMessageAsync(
             IEnumerable<MqMessage<Employee>> messages,
             string topicName,
             CancellationToken cancellationToken = default)
@@ -35,9 +31,9 @@ namespace SSW.SophieBot.DataSync.Crm.Sync
                 return;
             }
 
-            _currentSender ??= _serviceBusClient.CreateSender(topicName);
+            await using var sender = ServiceBusClient.CreateSender(topicName);
 
-            using ServiceBusMessageBatch messageBatch = await _currentSender.CreateMessageBatchAsync(cancellationToken);
+            using ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync(cancellationToken);
             var jsonSerializeOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
 
             var totalMessageCount = messages.Count();
@@ -46,22 +42,14 @@ namespace SSW.SophieBot.DataSync.Crm.Sync
             {
                 if (!messageBatch.TryAddMessage(new ServiceBusMessage(BinaryData.FromObjectAsJson(message, jsonSerializeOptions))))
                 {
-                    _logger.LogError("Failed to add message to batch: {Message}", message);
+                    Logger.LogError("Failed to add message to batch: {Message}", message);
                     addedMessageCount--;
                 }
             }
 
-            await _currentSender.SendMessagesAsync(messageBatch, cancellationToken);
-            _logger.LogInformation($"A batch of {addedMessageCount}/{totalMessageCount} messages " +
+            await sender.SendMessagesAsync(messageBatch, cancellationToken);
+            Logger.LogInformation($"A batch of {addedMessageCount}/{totalMessageCount} messages " +
                 $"has been published to the topic {topicName}.");
-        }
-
-        public void Dispose()
-        {
-            if (_currentSender != null)
-            {
-                _currentSender.DisposeAsync().AsTask().Wait();
-            }
         }
     }
 }

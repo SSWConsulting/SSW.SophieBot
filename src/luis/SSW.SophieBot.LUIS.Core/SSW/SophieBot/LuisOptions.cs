@@ -4,11 +4,11 @@ namespace SSW.SophieBot
 {
     public class LuisOptions
     {
-        public string AuthoringEndpoint { get; set; } = string.Empty;
+        public string AuthoringEndpoint { get; set; }
 
-        public string AuthoringKey { get; set; } = string.Empty;
+        public string AuthoringKey { get; set; }
 
-        public string AppId { get; set; } = string.Empty;
+        public string AppId { get; set; }
 
         public Guid GetGuidAppId()
         {

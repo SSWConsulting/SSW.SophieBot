@@ -1,4 +1,4 @@
-﻿namespace SSW.SophieBot.Entities
+﻿namespace SSW.SophieBot
 {
     public abstract class EntityBase
     {

@@ -11,6 +11,8 @@ namespace SSW.SophieBot.Sync
 
     public interface IBatchMessageService<TMessage, TOptions> : IMessageService<IEnumerable<TMessage>, TOptions>
     {
+        Task SendBatchStartAsync(string topicName, CancellationToken cancellationToken = default);
 
+        Task SendBatchEndAsync(string topicName, CancellationToken cancellationToken = default);
     }
 }
