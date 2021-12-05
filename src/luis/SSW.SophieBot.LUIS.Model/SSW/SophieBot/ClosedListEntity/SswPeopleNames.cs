@@ -82,7 +82,7 @@ namespace SSW.SophieBot.ClosedListEntity
                 nameList.Add($"{employee.NickName}s");
             }
 
-            return nameList;
+            return nameList.Distinct().ToList();
         }
     }
 }

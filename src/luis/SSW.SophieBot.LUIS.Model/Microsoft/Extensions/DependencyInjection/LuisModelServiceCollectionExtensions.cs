@@ -4,7 +4,7 @@ using SSW.SophieBot.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Extensions.DependencyInjection
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class LuisModelServiceCollectionExtensions
     {

@@ -1,6 +1,6 @@
 ﻿namespace SSW.SophieBot.LUIS.Migrator
 {
-    public class LuisMigratorOptions
+    public class PeopleApiOptions
     {
         public string BaseUri { get; set; }
 

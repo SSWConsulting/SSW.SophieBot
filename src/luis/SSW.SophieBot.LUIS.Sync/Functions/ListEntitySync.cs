@@ -95,22 +95,22 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
 
             _logger.LogDebug("Retrived closed entity sublists for {EntityName}: {Count}", _sswPeopleNamesClEntity.EntityName, sublist.Count);
 
-            var newSubList = sublist?.Select(item => new WordListObject(item.CanonicalForm, item.List))?.ToList() ?? new List<WordListObject>();
+            var newSubLists = sublist?.Select(item => new WordListObject(item.CanonicalForm, item.List))?.ToList() ?? new List<WordListObject>();
 
             foreach (var employee in employees)
             {
                 var canonicalForm = _sswPeopleNamesClEntity.GetCanonicalForm(employee.Message);
 
-                newSubList.RemoveAll(item => item.CanonicalForm == canonicalForm);
+                newSubLists.RemoveAll(item => item.CanonicalForm == canonicalForm);
                 if (employee.SyncMode == SyncMode.Create || employee.SyncMode == SyncMode.Update)
                 {
-                    newSubList.Add(_sswPeopleNamesClEntity.CreateWordList(employee.Message));
+                    newSubLists.Add(_sswPeopleNamesClEntity.CreateWordList(employee.Message));
                 }
             }
 
-            _logger.LogDebug("Calculated new closed entity sublists for {EntityName}: {Count}", _sswPeopleNamesClEntity.EntityName, newSubList.Count);
+            _logger.LogDebug("Calculated new closed entity sublists for {EntityName}: {Count}", _sswPeopleNamesClEntity.EntityName, newSubLists.Count);
 
-            var updateObject = new ClosedListModelUpdateObject(newSubList, _sswPeopleNamesClEntity.EntityName);
+            var updateObject = new ClosedListModelUpdateObject(newSubLists, _sswPeopleNamesClEntity.EntityName);
             var updateResponse = await _luisAuthoringClient.Model.UpdateClosedListAsync(
                 appId,
                 activeVersion,
