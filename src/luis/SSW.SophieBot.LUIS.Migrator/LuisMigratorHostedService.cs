@@ -58,8 +58,11 @@ namespace SSW.SophieBot.LUIS.Migrator
 
             await foreach (var employees in employeePages)
             {
+                _logger.LogDebug("Retrieved employees from People API: {Count}", employees.Count());
                 subLists.AddRange(employees.Select(employee => _sswPeopleNamesClEntity.CreateWordList(employee)));
             }
+
+            _logger.LogDebug("Total sublist count: {Count}", subLists.Count);
 
             var updateObject = new ClosedListModelUpdateObject(subLists, _sswPeopleNamesClEntity.EntityName);
             var updateResponse = await _luisAuthoringClient.Model.UpdateClosedListAsync(
@@ -69,7 +72,15 @@ namespace SSW.SophieBot.LUIS.Migrator
                 updateObject,
                 cancellationToken);
 
-            await _luisAuthoringClient.TrainAndPublishAppAsync(appId, activeVersion, cancellationToken);
+            var publishResult = await _luisAuthoringClient.TrainAndPublishAppAsync(appId, activeVersion, cancellationToken);
+            if(publishResult)
+            {
+                _logger.LogError("Failed to train and publish LUIS app: {AppId} - v{Version}", appId, activeVersion);
+            }
+            else
+            {
+                _logger.LogInformation("Successful to train and publish LUIS app: {AppId} - v{Version}", appId, activeVersion);
+            }
 
             _hostApplicationLifetime.StopApplication();
         }

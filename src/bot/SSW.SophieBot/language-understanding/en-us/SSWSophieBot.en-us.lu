@@ -58,12 +58,14 @@
 	- china:
 		- china
 
+@ list sswPeopleNames
+
 @ prebuilt email
 @ prebuilt personName
 @ prebuilt geographyV2
 @ prebuilt datetimeV2
 
-@ ml contact usesFeature personName,email
+@ ml contact usesFeature personName,email,sswPeopleNames
 @ contact = 
 	- @ ml firstname usesFeature personName
 	- @ ml lastname usesFeature personName
