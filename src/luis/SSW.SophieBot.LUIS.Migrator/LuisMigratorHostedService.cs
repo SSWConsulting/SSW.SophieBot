@@ -47,8 +47,9 @@ namespace SSW.SophieBot.LUIS.Migrator
             if (clEntityId.HasValue)
             {
                 await _luisAuthoringClient.Model.DeleteClosedListAsync(appId, activeVersion, clEntityId.Value, cancellationToken);
+                // TODO: add list entity feature to @contact
             }
-
+            
             clEntityId = await _luisAuthoringClient.Model.AddClosedListAsync(
                 appId,
                 activeVersion,
@@ -75,7 +76,7 @@ namespace SSW.SophieBot.LUIS.Migrator
                 cancellationToken);
 
             var publishResult = await _luisAuthoringClient.TrainAndPublishAppAsync(appId, activeVersion, cancellationToken);
-            if(publishResult)
+            if (!publishResult)
             {
                 _logger.LogError("Failed to train and publish LUIS app: {AppId} - v{Version}", appId, activeVersion);
             }
