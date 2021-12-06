@@ -34,24 +34,6 @@
                         ${join(createArray(Status(profile), ColumnSet('Client', ClientText(profile)), ColumnSet('Last seen', LastSeen(profile))), ',')}
                     ],
                     "verticalContentAlignment": "Center"
-                },
-                {
-                    "type": "Column",
-                    "width": "auto",
-                    "items": [
-                        {
-                            "type": "Image",
-                            "url": "${ChatIcon()}",
-                            "horizontalAlignment": "Right",
-                            "selectAction": {
-                                "type": "Action.OpenUrl",
-                                "url": "sip:${profile.emailAddress}"
-                            },
-                            "altText": "Contact now",
-                            "width": "18px",
-                            "height": "18px"
-                        }
-                    ]
                 }
             ]
         },
