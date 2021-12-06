@@ -191,8 +191,9 @@
 @ intent CheckAvailability usesFeature contact,available,unavailable
 
 # GetCurrentEmployeesOnLocation
+- ^who is [(in|on)] {@geographyV2} [office] [right] now[?]^
 - who is in brisbane right now
-- who is in newcastle right now
+- who is in newcastle now
 - Who are in the Sydney office right now?
 - Who are in the brisbane office right now?
 - Who is currently in the Melbourne office?
