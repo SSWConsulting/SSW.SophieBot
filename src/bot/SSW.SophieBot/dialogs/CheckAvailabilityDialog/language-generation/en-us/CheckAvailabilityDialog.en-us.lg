@@ -53,15 +53,6 @@
     "type": "ColumnSet",
     "columns": [
         {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "width": "stretch"
-                }
-            ]
-        },
-        {
             "type": "Column",
             "width": "80px",
             "items": [
