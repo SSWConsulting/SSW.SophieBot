@@ -336,15 +336,17 @@
 # GetPeopleOnClientWork
 - Who {@presentBe} ({@available} | {@unavailable})[?]
 - Who {@presentBe} ({@available} | {@unavailable}) {@datetimeV2}[?]
+- who {@presentBe} ({@available} | {@unavailable}) [in] {@geographyV2}[?]
 - Who is {@unavailable = on client work} tomorrow
 - Who is {@unavailable = working on client work} next Friday?
 - Who is {@unavailable = working for clients} in Sydney?
 - Who is {@unavailable = unavailable} remotely next Friday?
+- Who is {@unavailable = booked} in Sydney?
 
 - People not {@unavailable = on client work}?
 - Who is not {@unavailable = on client work} tomorrow
-- Who is not {@unavailable = on client work} tomorrow?
-- Who is not {@unavailable = on client work} in China?
+- Who is not {@unavailable = working on client work} tomorrow?
+- Who is not {@unavailable = booked} in China?
 - Who is not {@unavailable = on client work} in China next Monday?
 - who is {@available = free} tomorrow
 - Who is {@available = free} next Friday?
