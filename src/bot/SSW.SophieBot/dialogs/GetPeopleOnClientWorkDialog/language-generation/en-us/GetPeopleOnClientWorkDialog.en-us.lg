@@ -242,7 +242,7 @@
     ```
 
 # EmployeeSet(employee)
-- IF: ${ dialog.booked || IsNonEmptyString(dialog.skillEntity) }
+- IF: ${ dialog.booked || employee.nextClient == null || IsNonEmptyString(dialog.skillEntity) }
     - ${EmployeeRow(employee)}
 - ELSE:
     - ${join(createArray(EmployeeRow(employee), Note(employee)), ',')}
