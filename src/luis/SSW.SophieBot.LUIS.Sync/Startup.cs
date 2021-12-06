@@ -1,7 +1,6 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using SSW.SophieBot.AzureFunction.DependencyInjection;
-using SSW.SophieBot.LUIS.Core.DependencyInjection;
 
 [assembly: FunctionsStartup(typeof(SSW.SophieBot.LUIS.Sync.Startup))]
 namespace SSW.SophieBot.LUIS.Sync
@@ -10,8 +9,12 @@ namespace SSW.SophieBot.LUIS.Sync
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            builder.AddSerilog()
-                .AddLuis();
+            builder.AddSerilog();
+
+            var configuration = builder.GetContext().Configuration;
+            builder.Services.AddLuis(configuration);
+
+            builder.Services.AddEntities<EntityBase>();
         }
 
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
