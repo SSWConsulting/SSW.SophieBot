@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\framework\SSW.SophieBot.Core\SSW.SophieBot.Core.csproj" />
+    <ProjectReference Include="..\..\..\framework\SSW.SophieBot.Core\SSW.SophieBot.Core.csproj" />
   </ItemGroup>
 
 </Project>
