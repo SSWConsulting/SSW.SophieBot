@@ -19,6 +19,15 @@
 }
 ```
 
+# ChatInTeamsAction(emailAddress)
+-```
+{
+    "type": "Action.OpenUrl",
+    "title": "💬 Chat in Teams",
+    "url": "sip:${emailAddress}"
+}
+```
+
 # ViewBookingsAction(displayName, bookedDays, sourceIntent)
 - ```
 {
@@ -41,7 +50,7 @@
 - ```
 {
     "type": "Action.Submit",
-    "title": "View Profile Card",
+    "title": "👤 View Profile Card",
     "data": 
     {
         "intent": "GetProfile",
