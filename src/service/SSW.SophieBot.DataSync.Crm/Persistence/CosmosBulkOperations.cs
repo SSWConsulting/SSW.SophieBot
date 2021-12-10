@@ -18,8 +18,8 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
 
         public CosmosBulkOperations(Container container, string partitionKey, ILogger logger)
         {
-            _container = container ?? throw new ArgumentNullException(nameof(container));
-            _partitionKey = new PartitionKey(partitionKey ?? throw new ArgumentNullException(nameof(partitionKey)));
+            _container = Check.NotNull(container, nameof(container));
+            _partitionKey = new PartitionKey(Check.NotNullOrWhiteSpace(partitionKey, nameof(partitionKey)));
             _logger = logger;
         }
 

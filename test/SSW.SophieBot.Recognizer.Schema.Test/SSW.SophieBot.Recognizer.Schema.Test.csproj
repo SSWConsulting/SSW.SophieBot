@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -10,6 +9,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
 	<PackageReference Include="Moq" Version="4.16.1" />
 	<PackageReference Include="Shouldly" Version="4.0.3" />
+	<PackageReference Include="System.Linq.Async" Version="5.0.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\recognizer\luis\SSW.SophieBot.LUIS.Sync\SSW.SophieBot.LUIS.Sync.csproj" />
+    <ProjectReference Include="..\SSW.SophieBot.Recognizer.Schema.TestData\SSW.SophieBot.Recognizer.Schema.TestData.csproj" />
   </ItemGroup>
 
 </Project>

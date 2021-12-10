@@ -41,21 +41,13 @@ namespace SSW.SophieBot.ClosedListEntity
 
         public virtual WordListObject CreateWordList(Employee employee)
         {
-            if (employee == null)
-            {
-                throw new ArgumentNullException(nameof(employee));
-            }
-
+            Check.NotNull(employee, nameof(employee));
             return new WordListObject(GetCanonicalForm(employee), GetSubList(employee));
         }
 
         public virtual SubClosedList CreateSubClosedListResponse(Employee employee)
         {
-            if (employee == null)
-            {
-                throw new ArgumentNullException(nameof(employee));
-            }
-
+            Check.NotNull(employee, nameof(employee));
             return new SubClosedList(GetCanonicalForm(employee), GetSubList(employee));
         }
 
