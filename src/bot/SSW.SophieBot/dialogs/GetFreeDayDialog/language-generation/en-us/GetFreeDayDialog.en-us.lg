@@ -51,7 +51,7 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "${employee.displayName} ${AvailabilityText(employee.freeDate, dialog.isFree)}",
+                            "text": "${employee.displayName} ${AvailabilityText(employee.freeDate, dialog.isFree)} ${TimeDuration(employee.timeDuration)}",
                             "wrap": true
                         }
                     ],
@@ -77,8 +77,14 @@
 - ELSE:
     -  seems to have no client work for now.
 
+# TimeDuration(timeDuration)
+- IF: ${ IsNonEmptyString(timeDuration) }
+    - (${timeDuration})
+- ELSE:
+    -
+
 # AvailabilityDate(date, isFree)
 - IF: ${ date == 'Today' }
     - is ${if(isFree, 'free', 'on client')} ${date}.
 - ELSE:
-    - will ${if(isFree, 'be free', 'be on client work')} on ${date}.
+    - will ${if(isFree, 'be free', 'be on client work')} on ${date}
