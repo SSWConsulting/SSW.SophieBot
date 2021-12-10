@@ -347,6 +347,11 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 return Math.Max(1, (int)Math.Floor(value));
             }
 
+            static string GetDayString(double days)
+            {
+                return $"{days} {(days == 1 ? "day" : "days")}";
+            }
+
             var timeOffset = endDate - startDate;
 
             if (timeOffset.TotalDays <= 2)
@@ -354,34 +359,39 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 return String.Empty;
             }
 
-            if (timeOffset.TotalDays < 7)
+            var totalDays = timeOffset.TotalDays;
+
+            if (totalDays < 7)
             {
-                var days = timeOffset.TotalDays;
-                return $"{days} {(days == 1 ? "day" : "days")} from now";
+                return $"{GetDayString(totalDays)} from now";
             }
-            else if (timeOffset.TotalDays < 30)
+            else if (totalDays < 30)
             {
-                var weeks = GetInteger(timeOffset.TotalDays / 7);
-                var days = timeOffset.TotalDays % 7;
+                var weeks = GetInteger(totalDays / 7);
+                var days = totalDays % 7;
+
+                var weekString = $"{weeks} {(weeks == 1 ? "week" : "weeks")}";
 
                 if (days == 0)
                 {
-                    return $"{weeks} {(weeks == 1 ? "week" : "weeks")} from now";
+                    return $"{weekString} from now";
                 }
 
-                return $"{weeks} {(weeks == 1 ? "week" : "weeks")} and {days} {(days == 1 ? "day" : "days")} from now";
+                return $"{weekString} and {GetDayString(days)} from now";
             }
             else
             {
-                var monthes = GetInteger(timeOffset.TotalDays / 30);
-                var days = timeOffset.TotalDays % 30;
+                var monthes = GetInteger(totalDays / 30);
+                var days = totalDays % 30;
+
+                var monthString = $"{monthes} {(monthes == 1 ? "week" : "weeks")}";
 
                 if (days == 0)
                 {
-                    return $"{monthes} {(monthes == 1 ? "week" : "weeks")} from now";
+                    return $"{monthString} from now";
                 }
 
-                return $"{monthes} {(monthes == 1 ? "month" : "monthes")} and {days} {(days == 1 ? "day" : "days")} from now";
+                return $"{monthString} and {GetDayString(days)} from now";
             }
         }
     }
