@@ -315,7 +315,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                     && date.Date.Ticks >= GetTicksFrom(appointment.Start));
         }
 
-        public static string GetFreeDate(IEnumerable<GetAppointmentModel> appointments, DateTime startTime, bool isFree = true, DateTime? clientNow = null)
+        public static DateTime GetFreeDate(IEnumerable<GetAppointmentModel> appointments, DateTime startTime, bool isFree = true)
         {
             var checkDate = startTime.Date;
 
@@ -328,7 +328,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                     ? (checkAppointments.Count() == 0 || !checkAppointments.Any(appointment => !IsOnInternalWorkFunc(appointment)))
                     : checkAppointments.Any(appointment => IsOnClientWorkFunc(appointment)))
                 {
-                    return checkDate.ToUserFriendlyDate(clientNow);
+                    return checkDate;
                 }
 
                 do
@@ -337,7 +337,52 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 } while (checkDate.DayOfWeek == DayOfWeek.Saturday || checkDate.DayOfWeek == DayOfWeek.Sunday);
             }
 
-            return isFree ? checkDate.ToUserFriendlyDate() : string.Empty;
+            return checkDate;
+        }
+
+        public static string GetFormatedTimeDuration(DateTime startDate, DateTime endDate)
+        {
+            static int GetInteger(double value)
+            {
+                return Math.Max(1, (int)Math.Floor(value));
+            }
+
+            var timeOffset = endDate - startDate;
+
+            if (timeOffset.TotalDays <= 2)
+            {
+                return String.Empty;
+            }
+
+            if (timeOffset.TotalDays < 7)
+            {
+                var days = timeOffset.TotalDays;
+                return $"{days} {(days == 1 ? "day" : "days")} from now";
+            }
+            else if (timeOffset.TotalDays < 30)
+            {
+                var weeks = GetInteger(timeOffset.TotalDays / 7);
+                var days = timeOffset.TotalDays % 7;
+
+                if (days == 0)
+                {
+                    return $"{weeks} {(weeks == 1 ? "week" : "weeks")} from now";
+                }
+
+                return $"{weeks} {(weeks == 1 ? "week" : "weeks")} and {days} {(days == 1 ? "day" : "days")} from now";
+            }
+            else
+            {
+                var monthes = GetInteger(timeOffset.TotalDays / 30);
+                var days = timeOffset.TotalDays % 30;
+
+                if (days == 0)
+                {
+                    return $"{monthes} {(monthes == 1 ? "week" : "weeks")} from now";
+                }
+
+                return $"{monthes} {(monthes == 1 ? "month" : "monthes")} and {days} {(days == 1 ? "day" : "days")} from now";
+            }
         }
     }
 }
