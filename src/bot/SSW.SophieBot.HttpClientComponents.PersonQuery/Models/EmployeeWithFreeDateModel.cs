@@ -18,5 +18,8 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Models
 
         [JsonProperty("bookedDays")]
         public int BookedDays { get; set; }
+
+        [JsonProperty("timeDuration")]
+        public string TimeDuration { get; set; }
     }
 }

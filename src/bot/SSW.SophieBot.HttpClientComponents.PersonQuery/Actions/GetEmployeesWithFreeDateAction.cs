@@ -39,16 +39,22 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
             var employees = dc.GetValue(Employees);
 
             var date = DateTime.Now.ToUniversalTime();
+            var clientNow = date.ToUserLocalTime(dc);
 
-            var result = employees.Select(e => new EmployeeWithFreeDateModel
+            var result = employees.Select(e =>
             {
-                DisplayName = $"{e.FirstName} {e.LastName}",
-                FirstName = e.FirstName,
-                LastName = e.LastName,
-                FreeDate = EmployeesHelper.GetFreeDate(e.Appointments, date, isFree, date.ToUserLocalTime(dc)),
-                BookedDays = e.Appointments
-                    .Where(appointment => appointment.End.UtcTicks >= date.Ticks)
-                    .Count(appointment => EmployeesHelper.IsOnClientWorkFunc(appointment)),
+                var rawFreeDate = EmployeesHelper.GetFreeDate(e.Appointments, date, isFree);
+                return new EmployeeWithFreeDateModel
+                {
+                    DisplayName = $"{e.FirstName} {e.LastName}",
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    FreeDate = rawFreeDate.ToUserFriendlyDate(clientNow),
+                    BookedDays = e.Appointments
+                     .Where(appointment => appointment.End.UtcTicks >= date.Ticks)
+                     .Count(appointment => EmployeesHelper.IsOnClientWorkFunc(appointment)),
+                    TimeDuration = EmployeesHelper.GetFormatedTimeDuration(date.Date, rawFreeDate),
+                };
             })
             .ToList();
 
