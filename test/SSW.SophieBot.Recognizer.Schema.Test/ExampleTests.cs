@@ -1,57 +1,70 @@
 ﻿using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Threading;
+using System.Linq;
 using Xunit;
 
 namespace SSW.SophieBot.Recognizer.Schema.Test
 {
     public class ExampleTests
     {
-        [Fact]
-        public void Should_Get_Raw_Text_Calling_ToString()
-        {
-            // Arrange
-            var firstNameLabel = (ExampleLabel)$"{typeof(FirstNameEntity):Adam}";
-            var lastNameLabel = (ExampleLabel)$"{typeof(LastNameEntity):Cogan}";
-            var nameLabel = new ExampleLabel(typeof(NameEntity), $"{firstNameLabel} {lastNameLabel}");
-            var example = (BasicExample)$"who is {nameLabel}";
+        private readonly ExampleLabel _firstNameLabel;
+        private readonly ExampleLabel _lastNameLabel;
+        private readonly ExampleLabel _nameLabel;
+        private readonly BasicExample _example;
 
+        public ExampleTests()
+        {
+            _firstNameLabel = (ExampleLabel)$"{typeof(FirstNameEntity):Adam}";
+            _lastNameLabel = (ExampleLabel)$"{typeof(LastNameEntity):Cogan}";
+            _nameLabel = new ExampleLabel(typeof(NameEntity), $"{_firstNameLabel} {_lastNameLabel}");
+            _example = (BasicExample)$"who is {_nameLabel}";
+        }
+
+        [Fact]
+        public void Should_Have_Correct_Parent_Label()
+        {
+            // Assert
+            _nameLabel.Parent.ShouldBe(_example);
+            _firstNameLabel.Parent.ShouldBe(_nameLabel);
+            _lastNameLabel.Parent.ShouldBe(_nameLabel);
+        }
+
+        [Fact]
+        public void Should_Have_Correct_Child_Label()
+        {
+            // Assert
+            _example.ChildLabels.Count.ShouldBe(1);
+            _nameLabel.ChildLabels.Count.ShouldBe(2);
+            _nameLabel.ChildLabels.ToList()[1].ShouldBe(_lastNameLabel);
+        }
+
+        [Fact]
+        public void Should_Get_Correct_Raw_Text_Calling_ToString()
+        {
+            // Assert
+            _example.ToString().ShouldBe("who is Adam Cogan");
+            _nameLabel.ToString().ShouldBe("Adam Cogan");
+            _firstNameLabel.ToString().ShouldBe("Adam");
+            _lastNameLabel.ToString().ShouldBe("Cogan");
+        }
+
+        [Fact]
+        public void Should_Get_All_Example_Labels_Recursively()
+        {
             // Act
-            var rawText = example.ToString();
+            var exampleLabelsCount = _example.GetAllExampleLabels().Count;
 
             // Assert
-            rawText.ShouldBe("who is Adam Cogan");
+            exampleLabelsCount.ShouldBe(3);
         }
 
-        public class NameEntity : IEntity
+        [Fact]
+        public void Should_Get_All_Entity_Types_Recursively()
         {
-            public virtual Type Parent => null;
+            // Act
+            var entityTypesCount = _example.GetAllEntityTypes().Count;
 
-            public virtual ICollection<Type> Children => new List<Type>
-            {
-                typeof(FirstNameEntity),
-                typeof(LastNameEntity)
-            };
-
-            public async IAsyncEnumerable<bool> SeedAsync(CancellationToken cancellationToken = default)
-            {
-                yield return true;
-            }
-        }
-
-        public class FirstNameEntity : NameEntity
-        {
-            public override Type Parent => typeof(NameEntity);
-
-            public override ICollection<Type> Children => new List<Type>();
-        }
-
-        public class LastNameEntity : NameEntity
-        {
-            public override Type Parent => typeof(NameEntity);
-
-            public override ICollection<Type> Children => new List<Type>();
+            // Assert
+            entityTypesCount.ShouldBe(3);
         }
     }
 }
