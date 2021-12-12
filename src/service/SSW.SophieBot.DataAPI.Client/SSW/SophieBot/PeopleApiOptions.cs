@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace SSW.SophieBot
 {
-    public interface IEntity : IModel
+    public class PeopleApiOptions
     {
-        ICollection<Type> Children { get; }
     }
 }

@@ -7,14 +7,11 @@ namespace SSW.SophieBot
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public class SchemaAttribute : Attribute
     {
-        public Type[] SchemaTypes { get; }
+        public Type[] BaseSchemaTypes { get; }
 
-
-        // TODO: bool Inclusive
-
-        public SchemaAttribute(params Type[] schemaTypes)
+        public SchemaAttribute(params Type[] baseSchemaTypes)
         {
-            SchemaTypes = schemaTypes ?? new Type[0];
+            BaseSchemaTypes = baseSchemaTypes ?? new Type[0];
         }
 
         public static ISet<Type> GetBaseSchemaTypes(Type type)
@@ -23,7 +20,7 @@ namespace SSW.SophieBot
 
             return type.GetCustomAttributes(true)
                 .OfType<SchemaAttribute>()
-                .SelectMany(attribute => attribute.SchemaTypes)
+                .SelectMany(attribute => attribute.BaseSchemaTypes)
                 .Distinct()
                 .ToHashSet();
         }

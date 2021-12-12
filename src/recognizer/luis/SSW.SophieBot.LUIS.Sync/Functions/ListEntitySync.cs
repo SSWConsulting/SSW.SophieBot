@@ -34,7 +34,7 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
             _luisAuthoringClient = luisAuthoringClient;
             _sswPeopleNamesClEntity = sswPeopleNamesClEntity;
             _options = options.Value;
-            _logger = logger; 
+            _logger = logger;
         }
 
         [FunctionName(nameof(SyncSswPeopleNames))]

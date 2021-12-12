@@ -68,7 +68,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.Sc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.LUIS.Abstractions", "src\recognizer\SSW.SophieBot.Recognizer.LUIS.Abstractions\SSW.SophieBot.Recognizer.LUIS.Abstractions.csproj", "{D0A484AD-7D17-4E8F-ACF0-84CE4E54ECAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSW.SophieBot.Recognizer.LUIS.Abstractions.Test", "test\service\SSW.SophieBot.Recognizer.LUIS.Abstractions.Test\SSW.SophieBot.Recognizer.LUIS.Abstractions.Test.csproj", "{2E620F00-E9E7-45A0-A311-4AD541263B63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.LUIS.Abstractions.Test", "test\service\SSW.SophieBot.Recognizer.LUIS.Abstractions.Test\SSW.SophieBot.Recognizer.LUIS.Abstractions.Test.csproj", "{2E620F00-E9E7-45A0-A311-4AD541263B63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSW.SophieBot.Recognizer.LUIS.EmployeeFinder", "src\recognizer\SSW.SophieBot.Recognizer.LUIS.EmployeeFinder\SSW.SophieBot.Recognizer.LUIS.EmployeeFinder.csproj", "{CE516555-7285-4C0E-97AF-BEE6952E6B51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSW.SophieBot.DataAPI.Client", "src\service\SSW.SophieBot.DataAPI.Client\SSW.SophieBot.DataAPI.Client.csproj", "{35C312A3-7146-4D21-893B-5FB4800D55F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -152,6 +156,14 @@ Global
 		{2E620F00-E9E7-45A0-A311-4AD541263B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E620F00-E9E7-45A0-A311-4AD541263B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E620F00-E9E7-45A0-A311-4AD541263B63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE516555-7285-4C0E-97AF-BEE6952E6B51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE516555-7285-4C0E-97AF-BEE6952E6B51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE516555-7285-4C0E-97AF-BEE6952E6B51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE516555-7285-4C0E-97AF-BEE6952E6B51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35C312A3-7146-4D21-893B-5FB4800D55F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35C312A3-7146-4D21-893B-5FB4800D55F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35C312A3-7146-4D21-893B-5FB4800D55F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35C312A3-7146-4D21-893B-5FB4800D55F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -184,6 +196,8 @@ Global
 		{FD3DB385-529E-4AD2-B9E8-EF844593A86C} = {EA24F653-DAC3-46F0-B579-40518CE3F086}
 		{D0A484AD-7D17-4E8F-ACF0-84CE4E54ECAD} = {AA5C3A18-8A04-48D7-A5F2-B71807650250}
 		{2E620F00-E9E7-45A0-A311-4AD541263B63} = {EA24F653-DAC3-46F0-B579-40518CE3F086}
+		{CE516555-7285-4C0E-97AF-BEE6952E6B51} = {AA5C3A18-8A04-48D7-A5F2-B71807650250}
+		{35C312A3-7146-4D21-893B-5FB4800D55F4} = {C6992D1E-BC9C-4977-8950-EC757FB0B338}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {86E25EDA-9BBD-4C01-99A4-07ABD670C67C}

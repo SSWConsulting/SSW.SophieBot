@@ -10,21 +10,21 @@ namespace SSW.SophieBot
     {
         protected IServiceProvider ServiceProvider { get; }
 
-        protected RecognizerSchemaOptions Options { get; }
+        protected RecognizerSchemaOptions SchemaOptions { get; }
 
         public RecognizerSchemaManagerBase(
             IServiceProvider serviceProvider,
-            IOptions<RecognizerSchemaOptions> options)
+            IOptions<RecognizerSchemaOptions> schemaOptions)
         {
             ServiceProvider = serviceProvider;
-            Options = options.Value;
+            SchemaOptions = schemaOptions.Value;
         }
 
         public abstract Task PublishSchemaAsync(CancellationToken cancellationToken = default);
 
         public virtual async Task SeedAsync(CancellationToken cancellationToken = default)
         {
-            var modelTypes = Options.ModelTypes;
+            var modelTypes = SchemaOptions.ModelTypes;
             foreach (var modelType in modelTypes)
             {
                 var modelInstance = (IModel)ServiceProvider.GetRequiredService(modelType);
