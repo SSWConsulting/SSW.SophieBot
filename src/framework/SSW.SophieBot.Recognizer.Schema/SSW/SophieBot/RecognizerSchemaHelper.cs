@@ -60,7 +60,7 @@ namespace SSW.SophieBot
                         type.IsClass &&
                         !type.IsAbstract &&
                         !type.IsGenericType &&
-                        typeof(IModel).IsAssignableFrom(type)
+                        typeof(IRecognizerModel).IsAssignableFrom(type)
                 );
         }
     }

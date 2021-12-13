@@ -17,6 +17,10 @@ namespace SSW.SophieBot
 
         protected LuisOptions LuisOptions { get; }
 
+        protected Guid? AppId { get; set; }
+
+        protected string Version { get; set; }
+
         public LuisSchemaManager(
             HttpClient httpClient,
             ILUISAuthoringClient luisAuthoringClient,
@@ -30,9 +34,36 @@ namespace SSW.SophieBot
             LuisOptions = luisOptions.Value;
         }
 
-        public override Task PublishSchemaAsync(CancellationToken cancellationToken = default)
+        public override async Task PublishSchemaAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var clEntities = SchemaOptions.OfModelType<IClosedList>();
+            var entities = SchemaOptions.OfModelType<IEntity>();
+
+            await PublishClEntitiesAsync(clEntities, cancellationToken);
+            await PublishEntityAsync(entities, cancellationToken);
+        }
+
+        protected virtual async Task PublishClEntitiesAsync(IEnumerable<Type> entities, CancellationToken cancellationToken = default)
+        {
+            if (entities.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            if (!AppId.HasValue || Version.IsNullOrEmpty())
+            {
+                (AppId, Version) = await LuisHelper.GetLuisAppIdAndActiveVersionAsync(LuisAuthoringClient, LuisOptions, cancellationToken);
+            }
+
+            foreach (var entity in entities)
+            {
+                var createObject = LuisHelper.GetClEntityCreateObject(entity);
+                await LuisAuthoringClient.EnsureClEntityExistAsync(
+                    AppId.Value,
+                    Version,
+                    createObject,
+                    cancellationToken);
+            }
         }
 
         protected virtual async Task PublishEntityAsync(IEnumerable<Type> entities, CancellationToken cancellationToken = default)
@@ -42,23 +73,27 @@ namespace SSW.SophieBot
                 return;
             }
 
-            var (appId, activeVersion) = await LuisHelper.GetLuisAppIdAndActiveVersionAsync(LuisAuthoringClient, LuisOptions, cancellationToken);
+            if (!AppId.HasValue || Version.IsNullOrEmpty())
+            {
+                (AppId, Version) = await LuisHelper.GetLuisAppIdAndActiveVersionAsync(LuisAuthoringClient, LuisOptions, cancellationToken);
+            }
 
             foreach (var entity in entities)
             {
+                // only process root entity as their children will be handled in the same iteration
                 if (ChildOfAttribute.GetParentOrDefault(entity) != null)
                 {
                     continue;
                 }
 
                 var createObject = LuisHelper.GetEntityCreateObject(entity, entities);
-                var entityId = await LuisAuthoringClient.EnsureEntityExistAsync(appId, activeVersion, createObject, cancellationToken);
+                var entityId = await LuisAuthoringClient.EnsureEntityExistAsync(AppId.Value, Version, createObject, cancellationToken);
 
                 var featureCreateObjects = LuisHelper.GetEntityFeatureRelationModels(entity)
                     .Select(featureModel => EntityFeatureRelationCreateObject.FromModel(featureModel));
 
                 var updateFeatureResponse = await LuisAuthoringClient.Model.UpdateEntityFeatureRelationAsync(
-                    activeVersion,
+                    Version,
                     entityId,
                     featureCreateObjects.ToList(),
                     HttpClient,

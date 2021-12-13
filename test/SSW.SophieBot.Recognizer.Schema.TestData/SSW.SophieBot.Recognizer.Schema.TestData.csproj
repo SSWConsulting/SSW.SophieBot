@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\recognizer\SSW.SophieBot.Recognizer.Schema\SSW.SophieBot.Recognizer.Schema.csproj" />
+    <ProjectReference Include="..\..\src\framework\SSW.SophieBot.Recognizer.Schema\SSW.SophieBot.Recognizer.Schema.csproj" />
   </ItemGroup>
 
 </Project>

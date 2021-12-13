@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SSW.SophieBot
 {
-    public interface IClosedList : IModel
+    public interface IClosedList : IRecognizerModel
     {
         ICollection<SubClosedList> SubLists { get; }
     }

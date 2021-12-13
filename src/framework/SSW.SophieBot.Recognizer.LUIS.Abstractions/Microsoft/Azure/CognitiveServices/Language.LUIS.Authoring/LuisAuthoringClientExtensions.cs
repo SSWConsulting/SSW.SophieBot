@@ -197,6 +197,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             LuisOptions luisOptions,
             CancellationToken cancellationToken = default)
         {
+            // TODO: consider using Microsoft.Rest
             var uri = new Uri($"https://{luisOptions.AuthoringEndpoint}/luis/authoring/v3.0-preview/apps/{luisOptions.AppId}" +
                 $"/versions/{version}/entities/{entityId}/features");
 

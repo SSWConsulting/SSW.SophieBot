@@ -14,7 +14,7 @@ namespace SSW.SophieBot.LUIS.Sync
             var configuration = builder.GetContext().Configuration;
             builder.Services.AddLuis(configuration);
 
-            builder.Services.AddEntities<EntityBase>();
+            builder.Services.AddRecognizerSchema<EmployeeFinderRecognizerSchema>();
         }
 
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)

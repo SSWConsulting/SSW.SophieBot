@@ -33,12 +33,21 @@ namespace SSW.SophieBot
             return new HierarchicalEntityModel(childrenNames, ModelAttribute.GetName(entityType));
         }
 
-        public static ClosedListModelCreateObject GetClEntityCreateObject<T>(T clEntity)
+        public static ClosedListModelCreateObject GetClEntityCreateObject<T>()
             where T : class, IClosedList
         {
-            return new ClosedListModelCreateObject(
-                clEntity.SubLists.Select(subList => subList.ToWordListObject()).ToList(),
-                ModelAttribute.GetName(typeof(T)));
+            return GetClEntityCreateObject(typeof(T));
+        }
+
+        public static ClosedListModelCreateObject GetClEntityCreateObject(Type entityType)
+        {
+            Check.NotNull(entityType, nameof(entityType));
+            if (!typeof(IClosedList).IsAssignableFrom(entityType))
+            {
+                throw new ArgumentException($"Given type should implement {typeof(IClosedList).FullName}, but is {entityType.FullName}");
+            }
+
+            return new ClosedListModelCreateObject(name: ModelAttribute.GetName(entityType));
         }
 
         public static async Task<(Guid, string)> GetLuisAppIdAndActiveVersionAsync(

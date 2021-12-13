@@ -3,8 +3,8 @@ using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using SSW.SophieBot.ClosedListEntity;
 using SSW.SophieBot.Employees;
+using SSW.SophieBot.Entities;
 using SSW.SophieBot.Persistence;
 using SSW.SophieBot.Sync;
 using System;
@@ -21,18 +21,18 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
         private const string SbConnectionStringName = "ServiceBus";
 
         private readonly ILUISAuthoringClient _luisAuthoringClient;
-        private readonly SswPeopleNames _sswPeopleNamesClEntity;
+        private readonly SswPersonNames _sswPersonNamesClEntity;
         private readonly LuisOptions _options;
         private readonly ILogger<ListEntitySync> _logger;
 
         public ListEntitySync(
             ILUISAuthoringClient luisAuthoringClient,
-            SswPeopleNames sswPeopleNamesClEntity,
+            SswPersonNames sswPersonNamesClEntity,
             IOptions<LuisOptions> options,
             ILogger<ListEntitySync> logger)
         {
             _luisAuthoringClient = luisAuthoringClient;
-            _sswPeopleNamesClEntity = sswPeopleNamesClEntity;
+            _sswPersonNamesClEntity = sswPersonNamesClEntity;
             _options = options.Value;
             _logger = logger;
         }
@@ -74,43 +74,44 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
             string activeVersion,
             CancellationToken cancellationToken = default)
         {
-            var clEntityId = await _luisAuthoringClient.GetClEntityIdAsync(appId, _sswPeopleNamesClEntity.EntityName, activeVersion, cancellationToken);
+            var clEntityName = ModelAttribute.GetName(typeof(SswPersonNames));
+            var clEntityId = await _luisAuthoringClient.GetClEntityIdAsync(appId, clEntityName, activeVersion, cancellationToken);
 
             if (!clEntityId.HasValue)
             {
                 // if this cl entity does not exist, it's the LUIS build/publish service's responsibility to do the creation, but not this sync service
                 // (e.g. create this sswPeopleNames list entity and feed data by calling People API)
                 // so we can just log a warning and exit execution here
-                _logger.LogWarning("Failed to get target closed list entity: {EntityName}", _sswPeopleNamesClEntity.EntityName);
+                _logger.LogWarning("Failed to get target closed list entity: {EntityName}", clEntityName);
                 return;
             }
 
             _logger.LogDebug("Retrived LUIS app active version: {ActiveVersion}", activeVersion);
-            _logger.LogDebug("Retrived closed entity ID for {EntityName}: {ClEntityId}", _sswPeopleNamesClEntity.EntityName, clEntityId);
+            _logger.LogDebug("Retrived closed entity ID for {EntityName}: {ClEntityId}", clEntityName, clEntityId);
 
             // TODO: We are currently retriving all sub lists from LUIS in a single call due to the limitation of the REST API. 
             // May be a bottleneck here but it's of low priority
             var clEntity = await _luisAuthoringClient.Model.GetClosedListAsync(appId, activeVersion, clEntityId.Value, cancellationToken);
             var sublist = clEntity.SubLists;
 
-            _logger.LogDebug("Retrived closed entity sublists for {EntityName}: {Count}", _sswPeopleNamesClEntity.EntityName, sublist.Count);
+            _logger.LogDebug("Retrived closed entity sublists for {EntityName}: {Count}", clEntityName, sublist.Count);
 
             var newSubLists = sublist?.Select(item => new WordListObject(item.CanonicalForm, item.List))?.ToList() ?? new List<WordListObject>();
 
             foreach (var employee in employees)
             {
-                var canonicalForm = _sswPeopleNamesClEntity.GetCanonicalForm(employee.Message);
+                var wordListObject = _sswPersonNamesClEntity.CreateWordList(employee.Message);
 
-                newSubLists.RemoveAll(item => item.CanonicalForm == canonicalForm);
+                newSubLists.RemoveAll(item => item.CanonicalForm == wordListObject.CanonicalForm);
                 if (employee.SyncMode == SyncMode.Create || employee.SyncMode == SyncMode.Update)
                 {
-                    newSubLists.Add(_sswPeopleNamesClEntity.CreateWordList(employee.Message));
+                    newSubLists.Add(wordListObject);
                 }
             }
 
-            _logger.LogDebug("Calculated new closed entity sublists for {EntityName}: {Count}", _sswPeopleNamesClEntity.EntityName, newSubLists.Count);
+            _logger.LogDebug("Calculated new closed entity sublists for {EntityName}: {Count}", clEntityName, newSubLists.Count);
 
-            var updateObject = new ClosedListModelUpdateObject(newSubLists, _sswPeopleNamesClEntity.EntityName);
+            var updateObject = new ClosedListModelUpdateObject(newSubLists, clEntityName);
             var updateResponse = await _luisAuthoringClient.Model.UpdateClosedListAsync(
                 appId,
                 activeVersion,

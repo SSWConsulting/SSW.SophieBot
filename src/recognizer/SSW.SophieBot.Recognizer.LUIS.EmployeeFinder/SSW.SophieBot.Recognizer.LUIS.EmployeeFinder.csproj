@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\service\SSW.SophieBot.DataAPI.Client\SSW.SophieBot.DataAPI.Client.csproj" />
-    <ProjectReference Include="..\SSW.SophieBot.Recognizer.LUIS.Abstractions\SSW.SophieBot.Recognizer.LUIS.Abstractions.csproj" />
+    <ProjectReference Include="..\..\framework\SSW.SophieBot.Recognizer.LUIS.Abstractions\SSW.SophieBot.Recognizer.LUIS.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

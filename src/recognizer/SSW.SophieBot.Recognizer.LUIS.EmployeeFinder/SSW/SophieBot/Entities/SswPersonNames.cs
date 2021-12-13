@@ -13,14 +13,14 @@ namespace SSW.SophieBot.Entities
     public class SswPersonNames : IClosedList, IDisposable
     {
         private readonly ILUISAuthoringClient _luisAuthoringClient;
-        private readonly PeopleApiClient _peopleApiClient;
+        private readonly IPeopleApiClient _peopleApiClient;
         private readonly LuisOptions _luisOptions;
 
         public ICollection<SubClosedList> SubLists { get; } = new List<SubClosedList>();
 
         public SswPersonNames(
             ILUISAuthoringClient luisAuthoringClient,
-            PeopleApiClient peopleApiClient,
+            IPeopleApiClient peopleApiClient,
             IOptions<LuisOptions> luisOptions)
         {
             _luisAuthoringClient = luisAuthoringClient;
@@ -32,8 +32,17 @@ namespace SSW.SophieBot.Entities
         {
             var (appId, activeVersion) = await LuisHelper.GetLuisAppIdAndActiveVersionAsync(_luisAuthoringClient, _luisOptions, cancellationToken);
 
-            var createObject = LuisHelper.GetClEntityCreateObject(this);
-            var clEntityId = await _luisAuthoringClient.EnsureClEntityExistAsync(appId, activeVersion, createObject, cancellationToken);
+            var clEntityId = await _luisAuthoringClient.GetClEntityIdAsync(
+                appId,
+                activeVersion,
+                ModelAttribute.GetName(typeof(SswPersonNames)),
+                cancellationToken);
+
+            if (!clEntityId.HasValue)
+            {
+                yield return false;
+            }
+
             var employeePages = _peopleApiClient.GetPagedEmployeesAsync();
 
             await foreach (var employees in employeePages)
@@ -41,7 +50,7 @@ namespace SSW.SophieBot.Entities
                 var patchResponse = await _luisAuthoringClient.Model.PatchClosedListAsync(
                     appId,
                     activeVersion,
-                    clEntityId,
+                    clEntityId.Value,
                     ToPatchObject(employees),
                     cancellationToken);
 
@@ -49,6 +58,17 @@ namespace SSW.SophieBot.Entities
             }
 
             yield return true;
+        }
+
+        public virtual WordListObject CreateWordList(Employee employee)
+        {
+            Check.NotNull(employee, nameof(employee));
+            return new WordListObject(GetCanonicalForm(employee), GetSubList(employee));
+        }
+
+        public virtual string GetCanonicalForm(Employee employee)
+        {
+            return employee.UserId;
         }
 
         private ClosedListModelPatchObject ToPatchObject(IEnumerable<Employee> employees)
@@ -64,17 +84,6 @@ namespace SSW.SophieBot.Entities
             }
 
             return patchObject;
-        }
-
-        public virtual WordListObject CreateWordList(Employee employee)
-        {
-            Check.NotNull(employee, nameof(employee));
-            return new WordListObject(GetCanonicalForm(employee), GetSubList(employee));
-        }
-
-        private string GetCanonicalForm(Employee employee)
-        {
-            return employee.UserId;
         }
 
         private IList<string> GetSubList(Employee employee)

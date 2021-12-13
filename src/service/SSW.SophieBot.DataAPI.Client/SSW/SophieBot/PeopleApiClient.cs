@@ -8,7 +8,7 @@ using System.Net.Http.Headers;
 
 namespace SSW.SophieBot
 {
-    public class PeopleApiClient
+    public class PeopleApiClient : IPeopleApiClient
     {
         private readonly HttpClient _httpClient;
         private readonly PeopleApiOptions _options;

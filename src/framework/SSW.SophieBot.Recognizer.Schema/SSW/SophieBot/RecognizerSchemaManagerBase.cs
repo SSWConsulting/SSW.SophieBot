@@ -27,7 +27,7 @@ namespace SSW.SophieBot
             var modelTypes = SchemaOptions.ModelTypes;
             foreach (var modelType in modelTypes)
             {
-                var modelInstance = (IModel)ServiceProvider.GetRequiredService(modelType);
+                var modelInstance = (IRecognizerModel)ServiceProvider.GetRequiredService(modelType);
 
                 await foreach (var seedResult in modelInstance.SeedAsync(cancellationToken))
                 {
