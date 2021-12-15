@@ -1,6 +1,5 @@
 [common](common.en-us.lg)
 [Icons](icons.en-us.lg)
-[SSWSophieBot](SSWSophieBot.en-us.lg)
 
 # SendActivity_RA2SOG_text()
 - Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.

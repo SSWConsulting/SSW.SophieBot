@@ -1,6 +1,5 @@
-[Icons](icons.en-us.lg)
+[Common](common.en-us.lg)
 [PeopleList](peopleList.en-us.lg)
-[SSWSophieBot](SSWSophieBot.en-us.lg)
 
 # SendActivity_emJef2()
 [Activity
@@ -26,9 +25,6 @@
         false,
         'GetExpertsByLocation'))}
 ]
-
-# GetNextTitle(pageIndex, pageSize)
-- ${PaginationText(pageIndex, count(turn.employees))}
 
 # SendActivity_HNg6Pg()
 [Activity
