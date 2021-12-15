@@ -60,7 +60,7 @@
                     "type": "TextBlock",
                     "text": "Today:",
                     "wrap": true,
-                    "color": "Attention"
+                    "color": "Accent"
                 }
             ]
         },
@@ -136,7 +136,7 @@
                     "type": "TextBlock",
                     "text": "${name}:",
                     "wrap": true,
-                    "color": "Attention"
+                    "color": "Accent"
                 }
             ]
         },

@@ -37,3 +37,10 @@
 [Activity
     Attachments = ${json(AppointmentAgenda(dialog.displayName, turn.employeesWithStatus[0].appointments))}
 ]
+# SendActivity_8XHMsU()
+[Activity
+    Text = ${SendActivity_8XHMsU_text()}
+]
+
+# SendActivity_8XHMsU_text()
+- You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.
