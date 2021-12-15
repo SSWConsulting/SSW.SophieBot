@@ -42,6 +42,30 @@
                 "id": "cfYCZl"
               }
             }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "ZIynOJ"
+              },
+              "condition": "=!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "8XHMsU"
+                  },
+                  "activity": "${SendActivity_8XHMsU()}"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "yF2MmE"
+                  }
+                }
+              ]
+            }
           ]
         },
         {
