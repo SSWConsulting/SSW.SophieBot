@@ -1,6 +1,119 @@
 [Icons](icons.en-us.lg)
 [SSWSophieBot](SSWSophieBot.en-us.lg)
 
+# PeopleListBySkill(location, employees, total)
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        ${join(where(createArray(SkillCardHeader(location, total), EmployeeList(employees)), item => item != ''), ',')}
+    ]
+}
+```
+
+# SkillCardHeader(location, total)
+- IF: ${ dialog.foreach.pageindex == 1 }
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${dialog.skillEntity} - ${if(location != null, titleCase(location), 'All')} [${total}]",
+        "wrap": true,
+        "size": "ExtraLarge",
+        "weight": "Bolder"
+    }
+    ```
+- ELSE:
+    - ${Pagination(dialog.foreach.pageindex, total)}
+
+# EmployeeList(employees)
+-```
+{
+    "type": "ColumnSet",
+    "columns": [
+        ${ColumnHeaders(count(employees))}
+    ],
+    "style": "default"
+},
+{
+    "type": "Container",
+    "items": [${join(select(employees, e, EmployeeRow(e)), ',')}],
+}
+```
+
+# ColumnHeaders(pageCount)
+- IF: ${ dialog.foreach.pageindex == 1 || pageCount <= 10 }
+    - ```
+    {
+        "type": "Column",
+        "width": "50px",
+        "items": []
+    },
+    {
+        "type": "Column",
+        "width": "stretch",
+        "items": []
+    },
+    {
+        "type": "Column",
+        "width": "stretch",
+        "items": [
+            {
+                "type": "TextBlock",
+                "text": "Level ↓",
+                "wrap": true,
+                "weight": "Bolder",
+                "horizontalAlignment": "Center"
+            }
+        ]
+    },
+    ${BilledHeader('Billed', 'stretch', 'Center')}
+    ```
+- ELSE:
+    -
+
+# EmployeeRow(employee)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        ${Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px')},
+        ${ClickableName(concat(employee.firstName, ' ', employee.lastName), employee.firstName, employee.lastName, 'stretch', 'Small', 'Default', 'GetExpertsByLocation')},
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "text": "${employee.skillLevel}",
+                    "size": "Small",
+                    "horizontalAlignment": "Center"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "text": "${DaysText(first(where(turn.billableEmployees.employees, e, e.userId == employee.UserId)).billedDays, true)}",
+                    "size": "Small",
+                    "horizontalAlignment": "Center"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        }
+    ],
+    "height": "stretch",
+    "separator": false
+}
+```
+
 # BillableEmployeesList(title, subTitle, isMain, employees, isFinalPage, crmId, isProject, sourceIntent)
 -```
 {

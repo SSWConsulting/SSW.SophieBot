@@ -1,4 +1,4 @@
-[GetExpertsByLocationDialog](GetExpertsByLocationDialog.en-us.lg)
+[BillableList](billableList.en-us.lg)
 
 # SendActivity_v4yQKd()
 [Activity
@@ -27,7 +27,7 @@
 
 # SendActivity_RgIw3E()
 [Activity
-    Attachments = ${json(WorkingEmployeesList(dialog.locationEntity, dialog.foreach.page, count(turn.sortedEmployees)))}
+    Attachments = ${json(PeopleListBySkill(dialog.locationEntity, dialog.foreach.page, count(turn.sortedEmployees)))}
 ]
 
 # SendActivity_lQMjCh()
