@@ -114,7 +114,7 @@
 }
 ```
 
-# BillableEmployeesList(title, subTitle, isMain, employees, isFinalPage, crmId, isProject, sourceIntent)
+# PeopleListByBilled(title, subTitle, isMain, employees, isFinalPage, crmId, isProject, sourceIntent)
 -```
 {
     "type": "AdaptiveCard",

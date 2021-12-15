@@ -16,7 +16,7 @@
 
 # SendActivity_WXSOyK()
 [Activity
-    Attachments = ${json(BillableEmployeesList(
+    Attachments = ${json(PeopleListByBilled(
         if(dialog.foreach.pageindex == 1, dialog.billableTitle, GetNextTitle(dialog.foreach.pageindex, 10)), 
         turn.clientNow,
         if(dialog.foreach.pageindex == 1, true, false),

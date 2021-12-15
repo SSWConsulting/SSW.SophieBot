@@ -10,7 +10,7 @@
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
 # SendActivity_OeOolV()
 [Activity
-    Attachments = ${json(BillableEmployeesList(
+    Attachments = ${json(PeopleListByBilled(
         CardTitle(), 
         null, 
         true, 
