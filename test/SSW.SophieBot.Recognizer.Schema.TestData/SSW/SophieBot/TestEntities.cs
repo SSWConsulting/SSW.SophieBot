@@ -1,30 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 
 namespace SSW.SophieBot
 {
+    [TestModelDependency(typeof(TestModelDependency))]
     public class NameEntity : IEntity
     {
-        public virtual ICollection<Type> Children => new List<Type>
-            {
-                typeof(FirstNameEntity),
-                typeof(LastNameEntity)
-            };
-
         public async IAsyncEnumerable<bool> SeedAsync(CancellationToken cancellationToken = default)
         {
             yield return true;
         }
     }
 
+    [TestModelDependency(typeof(NameEntity))]
+    [TestModelDependency(typeof(TestModelDependency))]
     public class FirstNameEntity : NameEntity
     {
-        public override ICollection<Type> Children => new List<Type>();
+
     }
 
+    [TestModelDependency(typeof(FirstNameEntity))]
     public class LastNameEntity : NameEntity
     {
-        public override ICollection<Type> Children => new List<Type>();
+
     }
 }

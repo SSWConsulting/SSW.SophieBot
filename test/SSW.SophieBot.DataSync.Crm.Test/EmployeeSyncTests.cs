@@ -56,7 +56,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
 
             var batchContent = AssertBatchMode();
             batchContent.Count.ShouldBe(7);
-            batchContent.All(message => message.SyncMode == SyncMode.Create).ShouldBeTrue();
+            batchContent.ShouldAllBe(message => message.SyncMode == SyncMode.Create);
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
             // Assert
             _testData.Snapshots.Count.ShouldBe(8);
             _testData.Snapshots.Single(snapshot => snapshot.Id == newId).ShouldNotBeNull();
-            _testData.Snapshots.All(snapshot => snapshot.SyncVersion == _syncVersion).ShouldBeTrue();
+            _testData.Snapshots.ShouldAllBe(snapshot => snapshot.SyncVersion == _syncVersion);
 
             var batchContent = AssertBatchMode();
             batchContent.Single().SyncMode.ShouldBe(SyncMode.Create);
@@ -112,7 +112,7 @@ namespace SSW.SophieBot.DataSync.Crm.Test
                 .Single(snapshot => snapshot.Id == employeeToModify.Systemuserid)
                 .OrganizationId
                 .ShouldBe(NewOrganizationId);
-            _testData.Snapshots.All(snapshot => snapshot.SyncVersion == _syncVersion).ShouldBeTrue();
+            _testData.Snapshots.ShouldAllBe(snapshot => snapshot.SyncVersion == _syncVersion);
 
             var batchContent = AssertBatchMode();
             batchContent.Single().SyncMode.ShouldBe(SyncMode.Update);
@@ -151,8 +151,8 @@ namespace SSW.SophieBot.DataSync.Crm.Test
 
             // Assert
             _testData.Snapshots.Count.ShouldBe(6);
-            _testData.Snapshots.All(snapshot => snapshot.SyncVersion == _syncVersion).ShouldBeTrue();
-            _testData.Snapshots.Any(snapshot => snapshot.Id == employeeToDelete.Systemuserid).ShouldBeFalse();
+            _testData.Snapshots.ShouldAllBe(snapshot => snapshot.SyncVersion == _syncVersion);
+            _testData.Snapshots.ShouldAllBe(snapshot => snapshot.Id != employeeToDelete.Systemuserid);
 
             var batchContent = AssertBatchMode();
             batchContent.Single().SyncMode.ShouldBe(SyncMode.Delete);

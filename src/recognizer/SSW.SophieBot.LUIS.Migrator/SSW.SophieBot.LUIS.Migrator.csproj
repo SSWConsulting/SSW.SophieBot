@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Serilog" Version="2.10.0" />
+		<PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\service\SSW.SophieBot.DataSync.Domain\SSW.SophieBot.DataSync.Domain.csproj" />
+		<ProjectReference Include="..\SSW.SophieBot.Recognizer.LUIS.EmployeeFinder\SSW.SophieBot.Recognizer.LUIS.EmployeeFinder.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -4,13 +4,15 @@ using System.Linq;
 namespace SSW.SophieBot
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-    public class FeatureAttribute : Attribute
+    public class FeatureAttribute : Attribute, IModelDependency
     {
         public string ModelName { get; }
 
         public string FeatureName { get; }
 
         public bool IsRequired { get; }
+
+        public Type Dependency { get; }
 
         public FeatureAttribute(Type type, bool isModel = false, bool isRequired = false)
         {
@@ -25,6 +27,7 @@ namespace SSW.SophieBot
                 FeatureName = name;
             }
 
+            Dependency = type;
             IsRequired = isRequired;
         }
 
@@ -40,6 +43,7 @@ namespace SSW.SophieBot
             {
                 FeatureName = name;
             }
+
             IsRequired = isRequired;
         }
 

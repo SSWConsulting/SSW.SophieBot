@@ -33,8 +33,8 @@ namespace SSW.SophieBot.LUIS.Sync.Test
         public void Should_Have_Old_Data_For_Test()
         {
             // Assert
-            _testData.SswPeopleNames.SubLists[0].List.Contains(_testData.MqEmployees[0].Message.FullName).ShouldBeTrue();
-            _testData.SswPeopleNames.SubLists[1].List.Contains(_testData.MqEmployees[1].Message.FullName).ShouldBeFalse();
+            _testData.SswPeopleNames.SubLists[0].List.ShouldContain(_testData.MqEmployees[0].Message.FullName);
+            _testData.SswPeopleNames.SubLists[1].List.ShouldNotContain(_testData.MqEmployees[1].Message.FullName);
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace SSW.SophieBot.LUIS.Sync.Test
 
             // Assert
             newUpsertCanonicalForms.Count().ShouldBe(3);
-            upsertCanonicalForms.All(form => newUpsertCanonicalForms.Contains(form)).ShouldBeTrue();
+            upsertCanonicalForms.ShouldAllBe(form => newUpsertCanonicalForms.Contains(form));
         }
     }
 }

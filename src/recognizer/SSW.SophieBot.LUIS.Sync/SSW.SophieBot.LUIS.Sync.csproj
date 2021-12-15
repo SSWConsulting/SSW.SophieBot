@@ -8,8 +8,8 @@
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\framework\SSW.SophieBot.AzureFunction\SSW.SophieBot.AzureFunction.csproj" />
-    <ProjectReference Include="..\..\SSW.SophieBot.Recognizer.LUIS.EmployeeFinder\SSW.SophieBot.Recognizer.LUIS.EmployeeFinder.csproj" />
+    <ProjectReference Include="..\..\framework\SSW.SophieBot.AzureFunction\SSW.SophieBot.AzureFunction.csproj" />
+    <ProjectReference Include="..\SSW.SophieBot.Recognizer.LUIS.EmployeeFinder\SSW.SophieBot.Recognizer.LUIS.EmployeeFinder.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">

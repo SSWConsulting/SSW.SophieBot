@@ -1,4 +1,5 @@
 ﻿using SSW.SophieBot;
+using System.Linq;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -7,7 +8,8 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddRecognizerSchema<T>(this IServiceCollection services)
             where T : class
         {
-            var modelTypes = RecognizerSchemaHelper.GetAllModelTypes<T>();
+            var modelDescriptors = RecognizerSchemaHelper.GetAllModelTypes<T>();
+            var modelTypes = modelDescriptors.Select(modelDescriptor => modelDescriptor.ModelType);
 
             foreach (var modelType in modelTypes)
             {
@@ -16,7 +18,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.PostConfigure<RecognizerSchemaOptions>(options =>
             {
-                options.ModelTypes.AddRange(modelTypes);
+                options.AddModelTypes(modelTypes);
             });
 
             return services;

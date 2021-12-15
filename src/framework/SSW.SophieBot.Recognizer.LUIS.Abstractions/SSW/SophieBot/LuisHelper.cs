@@ -10,27 +10,26 @@ namespace SSW.SophieBot
 {
     public static class LuisHelper
     {
-        public static HierarchicalEntityModel GetEntityCreateObject<T>(IEnumerable<Type> entityTypes)
+        public static ModelCreateObject GetEntityCreateObject<T>()
             where T : class, IEntity
         {
-            return GetEntityCreateObject(typeof(T), entityTypes);
+            return GetEntityCreateObject(typeof(T));
         }
 
-        public static HierarchicalEntityModel GetEntityCreateObject(Type entityType, IEnumerable<Type> entityTypes)
+        public static ModelCreateObject GetEntityCreateObject(Type entityType)
         {
-            // TODO: SDK v3-preview only supports one level of child entity. need investigation and improvement
             Check.NotNull(entityType, nameof(entityType));
-            Check.NotNullOrEmpty(entityTypes, nameof(entityTypes));
-
-            var children = entityTypes.Where(type => ChildOfAttribute.GetParentOrDefault(type) == entityType);
-
             if (!typeof(IEntity).IsAssignableFrom(entityType))
             {
                 throw new ArgumentException($"Given type should implement {typeof(IEntity).FullName}, but is {entityType.FullName}");
             }
 
-            var childrenNames = children.Select(child => ModelAttribute.GetName(child)).ToList();
-            return new HierarchicalEntityModel(childrenNames, ModelAttribute.GetName(entityType));
+            return new ModelCreateObject(ModelAttribute.GetName(entityType));
+        }
+
+        public static HierarchicalChildModelCreateObject GetChildEntityCreateObject(Type childEntityType)
+        {
+            return new HierarchicalChildModelCreateObject(ModelAttribute.GetName(childEntityType));
         }
 
         public static ClosedListModelCreateObject GetClEntityCreateObject<T>()
@@ -56,7 +55,7 @@ namespace SSW.SophieBot
             CancellationToken cancellationToken = default)
         {
             var appId = options.GetGuidAppId();
-            if (appId == Guid.Empty)
+            if (appId == default)
             {
                 throw new LuisException("Failed to get LUIS app ID from configuration, end execution");
             }
@@ -85,6 +84,11 @@ namespace SSW.SophieBot
             })
             .Where(model => model != null)
             .ToList();
+        }
+
+        public static void FailOperation(string message = null)
+        {
+            new OperationStatus(OperationStatusType.Failed, message).EnsureSuccessOperationStatus();
         }
     }
 }

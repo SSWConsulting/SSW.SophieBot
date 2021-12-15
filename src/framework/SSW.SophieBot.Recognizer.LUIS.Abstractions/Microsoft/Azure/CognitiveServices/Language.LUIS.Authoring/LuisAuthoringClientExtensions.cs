@@ -160,16 +160,23 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             this ILUISAuthoringClient client,
             Guid appId,
             string version,
-            HierarchicalEntityModel createObject,
+            ModelCreateObject createObject,
             CancellationToken cancellationToken = default)
         {
             var entityId = await client.GetEntityIdAsync(appId, createObject.Name, version, cancellationToken);
             if (entityId.HasValue)
             {
-                await client.Model.DeleteEntityAsync(appId, version, entityId.Value, cancellationToken);
+                var deleteResponse = await client.Model.DeleteEntityAsync(appId, version, entityId.Value, cancellationToken);
+                deleteResponse.EnsureSuccessOperationStatus();
             }
 
-            return await client.Model.AddHierarchicalEntityAsync(appId, version, createObject, cancellationToken);
+            var newEntityId = await client.Model.AddEntityAsync(appId, version, createObject, cancellationToken);
+            if (newEntityId == default)
+            {
+                LuisHelper.FailOperation();
+            }
+
+            return newEntityId;
         }
 
         public static async Task<Guid> EnsureClEntityExistAsync(
@@ -210,6 +217,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
 
             using var response = await httpClient.SendAsync(request, cancellationToken);
             response.EnsureSuccessStatusCode();
+
             return JsonSerializer.Deserialize<OperationStatus>(await response.Content.ReadAsStringAsync());
         }
     }

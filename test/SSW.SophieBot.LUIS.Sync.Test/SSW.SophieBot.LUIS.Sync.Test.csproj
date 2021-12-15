@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\recognizer\luis\SSW.SophieBot.LUIS.Sync\SSW.SophieBot.LUIS.Sync.csproj" />
+    <ProjectReference Include="..\..\src\recognizer\SSW.SophieBot.LUIS.Sync\SSW.SophieBot.LUIS.Sync.csproj" />
   </ItemGroup>
 
 </Project>

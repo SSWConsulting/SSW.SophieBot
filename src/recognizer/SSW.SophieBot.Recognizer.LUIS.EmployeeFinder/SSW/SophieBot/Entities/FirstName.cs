@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
@@ -10,8 +9,6 @@ namespace SSW.SophieBot.Entities
     [Feature("personName")]
     public class FirstName : IEntity
     {
-        public ICollection<Type> Children { get; } = new List<Type>();
-
         public async IAsyncEnumerable<bool> SeedAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             yield return true;
