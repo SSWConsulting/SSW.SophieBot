@@ -1,8 +1,70 @@
-[common](common.en-us.lg)
-[Greeting](greeting.en-us.lg)
+[Common](common.en-us.lg)
 
 # WelcomeAttachment()
 [Attachment
     contenttype = herocard
     content = ${json(GreetingHeroCard())}
 ]
+
+# GreetingHeroCard()
+- ```
+{
+    "text": "${SayHi()}",
+    "images": [
+        ${if(!user.welcomed, GreetingImage(), '')}
+    ],
+    "buttons": [
+        ${GreetingButtons()}
+    ]
+}
+```
+
+# SayHi()
+- IF: ${exists(user.Identity)}
+    - ```
+    ${if(!user.welcomed, WelcomeText(), '')}
+    <b>Hi ${user.Identity.givenName}</b> 🖐<br/><br/>
+    ${SummaryText()}
+    ```
+- ELSE: 
+    - ```
+    ${if(!user.welcomed, WelcomeText(), '')}
+    <b>Hi there</b> 🖐<br/>
+    ${SummaryText()}
+    ```
+
+# WelcomeText()
+- ```
+<b><font size=\"4\">Welcome to <a href=\"${settings.App.ProductUrl}\">SSW SophieBot</a>!</font></b><br/><br/>
+```
+
+# GreetingImage()
+- ```
+{
+    "url": "${settings.App.BaseUrl}/sophiebot-branding.png"
+}
+```
+
+# SummaryText()
+- I can help you search for people in your organization. Try  asking...
+- I'm ready to help answer questions about people in your organization. Try  asking...
+- I'm here to help you find people in your organization. Try  asking...
+
+# GreetingButtons()
+- ```
+{
+    "type": "imBack",
+    "title": "Who is Adam Cogan?",
+    "value": "Who is Adam Cogan?"
+},
+{
+    "type": "imBack",
+    "title": "Who knows Azure?",
+    "value": "Who knows Azure?"
+},
+{
+    "type": "imBack",
+    "title": "Who is on client work?",
+    "value": "Who is on client work?"
+}
+```

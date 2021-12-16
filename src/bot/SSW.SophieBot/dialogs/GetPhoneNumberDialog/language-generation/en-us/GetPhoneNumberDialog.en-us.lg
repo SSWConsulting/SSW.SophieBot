@@ -1,4 +1,4 @@
-[SSWSophieBot](SSWSophieBot.en-us.lg)
+[Common](common.en-us.lg)
 
 # SendActivity_ooStup_text()
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.

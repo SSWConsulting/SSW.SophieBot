@@ -1,6 +1,5 @@
-[Icons](icons.en-us.lg)
-[BillableList](billableList.en-us.lg)
-[SSWSophieBot](SSWSophieBot.en-us.lg)
+[Common](common.en-us.lg)
+[PeopleList](peopleList.en-us.lg)
 
 # SendActivity_emJef2()
 [Activity
@@ -11,12 +10,12 @@
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
 # SendActivity_LcKuck()
 [Activity
-    Attachments = ${json(WorkingEmployeesList(dialog.locationEntity, dialog.foreach.page, count(turn.sortedEmployees)))}
+    Attachments = ${json(PeopleListBySkill(dialog.locationEntity, dialog.foreach.page, count(turn.sortedEmployees)))}
 ]
 
 # SendActivity_WXSOyK()
 [Activity
-    Attachments = ${json(BillableEmployeesList(
+    Attachments = ${json(PeopleListByBilled(
         if(dialog.foreach.pageindex == 1, dialog.billableTitle, GetNextTitle(dialog.foreach.pageindex, 10)), 
         turn.clientNow,
         if(dialog.foreach.pageindex == 1, true, false),
@@ -27,121 +26,6 @@
         'GetExpertsByLocation'))}
 ]
 
-# GetNextTitle(pageIndex, pageSize)
-- ${PaginationText(pageIndex, count(turn.employees))}
-
-# WorkingEmployeesList(location, employees, total)
--```
-{
-    "type": "AdaptiveCard",
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "version": "1.2",
-    "body": [
-        ${join(where(createArray(SkillCardHeader(location, total), EmployeeList(employees)), item => item != ''), ',')}
-    ]
-}
-```
-
-# SkillCardHeader(location, total)
-- IF: ${ dialog.foreach.pageindex == 1 }
-    - ```
-    {
-        "type": "TextBlock",
-        "text": "${dialog.skillEntity} - ${if(location != null, titleCase(location), 'All')} [${total}]",
-        "wrap": true,
-        "size": "ExtraLarge",
-        "weight": "Bolder"
-    }
-    ```
-- ELSE:
-    - ${Pagination(dialog.foreach.pageindex, total)}
-
-# EmployeeList(employees)
--```
-{
-    "type": "ColumnSet",
-    "columns": [
-        ${ColumnHeaders(count(employees))}
-    ],
-    "style": "default"
-},
-{
-    "type": "Container",
-    "items": [${join(select(employees, e, EmployeeRow(e)), ',')}],
-}
-```
-
-# ColumnHeaders(pageCount)
-- IF: ${ dialog.foreach.pageindex == 1 || pageCount <= 10 }
-    - ```
-    {
-        "type": "Column",
-        "width": "50px",
-        "items": []
-    },
-    {
-        "type": "Column",
-        "width": "stretch",
-        "items": []
-    },
-    {
-        "type": "Column",
-        "width": "stretch",
-        "items": [
-            {
-                "type": "TextBlock",
-                "text": "Level ↓",
-                "wrap": true,
-                "weight": "Bolder",
-                "horizontalAlignment": "Center"
-            }
-        ]
-    },
-    ${BilledHeader('Billed', 'stretch', 'Center')}
-    ```
-- ELSE:
-    -
-
-# EmployeeRow(employee)
-- ```
-{
-    "type": "ColumnSet",
-    "columns": [
-        ${Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px')},
-        ${ClickableName(concat(employee.firstName, ' ', employee.lastName), employee.firstName, employee.lastName, 'stretch', 'Small', 'Default', 'GetExpertsByLocation')},
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "wrap": true,
-                    "text": "${employee.skillLevel}",
-                    "size": "Small",
-                    "horizontalAlignment": "Center"
-                }
-            ],
-            "verticalContentAlignment": "Center"
-        },
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "wrap": true,
-                    "text": "${DaysText(first(where(turn.billableEmployees.employees, e, e.userId == employee.UserId)).billedDays, true)}",
-                    "size": "Small",
-                    "horizontalAlignment": "Center"
-                }
-            ],
-            "verticalContentAlignment": "Center"
-        }
-    ],
-    "height": "stretch",
-    "separator": false
-}
-```
 # SendActivity_HNg6Pg()
 [Activity
     Text = ${SendActivity_HNg6Pg_text()}
