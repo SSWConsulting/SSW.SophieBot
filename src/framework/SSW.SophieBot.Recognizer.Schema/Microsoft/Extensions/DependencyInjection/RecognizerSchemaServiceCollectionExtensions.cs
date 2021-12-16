@@ -8,7 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class RecognizerSchemaServiceCollectionExtensions
     {
         public static IServiceCollection AddRecognizerSchema<TSchema>(
-            this IServiceCollection services, 
+            this IServiceCollection services,
             Action<RecognizerSchemaServiceOptions> action = null)
             where TSchema : class
         {

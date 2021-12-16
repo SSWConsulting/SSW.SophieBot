@@ -1,5 +1,4 @@
-﻿using Castle.Core.Logging;
-using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
+﻿using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
 using Microsoft.Extensions.Logging.Abstractions;
 using SSW.SophieBot.Employees;
 using SSW.SophieBot.Entities;
@@ -52,7 +51,7 @@ namespace SSW.SophieBot.LUIS.Sync.Test.Data
         public TestData()
         {
             var testSswPeopleNamesClEntity = new TestSswPeopleNamesClEntity(
-                new TestLUISAuthoringClient(this), 
+                new TestLUISAuthoringClient(this),
                 new TestPeopleClient(),
                 new TestLuisOptions(),
                 NullLogger<SswPersonNames>.Instance);

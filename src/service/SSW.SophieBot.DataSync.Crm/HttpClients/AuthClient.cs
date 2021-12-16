@@ -29,7 +29,7 @@ namespace SSW.SophieBot.DataSync.Crm.HttpClients
 
             _httpClient.BaseAddress = new Uri(_crmOptions.GetFormatedTokenEndpoint());
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            
+
             if (!string.IsNullOrWhiteSpace(_crmOptions.AppId) && !string.IsNullOrWhiteSpace(_crmOptions.AppSecret))
             {
                 var clientCreds = $"{_crmOptions.AppId}:{Uri.EscapeDataString(_crmOptions.AppSecret)}";

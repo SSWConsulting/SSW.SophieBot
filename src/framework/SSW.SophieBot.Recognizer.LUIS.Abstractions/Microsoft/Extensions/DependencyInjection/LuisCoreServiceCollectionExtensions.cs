@@ -9,7 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class LuisCoreServiceCollectionExtensions
     {
         public static IServiceCollection AddLuis<TSchema>(
-            this IServiceCollection services, 
+            this IServiceCollection services,
             IConfiguration configuration,
             Action<RecognizerSchemaServiceOptions> action = null)
             where TSchema : class

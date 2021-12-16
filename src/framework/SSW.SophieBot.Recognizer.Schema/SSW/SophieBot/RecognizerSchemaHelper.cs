@@ -63,7 +63,7 @@ namespace SSW.SophieBot
                 .Select(type => new ModelDescriptor(type))
                 .ToList();
 
-            foreach(var modelDescriptor in modelDescriptors)
+            foreach (var modelDescriptor in modelDescriptors)
             {
                 SetDependencies(modelDescriptor, modelDescriptors);
             }
@@ -91,7 +91,7 @@ namespace SSW.SophieBot
                 .OfType<IModelDependency>()
                 .SelectMany(attribute => attribute.GetDependencies());
 
-            foreach(var dependency in dependencies)
+            foreach (var dependency in dependencies)
             {
                 dependencies = dependencies.Union(FindDependedModelTypesRecursively(dependency));
             }

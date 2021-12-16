@@ -1,5 +1,4 @@
-﻿using SSW.SophieBot.Components;
-using SSW.SophieBot.HttpClientAction.Models;
+﻿using SSW.SophieBot.HttpClientAction.Models;
 using SSW.SophieBot.HttpClientComponents.PersonQuery.Models;
 using System;
 using System.Collections.Generic;

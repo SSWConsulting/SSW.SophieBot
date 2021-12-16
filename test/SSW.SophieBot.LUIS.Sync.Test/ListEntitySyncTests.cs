@@ -22,9 +22,9 @@ namespace SSW.SophieBot.LUIS.Sync.Test
             _testData = new TestData();
             _luisAuthoringClient = new TestLUISAuthoringClient(_testData);
             _sswPeopleNamesClEntity = new TestSswPeopleNamesClEntity(
-                _luisAuthoringClient, 
-                new TestPeopleClient(), 
-                new TestLuisOptions(), 
+                _luisAuthoringClient,
+                new TestPeopleClient(),
+                new TestLuisOptions(),
                 NullLogger<SswPersonNames>.Instance);
             _listEntitySync = new ListEntitySync(
                 _luisAuthoringClient,
@@ -47,7 +47,7 @@ namespace SSW.SophieBot.LUIS.Sync.Test
             // Arrange
             var upsertCanonicalForms = _testData.MqEmployees
                 .Where(mqEmployee => mqEmployee.SyncMode != SyncMode.Delete)
-                .Select(mqEmployee => 
+                .Select(mqEmployee =>
                     _sswPeopleNamesClEntity.GetCanonicalForm(mqEmployee.Message));
 
             //Act

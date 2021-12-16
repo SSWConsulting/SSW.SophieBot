@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
@@ -30,7 +29,7 @@ namespace SSW.SophieBot.LUIS.Migrator
 
                     services.AddDataApi(hostContext.Configuration);
                     services.AddLuis<LuisMigratorSchema>(
-                        hostContext.Configuration, 
+                        hostContext.Configuration,
                         options => options.UseManager<LuisMigratorSchemaManager>());
 
                     services.AddHostedService<LuisMigratorHostedService>();
