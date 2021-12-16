@@ -62,21 +62,19 @@ namespace SSW.SophieBot
 
         public static List<EntityFeatureRelationModel> GetEntityFeatureRelationModels(Type entityType)
         {
-            var featureAttributes = entityType.GetCustomAttributes(true).OfType<FeatureAttribute>();
-            return featureAttributes.Select(attribute =>
-            {
-                var featureName = attribute.GetFeatureName();
-
-                if (attribute.IsModel)
+            return FeatureAttribute.GetFeatures(Check.NotNull(entityType, nameof(entityType)))
+                .Select(feature =>
                 {
-                    return new EntityFeatureRelationModel(featureName, null, attribute.IsRequired);
-                }
-                else
-                {
-                    return new EntityFeatureRelationModel(null, featureName, attribute.IsRequired);
-                }
-            })
-            .ToList();
+                    if (feature.IsModelFeature)
+                    {
+                        return new EntityFeatureRelationModel(feature.FeatureName, null, feature.IsRequired);
+                    }
+                    else
+                    {
+                        return new EntityFeatureRelationModel(null, feature.FeatureName, feature.IsRequired);
+                    }
+                })
+                .ToList();
         }
 
         public static OperationStatus SuccessOperation(string message = null)

@@ -5,11 +5,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
 {
     public static class ModelExtensions
     {
-        public static WordListObject ToWordListObject(this SubClosedList subList)
-        {
-            return new WordListObject(subList.CanonicalForm, subList.List);
-        }
-
         public static OperationStatus EnsureSuccessOperationStatus(this OperationStatus operationStatus)
         {
             if (operationStatus.Code != OperationStatusType.Success)

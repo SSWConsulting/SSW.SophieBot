@@ -11,6 +11,7 @@ using System.Threading;
 
 namespace SSW.SophieBot.Entities
 {
+    [Model("sswPersonNames")]
     public class SswPersonNames : IClosedList, IDisposable
     {
         private readonly ILUISAuthoringClient _luisAuthoringClient;

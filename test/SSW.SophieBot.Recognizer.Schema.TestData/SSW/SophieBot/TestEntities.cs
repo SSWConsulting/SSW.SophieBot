@@ -6,8 +6,7 @@
 
     }
 
-    [TestModelDependency(typeof(NameEntity))]
-    [TestModelDependency(typeof(TestModelDependency))]
+    [TestModelDependency(typeof(NameEntity), typeof(TestModelDependency))]
     public class FirstNameEntity : NameEntity
     {
 

@@ -15,7 +15,7 @@ namespace SSW.SophieBot.LUIS.Sync.Test.Data
         public ClosedListEntityExtractor SswPeopleNames { get; } = new(
             Guid.NewGuid(),
             string.Empty,
-            name: "SswPersonNames");
+            name: "sswPersonNames");
 
         public List<ClosedListEntityExtractor> ClosedListEntities => new()
         {

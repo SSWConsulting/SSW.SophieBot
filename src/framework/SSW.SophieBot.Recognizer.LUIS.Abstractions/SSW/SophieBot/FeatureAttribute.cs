@@ -1,45 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace SSW.SophieBot
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public class FeatureAttribute : Attribute, IModelDependency
     {
-        // TODO: allow multiple
-        public Type FeatureType { get; }
+        private readonly List<FeatureDescriptor> _features = new List<FeatureDescriptor>();
+        public IReadOnlyCollection<FeatureDescriptor> Features => _features.ToImmutableHashSet();
 
-        public bool IsModel { get; }
-
-        public bool IsRequired { get; }
-
-        public FeatureAttribute(Type type, bool isModel = true, bool isRequired = false)
+        public FeatureAttribute(Type type, bool isRequired = false)
         {
-            Check.NotNull(type, nameof(type));
-            if (!typeof(IRecognizerModel).IsAssignableFrom(type))
-            {
-                throw new ArgumentException($"Feature type should implement {typeof(IRecognizerModel).FullName}, but is {type.FullName}");
-            }
-
-            FeatureType = type;
-            IsModel = isModel;
-            IsRequired = isRequired;
+            _features.Add(new FeatureDescriptor(type, isRequired));
         }
 
-        public string GetFeatureName()
+        public FeatureAttribute(params Type[] types)
         {
-            return ModelAttribute.GetName(FeatureType);
+            Check.NotNull(types, nameof(types));
+
+            _features.AddRange(types
+                .Where(type => type != null)
+                .Select(type => new FeatureDescriptor(type))
+            );
         }
 
         public List<Type> GetDependencies()
         {
-            var dependencies = new List<Type>();
-            if (FeatureType != null)
-            {
-                dependencies.Add(FeatureType);
-            }
+            return _features.Select(feature => feature.FeatureType).ToList();
+        }
 
-            return dependencies;
+        public static List<FeatureDescriptor> GetFeatures<T>()
+        {
+            return GetFeatures(typeof(T));
+        }
+
+        public static List<FeatureDescriptor> GetFeatures(Type modelType)
+        {
+            Check.NotNull(modelType, nameof(modelType));
+
+            return modelType.GetCustomAttributes(true)
+                .OfType<FeatureAttribute>()
+                .SelectMany(attribute => attribute.Features)
+                .ToList();
         }
     }
 }

@@ -2,8 +2,8 @@
 
 namespace SSW.SophieBot.Entities
 {
-    [Feature(typeof(SswPersonNames))]
-    [Feature(typeof(PersonName))]
+    [Model("contact")]
+    [Feature(typeof(SswPersonNames), typeof(PersonName))]
     public class Contact : RecognizerModelBase, IEntity
     {
         public Type Parent { get; }
