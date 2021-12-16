@@ -28,13 +28,10 @@ namespace SSW.SophieBot.LUIS.Migrator
                 {
                     services.AddLogging(builder => builder.AddSerilog());
 
-                    services.AddHttpClient();
-                    services.AddTransient<IPeopleApiClient, PeopleApiClient>();
-                    services.Configure<PeopleApiOptions>(hostContext.Configuration.GetSection("PeopleApi"));
-
-                    services.AddLuis(hostContext.Configuration);
-
-                    services.Replace(ServiceDescriptor.Transient<IRecognizerSchemaManager, LuisMigratorSchemaManager>());
+                    services.AddDataApi(hostContext.Configuration);
+                    services.AddLuis<LuisMigratorSchema>(
+                        hostContext.Configuration, 
+                        options => options.UseManager<LuisMigratorSchemaManager>());
 
                     services.AddHostedService<LuisMigratorHostedService>();
                 });

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SSW.SophieBot
@@ -6,7 +7,7 @@ namespace SSW.SophieBot
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public class ChildOfAttribute : Attribute, IModelDependency
     {
-        public Type Dependency { get; }
+        public Type Parent { get; }
 
         public ChildOfAttribute(Type parentEntity)
         {
@@ -17,7 +18,7 @@ namespace SSW.SophieBot
                 throw new ArgumentException($"Parent type should implement {typeof(IEntity).FullName}, but is {parentEntity.FullName}");
             }
 
-            Dependency = parentEntity;
+            Parent = parentEntity;
         }
 
         public static Type GetParentOrDefault(Type entityType)
@@ -25,7 +26,12 @@ namespace SSW.SophieBot
             return entityType.GetCustomAttributes(true)
                 .OfType<ChildOfAttribute>()
                 .FirstOrDefault()
-                ?.Dependency;
+                ?.Parent;
+        }
+
+        public List<Type> GetDependencies()
+        {
+            return new List<Type> { Parent };
         }
     }
 }

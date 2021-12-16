@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
 {
+    // TODO: move to service
     public static class LuisAuthoringClientExtensions
     {
         public static async Task<string> GetActiveVersionAsync(
@@ -55,8 +56,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         public static async Task<Guid?> GetClEntityIdAsync(
             this ILUISAuthoringClient client,
             Guid appId,
-            string clName,
             string version,
+            string clName,
             CancellationToken cancellationToken = default)
         {
             if (clName.IsNullOrEmpty())
@@ -186,17 +187,48 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             ClosedListModelCreateObject createObject,
             CancellationToken cancellationToken = default)
         {
-            var clEntityId = await client.GetClEntityIdAsync(appId, createObject.Name, version, cancellationToken);
+            var clEntityId = await client.GetClEntityIdAsync(appId, version, createObject.Name, cancellationToken);
             if (clEntityId.HasValue)
             {
-                await client.Model.DeleteClosedListAsync(appId, version, clEntityId.Value, cancellationToken);
+                var deleteOperation = await client.Model.DeleteClosedListAsync(appId, version, clEntityId.Value, cancellationToken);
+                deleteOperation.EnsureSuccessOperationStatus();
             }
 
             return await client.Model.AddClosedListAsync(appId, version, createObject, cancellationToken);
         }
 
+        public static async Task<PrebuiltEntityExtractor> EnsurePrebuiltEntityExistAsync(
+            this ILUISAuthoringClient client,
+            Guid appId,
+            string version,
+            IList<string> prebuiltEntityNames,
+            CancellationToken cancellationToken = default)
+        {
+            Check.NotNullOrEmpty(prebuiltEntityNames, nameof(prebuiltEntityNames));
+
+            var prebuiltEntities = await client.Model.ListPrebuiltsAsync(appId, version, cancellationToken: cancellationToken);
+            var targetPrebuiltEntity = prebuiltEntities.FirstOrDefault(entity => prebuiltEntityNames.Contains(entity.Name));
+            if (targetPrebuiltEntity == null)
+            {
+                var newPrebuiltEntities = await client.Model.AddPrebuiltAsync(
+                    appId,
+                    version,
+                    prebuiltEntityNames,
+                    cancellationToken);
+
+                if (!newPrebuiltEntities.Any())
+                {
+                    LuisHelper.FailOperation();
+                }
+
+                return newPrebuiltEntities.First();
+            }
+
+            return targetPrebuiltEntity;
+        }
+
         public static async Task<OperationStatus> UpdateEntityFeatureRelationAsync(
-            this IModel model,
+            this ILUISAuthoringClient client,
             string version,
             Guid entityId,
             IList<EntityFeatureRelationCreateObject> createObjects,
@@ -205,7 +237,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             CancellationToken cancellationToken = default)
         {
             // TODO: consider using Microsoft.Rest
-            var uri = new Uri($"https://{luisOptions.AuthoringEndpoint}/luis/authoring/v3.0-preview/apps/{luisOptions.AppId}" +
+            var uri = new Uri($"{luisOptions.AuthoringEndpoint.EnsureEndsWith("/")}luis/authoring/v3.0-preview/apps/{luisOptions.AppId}" +
                 $"/versions/{version}/entities/{entityId}/features");
 
             var content = new StringContent(JsonSerializer.Serialize(createObjects), Encoding.UTF8, "application/json");
@@ -218,7 +250,37 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             using var response = await httpClient.SendAsync(request, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            return JsonSerializer.Deserialize<OperationStatus>(await response.Content.ReadAsStringAsync());
+            return LuisHelper.SuccessOperation();
+        }
+
+        public static async Task<Guid> CreateEntityChildAsync(
+            this ILUISAuthoringClient client,
+            string version,
+            Guid parentEntityId,
+            string childEntityName,
+            HttpClient httpClient,
+            LuisOptions luisOptions,
+            CancellationToken cancellationToken = default)
+        {
+            Check.NotNullOrEmpty(childEntityName, nameof(childEntityName));
+
+            var uri = new Uri($"{luisOptions.AuthoringEndpoint.EnsureEndsWith("/")}luis/authoring/v3.0-preview/apps/{luisOptions.AppId}" +
+                $"/versions/{version}/entities/{parentEntityId}/children");
+
+            var createObject = new { name = childEntityName };
+
+            var content = new StringContent(JsonSerializer.Serialize(createObject), Encoding.UTF8, "application/json");
+            var request = new HttpRequestMessage(HttpMethod.Post, uri)
+            {
+                Content = content
+            };
+            request.Headers.Add("Ocp-Apim-Subscription-Key", luisOptions.AuthoringKey);
+
+            using var response = await httpClient.SendAsync(request, cancellationToken);
+            response.EnsureSuccessStatusCode();
+
+            var newEntityId = JsonSerializer.Deserialize<Guid>(await response.Content.ReadAsStringAsync());
+            return newEntityId;
         }
     }
 }

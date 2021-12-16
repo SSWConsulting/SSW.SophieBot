@@ -1,43 +1,33 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SSW.SophieBot.Entities;
 
 namespace SSW.SophieBot.LUIS.Migrator
 {
-    public class LuisMigratorSchemaManager : RecognizerSchemaManagerBase
+    public class LuisMigratorSchemaManager : LuisSchemaManager
     {
         public LuisMigratorSchemaManager(
+            HttpClient httpClient,
+            ILUISAuthoringClient luisAuthoringClient,
             IServiceProvider serviceProvider,
-            IOptions<RecognizerSchemaOptions> schemaOptions)
-            : base(serviceProvider, schemaOptions)
+            IOptions<RecognizerSchemaOptions> schemaOptions,
+            IOptions<LuisOptions> luisOptions,
+            ILogger<LuisSchemaManager> logger)
+            : base(httpClient, luisAuthoringClient, serviceProvider, schemaOptions, luisOptions, logger)
         {
 
         }
 
-        public override Task PublishSchemaAsync(CancellationToken cancellationToken = default)
+        protected override List<Type> ChooseModelTypesToPublish()
         {
-            return Task.CompletedTask;
-        }
-
-        public override async Task SeedAsync(CancellationToken cancellationToken = default)
-        {
-            var modelTypes = new List<Type>
-            {
-                typeof(SswPersonNames)
-            };
-
-            foreach (var modelType in modelTypes)
-            {
-                var modelInstance = (IRecognizerModel)ServiceProvider.GetRequiredService(modelType);
-
-                await foreach (var seedResult in modelInstance.SeedAsync(cancellationToken))
-                {
-                    if (!seedResult)
-                    {
-                        throw new RecognizerSchemaException($"Failed to seed model {modelType.FullName}");
-                    }
-                }
-            }
+            return SchemaOptions.ModelTypes
+                .Where(modelType => modelType == typeof(SswPersonNames)
+                || modelType == typeof(Contact)
+                || modelType == typeof(FirstName)
+                || modelType == typeof(LastName)
+                || modelType == typeof(PersonName))
+                .ToList();
         }
     }
 }

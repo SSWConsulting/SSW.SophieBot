@@ -27,11 +27,12 @@ namespace SSW.SophieBot.Recognizer.Schema.Test
             var modelTypes = RecognizerSchemaHelper.GetAllModelTypes<TestSchema>().ToList();
 
             // Assert
-            modelTypes.Count.ShouldBe(4);
+            modelTypes.Count.ShouldBe(5);
             modelTypes[0].ModelType.ShouldBe(typeof(TestModelDependency));
             modelTypes[1].ModelType.ShouldBe(typeof(NameEntity));
             modelTypes[2].ModelType.ShouldBe(typeof(FirstNameEntity));
             modelTypes[3].ModelType.ShouldBe(typeof(LastNameEntity));
+            modelTypes[4].ModelType.ShouldBe(typeof(TestSubEntity));
         }
     }
 }

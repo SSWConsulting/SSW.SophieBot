@@ -1,6 +1,6 @@
 ﻿namespace SSW.SophieBot
 {
-    [Schema]
+    [Schema(typeof(LuisAbstractionSchema))]
     public class EmployeeFinderRecognizerSchema
     {
     }

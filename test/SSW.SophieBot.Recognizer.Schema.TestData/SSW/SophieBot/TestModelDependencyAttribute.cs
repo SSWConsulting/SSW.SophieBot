@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SSW.SophieBot
 {
@@ -10,6 +11,11 @@ namespace SSW.SophieBot
         public TestModelDependencyAttribute(Type dependency)
         {
             Dependency = Check.NotNull(dependency, nameof(dependency));
+        }
+
+        public List<Type> GetDependencies()
+        {
+            return new List<Type> { Dependency };
         }
     }
 }

@@ -21,7 +21,9 @@ namespace SSW.SophieBot.LUIS.Migrator
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
+            await _recognizerSchemaManager.PublishSchemaAsync(cancellationToken);
             await _recognizerSchemaManager.SeedAsync(cancellationToken);
+
             _hostApplicationLifetime.StopApplication();
         }
 

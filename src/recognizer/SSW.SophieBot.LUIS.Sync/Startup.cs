@@ -12,7 +12,7 @@ namespace SSW.SophieBot.LUIS.Sync
             builder.AddSerilog();
 
             var configuration = builder.GetContext().Configuration;
-            builder.Services.AddLuis(configuration);
+            //builder.Services.AddLuis(configuration);
 
             builder.Services.AddRecognizerSchema<EmployeeFinderRecognizerSchema>();
         }

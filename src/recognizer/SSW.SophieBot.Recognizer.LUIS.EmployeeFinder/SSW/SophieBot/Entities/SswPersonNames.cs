@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring;
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SSW.SophieBot.Employees;
 using System;
@@ -15,17 +16,20 @@ namespace SSW.SophieBot.Entities
         private readonly ILUISAuthoringClient _luisAuthoringClient;
         private readonly IPeopleApiClient _peopleApiClient;
         private readonly LuisOptions _luisOptions;
+        private readonly ILogger<SswPersonNames> _logger;
 
         public ICollection<SubClosedList> SubLists { get; } = new List<SubClosedList>();
 
         public SswPersonNames(
             ILUISAuthoringClient luisAuthoringClient,
             IPeopleApiClient peopleApiClient,
-            IOptions<LuisOptions> luisOptions)
+            IOptions<LuisOptions> luisOptions,
+            ILogger<SswPersonNames> logger)
         {
             _luisAuthoringClient = luisAuthoringClient;
             _peopleApiClient = peopleApiClient;
             _luisOptions = luisOptions.Value;
+            _logger = logger;
         }
 
         public async IAsyncEnumerable<bool> SeedAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -47,6 +51,8 @@ namespace SSW.SophieBot.Entities
 
             await foreach (var employees in employeePages)
             {
+                _logger.LogInformation("Received employees from People API: {Count}", employees.Count());
+
                 var patchResponse = await _luisAuthoringClient.Model.PatchClosedListAsync(
                     appId,
                     activeVersion,

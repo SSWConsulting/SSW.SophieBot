@@ -19,9 +19,7 @@ namespace SSW.SophieBot
 
             var schemaTypes = GetInheritedSchemaTypes(schemaType).Append(schemaType);
             var schemaAssemblies = schemaTypes.Select(x => x.Assembly).Distinct();
-            var modelDescriptors = schemaAssemblies
-                .SelectMany(assembly => EnumerateModelDescriptorsFromAssembly(assembly))
-                .Distinct();
+            var modelDescriptors = EnumerateModelDescriptorsFromAssembly(schemaAssemblies).Distinct();
 
             return modelDescriptors.SortByDependencies(m => m.Dependencies).ToHashSet();
         }
@@ -52,9 +50,9 @@ namespace SSW.SophieBot
             return typeList.ToHashSet();
         }
 
-        private static IEnumerable<ModelDescriptor> EnumerateModelDescriptorsFromAssembly(Assembly assembly)
+        private static IEnumerable<ModelDescriptor> EnumerateModelDescriptorsFromAssembly(IEnumerable<Assembly> assemblies)
         {
-            var modelDescriptors = AssemblyHelper.GetAllTypes(assembly)
+            var modelDescriptors = assemblies.SelectMany(assembly => AssemblyHelper.GetAllTypes(assembly))
                 .Where(
                     type => type != null &&
                         type.IsClass &&
@@ -91,7 +89,7 @@ namespace SSW.SophieBot
         {
             var dependencies = modelType.GetCustomAttributes(true)
                 .OfType<IModelDependency>()
-                .Select(attribute => attribute.Dependency);
+                .SelectMany(attribute => attribute.GetDependencies());
 
             foreach(var dependency in dependencies)
             {

@@ -1,4 +1,6 @@
-﻿using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring;
+﻿using Castle.Core.Logging;
+using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SSW.SophieBot.Entities;
 
@@ -9,7 +11,9 @@ namespace SSW.SophieBot.LUIS.Sync.Test.Data
         public TestSswPeopleNamesClEntity(
             ILUISAuthoringClient luisAuthoringClient,
             IPeopleApiClient peopleApiClient,
-            IOptions<LuisOptions> luisOptions) : base(luisAuthoringClient, peopleApiClient, luisOptions)
+            IOptions<LuisOptions> luisOptions,
+            ILogger<SswPersonNames> logger) 
+            : base(luisAuthoringClient, peopleApiClient, luisOptions, logger)
         {
 
         }

@@ -75,7 +75,7 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
             CancellationToken cancellationToken = default)
         {
             var clEntityName = ModelAttribute.GetName(typeof(SswPersonNames));
-            var clEntityId = await _luisAuthoringClient.GetClEntityIdAsync(appId, clEntityName, activeVersion, cancellationToken);
+            var clEntityId = await _luisAuthoringClient.GetClEntityIdAsync(appId, activeVersion, clEntityName, cancellationToken);
 
             if (!clEntityId.HasValue)
             {

@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SSW.SophieBot
 {
     public interface IModelDependency
     {
-        Type Dependency { get; }
+        List<Type> GetDependencies();
     }
 }

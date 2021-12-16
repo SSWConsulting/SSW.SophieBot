@@ -27,11 +27,6 @@ namespace SSW.SophieBot
             return new ModelCreateObject(ModelAttribute.GetName(entityType));
         }
 
-        public static HierarchicalChildModelCreateObject GetChildEntityCreateObject(Type childEntityType)
-        {
-            return new HierarchicalChildModelCreateObject(ModelAttribute.GetName(childEntityType));
-        }
-
         public static ClosedListModelCreateObject GetClEntityCreateObject<T>()
             where T : class, IClosedList
         {
@@ -46,7 +41,7 @@ namespace SSW.SophieBot
                 throw new ArgumentException($"Given type should implement {typeof(IClosedList).FullName}, but is {entityType.FullName}");
             }
 
-            return new ClosedListModelCreateObject(name: ModelAttribute.GetName(entityType));
+            return new ClosedListModelCreateObject(new List<WordListObject>(), ModelAttribute.GetName(entityType));
         }
 
         public static async Task<(Guid, string)> GetLuisAppIdAndActiveVersionAsync(
@@ -70,20 +65,23 @@ namespace SSW.SophieBot
             var featureAttributes = entityType.GetCustomAttributes(true).OfType<FeatureAttribute>();
             return featureAttributes.Select(attribute =>
             {
-                if (!attribute.ModelName.IsNullOrEmpty())
-                {
-                    return new EntityFeatureRelationModel(attribute.ModelName, null, attribute.IsRequired);
-                }
+                var featureName = attribute.GetFeatureName();
 
-                if (!attribute.FeatureName.IsNullOrEmpty())
+                if (attribute.IsModel)
                 {
-                    return new EntityFeatureRelationModel(null, attribute.FeatureName, attribute.IsRequired);
+                    return new EntityFeatureRelationModel(featureName, null, attribute.IsRequired);
                 }
-
-                return null;
+                else
+                {
+                    return new EntityFeatureRelationModel(null, featureName, attribute.IsRequired);
+                }
             })
-            .Where(model => model != null)
             .ToList();
+        }
+
+        public static OperationStatus SuccessOperation(string message = null)
+        {
+            return new OperationStatus(OperationStatusType.Success, message);
         }
 
         public static void FailOperation(string message = null)

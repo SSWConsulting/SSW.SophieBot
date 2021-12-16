@@ -1,70 +1,45 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace SSW.SophieBot
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public class FeatureAttribute : Attribute, IModelDependency
     {
-        public string ModelName { get; }
+        // TODO: allow multiple
+        public Type FeatureType { get; }
 
-        public string FeatureName { get; }
+        public bool IsModel { get; }
 
         public bool IsRequired { get; }
 
-        public Type Dependency { get; }
-
-        public FeatureAttribute(Type type, bool isModel = false, bool isRequired = false)
+        public FeatureAttribute(Type type, bool isModel = true, bool isRequired = false)
         {
-            var name = ModelAttribute.GetName(Check.NotNull(type, nameof(type)));
-
-            if (isModel)
+            Check.NotNull(type, nameof(type));
+            if (!typeof(IRecognizerModel).IsAssignableFrom(type))
             {
-                ModelName = name;
-            }
-            else
-            {
-                FeatureName = name;
+                throw new ArgumentException($"Feature type should implement {typeof(IRecognizerModel).FullName}, but is {type.FullName}");
             }
 
-            Dependency = type;
+            FeatureType = type;
+            IsModel = isModel;
             IsRequired = isRequired;
         }
 
-        public FeatureAttribute(string name, bool isModel = false, bool isRequired = false)
+        public string GetFeatureName()
         {
-            name = Check.NotNullOrWhiteSpace(name, nameof(name));
-
-            if (isModel)
-            {
-                ModelName = name;
-            }
-            else
-            {
-                FeatureName = name;
-            }
-
-            IsRequired = isRequired;
+            return ModelAttribute.GetName(FeatureType);
         }
 
-        public static string[] GetModelNames(Type modelType)
+        public List<Type> GetDependencies()
         {
-            Check.NotNull(modelType, nameof(modelType));
+            var dependencies = new List<Type>();
+            if (FeatureType != null)
+            {
+                dependencies.Add(FeatureType);
+            }
 
-            return modelType.GetCustomAttributes(true)
-                .OfType<FeatureAttribute>()
-                .Select(attribute => attribute.ModelName)
-                .ToArray();
-        }
-
-        public static string[] GetFeatureNames(Type modelType)
-        {
-            Check.NotNull(modelType, nameof(modelType));
-
-            return modelType.GetCustomAttributes(true)
-                .OfType<FeatureAttribute>()
-                .Select(attribute => attribute.FeatureName)
-                .ToArray();
+            return dependencies;
         }
     }
 }

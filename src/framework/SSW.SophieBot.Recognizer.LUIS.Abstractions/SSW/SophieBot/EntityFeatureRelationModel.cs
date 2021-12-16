@@ -5,10 +5,10 @@ namespace SSW.SophieBot
     public class EntityFeatureRelationModel
     {
         [JsonPropertyName("featureName")]
-        public string FeatureName { get; set; }
+        public string FeatureName { get; set; } = string.Empty;
 
         [JsonPropertyName("modelName")]
-        public string ModelName { get; set; }
+        public string ModelName { get; set; } = string.Empty;
 
         [JsonPropertyName("isRequired")]
         public bool IsRequired { get; set; }
@@ -20,7 +20,9 @@ namespace SSW.SophieBot
 
         public EntityFeatureRelationModel(string modelName, string featureName, bool isRequired = false)
         {
-
+            ModelName = modelName ?? string.Empty;
+            FeatureName = featureName ?? string.Empty;
+            IsRequired = isRequired;
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,8 +26,7 @@ namespace SSW.SophieBot
 
         public virtual async Task SeedAsync(CancellationToken cancellationToken = default)
         {
-            var modelTypes = SchemaOptions.ModelTypes;
-            foreach (var modelType in modelTypes)
+            foreach (var modelType in ChooseModelTypesToPublish())
             {
                 var modelInstance = (IRecognizerModel)ServiceProvider.GetRequiredService(modelType);
 
@@ -37,6 +38,16 @@ namespace SSW.SophieBot
                     }
                 }
             }
+        }
+
+        protected virtual List<Type> ChooseModelTypesToPublish()
+        {
+            return SchemaOptions.ModelTypes.ToList();
+        }
+
+        protected virtual List<Type> ChooseModelTypesToSeed()
+        {
+            return ChooseModelTypesToPublish();
         }
     }
 }
