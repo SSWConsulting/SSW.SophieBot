@@ -200,7 +200,7 @@ jobs:
         with:
           name: "appsettings.json"
           json: ${{ secrets.LUIS_MIGRATOR_APPSETTINGS }}
-          dir: "${{ env.OUTPUT_DIR }}/luis-migrator"
+          dir: "/${{ env.OUTPUT_DIR }}/luis-migrator"
           
       - name: Run LUIS migrator
         run: |
