@@ -186,4 +186,4 @@ jobs:
       - name: Run LUIS migrator
         run: |
           cd ${{ env.OUTPUT_DIR }}/luis-migrator
-          .\SSW.SophieBot.LUIS.Migrator
+          get-childitem
