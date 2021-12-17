@@ -6,7 +6,7 @@ on:
       - main
       - jim/luis_enhancement
     paths:
-      - src/bot/**
+      - src/**
       - .github/workflows/SSW.SophieBot.dev.yml
       - .github/workflows/scripts/**
 

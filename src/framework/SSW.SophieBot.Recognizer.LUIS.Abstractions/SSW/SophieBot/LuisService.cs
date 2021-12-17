@@ -173,19 +173,18 @@ namespace SSW.SophieBot
             await SetVersionAsync();
 
             var entityId = await GetEntityIdAsync(createObject.Name, cancellationToken);
-            if (entityId.HasValue)
+            if (!entityId.HasValue)
             {
-                var deleteResponse = await DeleteEntityAsync(entityId.Value, cancellationToken);
-                deleteResponse.EnsureSuccessOperationStatus();
+                var newEntityId = await AddEntityAsync(createObject, cancellationToken);
+                if (newEntityId == default)
+                {
+                    LuisHelper.FailOperation();
+                }
+
+                return newEntityId;
             }
 
-            var newEntityId = await AddEntityAsync(createObject, cancellationToken);
-            if (newEntityId == default)
-            {
-                LuisHelper.FailOperation();
-            }
-
-            return newEntityId;
+            return entityId.Value;
         }
 
         public virtual async Task<OperationStatus> DeleteEntityAsync(Guid entityId, CancellationToken cancellationToken = default)
@@ -209,13 +208,12 @@ namespace SSW.SophieBot
             await SetVersionAsync();
 
             var clEntityId = await GetClEntityIdAsync(createObject.Name, cancellationToken);
-            if (clEntityId.HasValue)
+            if (!clEntityId.HasValue)
             {
-                var deleteOperation = await DeleteClosedListAsync(clEntityId.Value, cancellationToken);
-                deleteOperation.EnsureSuccessOperationStatus();
+                return await AddClosedListAsync(createObject, cancellationToken);
             }
 
-            return await AddClosedListAsync(createObject, cancellationToken);
+            return clEntityId.Value;
         }
 
         public virtual async Task<OperationStatus> DeleteClosedListAsync(Guid clEntityId, CancellationToken cancellationToken = default)
@@ -304,7 +302,28 @@ namespace SSW.SophieBot
             return LuisHelper.SuccessOperation();
         }
 
-        public virtual async Task<Guid> CreateEntityChildAsync(
+        public virtual async Task<Guid> EnsureChildEntityExistAsync(
+            Guid parentEntityId,
+            string childEntityName,
+            CancellationToken cancellationToken = default)
+        {
+            Check.NotNull(childEntityName, nameof(childEntityName));
+
+            await SetVersionAsync();
+
+            var children = (await AuthoringClient.Model.GetHierarchicalEntityAsync(AppId, Version, parentEntityId, cancellationToken))
+                .Children;
+
+            var childEntity = children.FirstOrDefault(child => child.Name[child.Name.LastIndexOf('\\')..].Contains(childEntityName));
+            if (childEntity == null)
+            {
+                return await CreateChildEntityAsync(parentEntityId, childEntityName, cancellationToken);
+            }
+
+            return childEntity.Id;
+        }
+
+        public virtual async Task<Guid> CreateChildEntityAsync(
             Guid parentEntityId,
             string childEntityName,
             CancellationToken cancellationToken = default)

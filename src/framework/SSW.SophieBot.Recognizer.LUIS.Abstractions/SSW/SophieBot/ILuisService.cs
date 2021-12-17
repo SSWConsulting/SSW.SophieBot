@@ -30,7 +30,8 @@ namespace SSW.SophieBot
         Task<IList<PrebuiltEntityExtractor>> ListPrebuiltsAsync(int? skip = 0, int? take = 100, CancellationToken cancellationToken = default);
         Task<IList<PrebuiltEntityExtractor>> AddPrebuiltAsync(IList<string> prebuiltExtractorNames, CancellationToken cancellationToken = default);
         Task<OperationStatus> UpdateEntityFeatureRelationAsync(Guid entityId, IList<EntityFeatureRelationCreateObject> createObjects, CancellationToken cancellationToken = default);
-        Task<Guid> CreateEntityChildAsync(Guid parentEntityId, string childEntityName, CancellationToken cancellationToken = default);
+        Task<Guid> EnsureChildEntityExistAsync(Guid parentEntityId, string childEntityName, CancellationToken cancellationToken = default);
+        Task<Guid> CreateChildEntityAsync(Guid parentEntityId, string childEntityName, CancellationToken cancellationToken = default);
         Task SetVersionAsync(string version = null, CancellationToken cancellationToken = default);
         Task<bool> TrainAndPublishAppAsync(CancellationToken cancellationToken = default);
         Task<ClosedListEntityExtractor> FindClosedListAsync(string clEntityName, CancellationToken cancellationToken = default);

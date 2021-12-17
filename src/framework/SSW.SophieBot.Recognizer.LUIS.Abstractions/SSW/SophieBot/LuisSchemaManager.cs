@@ -95,8 +95,7 @@ namespace SSW.SophieBot
                     throw new LuisException($"Failed to create child entity {childEntityName} because parent entity has not been created yet.");
                 }
 
-                entityId = await LuisService.CreateEntityChildAsync(parentEntityId.Value, childEntityName, cancellationToken);
-
+                entityId = await LuisService.EnsureChildEntityExistAsync(parentEntityId.Value, childEntityName, cancellationToken);
                 if (entityId == default)
                 {
                     LuisHelper.FailOperation();

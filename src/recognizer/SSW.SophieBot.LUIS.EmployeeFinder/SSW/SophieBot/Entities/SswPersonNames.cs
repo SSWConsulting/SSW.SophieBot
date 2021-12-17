@@ -44,7 +44,7 @@ namespace SSW.SophieBot.Entities
             {
                 _logger.LogInformation("Received employees from People API: {Count}", employees.Count());
 
-                var patchResponse = await _luisService.PatchClosedListAsync(clEntityId.Value, ToPatchObject(employees), cancellationToken);
+                var patchResponse = await _luisService.UpdateClosedListAsync(clEntityId.Value, ToUpdateObject(employees), cancellationToken);
                 patchResponse.EnsureSuccessOperationStatus();
             }
 
@@ -62,19 +62,19 @@ namespace SSW.SophieBot.Entities
             return employee.UserId;
         }
 
-        private ClosedListModelPatchObject ToPatchObject(IEnumerable<Employee> employees)
+        private ClosedListModelUpdateObject ToUpdateObject(IEnumerable<Employee> employees)
         {
-            var patchObject = new ClosedListModelPatchObject(new List<WordListObject>());
+            var updateObject = new ClosedListModelUpdateObject(new List<WordListObject>());
 
             if (!employees.IsNullOrEmpty())
             {
                 foreach (var employee in employees)
                 {
-                    patchObject.SubLists.Add(CreateWordList(employee));
+                    updateObject.SubLists.Add(CreateWordList(employee));
                 }
             }
 
-            return patchObject;
+            return updateObject;
         }
 
         private IList<string> GetSubList(Employee employee)
