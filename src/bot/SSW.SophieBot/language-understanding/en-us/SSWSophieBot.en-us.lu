@@ -67,8 +67,8 @@
 
 @ ml contact usesFeature personName,email,sswPersonNames
 @ contact = 
-	- @ ml firstname usesFeature personName
-	- @ ml lastname usesFeature personName
+	- @ ml firstName usesFeature personName,sswPersonNames
+	- @ ml firstName usesFeature personName,sswPersonNames
 
 @ phraseList EmailAddressPhraseList(interchangeable) disabledForAllModels =
 	- email
