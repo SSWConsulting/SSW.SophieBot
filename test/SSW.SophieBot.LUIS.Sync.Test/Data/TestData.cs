@@ -51,9 +51,8 @@ namespace SSW.SophieBot.LUIS.Sync.Test.Data
         public TestData()
         {
             var testSswPeopleNamesClEntity = new TestSswPeopleNamesClEntity(
-                new TestLUISAuthoringClient(this),
+                null,
                 new TestPeopleClient(),
-                new TestLuisOptions(),
                 NullLogger<SswPersonNames>.Instance);
 
             SswPeopleNames.SubLists = MqEmployees

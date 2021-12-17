@@ -9,7 +9,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\framework\SSW.SophieBot.AzureFunction\SSW.SophieBot.AzureFunction.csproj" />
-    <ProjectReference Include="..\SSW.SophieBot.Recognizer.LUIS.EmployeeFinder\SSW.SophieBot.Recognizer.LUIS.EmployeeFinder.csproj" />
+    <ProjectReference Include="..\SSW.SophieBot.LUIS.EmployeeFinder\SSW.SophieBot.LUIS.EmployeeFinder.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">

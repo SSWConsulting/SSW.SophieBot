@@ -4,7 +4,6 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,30 +11,18 @@ namespace SSW.SophieBot
 {
     public class LuisSchemaManager : RecognizerSchemaManagerBase
     {
-        protected HttpClient HttpClient { get; }
-
-        protected ILUISAuthoringClient LuisAuthoringClient { get; }
-
-        protected LuisOptions LuisOptions { get; }
-
-        protected Guid AppId { get; set; }
-
-        protected string Version { get; set; }
+        protected ILuisService LuisService { get; }
 
         protected ILogger<LuisSchemaManager> Logger { get; }
 
         public LuisSchemaManager(
-            HttpClient httpClient,
-            ILUISAuthoringClient luisAuthoringClient,
+            ILuisService luisService,
             IServiceProvider serviceProvider,
             IOptions<RecognizerSchemaOptions> schemaOptions,
-            IOptions<LuisOptions> luisOptions,
             ILogger<LuisSchemaManager> logger)
             : base(serviceProvider, schemaOptions)
         {
-            HttpClient = httpClient;
-            LuisAuthoringClient = luisAuthoringClient;
-            LuisOptions = luisOptions.Value;
+            LuisService = luisService;
             Logger = logger;
         }
 
@@ -43,21 +30,19 @@ namespace SSW.SophieBot
         {
             await base.SeedAsync(cancellationToken);
 
-            var publishResult = await LuisAuthoringClient.TrainAndPublishAppAsync(AppId, Version, cancellationToken);
+            var publishResult = await LuisService.TrainAndPublishAppAsync(cancellationToken);
             if (!publishResult)
             {
-                Logger.LogError("Failed to train and publish LUIS app: {AppId} - v{Version}", AppId, Version);
+                Logger.LogError("Failed to train and publish LUIS app: {AppId} - v{Version}", LuisService.AppId, LuisService.Version);
             }
             else
             {
-                Logger.LogInformation("Successful to train and publish LUIS app: {AppId} - v{Version}", AppId, Version);
+                Logger.LogInformation("Successful to train and publish LUIS app: {AppId} - v{Version}", LuisService.AppId, LuisService.Version);
             }
         }
 
         public override async Task PublishSchemaAsync(CancellationToken cancellationToken = default)
         {
-            await SetAppIdAndVersionAsync(cancellationToken);
-
             var modelTypesToPublish = ChooseModelTypesToPublish();
             var prebuiltEntityNames = modelTypesToPublish
                 .Where(type => typeof(IPrebuiltEntity).IsAssignableFrom(type))
@@ -84,14 +69,9 @@ namespace SSW.SophieBot
             }
         }
 
-        protected virtual async Task SetAppIdAndVersionAsync(CancellationToken cancellationToken = default)
-        {
-            (AppId, Version) = await LuisHelper.GetLuisAppIdAndActiveVersionAsync(LuisAuthoringClient, LuisOptions, cancellationToken);
-        }
-
         protected virtual async Task PublishPrebuiltEntityAsync(IList<string> prebuiltEntityNames, CancellationToken cancellationToken = default)
         {
-            await LuisAuthoringClient.EnsurePrebuiltEntityExistAsync(AppId, Version, prebuiltEntityNames, cancellationToken);
+            await LuisService.EnsurePrebuiltEntityExistAsync(prebuiltEntityNames, cancellationToken);
         }
 
         protected virtual async Task PublishEntityAsync(Type entityType, CancellationToken cancellationToken = default)
@@ -102,26 +82,20 @@ namespace SSW.SophieBot
             if (parentEntityType == null)
             {
                 var createObject = LuisHelper.GetEntityCreateObject(entityType);
-                entityId = await LuisAuthoringClient.EnsureEntityExistAsync(AppId, Version, createObject, cancellationToken);
+                entityId = await LuisService.EnsureEntityExistAsync(createObject, cancellationToken);
             }
             else
             {
                 var childEntityName = ModelAttribute.GetName(entityType);
                 var parentEntityName = ModelAttribute.GetName(parentEntityType);
-                var parentEntityId = await LuisAuthoringClient.GetEntityIdAsync(AppId, parentEntityName, Version, cancellationToken);
+                var parentEntityId = await LuisService.GetEntityIdAsync(parentEntityName, cancellationToken);
 
                 if (!parentEntityId.HasValue)
                 {
                     throw new LuisException($"Failed to create child entity {childEntityName} because parent entity has not been created yet.");
                 }
 
-                entityId = await LuisAuthoringClient.CreateEntityChildAsync(
-                    Version,
-                    parentEntityId.Value,
-                    childEntityName,
-                    HttpClient,
-                    LuisOptions,
-                    cancellationToken);
+                entityId = await LuisService.CreateEntityChildAsync(parentEntityId.Value, childEntityName, cancellationToken);
 
                 if (entityId == default)
                 {
@@ -132,13 +106,7 @@ namespace SSW.SophieBot
             var featureCreateObjects = LuisHelper.GetEntityFeatureRelationModels(entityType)
                 .Select(featureModel => EntityFeatureRelationCreateObject.FromModel(featureModel));
 
-            var updateFeatureResponse = await LuisAuthoringClient.UpdateEntityFeatureRelationAsync(
-                Version,
-                entityId,
-                featureCreateObjects.ToList(),
-                HttpClient,
-                LuisOptions,
-                cancellationToken);
+            var updateFeatureResponse = await LuisService.UpdateEntityFeatureRelationAsync(entityId, featureCreateObjects.ToList(), cancellationToken);
 
             updateFeatureResponse.EnsureSuccessOperationStatus();
         }
@@ -146,11 +114,7 @@ namespace SSW.SophieBot
         protected virtual async Task PublishClEntityAsync(Type entityType, CancellationToken cancellationToken = default)
         {
             var createObject = LuisHelper.GetClEntityCreateObject(entityType);
-            await LuisAuthoringClient.EnsureClEntityExistAsync(
-                AppId,
-                Version,
-                createObject,
-                cancellationToken);
+            await LuisService.EnsureClEntityExistAsync(createObject, cancellationToken);
         }
     }
 }

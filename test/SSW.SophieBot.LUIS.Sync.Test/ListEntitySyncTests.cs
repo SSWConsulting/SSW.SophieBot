@@ -12,7 +12,7 @@ namespace SSW.SophieBot.LUIS.Sync.Test
 {
     public class ListEntitySyncTests
     {
-        private readonly ILUISAuthoringClient _luisAuthoringClient;
+        private readonly ILuisService _luisService;
         private readonly TestData _testData;
         private readonly SswPersonNames _sswPeopleNamesClEntity;
         private readonly ListEntitySync _listEntitySync;
@@ -20,16 +20,17 @@ namespace SSW.SophieBot.LUIS.Sync.Test
         public ListEntitySyncTests()
         {
             _testData = new TestData();
-            _luisAuthoringClient = new TestLUISAuthoringClient(_testData);
+            var testLuisOptions = new TestLuisOptions();
+            var luisAuthoringClient = new TestLuisAuthoringClient(_testData);
+            _luisService = new LuisService(luisAuthoringClient, null, testLuisOptions);
+
             _sswPeopleNamesClEntity = new TestSswPeopleNamesClEntity(
-                _luisAuthoringClient,
+                _luisService,
                 new TestPeopleClient(),
-                new TestLuisOptions(),
                 NullLogger<SswPersonNames>.Instance);
             _listEntitySync = new ListEntitySync(
-                _luisAuthoringClient,
+                _luisService,
                 _sswPeopleNamesClEntity,
-                new TestLuisOptions(),
                 NullLogger<ListEntitySync>.Instance);
         }
 

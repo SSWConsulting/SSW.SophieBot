@@ -62,7 +62,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.LU
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.LUIS.Abstractions.Test", "test\SSW.SophieBot.Recognizer.LUIS.Abstractions.Test\SSW.SophieBot.Recognizer.LUIS.Abstractions.Test.csproj", "{2E620F00-E9E7-45A0-A311-4AD541263B63}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.LUIS.EmployeeFinder", "src\recognizer\SSW.SophieBot.Recognizer.LUIS.EmployeeFinder\SSW.SophieBot.Recognizer.LUIS.EmployeeFinder.csproj", "{CE516555-7285-4C0E-97AF-BEE6952E6B51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.LUIS.EmployeeFinder", "src\recognizer\SSW.SophieBot.LUIS.EmployeeFinder\SSW.SophieBot.LUIS.EmployeeFinder.csproj", "{CE516555-7285-4C0E-97AF-BEE6952E6B51}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.DataAPI.Client", "src\service\SSW.SophieBot.DataAPI.Client\SSW.SophieBot.DataAPI.Client.csproj", "{35C312A3-7146-4D21-893B-5FB4800D55F4}"
 EndProject

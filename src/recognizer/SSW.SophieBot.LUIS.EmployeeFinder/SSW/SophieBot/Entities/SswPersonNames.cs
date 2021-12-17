@@ -1,7 +1,6 @@
 ﻿using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring;
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using SSW.SophieBot.Employees;
 using System;
 using System.Collections.Generic;
@@ -14,34 +13,25 @@ namespace SSW.SophieBot.Entities
     [Model("sswPersonNames")]
     public class SswPersonNames : IClosedList, IDisposable
     {
-        private readonly ILUISAuthoringClient _luisAuthoringClient;
+        private readonly ILuisService _luisService;
         private readonly IPeopleApiClient _peopleApiClient;
-        private readonly LuisOptions _luisOptions;
         private readonly ILogger<SswPersonNames> _logger;
 
         public ICollection<SubClosedList> SubLists { get; } = new List<SubClosedList>();
 
         public SswPersonNames(
-            ILUISAuthoringClient luisAuthoringClient,
+            ILuisService luisService,
             IPeopleApiClient peopleApiClient,
-            IOptions<LuisOptions> luisOptions,
             ILogger<SswPersonNames> logger)
         {
-            _luisAuthoringClient = luisAuthoringClient;
+            _luisService = luisService;
             _peopleApiClient = peopleApiClient;
-            _luisOptions = luisOptions.Value;
             _logger = logger;
         }
 
         public async IAsyncEnumerable<bool> SeedAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            var (appId, activeVersion) = await LuisHelper.GetLuisAppIdAndActiveVersionAsync(_luisAuthoringClient, _luisOptions, cancellationToken);
-
-            var clEntityId = await _luisAuthoringClient.GetClEntityIdAsync(
-                appId,
-                activeVersion,
-                ModelAttribute.GetName(typeof(SswPersonNames)),
-                cancellationToken);
+            var clEntityId = await _luisService.GetClEntityIdAsync(ModelAttribute.GetName(typeof(SswPersonNames)), cancellationToken);
 
             if (!clEntityId.HasValue)
             {
@@ -54,13 +44,7 @@ namespace SSW.SophieBot.Entities
             {
                 _logger.LogInformation("Received employees from People API: {Count}", employees.Count());
 
-                var patchResponse = await _luisAuthoringClient.Model.PatchClosedListAsync(
-                    appId,
-                    activeVersion,
-                    clEntityId.Value,
-                    ToPatchObject(employees),
-                    cancellationToken);
-
+                var patchResponse = await _luisService.PatchClosedListAsync(clEntityId.Value, ToPatchObject(employees), cancellationToken);
                 patchResponse.EnsureSuccessOperationStatus();
             }
 
@@ -116,7 +100,7 @@ namespace SSW.SophieBot.Entities
 
         public void Dispose()
         {
-            _luisAuthoringClient.Dispose();
+            _luisService.Dispose();
         }
     }
 }

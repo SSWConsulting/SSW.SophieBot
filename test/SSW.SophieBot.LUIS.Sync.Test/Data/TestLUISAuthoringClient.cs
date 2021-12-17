@@ -5,7 +5,7 @@ using System;
 
 namespace SSW.SophieBot.LUIS.Sync.Test.Data
 {
-    public class TestLUISAuthoringClient : ILUISAuthoringClient
+    public class TestLuisAuthoringClient : ILUISAuthoringClient
     {
         public JsonSerializerSettings SerializationSettings => throw new NotImplementedException();
 
@@ -35,7 +35,7 @@ namespace SSW.SophieBot.LUIS.Sync.Test.Data
 
         public IAzureAccounts AzureAccounts => throw new NotImplementedException();
 
-        public TestLUISAuthoringClient(TestData testData)
+        public TestLuisAuthoringClient(TestData testData)
         {
             Apps = TestApps.CreateInstance();
             Model = TestModel.CreateInstance(testData);

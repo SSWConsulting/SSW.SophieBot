@@ -31,6 +31,8 @@ namespace Microsoft.Extensions.DependencyInjection
                     });
             });
 
+            services.AddTransient<ILuisService, LuisService>();
+
             action ??= options => options.UseManager<LuisSchemaManager>();
             services.AddRecognizerSchema<TSchema>(action);
 

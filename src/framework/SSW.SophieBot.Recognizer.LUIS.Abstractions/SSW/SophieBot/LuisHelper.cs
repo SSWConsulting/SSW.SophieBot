@@ -44,22 +44,6 @@ namespace SSW.SophieBot
             return new ClosedListModelCreateObject(new List<WordListObject>(), ModelAttribute.GetName(entityType));
         }
 
-        public static async Task<(Guid, string)> GetLuisAppIdAndActiveVersionAsync(
-            ILUISAuthoringClient authoringClient,
-            LuisOptions options,
-            CancellationToken cancellationToken = default)
-        {
-            var appId = options.GetGuidAppId();
-            if (appId == default)
-            {
-                throw new LuisException("Failed to get LUIS app ID from configuration, end execution");
-            }
-
-            var activeVersion = await authoringClient.GetActiveVersionAsync(appId, cancellationToken);
-
-            return (appId, activeVersion);
-        }
-
         public static List<EntityFeatureRelationModel> GetEntityFeatureRelationModels(Type entityType)
         {
             return FeatureAttribute.GetFeatures(Check.NotNull(entityType, nameof(entityType)))

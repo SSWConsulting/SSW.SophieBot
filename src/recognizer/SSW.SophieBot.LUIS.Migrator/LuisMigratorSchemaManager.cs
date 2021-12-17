@@ -1,5 +1,4 @@
-﻿using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SSW.SophieBot.Entities;
 
@@ -8,13 +7,11 @@ namespace SSW.SophieBot.LUIS.Migrator
     public class LuisMigratorSchemaManager : LuisSchemaManager
     {
         public LuisMigratorSchemaManager(
-            HttpClient httpClient,
-            ILUISAuthoringClient luisAuthoringClient,
+            ILuisService luisService,
             IServiceProvider serviceProvider,
             IOptions<RecognizerSchemaOptions> schemaOptions,
-            IOptions<LuisOptions> luisOptions,
             ILogger<LuisSchemaManager> logger)
-            : base(httpClient, luisAuthoringClient, serviceProvider, schemaOptions, luisOptions, logger)
+            : base(luisService, serviceProvider, schemaOptions, logger)
         {
 
         }
