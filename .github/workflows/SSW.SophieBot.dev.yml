@@ -121,7 +121,7 @@ jobs:
       - name: Create LUIS migrator publishing package
         run: |
           cd ${{ env.LUIS_MIGRATOR_DIR }}
-          dotnet publish -c Release -o "${{ env.OUTPUT_DIR }}/luis-migrator" --no-self-contained -r win-x64
+          dotnet publish -c Release -o "${{ env.OUTPUT_DIR }}/luis-migrator" --self-contained -r linux-x64
 
       # Upload webapp artifact
       - name: Upload webapp artifact
@@ -171,6 +171,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
     steps:
+      - uses: actions/checkout@v2.3.4
+
       - uses: actions/download-artifact@v2
         with:
           name: "LUIS_Migrator_${{ github.run_id }}"
@@ -186,4 +188,4 @@ jobs:
       - name: Run LUIS migrator
         run: |
           cd ${{ env.OUTPUT_DIR }}/luis-migrator
-          get-childitem
+          .\SSW.SophieBot.LUIS.Migrator
