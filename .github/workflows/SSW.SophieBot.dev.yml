@@ -109,18 +109,6 @@ jobs:
           path: ${{ env.BOT_PROJECT_DIR }}/generated
           if-no-files-found: error
 
-      # dotnet build
-      - name: Built bot app
-        run: |
-          cd ${{ github.workspace }}
-          dotnet build --configuration Release
-
-      # dotnet test
-      - name: Test bot app
-        run: |
-          cd ${{ github.workspace }}
-          dotnet test --no-restore --verbosity normal
-
       # Create bot app publishing package
       - name: Create bot publishing package
         run: |
@@ -183,13 +171,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
     steps:
-      - uses: actions/checkout@v2.3.4
-
-      - name: Use .Net Core sdk
-        uses: actions/setup-dotnet@v1.9.0
-        with:
-          dotnet-version: '6.0.x'
-
       - uses: actions/download-artifact@v2
         with:
           name: "LUIS_Migrator_${{ github.run_id }}"
@@ -205,4 +186,4 @@ jobs:
       - name: Run LUIS migrator
         run: |
           cd ${{ env.OUTPUT_DIR }}/luis-migrator
-          dotnet run
+          .\SSW.SophieBot.LUIS.Migrator
