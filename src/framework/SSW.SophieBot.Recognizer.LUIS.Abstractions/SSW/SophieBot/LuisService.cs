@@ -49,7 +49,6 @@ namespace SSW.SophieBot
 
         public virtual async Task<ApplicationInfoResponse> GetAppInfoAsync(CancellationToken cancellationToken = default)
         {
-            await SetVersionAsync();
             return await AuthoringClient.Apps.GetAsync(AppId, cancellationToken);
         }
 
