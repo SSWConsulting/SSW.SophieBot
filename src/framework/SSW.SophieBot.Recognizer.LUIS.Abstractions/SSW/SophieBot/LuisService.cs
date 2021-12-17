@@ -339,7 +339,7 @@ namespace SSW.SophieBot
             {
                 Version = version;
             }
-            else if (Version != null)
+            else if (Version == null)
             {
                 Version = await GetActiveVersionAsync(cancellationToken);
             }
