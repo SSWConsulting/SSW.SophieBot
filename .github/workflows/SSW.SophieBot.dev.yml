@@ -85,6 +85,20 @@ jobs:
           cd $outputDirectory
           ls -R
 
+      # Publish LUIS models
+      - name: Publish LUIS
+        if: env.BUILD_FLOW == 'composer'
+        run: |
+          cd ${{ env.BOT_PROJECT_DIR }}
+          & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-LUIS.ps1" -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -authoringKey ${{ secrets.LUIS_AUTHORING_KEY }} -botName ${{ env.BOT_NAME }} -endpoint ${{ env.LUIS_AUTHORING_ENDPOINT }} -region ${{ env.LUIS_AUTHORING_REGION }}
+
+      # Publish Orchestrator models
+      # - name: Publish orchestrator
+      #   if: env.BUILD_FLOW == 'composer'
+      #   run: |
+      #     cd ${{ env.BOT_PROJECT_DIR }}
+      #     & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-Orchestrator.ps1" -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -appSettingsFile ./settings/appsettings.json
+
       # Upload bot models artifact
       - name: Upload bot models artifact
         if: env.BUILD_FLOW == 'composer'
@@ -109,41 +123,7 @@ jobs:
           name: "Bot_Webapp_${{ github.run_id }}"
           path: ${{ env.OUTPUT_DIR }}
           if-no-files-found: error
-
-  deploy-recognizers:
-    name: Deploy recognizers
-    needs: build
-    runs-on: ubuntu-latest
-    environment: dev
-    steps:
-      - uses: actions/checkout@v2.3.4
-
-      - name: Use Node 13.x
-        uses: actions/setup-node@v2.4.0
-        with:
-          node-version: '13'
-      - name: Use BF CLI
-        run: npm install -g @microsoft/botframework-cli
-
-      - uses: actions/download-artifact@v2
-        with:
-          name: "Bot_Models_${{ github.run_id }}"
-          path: ${{ env.BOT_PROJECT_DIR }}/generated
-
-      # Publish LUIS models
-      - name: Publish LUIS
-        if: env.BUILD_FLOW == 'composer'
-        run: |
-          cd ${{ env.BOT_PROJECT_DIR }}
-          & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-LUIS.ps1" -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -authoringKey ${{ secrets.LUIS_AUTHORING_KEY }} -botName ${{ env.BOT_NAME }} -endpoint ${{ env.LUIS_AUTHORING_ENDPOINT }} -region ${{ env.LUIS_AUTHORING_REGION }}
-
-      # Publish Orchestrator models
-      # - name: Publish orchestrator
-      #   if: env.BUILD_FLOW == 'composer'
-      #   run: |
-      #     cd ${{ env.BOT_PROJECT_DIR }}
-      #     & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-Orchestrator.ps1" -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -appSettingsFile ./settings/appsettings.json
-  
+          
   deploy-web-app:
     name: Deploy web app
     needs: build
