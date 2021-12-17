@@ -65,7 +65,7 @@
 @ prebuilt geographyV2
 @ prebuilt datetimeV2
 
-@ ml contact usesFeature personName,email,sswPeopleNames
+@ ml contact usesFeature personName,email,sswPersonNames
 @ contact = 
 	- @ ml firstname usesFeature personName
 	- @ ml lastname usesFeature personName
