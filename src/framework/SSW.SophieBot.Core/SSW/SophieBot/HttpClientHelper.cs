@@ -12,7 +12,7 @@ namespace SSW.SophieBot
             {
                 NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString
             };
-        
+
         public static bool IsSuccessStatusCode(HttpStatusCode statusCode)
         {
             return new HttpResponseMessage(statusCode).IsSuccessStatusCode;

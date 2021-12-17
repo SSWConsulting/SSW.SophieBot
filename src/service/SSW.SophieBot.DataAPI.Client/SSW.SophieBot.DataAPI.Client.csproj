@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+	<RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\framework\SSW.SophieBot.Core\SSW.SophieBot.Core.csproj" />
+    <ProjectReference Include="..\SSW.SophieBot.DataSync.Domain\SSW.SophieBot.DataSync.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

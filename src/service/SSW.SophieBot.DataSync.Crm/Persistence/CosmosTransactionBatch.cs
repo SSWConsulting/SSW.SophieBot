@@ -1,7 +1,6 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Logging;
 using SSW.SophieBot.Persistence;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +15,7 @@ namespace SSW.SophieBot.DataSync.Crm.Persistence
 
         public CosmosTransactionBatch(TransactionalBatch batch, ILogger logger = null, CancellationToken cancellationToken = default)
         {
-            _batch = batch ?? throw new ArgumentNullException(nameof(batch));
+            _batch = Check.NotNull(batch, nameof(batch));
             _logger = logger;
             _cancellationToken = cancellationToken;
         }

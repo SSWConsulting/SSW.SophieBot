@@ -394,6 +394,7 @@ FodyWeavers.xsd
 .idea/
 *.sln.iml
 
+*.botproj
 appsettings.json
 appsettings.dev.json
 appsettings.prod.json

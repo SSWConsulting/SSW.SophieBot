@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - src/bot/**
+      - src/**
       - .github/workflows/SSW.SophieBot.dev.yml
       - .github/workflows/scripts/**
 
@@ -18,7 +18,8 @@ env:
   BOT_NAME: SSWSophieBotDev
   WEBAPP_NAME: SSWSophieBotDev
   SOURCE_DIR: ${{ github.workspace }}
-  OUTPUT_DIR: ${{ github.workspace }}/output/deploy
+  OUTPUT_DIR: ${{ github.workspace }}/output
+  LUIS_MIGRATOR_DIR: ${{ github.workspace }}/src/recognizer/SSW.SophieBot.LUIS.Migrator
   BOT_PROJECT_DIR: ${{ github.workspace }}/src/bot/SSW.SophieBot
   BOT_PROJECT_NAME: SSW.SophieBot.csproj
   PUBLISHING_PROFILE_NAME: SSW.Bots.Dev
@@ -30,8 +31,8 @@ defaults:
     shell: pwsh
 
 jobs:
-  build-and-deploy:
-    name: Build and deploy
+  build-and-test:
+    name: Build and test
     runs-on: ubuntu-latest
     environment: dev
     steps:
@@ -43,16 +44,16 @@ jobs:
           node-version: '13'
       - name: Use BF CLI
         run: npm install -g @microsoft/botframework-cli
-      - name: Use .Net Core sdk 3.1.x
-        uses: actions/setup-dotnet@v1.8.1
+      - name: Use .Net Core sdk
+        uses: actions/setup-dotnet@v1.9.0
         with:
-          dotnet-version: '3.1.x'
+          dotnet-version: '6.0.x'
 
       - name: Create appsettings file
         uses: jsdaniell/create-json@1.1.2
         with:
           name: "appsettings.json"
-          json: ${{ secrets.APPSETTINGS_JSON }}
+          json: ${{ secrets.BOT_APP_APPSETTINGS }}
           dir: "src/bot/SSW.SophieBot/settings"
 
       # Prepare working folders    
@@ -92,19 +93,11 @@ jobs:
           & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-LUIS.ps1" -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -authoringKey ${{ secrets.LUIS_AUTHORING_KEY }} -botName ${{ env.BOT_NAME }} -endpoint ${{ env.LUIS_AUTHORING_ENDPOINT }} -region ${{ env.LUIS_AUTHORING_REGION }}
 
       # Publish Orchestrator models
-      - name: Publish orchestrator
-        if: env.BUILD_FLOW == 'composer'
-        run: |
-          cd ${{ env.BOT_PROJECT_DIR }}
-          & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-Orchestrator.ps1" -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -appSettingsFile ./settings/appsettings.json
-
-      # Compress bot models folder
-      - name: Compress bot models files
-        if: env.BUILD_FLOW == 'composer'
-        uses: ihiroky/archive-action@v1
-        with:
-          root_dir: ${{ env.BOT_PROJECT_DIR }}/generated
-          file_path: ${{ env.SOURCE_DIR }}/output/generated.zip
+      # - name: Publish orchestrator
+      #   if: env.BUILD_FLOW == 'composer'
+      #   run: |
+      #     cd ${{ env.BOT_PROJECT_DIR }}
+      #     & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-Orchestrator.ps1" -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -appSettingsFile ./settings/appsettings.json
 
       # Upload bot models artifact
       - name: Upload bot models artifact
@@ -112,33 +105,56 @@ jobs:
         uses: actions/upload-artifact@v2.2.4
         with:
           name: "Bot_Models_${{ github.run_id }}"
-          path: ${{ env.SOURCE_DIR }}/output/generated.zip
+          path: ${{ env.BOT_PROJECT_DIR }}/generated
           if-no-files-found: error
-          retention-days: 5
 
-      # Build bot
-      - name: Build bot publishing package
+      # Create bot app publishing package
+      - name: Create bot publishing package
         run: |
           cd ${{ env.BOT_PROJECT_DIR }}
 
           $publishingProfileName = (${{ env.BUILD_FLOW }} -eq 'composer') ? "${{ env.PUBLISHING_PROFILE_NAME }}" : ""
           & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Publish-WebApp.ps1" -botProjectFolder ${{ env.BOT_PROJECT_DIR }} -botProjectName ${{ env.BOT_PROJECT_NAME }} -outputFolder "${{ env.OUTPUT_DIR }}/deploy" -publishingProfile $publishingProfileName
 
-      # Compress webapp publish folder
-      - name: Compress webapp publish files
-        uses: ihiroky/archive-action@v1
-        with:
-          root_dir: ${{ env.OUTPUT_DIR }}
-          file_path: ${{ env.OUTPUT_DIR }}/deploy.zip
+      # Create LUIS migrator publishing package
+      - name: Create LUIS migrator publishing package
+        run: |
+          cd ${{ env.LUIS_MIGRATOR_DIR }}
+          dotnet publish -c Release -o "${{ env.OUTPUT_DIR }}/luis-migrator" --self-contained -r win-x64
 
       # Upload webapp artifact
       - name: Upload webapp artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v2.3.1
         with:
           name: "Bot_Webapp_${{ github.run_id }}"
-          path: ${{ env.OUTPUT_DIR }}/deploy.zip
+          path: ${{ env.OUTPUT_DIR }}/deploy
           if-no-files-found: error
-          retention-days: 5
+
+      # Upload LUIS migrator artifact
+      - name: Upload LUIS migrator artifact
+        uses: actions/upload-artifact@v2.3.1
+        with:
+          name: "LUIS_Migrator_${{ github.run_id }}"
+          path: ${{ env.OUTPUT_DIR }}/luis-migrator
+          if-no-files-found: error
+
+  deploy-web-app:
+    name: Deploy web app
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - uses: actions/checkout@v2.3.4
+
+      - name: Use .Net Core sdk
+        uses: actions/setup-dotnet@v1.9.0
+        with:
+          dotnet-version: '6.0.x'
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: "Bot_Webapp_${{ github.run_id }}"
+          path: ${{ env.OUTPUT_DIR }}/deploy
 
       # Deploy the web app to azure
       - name: "Deploy Azure Web App"
@@ -147,3 +163,28 @@ jobs:
           app-Name: ${{ env.WEBAPP_NAME }}
           publish-profile: ${{ secrets.BOT_WEBAPP_PUBLISH_PROFILE }}
           package: "${{ env.OUTPUT_DIR }}/deploy"
+
+  migrate-luis-model:
+    name: Migrate LUIS model
+    needs: build-and-test
+    runs-on: windows-latest
+    environment: dev
+    steps:
+      - uses: actions/checkout@v2.3.4
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: "LUIS_Migrator_${{ github.run_id }}"
+          path: ${{ env.OUTPUT_DIR }}/luis-migrator
+
+      - name: Create appsettings file
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "appsettings.json"
+          json: ${{ secrets.LUIS_MIGRATOR_APPSETTINGS }}
+          dir: "output/luis-migrator"
+          
+      - name: Run LUIS migrator
+        run: |
+          cd ${{ env.OUTPUT_DIR }}/luis-migrator
+          .\SSW.SophieBot.LUIS.Migrator

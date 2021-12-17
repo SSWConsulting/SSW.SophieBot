@@ -58,17 +58,17 @@
 	- china:
 		- china
 
-@ list sswPeopleNames
+@ list sswPersonNames
 
 @ prebuilt email
 @ prebuilt personName
 @ prebuilt geographyV2
 @ prebuilt datetimeV2
 
-@ ml contact usesFeature personName,email,sswPeopleNames
+@ ml contact usesFeature personName,email,sswPersonNames
 @ contact = 
-	- @ ml firstname usesFeature personName
-	- @ ml lastname usesFeature personName
+	- @ ml firstName usesFeature personName,sswPersonNames
+	- @ ml firstName usesFeature personName,sswPersonNames
 
 @ phraseList EmailAddressPhraseList(interchangeable) disabledForAllModels =
 	- email
@@ -176,17 +176,17 @@
 - ^is {@contact} ({@available} | {@unavailable})[?]
 - ^is {@contact} ({@available} | {@unavailable}) or ({@available} | {@unavailable})[?]
 - ^is {@contact} ({@available} | {@unavailable}) or not[?]
-- Is {@contact={@firstname=Anthony}} {@unavailable=booked} or {@available=free}?
-- Is {@contact={@firstname=pat}} {@unavailable=booked} or not?
-- Is {@contact={@firstname=adam}} {@available=free} or not?
-- Is {@contact={@firstname=Jack}} {@available=free} or {@unavailable=booked}?
-- Is {@contact={@firstname=Anthony}} {@unavailable=booked}?
-- Is {@contact={@firstname=Sam} {@lastname=Robinson}} {@available=free}?
-- Is {@contact={@firstname=John}} {@available=free}
-- Is {@contact={@firstname=Will}} {@available=available}?
-- Is {@contact={@firstname=Will}} {@available=on internal work} now?
-- what is {@contact={@firstname=jim}}'s availability now
-- can i book {@contact={@firstname=white}}?
+- Is {@contact={@firstName=Anthony}} {@unavailable=booked} or {@available=free}?
+- Is {@contact={@firstName=pat}} {@unavailable=booked} or not?
+- Is {@contact={@firstName=adam}} {@available=free} or not?
+- Is {@contact={@firstName=Jack}} {@available=free} or {@unavailable=booked}?
+- Is {@contact={@firstName=Anthony}} {@unavailable=booked}?
+- Is {@contact={@firstName=Sam} {@lastName=Robinson}} {@available=free}?
+- Is {@contact={@firstName=John}} {@available=free}
+- Is {@contact={@firstName=Will}} {@available=available}?
+- Is {@contact={@firstName=Will}} {@available=on internal work} now?
+- what is {@contact={@firstName=jim}}'s availability now
+- can i book {@contact={@firstName=white}}?
 
 @ intent CheckAvailability usesFeature contact,available,unavailable
 
@@ -206,55 +206,55 @@
 @ intent GetCurrentEmployeesOnLocation usesFeature CurrentPhraseList,geographyV2
 
 # GetEmailAddress
-- {@contact={@firstname=antonio}}'s {@profileProperty={@emailAddressProperty=email}} please
-- can you find {@contact={@firstname=julian}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
-- can you get me {@contact={@firstname=benny}}'s {@profileProperty={@emailAddressProperty=email}}?
-- can you give me the {@contact={@firstname=alberto}} {@profileProperty={@emailAddressProperty=email addreess}}
-- can you give me the {@contact={@firstname=luis}} {@profileProperty={@emailAddressProperty=emailaddress}}
-- can you tell me {@profileProperty={@emailAddressProperty=email}} {@contact={@firstname=valderrama}}?
-- could you give me {@contact={@firstname=daniella}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
-- could you tell me {@contact={@firstname=paola}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
-- find {@contact={@firstname=donald}}'s {@profileProperty={@emailAddressProperty=email}}
-- find {@contact={@firstname=luong}} {@profileProperty={@emailAddressProperty=email}}
-- find {@contact={@firstname=nancy} {@lastname=benavides}} {@profileProperty={@emailAddressProperty=email}}.
-- find {@contact={@firstname=ted}} {@profileProperty={@emailAddressProperty=email}}.
-- hey, find me an {@profileProperty={@emailAddressProperty=email}} of that lady {@contact={@firstname=paola}}
-- i want {@contact={@firstname=lisa}} {@profileProperty={@emailAddressProperty=gmail emailaddress}}.
-- is the {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstname=charles}} correct?
-- may i know {@contact={@firstname=nancy}}'s new {@profileProperty={@emailAddressProperty=emailaddress}} ?
-- please provide me with {@contact={@firstname=jim}}'s {@profileProperty={@emailAddressProperty=emailaddress}}
-- please provide the {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstname=brandon} {@lastname=sim}}.
-- please tell me the new {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstname=darrel}}
-- please, find {@contact={@firstname=phineas}} {@profileProperty={@emailAddressProperty=personal email}}.
-- search the {@contact={@firstname=roger}} {@profileProperty={@emailAddressProperty=email}}
-- what is {@contact={@firstname=angelica}}'s {@profileProperty={@emailAddressProperty=secret emailaddress}}?
-- what is {@contact={@firstname=clark}}'s {@profileProperty={@emailAddressProperty=e-mail}}?
-- what is {@contact={@firstname=helen}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
-- what is {@contact={@firstname=johns}} {@profileProperty={@emailAddressProperty=e-mail}}?
-- what is {@contact={@firstname=lebron} {@lastname=james}}' {@profileProperty={@emailAddressProperty=emailaddress}}?
-- what is {@contact={@firstname=mario}} {@profileProperty={@emailAddressProperty=e-mail}}?
-- what is {@contact={@firstname=neobux}} {@profileProperty={@emailAddressProperty=e-mail}}?
-- what is new {@profileProperty={@emailAddressProperty=emailaddress}} of my friend {@contact={@firstname=sam}}?
-- what is {@contact={@firstname=pamela}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
-- what is {@contact={@firstname=stan}}'s personal {@profileProperty={@emailAddressProperty=email}}?
-- what is the {@profileProperty={@emailAddressProperty=email}} for {@contact={@firstname=neyer}}
-- what is the {@profileProperty={@emailAddressProperty=email}} of {@contact={@firstname=jimmy} {@lastname=hong}}?
-- what is the {@profileProperty={@emailAddressProperty=email}} of {@contact={@firstname=melania}}?
-- what is the {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstname=hang} {@lastname=dam}}?
-- what is the {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstname=john}}?
-- what is the {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstname=molly}}?
-- what is the {@contact={@firstname=mary}}'s {@profileProperty={@emailAddressProperty=email}}
-- what is {@contact={@firstname=walter} {@lastname=madden}}'s {@profileProperty={@emailAddressProperty=email}}?
-- what is your {@profileProperty={@emailAddressProperty=email}} {@contact={@firstname=anne}}?
-- what is your {@profileProperty={@emailAddressProperty=email}} {@contact={@firstname=tiana}}?
-- what's {@contact={@firstname=alex}} {@profileProperty={@emailAddressProperty=emailaddress}}?
-- what's {@contact={@firstname=chris}} {@profileProperty={@emailAddressProperty=email}}
-- what's {@contact={@firstname=jefferson}}'s {@profileProperty={@emailAddressProperty=email}}?
-- what's {@contact={@firstname=jon}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
-- whats {@contact={@firstname=mike}}'s {@profileProperty={@emailAddressProperty=email}}?
-- who knows {@contact={@firstname=john}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
-- whats {@contact={@firstname=jims}} {@profileProperty={@emailAddressProperty=emailaddress}}
-- show me {@contact={@firstname=adams}} {@profileProperty={@emailAddressProperty=email}}
+- {@contact={@firstName=antonio}}'s {@profileProperty={@emailAddressProperty=email}} please
+- can you find {@contact={@firstName=julian}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
+- can you get me {@contact={@firstName=benny}}'s {@profileProperty={@emailAddressProperty=email}}?
+- can you give me the {@contact={@firstName=alberto}} {@profileProperty={@emailAddressProperty=email addreess}}
+- can you give me the {@contact={@firstName=luis}} {@profileProperty={@emailAddressProperty=emailaddress}}
+- can you tell me {@profileProperty={@emailAddressProperty=email}} {@contact={@firstName=valderrama}}?
+- could you give me {@contact={@firstName=daniella}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
+- could you tell me {@contact={@firstName=paola}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
+- find {@contact={@firstName=donald}}'s {@profileProperty={@emailAddressProperty=email}}
+- find {@contact={@firstName=luong}} {@profileProperty={@emailAddressProperty=email}}
+- find {@contact={@firstName=nancy} {@lastName=benavides}} {@profileProperty={@emailAddressProperty=email}}.
+- find {@contact={@firstName=ted}} {@profileProperty={@emailAddressProperty=email}}.
+- hey, find me an {@profileProperty={@emailAddressProperty=email}} of that lady {@contact={@firstName=paola}}
+- i want {@contact={@firstName=lisa}} {@profileProperty={@emailAddressProperty=gmail emailaddress}}.
+- is the {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstName=charles}} correct?
+- may i know {@contact={@firstName=nancy}}'s new {@profileProperty={@emailAddressProperty=emailaddress}} ?
+- please provide me with {@contact={@firstName=jim}}'s {@profileProperty={@emailAddressProperty=emailaddress}}
+- please provide the {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstName=brandon} {@lastName=sim}}.
+- please tell me the new {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstName=darrel}}
+- please, find {@contact={@firstName=phineas}} {@profileProperty={@emailAddressProperty=personal email}}.
+- search the {@contact={@firstName=roger}} {@profileProperty={@emailAddressProperty=email}}
+- what is {@contact={@firstName=angelica}}'s {@profileProperty={@emailAddressProperty=secret emailaddress}}?
+- what is {@contact={@firstName=clark}}'s {@profileProperty={@emailAddressProperty=e-mail}}?
+- what is {@contact={@firstName=helen}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
+- what is {@contact={@firstName=johns}} {@profileProperty={@emailAddressProperty=e-mail}}?
+- what is {@contact={@firstName=lebron} {@lastName=james}}' {@profileProperty={@emailAddressProperty=emailaddress}}?
+- what is {@contact={@firstName=mario}} {@profileProperty={@emailAddressProperty=e-mail}}?
+- what is {@contact={@firstName=neobux}} {@profileProperty={@emailAddressProperty=e-mail}}?
+- what is new {@profileProperty={@emailAddressProperty=emailaddress}} of my friend {@contact={@firstName=sam}}?
+- what is {@contact={@firstName=pamela}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
+- what is {@contact={@firstName=stan}}'s personal {@profileProperty={@emailAddressProperty=email}}?
+- what is the {@profileProperty={@emailAddressProperty=email}} for {@contact={@firstName=neyer}}
+- what is the {@profileProperty={@emailAddressProperty=email}} of {@contact={@firstName=jimmy} {@lastName=hong}}?
+- what is the {@profileProperty={@emailAddressProperty=email}} of {@contact={@firstName=melania}}?
+- what is the {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstName=hang} {@lastName=dam}}?
+- what is the {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstName=john}}?
+- what is the {@profileProperty={@emailAddressProperty=emailaddress}} of {@contact={@firstName=molly}}?
+- what is the {@contact={@firstName=mary}}'s {@profileProperty={@emailAddressProperty=email}}
+- what is {@contact={@firstName=walter} {@lastName=madden}}'s {@profileProperty={@emailAddressProperty=email}}?
+- what is your {@profileProperty={@emailAddressProperty=email}} {@contact={@firstName=anne}}?
+- what is your {@profileProperty={@emailAddressProperty=email}} {@contact={@firstName=tiana}}?
+- what's {@contact={@firstName=alex}} {@profileProperty={@emailAddressProperty=emailaddress}}?
+- what's {@contact={@firstName=chris}} {@profileProperty={@emailAddressProperty=email}}
+- what's {@contact={@firstName=jefferson}}'s {@profileProperty={@emailAddressProperty=email}}?
+- what's {@contact={@firstName=jon}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
+- whats {@contact={@firstName=mike}}'s {@profileProperty={@emailAddressProperty=email}}?
+- who knows {@contact={@firstName=john}}'s {@profileProperty={@emailAddressProperty=emailaddress}}?
+- whats {@contact={@firstName=jims}} {@profileProperty={@emailAddressProperty=emailaddress}}
+- show me {@contact={@firstName=adams}} {@profileProperty={@emailAddressProperty=email}}
 
 @ intent GetEmailAddress usesFeature contact,EmailAddressPhraseList
 
@@ -339,15 +339,17 @@
 # GetPeopleOnClientWork
 - Who {@presentBe} ({@available} | {@unavailable})[?]
 - Who {@presentBe} ({@available} | {@unavailable}) {@datetimeV2}[?]
+- who {@presentBe} ({@available} | {@unavailable}) [in] {@geographyV2}[?]
 - Who is {@unavailable = on client work} tomorrow
 - Who is {@unavailable = working on client work} next Friday?
 - Who is {@unavailable = working for clients} in Sydney?
 - Who is {@unavailable = unavailable} remotely next Friday?
+- Who is {@unavailable = booked} in Sydney?
 
 - People not {@unavailable = on client work}?
 - Who is not {@unavailable = on client work} tomorrow
-- Who is not {@unavailable = on client work} tomorrow?
-- Who is not {@unavailable = on client work} in China?
+- Who is not {@unavailable = working on client work} tomorrow?
+- Who is not {@unavailable = booked} in China?
 - Who is not {@unavailable = on client work} in China next Monday?
 - who is {@available = free} tomorrow
 - Who is {@available = free} next Friday?
@@ -377,123 +379,123 @@
 @ intent GetPeopleOnClientWork usesFeature available,unavailable,datetimeV2,geographyV2,SkilledPhraseList,skill
 
 # GetPhoneNumber
-- can you find me {@contact={@firstname=noe}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
-- can you give me the {@contact={@firstname=carla}} {@profileProperty={@phoneNumberProperty=phone number}}
-- can you give me the {@contact={@firstname=jerry}} {@profileProperty={@phoneNumberProperty=phone number}}
-- can you give me {@contact={@firstname=will}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
-- could you tell me the {@profileProperty={@phoneNumberProperty=phone number}} of {@contact={@firstname=julian}}?
-- find {@profileProperty={@phoneNumberProperty=phone number}} for {@contact={@firstname=cesar} {@lastname=lopez}}.
-- find {@profileProperty={@phoneNumberProperty=phone number}} for {@contact={@firstname=rafael}}
-- find {@profileProperty={@phoneNumberProperty=phone number}} of {@contact={@firstname=tina}}
-- find {@profileProperty={@phoneNumberProperty=phonenumber} for {@contact={@firstname=lucci}}
-- give me {@contact={@firstname=seva}}'s {@profileProperty={@phoneNumberProperty=contact number}}
-- i asked for {@contact={@firstname=lisa}}'s {@profileProperty={@phoneNumberProperty=office phone number}}.
-- i want {@contact={@firstname=rick}}'s {@profileProperty={@phoneNumberProperty=current phone number}}
-- may i know {@contact={@firstname=peter}}'s {@profileProperty={@phoneNumberProperty=phone number}} ?
-- please, find {@profileProperty={@phoneNumberProperty=phone number}} for {@contact={@firstname=michael}}'s office.
-- should i ask {@contact={@firstname=angelica}} about her {@profileProperty={@phoneNumberProperty=phone number}}?
-- tell me {@contact={@firstname=monica}}'s {@profileProperty={@phoneNumberProperty=number}}
-- tell me the {@profileProperty={@phoneNumberProperty=number}} of {@contact={@firstname=james}}
-- tell me the {@profileProperty={@phoneNumberProperty=phone number}} of {@contact={@firstname=ismael}}?
-- tell me what is {@contact={@firstname=lisbeth}}'s {@profileProperty={@phoneNumberProperty=telefo number}}
-- what is {@contact={@firstname=bruce} {@lastname=wayne}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
-- what is {@contact={@firstname=deborah}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
-- what is {@contact={@firstname=dejan}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
-- what is {@contact={@firstname=maria}}'s {@profileProperty={@phoneNumberProperty=phone number}}
-- what is {@contact={@firstname=max}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
-- what is {@contact={@firstname=michael} {@lastname=jordan}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
-- what is {@contact={@firstname=miki}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
-- what is {@profileProperty={@phoneNumberProperty=number phone}} of {@contact={@firstname=maria}}?
-- what is {@contact={@firstname=ryans}} {@profileProperty={@phoneNumberProperty=number phone}}?
-- what is {@contact={@firstname=sam}}'s {@profileProperty={@phoneNumberProperty=personal mobile number}}?
-- what is {@contact={@firstname=terrence}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
-- what is the {@profileProperty={@phoneNumberProperty=contact number}} of {@contact={@firstname=rachel} {@lastname=lee}} ?
-- what is the {@contact={@firstname=jhon} {@lastname=sigmund}} {@profileProperty={@phoneNumberProperty=contact number}}
-- what is the {@profileProperty={@phoneNumberProperty=number}} for {@contact={@firstname=jon}}
-- what is the {@profileProperty={@phoneNumberProperty=number}} for {@contact={@firstname=mary}}
-- what is the {@profileProperty={@phoneNumberProperty=phone number}} from {@contact={@firstname=stafke}}?
-- what is the {@profileProperty={@phoneNumberProperty=phone number}} of {@contact={@firstname=daniel} {@lastname=pence}}?
-- what is the {@profileProperty={@phoneNumberProperty=phone number}} of {@contact={@firstname=iria} {@lastname=gold}}?
-- what is the {@profileProperty={@phoneNumberProperty=phone number}} of {@contact={@firstname=larry}}?
-- what is the {@profileProperty={@phoneNumberProperty=phone number}} of {@contact={@firstname=meg}}?
-- what is your {@profileProperty={@phoneNumberProperty=telephone number}} for {@contact={@firstname=cesar}}?
-- what this {@profileProperty={@phoneNumberProperty=telephone}} the {@contact={@firstname=marta} {@lastname=sanches}}?
-- what's {@contact={@firstname=alex}} {@profileProperty={@phoneNumberProperty=phone number}}?
-- what's {@profileProperty={@phoneNumberProperty=number phone}} for {@contact={@firstname=lea}}
-- whats {@contact={@firstname=pablo}}'s {@profileProperty={@phoneNumberProperty=phone number}}
-- which {@contact={@firstname=john}}´s {@profileProperty={@phoneNumberProperty=new phone number}}?
-- who can tell me {@contact={@firstname=alfonso}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
-- who remembers {@contact={@firstname=albert}}´s {@profileProperty={@phoneNumberProperty=phone number}}?
-- what's {@contact={@firstname=jims}} {@profileProperty={@phoneNumberProperty=phone number}}?
-- what's {@contact={@firstname=Uly}}'s {@profileProperty={@phoneNumberProperty=mobile}}?
-- what is {@contact={@firstname=Uly}}'s {@profileProperty={@phoneNumberProperty=mobile}}?
-- whats {@contact={@firstname=jims}} {@profileProperty={@phoneNumberProperty=mobile}}
-- show me {@contact={@firstname=adams}} {@profileProperty={@phoneNumberProperty=phone number}}
+- can you find me {@contact={@firstName=noe}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
+- can you give me the {@contact={@firstName=carla}} {@profileProperty={@phoneNumberProperty=phone number}}
+- can you give me the {@contact={@firstName=jerry}} {@profileProperty={@phoneNumberProperty=phone number}}
+- can you give me {@contact={@firstName=will}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
+- could you tell me the {@profileProperty={@phoneNumberProperty=phone number}} of {@contact={@firstName=julian}}?
+- find {@profileProperty={@phoneNumberProperty=phone number}} for {@contact={@firstName=cesar} {@lastName=lopez}}.
+- find {@profileProperty={@phoneNumberProperty=phone number}} for {@contact={@firstName=rafael}}
+- find {@profileProperty={@phoneNumberProperty=phone number}} of {@contact={@firstName=tina}}
+- find {@profileProperty={@phoneNumberProperty=phonenumber} for {@contact={@firstName=lucci}}
+- give me {@contact={@firstName=seva}}'s {@profileProperty={@phoneNumberProperty=contact number}}
+- i asked for {@contact={@firstName=lisa}}'s {@profileProperty={@phoneNumberProperty=office phone number}}.
+- i want {@contact={@firstName=rick}}'s {@profileProperty={@phoneNumberProperty=current phone number}}
+- may i know {@contact={@firstName=peter}}'s {@profileProperty={@phoneNumberProperty=phone number}} ?
+- please, find {@profileProperty={@phoneNumberProperty=phone number}} for {@contact={@firstName=michael}}'s office.
+- should i ask {@contact={@firstName=angelica}} about her {@profileProperty={@phoneNumberProperty=phone number}}?
+- tell me {@contact={@firstName=monica}}'s {@profileProperty={@phoneNumberProperty=number}}
+- tell me the {@profileProperty={@phoneNumberProperty=number}} of {@contact={@firstName=james}}
+- tell me the {@profileProperty={@phoneNumberProperty=phone number}} of {@contact={@firstName=ismael}}?
+- tell me what is {@contact={@firstName=lisbeth}}'s {@profileProperty={@phoneNumberProperty=telefo number}}
+- what is {@contact={@firstName=bruce} {@lastName=wayne}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
+- what is {@contact={@firstName=deborah}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
+- what is {@contact={@firstName=dejan}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
+- what is {@contact={@firstName=maria}}'s {@profileProperty={@phoneNumberProperty=phone number}}
+- what is {@contact={@firstName=max}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
+- what is {@contact={@firstName=michael} {@lastName=jordan}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
+- what is {@contact={@firstName=miki}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
+- what is {@profileProperty={@phoneNumberProperty=number phone}} of {@contact={@firstName=maria}}?
+- what is {@contact={@firstName=ryans}} {@profileProperty={@phoneNumberProperty=number phone}}?
+- what is {@contact={@firstName=sam}}'s {@profileProperty={@phoneNumberProperty=personal mobile number}}?
+- what is {@contact={@firstName=terrence}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
+- what is the {@profileProperty={@phoneNumberProperty=contact number}} of {@contact={@firstName=rachel} {@lastName=lee}} ?
+- what is the {@contact={@firstName=jhon} {@lastName=sigmund}} {@profileProperty={@phoneNumberProperty=contact number}}
+- what is the {@profileProperty={@phoneNumberProperty=number}} for {@contact={@firstName=jon}}
+- what is the {@profileProperty={@phoneNumberProperty=number}} for {@contact={@firstName=mary}}
+- what is the {@profileProperty={@phoneNumberProperty=phone number}} from {@contact={@firstName=stafke}}?
+- what is the {@profileProperty={@phoneNumberProperty=phone number}} of {@contact={@firstName=daniel} {@lastName=pence}}?
+- what is the {@profileProperty={@phoneNumberProperty=phone number}} of {@contact={@firstName=iria} {@lastName=gold}}?
+- what is the {@profileProperty={@phoneNumberProperty=phone number}} of {@contact={@firstName=larry}}?
+- what is the {@profileProperty={@phoneNumberProperty=phone number}} of {@contact={@firstName=meg}}?
+- what is your {@profileProperty={@phoneNumberProperty=telephone number}} for {@contact={@firstName=cesar}}?
+- what this {@profileProperty={@phoneNumberProperty=telephone}} the {@contact={@firstName=marta} {@lastName=sanches}}?
+- what's {@contact={@firstName=alex}} {@profileProperty={@phoneNumberProperty=phone number}}?
+- what's {@profileProperty={@phoneNumberProperty=number phone}} for {@contact={@firstName=lea}}
+- whats {@contact={@firstName=pablo}}'s {@profileProperty={@phoneNumberProperty=phone number}}
+- which {@contact={@firstName=john}}´s {@profileProperty={@phoneNumberProperty=new phone number}}?
+- who can tell me {@contact={@firstName=alfonso}}'s {@profileProperty={@phoneNumberProperty=phone number}}?
+- who remembers {@contact={@firstName=albert}}´s {@profileProperty={@phoneNumberProperty=phone number}}?
+- what's {@contact={@firstName=jims}} {@profileProperty={@phoneNumberProperty=phone number}}?
+- what's {@contact={@firstName=Uly}}'s {@profileProperty={@phoneNumberProperty=mobile}}?
+- what is {@contact={@firstName=Uly}}'s {@profileProperty={@phoneNumberProperty=mobile}}?
+- whats {@contact={@firstName=jims}} {@profileProperty={@phoneNumberProperty=mobile}}
+- show me {@contact={@firstName=adams}} {@profileProperty={@phoneNumberProperty=phone number}}
 
 @ intent GetPhoneNumber usesFeature contact,PhoneNumberPhraseList
 
 # GetProfile
 - who is {@contact}[?]
-- what's {@contact={@firstname=calum}}'s {@profileProperty=rate}
-- what is the {@profileProperty=youtube account} of {@contact={@firstname=mehmet}}
-- what is {@profileProperty=title} of {@contact={@firstname=bill} {@lastname=gates}}?
-- {@contact={@firstname=adam}}
-- {@contact={@firstname=jim} {@lastname=zheng}}
-- do you know who is {@contact={@firstname=paige}}?
-- hey, can you tell me who this guy {@contact={@firstname=john}} is
-- i want to know who is {@contact={@firstname=john} {@lastname=paul}} really?
-- is there a guy called {@contact={@firstname=cliff}}?
-- please tell me about {@contact={@firstname=alexander}}
-- present {@contact={@firstname=katherine}} to me
-- show {@contact={@firstname=ben}}'s profile page
-- show {@contact={@firstname=cesar} {@lastname=felipe}}.
-- show {@contact={@firstname=eremias}} profile
+- what's {@contact={@firstName=calum}}'s {@profileProperty=rate}
+- what is the {@profileProperty=youtube account} of {@contact={@firstName=mehmet}}
+- what is {@profileProperty=title} of {@contact={@firstName=bill} {@lastName=gates}}?
+- {@contact={@firstName=adam}}
+- {@contact={@firstName=jim} {@lastName=zheng}}
+- do you know who is {@contact={@firstName=paige}}?
+- hey, can you tell me who this guy {@contact={@firstName=john}} is
+- i want to know who is {@contact={@firstName=john} {@lastName=paul}} really?
+- is there a guy called {@contact={@firstName=cliff}}?
+- please tell me about {@contact={@firstName=alexander}}
+- present {@contact={@firstName=katherine}} to me
+- show {@contact={@firstName=ben}}'s profile page
+- show {@contact={@firstName=cesar} {@lastName=felipe}}.
+- show {@contact={@firstName=eremias}} profile
 - show me {@contact=daniel@outlook.edu}
 - show me {@contact=maria@company.co.uk}
-- show me {@contact={@firstname=pedro} {@lastname=navaja}}
+- show me {@contact={@firstName=pedro} {@lastName=navaja}}
 - tell me about {@contact=henry_miller@contoso.co.uk}
 - tell me everything about {@contact=peter@microsoft.co.za}
-- tell me more about {@contact={@firstname=paulina}}
-- tell me more about {@contact={@firstname=rathna}}
-- what do you know about {@contact={@firstname=lisa}}?
-- what do you know about {@contact={@firstname=tom}}?
-- when did you last seen {@contact={@firstname=sam}}?
-- who exactly is {@contact={@firstname=ross} {@lastname=geller}}?
-- who is {@contact={@firstname=angel} {@lastname=john}} of the mirage company?
-- who is {@contact={@firstname=angelica}} in the company?
-- who is {@contact={@firstname=gorge}} please?
-- who is {@contact={@firstname=karl}} at this company
-- who is {@contact={@firstname=leo}} from microsoft?
-- who is mr. {@contact={@lastname=andy}}
-- who is {@contact={@firstname=Kaique}}
-- who is {@contact={@firstname=Kaique} {lastname=Biancatti}}
+- tell me more about {@contact={@firstName=paulina}}
+- tell me more about {@contact={@firstName=rathna}}
+- what do you know about {@contact={@firstName=lisa}}?
+- what do you know about {@contact={@firstName=tom}}?
+- when did you last seen {@contact={@firstName=sam}}?
+- who exactly is {@contact={@firstName=ross} {@lastName=geller}}?
+- who is {@contact={@firstName=angel} {@lastName=john}} of the mirage company?
+- who is {@contact={@firstName=angelica}} in the company?
+- who is {@contact={@firstName=gorge}} please?
+- who is {@contact={@firstName=karl}} at this company
+- who is {@contact={@firstName=leo}} from microsoft?
+- who is mr. {@contact={@lastName=andy}}
+- who is {@contact={@firstName=Kaique}}
+- who is {@contact={@firstName=Kaique} {lastName=Biancatti}}
 
 @ intent GetProfile usesFeature contact,profileProperty
 
 # GetSkills
-- show all {@profileProperty={@skillProperty=skills}} for {@contact={@firstname=Eden} {@lastname=Liang}}
-- show me {@contact={@firstname=jack}}'s {@profileProperty={@skillProperty=skills}}
-- show me {@contact={@firstname=williams}} {@profileProperty={@skillProperty=skills}}
-- show me {@profileProperty={@skillProperty=techs}} for {@contact={@firstname=Duncan}}
+- show all {@profileProperty={@skillProperty=skills}} for {@contact={@firstName=Eden} {@lastName=Liang}}
+- show me {@contact={@firstName=jack}}'s {@profileProperty={@skillProperty=skills}}
+- show me {@contact={@firstName=williams}} {@profileProperty={@skillProperty=skills}}
+- show me {@profileProperty={@skillProperty=techs}} for {@contact={@firstName=Duncan}}
 - show me all {@profileProperty={@skillProperty=expertise}}
-- show me all {@profileProperty={@skillProperty=skills}} for {@contact={@firstname=Jack} {@lastname=Kranz}}
-- what does {@contact={@firstname=Jack}} know?
-- i need to see {@contact={@firstname=Jack}}'s {@profileProperty={@skillProperty=specialty}}
-- what is {@contact={@firstname=Jack}} {@profileProperty={@skillProperty=good at}}
-- what is {@contact={@firstname=John}} {@profileProperty={@skillProperty=good at}}
-- what is {@contact={@firstname=Adam}} {@profileProperty={@skillProperty=good at}}
-- what is {@contact={@firstname=John} {@lastname=Smith}} {@profileProperty={@skillProperty=good at}}
-- what's {@contact={@firstname=Jack}} {@profileProperty={@skillProperty=good at}}?
-- what is {@contact={@firstname=John}}'s {@profileProperty={@skillProperty=skill}}?
-- what is {@contact={@firstname=John}}'s {@profileProperty={@skillProperty=tech}}?
-- what is {@contact={@firstname=John}}'s {@profileProperty={@skillProperty=technology}}
-- what are {@contact={@firstname=Jason}}'s {@profileProperty={@skillProperty=skills}}
-- what is the {@profileProperty={@skillProperty=expertise}} of {@contact={@firstname=John} {@lastname=Smith}}?
-- what is the {@profileProperty={@skillProperty=specialty}} of {@contact={@firstname=John} {@lastname=Smith}}
-- what's {@contact={@firstname=jims}} {@profileProperty={@skillProperty=skills}}
-- what are {@contact={@firstname=toms}} {@profileProperty={@skillProperty=techs}}
-- whats {@contact={@firstname=jims}} {@profileProperty={@skillProperty=skills}}?
-- show me {@contact={@firstname=adams}} {@profileProperty={@skillProperty=techs}}
+- show me all {@profileProperty={@skillProperty=skills}} for {@contact={@firstName=Jack} {@lastName=Kranz}}
+- what does {@contact={@firstName=Jack}} know?
+- i need to see {@contact={@firstName=Jack}}'s {@profileProperty={@skillProperty=specialty}}
+- what is {@contact={@firstName=Jack}} {@profileProperty={@skillProperty=good at}}
+- what is {@contact={@firstName=John}} {@profileProperty={@skillProperty=good at}}
+- what is {@contact={@firstName=Adam}} {@profileProperty={@skillProperty=good at}}
+- what is {@contact={@firstName=John} {@lastName=Smith}} {@profileProperty={@skillProperty=good at}}
+- what's {@contact={@firstName=Jack}} {@profileProperty={@skillProperty=good at}}?
+- what is {@contact={@firstName=John}}'s {@profileProperty={@skillProperty=skill}}?
+- what is {@contact={@firstName=John}}'s {@profileProperty={@skillProperty=tech}}?
+- what is {@contact={@firstName=John}}'s {@profileProperty={@skillProperty=technology}}
+- what are {@contact={@firstName=Jason}}'s {@profileProperty={@skillProperty=skills}}
+- what is the {@profileProperty={@skillProperty=expertise}} of {@contact={@firstName=John} {@lastName=Smith}}?
+- what is the {@profileProperty={@skillProperty=specialty}} of {@contact={@firstName=John} {@lastName=Smith}}
+- what's {@contact={@firstName=jims}} {@profileProperty={@skillProperty=skills}}
+- what are {@contact={@firstName=toms}} {@profileProperty={@skillProperty=techs}}
+- whats {@contact={@firstName=jims}} {@profileProperty={@skillProperty=skills}}?
+- show me {@contact={@firstName=adams}} {@profileProperty={@skillProperty=techs}}
 
 @ intent GetSkills usesFeature contact,SkillInfoPhraseList
 
@@ -548,53 +550,53 @@
 - let me know when Adam's booked
 
 # GetCalendar
-- show {@contact={@firstname=adam}}'s {@profileProperty={@calendarProperty=calendar}}
-- show {@contact={@firstname=json}}'s {@profileProperty={@calendarProperty=bookings}}
-- show {@contact={@firstname=json}}'s {@profileProperty={@calendarProperty=next booking}}
-- show me {@contact={@firstname=jacks}} {@profileProperty={@calendarProperty=schedule}}
-- show {@profileProperty={@calendarProperty=calendar}} for {@contact={@firstname=adam} {@lastname=cogan}}
-- what's {@contact={@firstname=john}}'s {@profileProperty={@calendarProperty=calendar}}?
-- what is {@contact={@firstname=jason}}'s {@profileProperty={@calendarProperty=agenda}}
-- what is the {@profileProperty={@calendarProperty=calendar}} of {@contact={@firstname=talor}}
-- give me {@contact={@firstname=elise}}'s {@profileProperty={@calendarProperty=calendar}}
-- i want to see {@contact={@firstname=michael}}'s {@profileProperty={@calendarProperty=appointments}}
-- do you have {@contact={@firstname=kiki}}'s {@profileProperty={@calendarProperty=calendar}}?
-- whats {@contact={@firstname=jims}} {@profileProperty={@calendarProperty=calendar}}
-- show me {@contact={@firstname=adams}} {@profileProperty={@calendarProperty=calendar}}
+- show {@contact={@firstName=adam}}'s {@profileProperty={@calendarProperty=calendar}}
+- show {@contact={@firstName=json}}'s {@profileProperty={@calendarProperty=bookings}}
+- show {@contact={@firstName=json}}'s {@profileProperty={@calendarProperty=next booking}}
+- show me {@contact={@firstName=jacks}} {@profileProperty={@calendarProperty=schedule}}
+- show {@profileProperty={@calendarProperty=calendar}} for {@contact={@firstName=adam} {@lastName=cogan}}
+- what's {@contact={@firstName=john}}'s {@profileProperty={@calendarProperty=calendar}}?
+- what is {@contact={@firstName=jason}}'s {@profileProperty={@calendarProperty=agenda}}
+- what is the {@profileProperty={@calendarProperty=calendar}} of {@contact={@firstName=talor}}
+- give me {@contact={@firstName=elise}}'s {@profileProperty={@calendarProperty=calendar}}
+- i want to see {@contact={@firstName=michael}}'s {@profileProperty={@calendarProperty=appointments}}
+- do you have {@contact={@firstName=kiki}}'s {@profileProperty={@calendarProperty=calendar}}?
+- whats {@contact={@firstName=jims}} {@profileProperty={@calendarProperty=calendar}}
+- show me {@contact={@firstName=adams}} {@profileProperty={@calendarProperty=calendar}}
 
 @ intent GetCalendar usesFeature contact, CalendarPhraseList
 
 # GetFreeDay
 - when ({@presentBe} | {@futureBe}) [not] {@contact} [be] [not] ({@available} | {@unavailable})[?]
-- when will {@contact={@firstname=adam}} be {@available = free}
-- when will {@contact={@firstname=adam} {@lastname=cogan}} be {@available = available}
-- when will {@contact={@firstname=adam}} be {@available = working for ssw}?
-- when will {@contact={@firstname=adam} {@lastname=cogan}} be {@available = internal}?
+- when will {@contact={@firstName=adam}} be {@available = free}
+- when will {@contact={@firstName=adam} {@lastName=cogan}} be {@available = available}
+- when will {@contact={@firstName=adam}} be {@available = working for ssw}?
+- when will {@contact={@firstName=adam} {@lastName=cogan}} be {@available = internal}?
 
-- when is {@contact={@firstname=calum}} {@available = free}
-- when is {@contact={@firstname=calum}} next {@available = free}
-- when is {@contact={@firstname=calum}} next be {@available = free}
-- when is {@contact={@firstname=calum}}'s next {@available = free}
-- when is {@contact={@firstname=calum}} {@available = bookable}
-- when is {@contact={@firstname=calum}} next {@available = bookable}
-- when is {@contact={@firstname=calum}}'s next {@available = bookable}
-- when is {@contact={@firstname=calum} {@lastname=simpson}} {@available = available}
-- when is {@contact={@firstname=calum}}'s next {@available = available}
-- when is {@contact={@firstname=calum}}'s next {@available = availablity}
-- when is {@contact={@firstname=calum}} {@available = working for ssw}?
-- when is {@contact={@firstname=calum} {@lastname=simpson}} {@available = internal}?
+- when is {@contact={@firstName=calum}} {@available = free}
+- when is {@contact={@firstName=calum}} next {@available = free}
+- when is {@contact={@firstName=calum}} next be {@available = free}
+- when is {@contact={@firstName=calum}}'s next {@available = free}
+- when is {@contact={@firstName=calum}} {@available = bookable}
+- when is {@contact={@firstName=calum}} next {@available = bookable}
+- when is {@contact={@firstName=calum}}'s next {@available = bookable}
+- when is {@contact={@firstName=calum} {@lastName=simpson}} {@available = available}
+- when is {@contact={@firstName=calum}}'s next {@available = available}
+- when is {@contact={@firstName=calum}}'s next {@available = availablity}
+- when is {@contact={@firstName=calum}} {@available = working for ssw}?
+- when is {@contact={@firstName=calum} {@lastName=simpson}} {@available = internal}?
 
-- when can I book {@contact={@firstname=piers}} 
-- when can I book {@contact={@firstname=piers} {@lastname=sinclair}} 
-- when can I book {@contact={@firstname=piers}}?
-- when can I book {@contact={@firstname=piers} {@lastname=sinclair}}?
+- when can I book {@contact={@firstName=piers}} 
+- when can I book {@contact={@firstName=piers} {@lastName=sinclair}} 
+- when can I book {@contact={@firstName=piers}}?
+- when can I book {@contact={@firstName=piers} {@lastName=sinclair}}?
 
-- on which day won't {@contact={@firstname=piers}} be {@available = free}?
-- what date isn't {@contact={@firstname=piers} {@lastname=sinclair}} {@available = free}?
+- on which day won't {@contact={@firstName=piers}} be {@available = free}?
+- what date isn't {@contact={@firstName=piers} {@lastName=sinclair}} {@available = free}?
 
-- when will {@contact={@firstname=adam}} be {@unavailable = on client work}?
-- when is {@contact={@firstname=adam}}'s {@unavailable = next client appointment}?
-- when is {@contact={@firstname=adam}}'s {@unavailable = next client booking}?
+- when will {@contact={@firstName=adam}} be {@unavailable = on client work}?
+- when is {@contact={@firstName=adam}}'s {@unavailable = next client appointment}?
+- when is {@contact={@firstName=adam}}'s {@unavailable = next client booking}?
 
 @ phraseList GetFreeDayPhraseList(interchangeable) disabledForAllModels =
 	- when
