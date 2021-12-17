@@ -31,8 +31,8 @@ defaults:
     shell: pwsh
 
 jobs:
-  build:
-    name: Build
+  build-and-test:
+    name: Build and test
     runs-on: ubuntu-latest
     environment: dev
     steps:
@@ -108,8 +108,15 @@ jobs:
           path: ${{ env.BOT_PROJECT_DIR }}/generated
           if-no-files-found: error
 
-      # Build bot
-      - name: Build bot publishing package
+      # Build and test
+      - name: Built and test bot app
+        run: |
+          cd ${{ github.workspace }}
+          dotnet build --configuration Release
+          dotnet test --no-restore --verbosity normal
+
+      # Create bot
+      - name: Create bot publishing package
         run: |
           cd ${{ env.BOT_PROJECT_DIR }}
 
@@ -126,7 +133,7 @@ jobs:
 
   deploy-web-app:
     name: Deploy web app
-    needs: build
+    needs: build-and-test
     runs-on: ubuntu-latest
     environment: dev
     steps:
