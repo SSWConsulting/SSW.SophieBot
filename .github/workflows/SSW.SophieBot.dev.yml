@@ -47,9 +47,7 @@ jobs:
       - name: Use .Net Core sdk
         uses: actions/setup-dotnet@v1.9.0
         with:
-          dotnet-version: |
-            '3.1.x'
-            '6.0.x'
+          dotnet-version: '6.0.x'
 
       - name: Create appsettings file
         uses: jsdaniell/create-json@1.1.2
@@ -95,7 +93,6 @@ jobs:
           name: "Bot_Models_${{ github.run_id }}"
           path: ${{ env.BOT_PROJECT_DIR }}/generated
           if-no-files-found: error
-          retention-days: 5
 
       # Build bot
       - name: Build bot publishing package
@@ -112,7 +109,6 @@ jobs:
           name: "Bot_Webapp_${{ github.run_id }}"
           path: ${{ env.OUTPUT_DIR }}
           if-no-files-found: error
-          retention-days: 5
 
   deploy-recognizers:
     name: Deploy recognizers
@@ -159,9 +155,7 @@ jobs:
       - name: Use .Net Core sdk
         uses: actions/setup-dotnet@v1.9.0
         with:
-          dotnet-version: |
-            '3.1.x'
-            '6.0.x'
+          dotnet-version: '6.0.x'
 
       - uses: actions/download-artifact@v2
         with:
