@@ -121,7 +121,7 @@ jobs:
       - name: Create LUIS migrator publishing package
         run: |
           cd ${{ env.LUIS_MIGRATOR_DIR }}
-          dotnet publish -c Release -o "${{ env.OUTPUT_DIR }}/luis-migrator" --self-contained -r linux-x64
+          dotnet publish -c Release -o "${{ env.OUTPUT_DIR }}/luis-migrator" --self-contained -r win-x64
 
       # Upload webapp artifact
       - name: Upload webapp artifact
@@ -168,7 +168,7 @@ jobs:
   migrate-luis-model:
     name: Migrate LUIS model
     needs: build-and-test
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     environment: dev
     steps:
       - uses: actions/checkout@v2.3.4
