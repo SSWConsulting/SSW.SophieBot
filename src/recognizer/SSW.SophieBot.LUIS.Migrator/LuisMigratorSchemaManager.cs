@@ -18,12 +18,17 @@ namespace SSW.SophieBot.LUIS.Migrator
 
         protected override List<Type> ChooseModelTypesToPublish()
         {
+            var migrationTypes = new List<Type>
+            {
+                typeof(SswPersonNames),
+                typeof(Contact),
+                typeof(FirstName),
+                typeof(LastName),
+                typeof(PersonName)
+            };
+
             return SchemaOptions.ModelTypes
-                .Where(modelType => modelType == typeof(SswPersonNames)
-                || modelType == typeof(Contact)
-                || modelType == typeof(FirstName)
-                || modelType == typeof(LastName)
-                || modelType == typeof(PersonName))
+                .Where(modelType => migrationTypes.Contains(modelType))
                 .ToList();
         }
     }
