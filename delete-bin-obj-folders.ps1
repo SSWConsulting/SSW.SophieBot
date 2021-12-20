@@ -1,0 +1,1 @@
+Get-Childitem -Path obj,bin -Directory -Recurse | Where {$_.Fullname -notlike "*\node_modules\*"} | Remove-Item -Recurse

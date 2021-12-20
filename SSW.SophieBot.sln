@@ -68,6 +68,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.DataAPI.Clien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.LUIS.Migrator", "src\recognizer\SSW.SophieBot.LUIS.Migrator\SSW.SophieBot.LUIS.Migrator.csproj", "{5E2870AC-C4E5-4071-8564-E1F57904B662}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSW.SophieBot.TestBase", "test\SSW.SophieBot.TestBase\SSW.SophieBot.TestBase.csproj", "{56037D26-604E-4D44-9675-42B289DC4534}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -150,6 +152,10 @@ Global
 		{5E2870AC-C4E5-4071-8564-E1F57904B662}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E2870AC-C4E5-4071-8564-E1F57904B662}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E2870AC-C4E5-4071-8564-E1F57904B662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56037D26-604E-4D44-9675-42B289DC4534}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56037D26-604E-4D44-9675-42B289DC4534}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56037D26-604E-4D44-9675-42B289DC4534}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56037D26-604E-4D44-9675-42B289DC4534}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -181,6 +187,7 @@ Global
 		{CE516555-7285-4C0E-97AF-BEE6952E6B51} = {AA5C3A18-8A04-48D7-A5F2-B71807650250}
 		{35C312A3-7146-4D21-893B-5FB4800D55F4} = {C6992D1E-BC9C-4977-8950-EC757FB0B338}
 		{5E2870AC-C4E5-4071-8564-E1F57904B662} = {AA5C3A18-8A04-48D7-A5F2-B71807650250}
+		{56037D26-604E-4D44-9675-42B289DC4534} = {EA24F653-DAC3-46F0-B579-40518CE3F086}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {86E25EDA-9BBD-4C01-99A4-07ABD670C67C}
