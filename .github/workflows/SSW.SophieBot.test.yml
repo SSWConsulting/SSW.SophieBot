@@ -4,14 +4,22 @@ on:
   pull_request:
     paths-ignore:
       - '_docs/**'
+  push:
+    branches:
+      - main
+    paths:
+      - src/**
+      - test/**
+      - .github/workflows/SSW.SophieBot.dev.yml
+      - .github/workflows/scripts/**
   
 defaults:
   run:
     shell: pwsh
 
 jobs:
-  test:
-    name: Test
+  build-test:
+    name: Build and test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4
