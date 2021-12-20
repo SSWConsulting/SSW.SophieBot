@@ -133,7 +133,7 @@ jobs:
 
   deploy-web-app:
     name: Deploy web app
-    needs: build-and-test
+    needs: build
     runs-on: ubuntu-latest
     environment: dev
     steps:
@@ -159,7 +159,7 @@ jobs:
 
   migrate-luis-model:
     name: Migrate LUIS model
-    needs: build-and-test
+    needs: build
     runs-on: windows-latest
     environment: dev
     steps:
