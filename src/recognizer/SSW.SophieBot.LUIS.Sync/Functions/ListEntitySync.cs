@@ -18,23 +18,23 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
         private const string SbConnectionStringName = "ServiceBus";
 
         private readonly ILuisService _luisService;
-        private readonly SswPersonNames _sswPersonNamesClEntity;
+        private readonly PersonNames _personNamesClEntity;
         private readonly ILogger<ListEntitySync> _logger;
 
         public ListEntitySync(
             ILuisService luisService,
-            SswPersonNames sswPersonNamesClEntity,
+            PersonNames personNamesClEntity,
             ILogger<ListEntitySync> logger)
         {
             _luisService = luisService;
-            _sswPersonNamesClEntity = sswPersonNamesClEntity;
+            _personNamesClEntity = personNamesClEntity;
             _logger = logger;
         }
 
-        [FunctionName(nameof(SyncSswPeopleNames))]
-        public async Task SyncSswPeopleNames([ServiceBusTrigger(
-            "%ServiceBus:SswPeopleNames:Topic%",
-            "%ServiceBus:SswPeopleNames:Subscription%",
+        [FunctionName(nameof(SyncPersonNames))]
+        public async Task SyncPersonNames([ServiceBusTrigger(
+            "%ServiceBus:PersonNames:Topic%",
+            "%ServiceBus:PersonNames:Subscription%",
             Connection = SbConnectionStringName)] IEnumerable<MqMessage<Employee>> employees,
             CancellationToken cancellationToken)
         {
@@ -57,7 +57,7 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
             IEnumerable<MqMessage<Employee>> employees,
             CancellationToken cancellationToken = default)
         {
-            var clEntityName = ModelAttribute.GetName(typeof(SswPersonNames));
+            var clEntityName = ModelAttribute.GetName(typeof(PersonNames));
 
             // TODO: We are currently retriving all sub lists from LUIS in a single call due to the limitation of the REST API. 
             // May be a bottleneck here but it's of low priority
@@ -65,7 +65,7 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
             if (clEntity == null)
             {
                 // if this cl entity does not exist, it's the LUIS build/publish service's responsibility to do the creation, but not this sync service
-                // (e.g. create this sswPeopleNames list entity and feed data by calling People API)
+                // (e.g. create this personNames list entity and feed data by calling People API)
                 // so we can just log a warning and exit execution here
                 _logger.LogWarning("Failed to get target closed list entity: {EntityName}", clEntityName);
                 return;
@@ -79,7 +79,7 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
 
             foreach (var employee in employees)
             {
-                var wordListObject = _sswPersonNamesClEntity.CreateWordList(employee.Message);
+                var wordListObject = _personNamesClEntity.CreateWordList(employee.Message);
 
                 newSubLists.RemoveAll(item => item.CanonicalForm == wordListObject.CanonicalForm);
                 if (employee.SyncMode == SyncMode.Create || employee.SyncMode == SyncMode.Update)

@@ -1,6 +1,6 @@
 ![ssw-banner](./_docs/images/ssw-banner.png)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![BuildAndDeploy-Prod](https://github.com/SSWConsulting/SSW.SophieBot/actions/workflows/SSW.SophieBot.prod.yml/badge.svg?branch=main)](https://github.com/SSWConsulting/SSW.SophieBot/actions/workflows/SSW.SophieBot.prod.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Build and Deploy-Prod](https://github.com/SSWConsulting/SSW.SophieBot/actions/workflows/SSW.SophieBot.prod.yml/badge.svg?branch=main)](https://github.com/SSWConsulting/SSW.SophieBot/actions/workflows/SSW.SophieBot.prod.yml)
 
 # SSW.SophieBot
 

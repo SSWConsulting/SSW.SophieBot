@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.test.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(MicrosoftNETTestSdkPackageVersion)" />
+    <PackageReference Include="System.Linq.Async" Version="5.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SSW.SophieBot.Recognizer.Schema.TestData\SSW.SophieBot.Recognizer.Schema.TestData.csproj" />
+    <ProjectReference Include="..\SSW.SophieBot.TestBase\SSW.SophieBot.TestBase.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -58,17 +58,17 @@
 	- china:
 		- china
 
-@ list sswPersonNames
+@ list personNames
 
 @ prebuilt email
 @ prebuilt personName
 @ prebuilt geographyV2
 @ prebuilt datetimeV2
 
-@ ml contact usesFeature personName,email,sswPersonNames
+@ ml contact usesFeature personName,email,personNames
 @ contact = 
-	- @ ml firstName usesFeature personName,sswPersonNames
-	- @ ml firstName usesFeature personName,sswPersonNames
+	- @ ml firstName usesFeature personName,personNames
+	- @ ml firstName usesFeature personName,personNames
 
 @ phraseList EmailAddressPhraseList(interchangeable) disabledForAllModels =
 	- email

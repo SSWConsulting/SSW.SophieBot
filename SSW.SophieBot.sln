@@ -42,31 +42,33 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{48D165C5-D41
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{EA24F653-DAC3-46F0-B579-40518CE3F086}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.DataSync.Crm.Test", "test\SSW.SophieBot.DataSync.Crm.Test\SSW.SophieBot.DataSync.Crm.Test.csproj", "{18EF70CA-F8FE-49B7-8D14-1DF45CAADDB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.DataSync.Crm.Tests", "test\SSW.SophieBot.DataSync.Crm.Tests\SSW.SophieBot.DataSync.Crm.Tests.csproj", "{18EF70CA-F8FE-49B7-8D14-1DF45CAADDB9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{78D9C92A-37E3-49D6-8747-B03AF396A492}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Core", "src\framework\SSW.SophieBot.Core\SSW.SophieBot.Core.csproj", "{2F1A3FEB-D7BE-4760-A4A0-A9599659C6B9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.LUIS.Sync.Test", "test\SSW.SophieBot.LUIS.Sync.Test\SSW.SophieBot.LUIS.Sync.Test.csproj", "{D6790504-79B9-4B6E-A5A2-4BF5919F4C9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.LUIS.Sync.Tests", "test\SSW.SophieBot.LUIS.Sync.Tests\SSW.SophieBot.LUIS.Sync.Tests.csproj", "{D6790504-79B9-4B6E-A5A2-4BF5919F4C9B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "recognizer", "recognizer", "{AA5C3A18-8A04-48D7-A5F2-B71807650250}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.Schema", "src\framework\SSW.SophieBot.Recognizer.Schema\SSW.SophieBot.Recognizer.Schema.csproj", "{5E12CDC0-A968-4A5E-933C-EA074D3B8495}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.Schema.Test", "test\SSW.SophieBot.Recognizer.Schema.Test\SSW.SophieBot.Recognizer.Schema.Test.csproj", "{9ED38FFF-6686-4929-B88C-AFF58B052A84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.Schema.Tests", "test\SSW.SophieBot.Recognizer.Schema.Tests\SSW.SophieBot.Recognizer.Schema.Tests.csproj", "{9ED38FFF-6686-4929-B88C-AFF58B052A84}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.Schema.TestData", "test\SSW.SophieBot.Recognizer.Schema.TestData\SSW.SophieBot.Recognizer.Schema.TestData.csproj", "{FD3DB385-529E-4AD2-B9E8-EF844593A86C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.LUIS.Abstractions", "src\framework\SSW.SophieBot.Recognizer.LUIS.Abstractions\SSW.SophieBot.Recognizer.LUIS.Abstractions.csproj", "{D0A484AD-7D17-4E8F-ACF0-84CE4E54ECAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.LUIS", "src\framework\SSW.SophieBot.Recognizer.LUIS\SSW.SophieBot.Recognizer.LUIS.csproj", "{D0A484AD-7D17-4E8F-ACF0-84CE4E54ECAD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.LUIS.Abstractions.Test", "test\SSW.SophieBot.Recognizer.LUIS.Abstractions.Test\SSW.SophieBot.Recognizer.LUIS.Abstractions.Test.csproj", "{2E620F00-E9E7-45A0-A311-4AD541263B63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.LUIS.Tests", "test\SSW.SophieBot.Recognizer.LUIS.Tests\SSW.SophieBot.Recognizer.LUIS.Tests.csproj", "{2E620F00-E9E7-45A0-A311-4AD541263B63}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.LUIS.EmployeeFinder", "src\recognizer\SSW.SophieBot.LUIS.EmployeeFinder\SSW.SophieBot.LUIS.EmployeeFinder.csproj", "{CE516555-7285-4C0E-97AF-BEE6952E6B51}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.DataAPI.Client", "src\service\SSW.SophieBot.DataAPI.Client\SSW.SophieBot.DataAPI.Client.csproj", "{35C312A3-7146-4D21-893B-5FB4800D55F4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.LUIS.Migrator", "src\recognizer\SSW.SophieBot.LUIS.Migrator\SSW.SophieBot.LUIS.Migrator.csproj", "{5E2870AC-C4E5-4071-8564-E1F57904B662}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.TestBase", "test\SSW.SophieBot.TestBase\SSW.SophieBot.TestBase.csproj", "{56037D26-604E-4D44-9675-42B289DC4534}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -150,6 +152,10 @@ Global
 		{5E2870AC-C4E5-4071-8564-E1F57904B662}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E2870AC-C4E5-4071-8564-E1F57904B662}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E2870AC-C4E5-4071-8564-E1F57904B662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56037D26-604E-4D44-9675-42B289DC4534}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56037D26-604E-4D44-9675-42B289DC4534}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56037D26-604E-4D44-9675-42B289DC4534}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56037D26-604E-4D44-9675-42B289DC4534}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -181,6 +187,7 @@ Global
 		{CE516555-7285-4C0E-97AF-BEE6952E6B51} = {AA5C3A18-8A04-48D7-A5F2-B71807650250}
 		{35C312A3-7146-4D21-893B-5FB4800D55F4} = {C6992D1E-BC9C-4977-8950-EC757FB0B338}
 		{5E2870AC-C4E5-4071-8564-E1F57904B662} = {AA5C3A18-8A04-48D7-A5F2-B71807650250}
+		{56037D26-604E-4D44-9675-42B289DC4534} = {EA24F653-DAC3-46F0-B579-40518CE3F086}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {86E25EDA-9BBD-4C01-99A4-07ABD670C67C}

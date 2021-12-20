@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.test.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(MicrosoftNETTestSdkPackageVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\service\SSW.SophieBot.DataSync.Crm\SSW.SophieBot.DataSync.Crm.csproj" />
+    <ProjectReference Include="..\SSW.SophieBot.TestBase\SSW.SophieBot.TestBase.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,5 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\..\..\configureawait.props" />
+  <Import Project="..\..\..\common.props" />
+
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
 	<RootNamespace />
@@ -7,7 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\service\SSW.SophieBot.DataAPI.Client\SSW.SophieBot.DataAPI.Client.csproj" />
-    <ProjectReference Include="..\..\framework\SSW.SophieBot.Recognizer.LUIS.Abstractions\SSW.SophieBot.Recognizer.LUIS.Abstractions.csproj" />
+    <ProjectReference Include="..\..\framework\SSW.SophieBot.Recognizer.LUIS\SSW.SophieBot.Recognizer.LUIS.csproj" />
   </ItemGroup>
 
 </Project>
