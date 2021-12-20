@@ -24,8 +24,8 @@ defaults:
     shell: pwsh
 
 jobs:
-  build-and-test:
-    name: Build and test
+  build:
+    name: Build
     runs-on: ubuntu-latest
     environment: prod
     steps:
