@@ -18,16 +18,16 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
         private const string SbConnectionStringName = "ServiceBus";
 
         private readonly ILuisService _luisService;
-        private readonly PersonNames _sswPersonNamesClEntity;
+        private readonly PersonNames _personNamesClEntity;
         private readonly ILogger<ListEntitySync> _logger;
 
         public ListEntitySync(
             ILuisService luisService,
-            PersonNames sswPersonNamesClEntity,
+            PersonNames personNamesClEntity,
             ILogger<ListEntitySync> logger)
         {
             _luisService = luisService;
-            _sswPersonNamesClEntity = sswPersonNamesClEntity;
+            _personNamesClEntity = personNamesClEntity;
             _logger = logger;
         }
 
@@ -79,7 +79,7 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
 
             foreach (var employee in employees)
             {
-                var wordListObject = _sswPersonNamesClEntity.CreateWordList(employee.Message);
+                var wordListObject = _personNamesClEntity.CreateWordList(employee.Message);
 
                 newSubLists.RemoveAll(item => item.CanonicalForm == wordListObject.CanonicalForm);
                 if (employee.SyncMode == SyncMode.Create || employee.SyncMode == SyncMode.Update)

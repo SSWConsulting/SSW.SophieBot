@@ -1,5 +1,5 @@
 [Icons](icons.en-us.lg)
-[billableList](billableList.en-us.lg)
+[PeopleList](peopleList.en-us.lg)
 
 # AppointmentAgenda(displayName, appointments)
 - IF: ${count(appointments) > 0}

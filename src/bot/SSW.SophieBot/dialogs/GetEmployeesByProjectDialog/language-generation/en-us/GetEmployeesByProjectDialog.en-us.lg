@@ -1,5 +1,5 @@
-[common](common.en-us.lg)
-[BillableList](billableList.en-us.lg)
+[Common](common.en-us.lg)
+[PeopleList](peopleList.en-us.lg)
 
 # SendActivity_3tfngC()
 [Activity
@@ -10,7 +10,7 @@
 - I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
 # SendActivity_OeOolV()
 [Activity
-    Attachments = ${json(BillableEmployeesList(
+    Attachments = ${json(PeopleListByBilled(
         CardTitle(), 
         null, 
         true, 
