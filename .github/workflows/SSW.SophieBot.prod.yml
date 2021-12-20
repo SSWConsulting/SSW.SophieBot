@@ -3,7 +3,7 @@ name: Build and Deploy-Prod
 on: workflow_dispatch
 
 concurrency:
-  group: SSWSophieBotProd
+  group: SSWSophieBotProd-BuildAndDeploy
   cancel-in-progress: true
 
 env:

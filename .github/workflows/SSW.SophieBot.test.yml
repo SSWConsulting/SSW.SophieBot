@@ -13,6 +13,10 @@ on:
       - .github/workflows/SSW.SophieBot.dev.yml
       - .github/workflows/scripts/**
   
+concurrency:
+  group: SSWSophieBot-BuildAndTest
+  cancel-in-progress: true
+
 defaults:
   run:
     shell: pwsh

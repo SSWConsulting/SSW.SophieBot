@@ -11,7 +11,7 @@ on:
       - .github/workflows/scripts/**
 
 concurrency:
-  group: SSWSophieBotDev
+  group: SSWSophieBotDev-BuildAndDeploy
   cancel-in-progress: true
 
 env:

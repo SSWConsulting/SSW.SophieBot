@@ -1,6 +1,7 @@
 ![ssw-banner](./_docs/images/ssw-banner.png)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) 
+[![codecov](https://codecov.io/gh/SSWConsulting/SSW.SophieBot/branch/main/graph/badge.svg?token=MYW6YPW4P3)](https://codecov.io/gh/SSWConsulting/SSW.SophieBot)
 [![Build and Deploy-Prod](https://github.com/SSWConsulting/SSW.SophieBot/actions/workflows/SSW.SophieBot.prod.yml/badge.svg?branch=main)](https://github.com/SSWConsulting/SSW.SophieBot/actions/workflows/SSW.SophieBot.prod.yml)
 
 # SSW.SophieBot
