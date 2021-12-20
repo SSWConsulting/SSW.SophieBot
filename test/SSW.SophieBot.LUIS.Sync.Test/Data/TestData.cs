@@ -15,7 +15,7 @@ namespace SSW.SophieBot.LUIS.Sync.Test.Data
         public ClosedListEntityExtractor SswPeopleNames { get; } = new(
             Guid.NewGuid(),
             string.Empty,
-            name: "sswPersonNames");
+            name: "personNames");
 
         public List<ClosedListEntityExtractor> ClosedListEntities => new()
         {
@@ -50,10 +50,10 @@ namespace SSW.SophieBot.LUIS.Sync.Test.Data
 
         public TestData()
         {
-            var testSswPeopleNamesClEntity = new TestSswPeopleNamesClEntity(
+            var testSswPeopleNamesClEntity = new TestPersonNamesClEntity(
                 null,
                 new TestPeopleClient(),
-                NullLogger<SswPersonNames>.Instance);
+                NullLogger<PersonNames>.Instance);
 
             SswPeopleNames.SubLists = MqEmployees
                 .Select(mqEmployee =>

@@ -10,19 +10,19 @@ using System.Threading;
 
 namespace SSW.SophieBot.Entities
 {
-    [Model("sswPersonNames")]
-    public class SswPersonNames : IClosedList, IDisposable
+    [Model("personNames")]
+    public class PersonNames : IClosedList, IDisposable
     {
         private readonly ILuisService _luisService;
         private readonly IPeopleApiClient _peopleApiClient;
-        private readonly ILogger<SswPersonNames> _logger;
+        private readonly ILogger<PersonNames> _logger;
 
         public ICollection<SubClosedList> SubLists { get; } = new List<SubClosedList>();
 
-        public SswPersonNames(
+        public PersonNames(
             ILuisService luisService,
             IPeopleApiClient peopleApiClient,
-            ILogger<SswPersonNames> logger)
+            ILogger<PersonNames> logger)
         {
             _luisService = luisService;
             _peopleApiClient = peopleApiClient;
@@ -31,7 +31,7 @@ namespace SSW.SophieBot.Entities
 
         public async IAsyncEnumerable<bool> SeedAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            var clEntityId = await _luisService.GetClEntityIdAsync(ModelAttribute.GetName(typeof(SswPersonNames)), cancellationToken);
+            var clEntityId = await _luisService.GetClEntityIdAsync(ModelAttribute.GetName(typeof(PersonNames)), cancellationToken);
 
             if (!clEntityId.HasValue)
             {

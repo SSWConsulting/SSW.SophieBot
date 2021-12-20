@@ -20,7 +20,7 @@ namespace SSW.SophieBot.LUIS.Migrator
         {
             var migrationTypes = new List<Type>
             {
-                typeof(SswPersonNames),
+                typeof(PersonNames),
                 typeof(Contact),
                 typeof(FirstName),
                 typeof(LastName),

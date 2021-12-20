@@ -3,12 +3,12 @@ using SSW.SophieBot.Entities;
 
 namespace SSW.SophieBot.LUIS.Sync.Test.Data
 {
-    public class TestSswPeopleNamesClEntity : SswPersonNames
+    public class TestPersonNamesClEntity : PersonNames
     {
-        public TestSswPeopleNamesClEntity(
+        public TestPersonNamesClEntity(
             ILuisService luisService,
             IPeopleApiClient peopleApiClient,
-            ILogger<SswPersonNames> logger)
+            ILogger<PersonNames> logger)
             : base(luisService, peopleApiClient, logger)
         {
 

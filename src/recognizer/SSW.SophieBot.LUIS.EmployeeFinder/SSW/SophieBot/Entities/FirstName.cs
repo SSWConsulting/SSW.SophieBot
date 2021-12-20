@@ -2,7 +2,7 @@
 {
     [Model("firstName")]
     [ChildOf(typeof(Contact))]
-    [Feature(typeof(SswPersonNames), typeof(PersonName))]
+    [Feature(typeof(PersonNames), typeof(PersonName))]
     public class FirstName : RecognizerModelBase, IEntity
     {
 

@@ -14,7 +14,7 @@ namespace SSW.SophieBot.LUIS.Sync.Test
     {
         private readonly ILuisService _luisService;
         private readonly TestData _testData;
-        private readonly SswPersonNames _sswPeopleNamesClEntity;
+        private readonly PersonNames _sswPeopleNamesClEntity;
         private readonly ListEntitySync _listEntitySync;
 
         public ListEntitySyncTests()
@@ -24,10 +24,10 @@ namespace SSW.SophieBot.LUIS.Sync.Test
             var luisAuthoringClient = new TestLuisAuthoringClient(_testData);
             _luisService = new LuisService(luisAuthoringClient, null, testLuisOptions);
 
-            _sswPeopleNamesClEntity = new TestSswPeopleNamesClEntity(
+            _sswPeopleNamesClEntity = new TestPersonNamesClEntity(
                 _luisService,
                 new TestPeopleClient(),
-                NullLogger<SswPersonNames>.Instance);
+                NullLogger<PersonNames>.Instance);
             _listEntitySync = new ListEntitySync(
                 _luisService,
                 _sswPeopleNamesClEntity,

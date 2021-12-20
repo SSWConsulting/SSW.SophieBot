@@ -18,12 +18,12 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
         private const string SbConnectionStringName = "ServiceBus";
 
         private readonly ILuisService _luisService;
-        private readonly SswPersonNames _sswPersonNamesClEntity;
+        private readonly PersonNames _sswPersonNamesClEntity;
         private readonly ILogger<ListEntitySync> _logger;
 
         public ListEntitySync(
             ILuisService luisService,
-            SswPersonNames sswPersonNamesClEntity,
+            PersonNames sswPersonNamesClEntity,
             ILogger<ListEntitySync> logger)
         {
             _luisService = luisService;
@@ -57,7 +57,7 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
             IEnumerable<MqMessage<Employee>> employees,
             CancellationToken cancellationToken = default)
         {
-            var clEntityName = ModelAttribute.GetName(typeof(SswPersonNames));
+            var clEntityName = ModelAttribute.GetName(typeof(PersonNames));
 
             // TODO: We are currently retriving all sub lists from LUIS in a single call due to the limitation of the REST API. 
             // May be a bottleneck here but it's of low priority
