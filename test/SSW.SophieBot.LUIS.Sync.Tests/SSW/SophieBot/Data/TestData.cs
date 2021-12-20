@@ -12,14 +12,14 @@ namespace SSW.SophieBot
 {
     public class TestData
     {
-        public ClosedListEntityExtractor SswPeopleNames { get; } = new(
+        public ClosedListEntityExtractor PersonNames { get; } = new(
             Guid.NewGuid(),
             string.Empty,
             name: "personNames");
 
         public List<ClosedListEntityExtractor> ClosedListEntities => new()
         {
-            SswPeopleNames
+            PersonNames
         };
 
         public List<MqMessage<Employee>> MqEmployees { get; set; } = new()
@@ -50,15 +50,15 @@ namespace SSW.SophieBot
 
         public TestData()
         {
-            var testSswPeopleNamesClEntity = new TestPersonNamesClEntity(
+            var testPersonNamesClEntity = new TestPersonNamesClEntity(
                 null,
                 new TestPeopleClient(),
                 NullLogger<PersonNames>.Instance);
 
-            SswPeopleNames.SubLists = MqEmployees
+            PersonNames.SubLists = MqEmployees
                 .Select(mqEmployee =>
                 {
-                    var response = testSswPeopleNamesClEntity.CreateWordList(mqEmployee.Message);
+                    var response = testPersonNamesClEntity.CreateWordList(mqEmployee.Message);
                     if (mqEmployee.SyncMode == SyncMode.Update)
                     {
                         response.List = response.List.Select(item => $"{item}_old").ToList();

@@ -31,10 +31,10 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
             _logger = logger;
         }
 
-        [FunctionName(nameof(SyncSswPeopleNames))]
-        public async Task SyncSswPeopleNames([ServiceBusTrigger(
-            "%ServiceBus:SswPeopleNames:Topic%",
-            "%ServiceBus:SswPeopleNames:Subscription%",
+        [FunctionName(nameof(SyncPersonNames))]
+        public async Task SyncPersonNames([ServiceBusTrigger(
+            "%ServiceBus:PersonNames:Topic%",
+            "%ServiceBus:PersonNames:Subscription%",
             Connection = SbConnectionStringName)] IEnumerable<MqMessage<Employee>> employees,
             CancellationToken cancellationToken)
         {
@@ -65,7 +65,7 @@ namespace SSW.SophieBot.LUIS.Sync.Functions
             if (clEntity == null)
             {
                 // if this cl entity does not exist, it's the LUIS build/publish service's responsibility to do the creation, but not this sync service
-                // (e.g. create this sswPeopleNames list entity and feed data by calling People API)
+                // (e.g. create this personNames list entity and feed data by calling People API)
                 // so we can just log a warning and exit execution here
                 _logger.LogWarning("Failed to get target closed list entity: {EntityName}", clEntityName);
                 return;

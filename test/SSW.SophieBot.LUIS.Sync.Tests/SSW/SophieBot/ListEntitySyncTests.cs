@@ -12,7 +12,7 @@ namespace SSW.SophieBot
     {
         private readonly ILuisService _luisService;
         private readonly TestData _testData;
-        private readonly PersonNames _sswPeopleNamesClEntity;
+        private readonly PersonNames _personNamesClEntity;
         private readonly ListEntitySync _listEntitySync;
 
         public ListEntitySyncTests()
@@ -22,13 +22,13 @@ namespace SSW.SophieBot
             var luisAuthoringClient = new TestLuisAuthoringClient(_testData);
             _luisService = new LuisService(luisAuthoringClient, null, testLuisOptions);
 
-            _sswPeopleNamesClEntity = new TestPersonNamesClEntity(
+            _personNamesClEntity = new TestPersonNamesClEntity(
                 _luisService,
                 new TestPeopleClient(),
                 NullLogger<PersonNames>.Instance);
             _listEntitySync = new ListEntitySync(
                 _luisService,
-                _sswPeopleNamesClEntity,
+                _personNamesClEntity,
                 NullLogger<ListEntitySync>.Instance);
         }
 
@@ -36,8 +36,8 @@ namespace SSW.SophieBot
         public void Should_Have_Old_Data_For_Test()
         {
             // Assert
-            _testData.SswPeopleNames.SubLists[0].List.ShouldContain(_testData.MqEmployees[0].Message.FullName);
-            _testData.SswPeopleNames.SubLists[1].List.ShouldNotContain(_testData.MqEmployees[1].Message.FullName);
+            _testData.PersonNames.SubLists[0].List.ShouldContain(_testData.MqEmployees[0].Message.FullName);
+            _testData.PersonNames.SubLists[1].List.ShouldNotContain(_testData.MqEmployees[1].Message.FullName);
         }
 
         [Fact]
@@ -47,11 +47,11 @@ namespace SSW.SophieBot
             var upsertCanonicalForms = _testData.MqEmployees
                 .Where(mqEmployee => mqEmployee.SyncMode != SyncMode.Delete)
                 .Select(mqEmployee =>
-                    _sswPeopleNamesClEntity.GetCanonicalForm(mqEmployee.Message));
+                    _personNamesClEntity.GetCanonicalForm(mqEmployee.Message));
 
             //Act
-            await _listEntitySync.SyncSswPeopleNames(_testData.MqEmployees, default);
-            var newUpsertCanonicalForms = _testData.SswPeopleNames.SubLists.Select(subList => subList.CanonicalForm);
+            await _listEntitySync.SyncPersonNames(_testData.MqEmployees, default);
+            var newUpsertCanonicalForms = _testData.PersonNames.SubLists.Select(subList => subList.CanonicalForm);
 
             // Assert
             newUpsertCanonicalForms.Count().ShouldBe(3);
