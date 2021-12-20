@@ -19,7 +19,7 @@
     <!-- coverlet.collector https://www.nuget.org/packages/coverlet.collector -->
     <coverletCollectorPackageVersion>3.1.0</coverletCollectorPackageVersion>
 
-    <IsTestProject Condition="$(MSBuildProjectFullPath.Contains('test')) and ($(MSBuildProjectName.EndsWith('.Test')) or $(MSBuildProjectName.EndsWith('.TestBase')))">true</IsTestProject>
+    <IsTestProject Condition="$(MSBuildProjectFullPath.Contains('test')) and ($(MSBuildProjectName.EndsWith('.Tests')) or $(MSBuildProjectName.EndsWith('.TestBase')))">true</IsTestProject>
 
   </PropertyGroup>
 </Project>
