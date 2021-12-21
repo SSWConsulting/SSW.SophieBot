@@ -21,7 +21,7 @@ env:
   WEBAPP_NAME: SSWSophieBotDev
   SOURCE_DIR: ${{ github.workspace }}
   OUTPUT_DIR: ${{ github.workspace }}/output
-  LUIS_MIGRATOR_DIR: ${{ github.workspace }}/bots/employee-finder/src/SSW.SophieBot.LUIS.Migrator
+  LUIS_MIGRATOR_DIR: ${{ github.workspace }}/bots/employee-finder/src/SSW.SophieBot.LUIS.EmployeeFinder.Migrator
   BOT_PROJECT_DIR: ${{ github.workspace }}/bots/employee-finder/src/SSW.SophieBot
   BOT_PROJECT_NAME: SSW.SophieBot.csproj
   PUBLISHING_PROFILE_NAME: SSW.Bots.Dev
@@ -56,7 +56,7 @@ jobs:
         with:
           name: "appsettings.json"
           json: ${{ secrets.BOT_APP_APPSETTINGS }}
-          dir: "src/bot/SSW.SophieBot/settings"
+          dir: "bots/employee-finder/src/SSW.SophieBot/settings"
 
       # Prepare working folders    
       - name: Prepare working folders
@@ -90,10 +90,9 @@ jobs:
       # Publish LUIS models
       - name: Publish LUIS
         if: env.BUILD_FLOW == 'composer'
-        run: |
-          cd ${{ env.BOT_PROJECT_DIR }}
-          & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-LUIS.ps1" -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -authoringKey ${{ secrets.LUIS_AUTHORING_KEY }} -botName ${{ env.BOT_NAME }} -endpoint ${{ env.LUIS_AUTHORING_ENDPOINT }} -region ${{ env.LUIS_AUTHORING_REGION }}
-
+        run: ${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-LUIS.ps1 -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -authoringKey ${{ secrets.LUIS_AUTHORING_KEY }} -botName ${{ env.BOT_NAME }} -endpoint ${{ env.LUIS_AUTHORING_ENDPOINT }} -region ${{ env.LUIS_AUTHORING_REGION }}
+        working-directory: ${{ env.BOT_PROJECT_DIR }}
+        
       # Publish Orchestrator models
       # - name: Publish orchestrator
       #   if: env.BUILD_FLOW == 'composer'
@@ -110,11 +109,6 @@ jobs:
           path: ${{ env.BOT_PROJECT_DIR }}/generated
           if-no-files-found: error
 
-      # Build all
-      - name: Build projects
-        run: .\build-all.ps1
-        working-directory: ./_scripts
-
       # Create bot app publishing package
       - name: Create bot publishing package
         run: |
@@ -124,9 +118,8 @@ jobs:
 
       # Create LUIS migrator publishing package
       - name: Create LUIS migrator publishing package
-        run: |
-          cd ${{ env.LUIS_MIGRATOR_DIR }}
-          dotnet publish -c Release -o "${{ env.OUTPUT_DIR }}/luis-migrator" --self-contained -r win-x64
+        run: dotnet publish -c Release -o "${{ env.OUTPUT_DIR }}/luis-migrator" --self-contained -r win-x64
+        working-directory: ${{ env.LUIS_MIGRATOR_DIR }}
 
       # Upload webapp artifact
       - name: Upload webapp artifact
@@ -191,6 +184,5 @@ jobs:
           dir: "output/luis-migrator"
           
       - name: Run LUIS migrator
-        run: |
-          cd ${{ env.OUTPUT_DIR }}/luis-migrator
-          .\SSW.SophieBot.LUIS.Migrator
+        run: .\SSW.SophieBot.LUIS.EmployeeFinder.Migrator
+        working-directory: ${{ env.OUTPUT_DIR }}/luis-migrator
