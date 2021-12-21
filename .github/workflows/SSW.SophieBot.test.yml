@@ -35,11 +35,11 @@ jobs:
       
       - name: Build all
         run: .\build-all.ps1
-        working-directory: .\_scripts
+        working-directory: ./_scripts
 
       - name: Test all
         run: .\test-all.ps1
-        working-directory: .\_scripts
+        working-directory: ./_scripts
 
       - name: Codecov
         uses: codecov/codecov-action@v2.1.0

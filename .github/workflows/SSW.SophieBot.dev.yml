@@ -113,7 +113,7 @@ jobs:
       # Build all
       - name: Build projects
         run: .\build-all.ps1
-        working-directory: .\_scripts
+        working-directory: ./_scripts
 
       # Create bot app publishing package
       - name: Create bot publishing package
