@@ -12,8 +12,8 @@ env:
   WEBAPP_NAME: SSWSophieBot
   SOURCE_DIR: ${{ github.workspace }}
   OUTPUT_DIR: ${{ github.workspace }}/output
-  LUIS_MIGRATOR_DIR: ${{ github.workspace }}/src/recognizer/SSW.SophieBot.LUIS.Migrator
-  BOT_PROJECT_DIR: ${{ github.workspace }}/src/bot/SSW.SophieBot
+  LUIS_MIGRATOR_DIR: ${{ github.workspace }}/bots/employee-finder/src/SSW.SophieBot.LUIS.EmployeeFinder.Migrator
+  BOT_PROJECT_DIR: ${{ github.workspace }}/bots/employee-finder/src/SSW.SophieBot
   BOT_PROJECT_NAME: SSW.SophieBot.csproj
   PUBLISHING_PROFILE_NAME: SSW.Bots
   LUIS_AUTHORING_ENDPOINT: https://australiaeast.api.cognitive.microsoft.com/
@@ -37,7 +37,7 @@ jobs:
           node-version: '13'
       - name: Use BF CLI
         run: npm install -g @microsoft/botframework-cli
-      - name: Use .Net Core sdk 3.1.x
+      - name: Use .Net sdk 6.0.x
         uses: actions/setup-dotnet@v1.9.0
         with:
           dotnet-version: '6.0.x'
@@ -47,7 +47,7 @@ jobs:
         with:
           name: "appsettings.json"
           json: ${{ secrets.BOT_APP_APPSETTINGS }}
-          dir: "src/bot/SSW.SophieBot/settings"
+          dir: "bots/employee-finder/src/SSW.SophieBot/settings"
 
       # Prepare working folders    
       - name: Prepare working folders
@@ -81,9 +81,8 @@ jobs:
       # Publish LUIS models
       - name: Publish LUIS
         if: env.BUILD_FLOW == 'composer'
-        run: |
-          cd ${{ env.BOT_PROJECT_DIR }}
-          & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-LUIS.ps1" -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -authoringKey ${{ secrets.LUIS_AUTHORING_KEY }} -botName ${{ env.BOT_NAME }} -endpoint ${{ env.LUIS_AUTHORING_ENDPOINT }} -region ${{ env.LUIS_AUTHORING_REGION }}
+        run: ${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-LUIS.ps1 -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -authoringKey ${{ secrets.LUIS_AUTHORING_KEY }} -botName ${{ env.BOT_NAME }} -endpoint ${{ env.LUIS_AUTHORING_ENDPOINT }} -region ${{ env.LUIS_AUTHORING_REGION }}
+        working-directory: ${{ env.BOT_PROJECT_DIR }}
 
       # Publish Orchestrator models
       # - name: Publish orchestrator
@@ -101,19 +100,17 @@ jobs:
           path: ${{ env.BOT_PROJECT_DIR }}/generated
           if-no-files-found: error
 
-      # Build bot
-      - name: Build bot publishing package
+      # Create bot app publishing package
+      - name: Create bot publishing package
         run: |
-          cd ${{ env.BOT_PROJECT_DIR }}
-
           $publishingProfileName = (${{ env.BUILD_FLOW }} -eq 'composer') ? "${{ env.PUBLISHING_PROFILE_NAME }}" : ""
           & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Publish-WebApp.ps1" -botProjectFolder ${{ env.BOT_PROJECT_DIR }} -botProjectName ${{ env.BOT_PROJECT_NAME }} -outputFolder "${{ env.OUTPUT_DIR }}/deploy" -publishingProfile $publishingProfileName
+        working-directory: ${{ env.BOT_PROJECT_DIR }}
 
       # Create LUIS migrator publishing package
       - name: Create LUIS migrator publishing package
-        run: |
-          cd ${{ env.LUIS_MIGRATOR_DIR }}
-          dotnet publish -c Release -o "${{ env.OUTPUT_DIR }}/luis-migrator" --self-contained -r win-x64
+        run: dotnet publish -c Release -o "${{ env.OUTPUT_DIR }}/luis-migrator" --self-contained -r win-x64
+        working-directory: ${{ env.LUIS_MIGRATOR_DIR }}
 
       # Upload webapp artifact
       - name: Upload webapp artifact
@@ -139,7 +136,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
 
-      - name: Use .Net Core sdk
+      - name: Use .Net sdk 6.0.x
         uses: actions/setup-dotnet@v1.9.0
         with:
           dotnet-version: '6.0.x'
@@ -178,6 +175,5 @@ jobs:
           dir: "output/luis-migrator"
           
       - name: Run LUIS migrator
-        run: |
-          cd ${{ env.OUTPUT_DIR }}/luis-migrator
-          .\SSW.SophieBot.LUIS.Migrator
+        run: .\SSW.SophieBot.LUIS.EmployeeFinder.Migrator
+        working-directory: ${{ env.OUTPUT_DIR }}/luis-migrator

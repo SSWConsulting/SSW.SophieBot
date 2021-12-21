@@ -1,0 +1,115 @@
+[Common](common.en-us.lg)
+[PeopleList](peopleList.en-us.lg)
+
+# SendActivity_v4yQKd()
+[Activity
+    Text = ${SendActivity_v4yQKd_text()}
+]
+
+# SendActivity_v4yQKd_text()
+- Please specify a valid skill to query.
+
+# SendActivity_52UMzl()
+[Activity
+    Text = ${SendActivity_52UMzl_text()}
+]
+
+# SendActivity_52UMzl_text()
+- ```I couldn't find anyone who knows **${dialog.skillEntity}**. I'm not very good at hide and seek.
+```
+
+# SendActivity_CObFyQ()
+[Activity
+    Text = ${SendActivity_CObFyQ_text()}
+]
+
+# SendActivity_CObFyQ_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+
+# SendActivity_RgIw3E()
+[Activity
+    Attachments = ${json(PeopleListBySkill(dialog.locationEntity, dialog.foreach.page, count(turn.sortedEmployees)))}
+]
+
+# SendActivity_lQMjCh()
+[Activity
+    Attachments = ${json(SendActivity_X1CF9d_attachment_v9gcuo(turn.firstNames, turn.sortedEmployees, dialog.skillEntity, dialog.locationEntity, turn.locations))}
+]
+
+# SendActivity_X1CF9d_attachment_v9gcuo(firstNames, employees, skill, location, locations)
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "${Title(skill, location, count(employees))}",
+            "wrap": true,
+            "size": "ExtraLarge",
+            "weight": "Bolder"
+        },
+        {
+            "type": "TextBlock",
+            "text": "${firstNames}",
+            "wrap": true
+        },
+        {
+            "type": "TextBlock",
+            "text": "Narrow your search...",
+            "wrap": true
+        },
+        ${GetExpertsButtons(employees, skill, locations, 'GetPeopleBySkills', 'GetPeopleBySkills')}
+    ]
+}
+```
+
+# Title(skill, location, count)
+- ${skill} - ${if(IsNonEmptyString(location), location, 'All')} [${count}]
+
+# SendActivity_Eyk2OR()
+[Activity
+    Attachments = ${json(SkillSelectionCard('GetPeopleBySkills', 'GetPeopleBySkills'))}
+]
+
+# SkillSelectionCard(targetIntent, sourceIntent)
+- ```
+{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "TextBlock",
+            "wrap": true,
+            "text": "There seems to be more than one skills relate to **${titleCase(dialog.skillEntity)}**. Which one were you looking for?"
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                ${join(select(take(turn.matchedSkills, 5), skill => SkillButton(targetIntent, sourceIntent, skill)), ',')}
+            ],
+            "height": "stretch"
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2"
+}
+```
+
+# SkillButton(targetIntent, sourceIntent, skill)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${skill}",
+    "data": {
+        "intent": "${targetIntent}",
+        ${IntentRedirectTelemetry('SkillButton', sourceIntent, skill)},
+        "skill" : "${skill}",
+        "location": "${dialog.locationEntity}",
+        "msteams": {
+            "type": "messageBack",
+            "displayText": "${Skill}"
+        }
+    }
+}
+```
