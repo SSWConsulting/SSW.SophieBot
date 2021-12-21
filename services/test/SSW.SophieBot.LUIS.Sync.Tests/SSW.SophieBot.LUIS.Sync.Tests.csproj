@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\..\common.test.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(MicrosoftNETTestSdkPackageVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\SSW.SophieBot.LUIS.Sync\SSW.SophieBot.LUIS.Sync.csproj" />
+    <ProjectReference Include="..\..\..\libraries\test\SSW.SophieBot.TestBase\SSW.SophieBot.TestBase.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -12,8 +12,8 @@ env:
   WEBAPP_NAME: SSWSophieBot
   SOURCE_DIR: ${{ github.workspace }}
   OUTPUT_DIR: ${{ github.workspace }}/output
-  LUIS_MIGRATOR_DIR: ${{ github.workspace }}/src/recognizer/SSW.SophieBot.LUIS.Migrator
-  BOT_PROJECT_DIR: ${{ github.workspace }}/src/bot/SSW.SophieBot
+  LUIS_MIGRATOR_DIR: ${{ github.workspace }}/bots/employee-finder/src/SSW.SophieBot.LUIS.Migrator
+  BOT_PROJECT_DIR: ${{ github.workspace }}/bots/employee-finder/src/SSW.SophieBot
   BOT_PROJECT_NAME: SSW.SophieBot.csproj
   PUBLISHING_PROFILE_NAME: SSW.Bots
   LUIS_AUTHORING_ENDPOINT: https://australiaeast.api.cognitive.microsoft.com/
@@ -37,7 +37,7 @@ jobs:
           node-version: '13'
       - name: Use BF CLI
         run: npm install -g @microsoft/botframework-cli
-      - name: Use .Net Core sdk 3.1.x
+      - name: Use .Net sdk 6.0.x
         uses: actions/setup-dotnet@v1.9.0
         with:
           dotnet-version: '6.0.x'
@@ -139,7 +139,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
 
-      - name: Use .Net Core sdk
+      - name: Use .Net sdk 6.0.x
         uses: actions/setup-dotnet@v1.9.0
         with:
           dotnet-version: '6.0.x'
