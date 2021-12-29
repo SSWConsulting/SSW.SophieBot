@@ -132,7 +132,7 @@ jobs:
     name: Deploy web app
     needs: build
     runs-on: ubuntu-latest
-    environment: dev
+    environment: prod
     steps:
       - uses: actions/checkout@v2.3.4
 
@@ -158,7 +158,7 @@ jobs:
     name: Migrate LUIS model
     needs: build
     runs-on: windows-latest
-    environment: dev
+    environment: prod
     steps:
       - uses: actions/checkout@v2.3.4
 
