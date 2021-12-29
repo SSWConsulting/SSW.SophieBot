@@ -158,7 +158,7 @@
         "type": "TextBlock",
         "text": "${Subtitle(turn.formatDate, dialog.skillEntity)}",
         "wrap": true
-    },
+    }
 	${AuthWarningText(warningId)}
     ```
 - ELSE:
@@ -167,7 +167,7 @@
 # AuthWarningText(warningId)
 - IF: ${!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false}
 	- ```
-	{
+	,{
         "type": "TextBlock",
         "text": "You have limited access to this information because your account belongs to another organization. Please contact [SSWSophieBotDevs@ssw.com.au](SSWSophieBotDevs@ssw.com.au) for support.",
         "wrap": true,
@@ -177,8 +177,7 @@
     }
 	```
 - ELSE:
-	- ```
-	```
+	- ``````
 
 # Footer()
 - IF: ${ dialog.foreach.pageindex == ceiling(div(count(turn.employees), float('10.0'))) }
