@@ -1,4 +1,6 @@
-﻿using SSW.SophieBot.HttpClientAction.Models;
+﻿using Microsoft.Bot.Builder.Dialogs;
+using SSW.SophieBot.Components;
+using SSW.SophieBot.HttpClientAction.Models;
 using SSW.SophieBot.HttpClientComponents.PersonQuery.Models;
 using System;
 using System.Collections.Generic;
@@ -70,6 +72,24 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             }
 
             return BookingStatus.Unknown;
+        }
+
+        public static DateTime? GetReturningDate(IEnumerable<GetAppointmentModel> appointments, DateTime date, DialogContext dc)
+        {
+            if (appointments == null || !appointments.Any())
+            {
+                return null;
+            }
+
+            foreach (var appointment in appointments.OrderBy(a => a.Start))
+            {
+                if (appointment.Start.UtcTicks >= date.Ticks && GetBookingStatus(appointment) != BookingStatus.Leave)
+                {
+                    return appointment.Start.UtcDateTime.ToUserLocalTime(dc);
+                }
+            }
+
+            return null;
         }
 
         public static BookingStatus GetBookingStatus(GetEmployeeModel employee, DateTime date)

@@ -36,27 +36,39 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
 
             var date = DateTime.Now.ToUniversalTime();
 
-            var result = employees.Select(e => new EmployeeProfileWithStatusModel
+            var result = employees.Select(e => ConvertToProfile(e, dc, date)).ToList();
+
+            if (Result != null)
             {
-                UserId = e.UserId,
-                AvatarUrl = e.AvatarUrl,
-                DisplayName = $"{e.FirstName} {e.LastName}",
-                Title = e.Title,
-                Clients = EmployeesHelper.GetClientsByDate(date, e.Appointments),
-                BookingStatus = EmployeesHelper.GetBookingStatus(e, date),
-                LastSeenAt = e.LastSeenAt,
-                LastSeenTime = EmployeesHelper.GetLastSeen(e),
-                Skills = e.Skills,
-                EmailAddress = e.EmailAddress,
-                MobilePhone = e.MobilePhone,
-                DefaultSite = e.DefaultSite,
-                FirstName = e.FirstName,
-                LastName = e.LastName,
-                BillableRate = e.BillableRate,
-                BookedDays = e.Appointments
+                dc.State.SetValue(Result.GetValue(dc.State), result);
+            }
+
+            return await dc.EndDialogAsync(result: result, cancellationToken: cancellationToken);
+        }
+
+        private EmployeeProfileWithStatusModel ConvertToProfile(GetEmployeeModel employee, DialogContext dc, DateTime date)
+        {
+            var profile = new EmployeeProfileWithStatusModel
+            {
+                UserId = employee.UserId,
+                AvatarUrl = employee.AvatarUrl,
+                DisplayName = $"{employee.FirstName} {employee.LastName}",
+                Title = employee.Title,
+                Clients = EmployeesHelper.GetClientsByDate(date, employee.Appointments),
+                BookingStatus = EmployeesHelper.GetBookingStatus(employee, date),
+                LastSeenAt = employee.LastSeenAt,
+                LastSeenTime = EmployeesHelper.GetLastSeen(employee),
+                Skills = employee.Skills,
+                EmailAddress = employee.EmailAddress,
+                MobilePhone = employee.MobilePhone,
+                DefaultSite = employee.DefaultSite,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                BillableRate = employee.BillableRate,
+                BookedDays = employee.Appointments
                     .Where(appointment => appointment.End.UtcTicks >= date.Ticks)
                     .Count(appointment => EmployeesHelper.IsOnClientWorkFunc(appointment)),
-                Appointments = EmployeesHelper.GetAppointments(e.Appointments, date, 10)
+                Appointments = EmployeesHelper.GetAppointments(employee.Appointments, date, 10)
                     .Select(a => new EmployeeProfileAppointment
                     {
                         Start = a.Start.DateTime.ToUserLocalTime(dc).ToUserFriendlyDate(date),
@@ -66,15 +78,26 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
                         Regarding = a.Regarding.Trim()
                     })
                     .ToList()
-            })
-            .ToList();
+            };
 
-            if (Result != null)
+            if (profile.BookingStatus == BookingStatus.Leave)
             {
-                dc.State.SetValue(Result.GetValue(dc.State), result);
+                var returningDate = EmployeesHelper.GetReturningDate(employee.Appointments, date, dc);
+
+                if (returningDate.HasValue)
+                {
+                    var additionalStatus = $"back on {returningDate.Value.ToUserFriendlyDate(date, dayOfWeek: false)}";
+
+                    var timeInterval = date.GetUserFriendlyTimeInterval(returningDate.Value);
+                    if (!string.IsNullOrEmpty(timeInterval))
+                    {
+                        additionalStatus += $" ({timeInterval})";
+                    }
+                    profile.AdditionalStatus = additionalStatus;
+                }
             }
 
-            return await dc.EndDialogAsync(result: result, cancellationToken: cancellationToken);
+            return profile;
         }
     }
 }
