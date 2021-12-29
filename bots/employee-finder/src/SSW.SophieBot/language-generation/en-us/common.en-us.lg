@@ -450,7 +450,6 @@ ${IntranetInfo()}
 	            }
 	        }
 	    ],
-	    "horizontalAlignment": "Right",
-	    "id": "${concat('s-', id)}"
+	    "horizontalAlignment": "Right"
 	}
 	```
