@@ -405,7 +405,7 @@
 - ELSEIF: ${ profile.bookingStatus == 2 }
     - On internal work
 - ELSEIF: ${ profile.bookingStatus == 3 }
-    - On leave
+    - On leave...${if(profile.additionalStatus.length > 0, profile.additionalStatus, '')}
 - ELSE:
     - Free
 

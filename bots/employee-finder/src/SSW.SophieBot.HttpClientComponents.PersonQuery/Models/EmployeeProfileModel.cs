@@ -54,6 +54,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Models
         [JsonProperty("bookedDays")]
         public int BookedDays { get; set; }
 
+        [JsonProperty("additionalStatus")]
+        public string AdditionalStatus { get; set; }
+
         [JsonProperty("appointments")]
         public List<EmployeeProfileAppointment> Appointments { get; set; }
     }
@@ -74,5 +77,8 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Models
 
         [JsonProperty("regarding")]
         public string Regarding { get; set; }
+
+        [JsonProperty("additionalStatus")]
+        public string AdditionalStatus { get; set; }
     }
 }

@@ -31,7 +31,19 @@ namespace SSW.SophieBot.Components
             return date.AddDays(diff).Date;
         }
 
-        public static string ToUserFriendlyDate(this DateTime dateTime, DateTime? now = null)
+        public static string GetUserFriendlyTimeInterval(this DateTime sourceDate, DateTime targetDate)
+        {
+            var intervalDays = (int)Math.Ceiling((targetDate - sourceDate).TotalDays);
+            if(intervalDays < 5)
+            {
+                return string.Empty;
+            }
+
+            var intervalWeeks = (int)Math.Ceiling(intervalDays / 7d);
+            return $"approximately {intervalWeeks} week{(intervalWeeks > 1 ? "s" : string.Empty)}";
+        }
+
+        public static string ToUserFriendlyDate(this DateTime dateTime, DateTime? now = null, bool dayOfWeek = true)
         {
             if (now.HasValue)
             {
@@ -51,11 +63,11 @@ namespace SSW.SophieBot.Components
                 }
                 else if (dateTime.Year == now.Value.Year)
                 {
-                    return dateTime.ToString("ddd d MMM");
+                    return $"{(dayOfWeek ? $"{dateTime:ddd d}" : $"{dateTime.Day}")}{GetDateSuffix(dateTime)} {dateTime:MMM}";
                 }
             }
 
-            return dateTime.ToString("ddd d MMM yyyy");
+            return $"{(dayOfWeek ? $"{dateTime:ddd d}" : $"{dateTime.Day}")}{GetDateSuffix(dateTime)} {dateTime:MMM yyyy}";
         }
 
         public static string ToUserFriendlyDuration(this TimeSpan duration)
@@ -70,6 +82,14 @@ namespace SSW.SophieBot.Components
             {
                 return $"{totalHours} hours";
             }
+        }
+
+        private static string GetDateSuffix(DateTime date)
+        {
+            return (date.Day % 10 == 1 && date.Day % 100 != 11) ? "st"
+            : (date.Day % 10 == 2 && date.Day % 100 != 12) ? "nd"
+            : (date.Day % 10 == 3 && date.Day % 100 != 13) ? "rd"
+            : "th";
         }
     }
 }
