@@ -396,6 +396,6 @@ FodyWeavers.xsd
 
 *.botproj
 appsettings.json
-appsettings.dev.json
-appsettings.prod.json
-/src/bot/SSW.SophieBot/code.zip
+appsettings.*.json
+!appsettings.example.json
+**/SSW.SophieBot/code.zip

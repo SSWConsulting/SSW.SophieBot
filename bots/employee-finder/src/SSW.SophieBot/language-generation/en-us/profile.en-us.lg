@@ -372,7 +372,7 @@
 ```
 
 # ViewInPeopleAction(profile)
-- IF: ${exists(settings.App.PeopleSiteUrl) && length(settings.App.PeopleSiteUrl) > 0 && user.TenantAuthenticated == true}
+- IF: ${exists(settings.App.PeopleSiteUrl) && length(settings.App.PeopleSiteUrl) > 0}
     - ```
     {
         "type": "Action.OpenUrl",
@@ -385,7 +385,7 @@
     -
 
 # ViewInCRMAction(profile)
-- IF: ${exists(settings.App.CRMUserUrl) && length(settings.App.CRMUserUrl) > 0 && user.TenantAuthenticated == true}
+- IF: ${exists(settings.App.CRMUserUrl) && length(settings.App.CRMUserUrl) > 0}
     - ```
     {
         "type": "Action.OpenUrl",

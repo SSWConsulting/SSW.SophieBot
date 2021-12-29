@@ -6,6 +6,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Models
 {
     public class EmployeeByDateModel
     {
+        [JsonProperty("userId")]
+        public string UserId { get; set; }
+
         [JsonProperty("firstName")]
         public string FirstName { get; set; }
 
