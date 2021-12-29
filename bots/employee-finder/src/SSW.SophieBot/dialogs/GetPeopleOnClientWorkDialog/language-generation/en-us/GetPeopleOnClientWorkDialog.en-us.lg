@@ -139,12 +139,12 @@
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2",
     "body": [
-        ${join(where(createArray(Header(location), EmployeeList(employees), Footer()), item => item != ''), ',')}
+        ${join(where(createArray(Header(location, 'warning'), EmployeeList(employees, 'warning'), Footer()), item => item != ''), ',')}
     ]
 }
 ```
 
-# Header(location)
+# Header(location, warningId)
 - IF: ${ dialog.foreach.pageindex == 1 }
     - ```
     {
@@ -158,10 +158,27 @@
         "type": "TextBlock",
         "text": "${Subtitle(turn.formatDate, dialog.skillEntity)}",
         "wrap": true
-    }
+    },
+	${AuthWarningText(warningId)}
     ```
 - ELSE:
     - ${Pagination(dialog.foreach.pageindex, count(turn.employees))}
+
+# AuthWarningText(warningId)
+- IF: ${!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false}
+	- ```
+	{
+        "type": "TextBlock",
+        "text": "You have limited access to this information because your account belongs to another organization. Please contact [SSWSophieBotDevs@ssw.com.au](SSWSophieBotDevs@ssw.com.au) for support.",
+        "wrap": true,
+        "color": "Attention",
+        "id": "${warningId}",
+        "isVisible": false
+    }
+	```
+- ELSE:
+	- ```
+	```
 
 # Footer()
 - IF: ${ dialog.foreach.pageindex == ceiling(div(count(turn.employees), float('10.0'))) }
@@ -178,7 +195,7 @@
     - On Internal Work
 
 
-# EmployeeList(employees)
+# EmployeeList(employees, warningId)
 -```
 {
     "type": "ColumnSet",
@@ -189,11 +206,11 @@
 },
 {
     "type": "Container",
-    "items": [${join(select(employees, employee => EmployeeSet(employee)), ',')}]
+    "items": [${join(select(employees, employee => EmployeeSet(employee, warningId)), ',')}]
 }
 ```
 
-# HeaderColumns
+# HeaderColumns()
 - IF: ${ dialog.foreach.pageindex != 1 }
     - 
 - ELSEIF: ${ IsNonEmptyString(dialog.skillEntity) }
@@ -201,8 +218,8 @@
 - ELSEIF: ${ dialog.booked }
     - ${join(createArray(
             HeaderColumn('', '50px', 'Center'), 
-            HeaderColumn('', '100px', 'Center'), 
-            HeaderColumn('Client(s)', 'stretch', 'Center')
+            HeaderColumn('', '150px', 'Center'), 
+            HeaderColumn('Client(s)', 'stretch', 'Left')
         ), ',')}
 - ELSE:
     - ${join(createArray(
@@ -239,18 +256,18 @@
     }
     ```
 
-# EmployeeSet(employee)
+# EmployeeSet(employee, warningId)
 - IF: ${ dialog.booked || employee.nextClient == null || IsNonEmptyString(dialog.skillEntity) }
-    - ${EmployeeRow(employee)}
+    - ${EmployeeRow(employee, warningId)}
 - ELSE:
-    - ${join(createArray(EmployeeRow(employee), Note(employee)), ',')}
+    - ${join(createArray(EmployeeRow(employee, warningId), Note(employee)), ',')}
 
-# EmployeeRow(employee)
+# EmployeeRow(employee, warningId)
 - ```
 {
     "type": "ColumnSet",
     "columns": [
-        ${BodyColumns(employee)}
+        ${BodyColumns(employee, warningId)}
     ],
     "height": "stretch",
     "separator": false
@@ -287,7 +304,7 @@
 Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
 ```
 
-# BodyColumns(employee)
+# BodyColumns(employee, warningId)
 - IF: ${ IsNonEmptyString(dialog.skillEntity) }
     - ${join(createArray(
             Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
@@ -298,7 +315,7 @@ Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
     - ${join(createArray(
             Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
             ClickableName(employee.displayName, employee.firstName, employee.lastName, '150px', 'Small', 'Default', 'GetPeopleOnClientWork'),
-            ClientColumn(employee.clients, 'stretch', 'Center')
+            ClientColumn(employee.clients, 'stretch', 'Center', employee.userId, warningId)
         ), ',')}
 - ELSE:
     - ${join(createArray(
@@ -331,13 +348,13 @@ Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
 - ${freeDays}/20 days
 
 
-# ClientColumn(clients, width, alignment)
+# ClientColumn(clients, width, alignment, id, warningId)
 -```
 {
     "type": "Column",
     "width": "${width}",
     "items": [
-        ${ClientTextBlock(clients)}
+        ${GetAuthenticationMaskedColumn(join(select(clients, client => ClientText(client)), ','), id, warningId)}
     ],
     "verticalContentAlignment": "${alignment}"
 }
@@ -361,12 +378,7 @@ Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
 
 # ClientText(text)
 - ```
-{
-    "type": "TextBlock",
-    "text": "${if(text != null && text != '', text, '—')}",
-    "wrap": true,
-    "size": "Small"
-}
+${if(text != null && text != '', text, '—')}
 ```
 
 # BodyColumn(text, width)

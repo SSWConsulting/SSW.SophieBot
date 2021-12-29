@@ -44,6 +44,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
 
             var result = EmployeesHelper.FilterDevelopers(employees).Select(e => new EmployeeByDateModel
             {
+                UserId = e.UserId,
                 FirstName = e.FirstName,
                 LastName = e.LastName,
                 DefaultSite = e.DefaultSite,
