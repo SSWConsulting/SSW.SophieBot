@@ -169,7 +169,7 @@
 	- ```
 	,{
         "type": "TextBlock",
-        "text": "You have limited access to this information because your account belongs to another organization. Please contact [SSWSophieBotDevs@ssw.com.au](SSWSophieBotDevs@ssw.com.au) for support.",
+        "text": "⚠️ You have limited access to this information because your account belongs to another organization. Please contact [SSWSophieBotDevs@ssw.com.au](SSWSophieBotDevs@ssw.com.au) for support.",
         "wrap": true,
         "color": "Attention",
         "id": "${warningId}",
