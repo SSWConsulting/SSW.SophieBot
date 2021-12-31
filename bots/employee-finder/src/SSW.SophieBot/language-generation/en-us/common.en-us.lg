@@ -494,7 +494,7 @@ ${IntranetInfo()}
         },
         {
             "type": "TextBlock",
-            "text": "See more at [Azure Workbook](${settings.App.AppInsights.BaseUrl})",
+            "text": "See more at [Azure Workbook](${settings.App.AppInsights.WorkbookLink})",
             "wrap": true,
             "horizontalAlignment": "Right",
             "size": "Small",
@@ -570,7 +570,8 @@ ${IntranetInfo()}
             "fillMode": "RepeatHorizontally",
             "url": "${settings.App.BaseUrl}/Images/bar-unit.png"
         },
-        "width": "${px + 'px'}"
+        "width": "${px + 'px'}"，
+		"items": []
     }
 	```
 - ELSE:
@@ -582,6 +583,7 @@ ${IntranetInfo()}
             "fillMode": "RepeatHorizontally",
             "url": "${settings.App.BaseUrl + '/Images/bar-' + max(px, 1) + 'px.png'}"
         },
-        "width": "1px"
+        "width": "1px"，
+		"items": []
     }
 	```
