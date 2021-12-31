@@ -21,7 +21,7 @@ namespace SSW.SophieBot.Components.Services
         public async Task<UsageByUserQueryResult> GetUsageByUserAsync(int? spanDays = null, int? maxItemCount = null)
         {
             var validPastDays = Math.Min(90, Math.Max(0, spanDays ?? 7));
-            var validMaxItemCount = Math.Min(10, Math.Max(0, maxItemCount ?? 10));
+            var validMaxItemCount = Math.Min(10, Math.Max(0, maxItemCount ?? 50));
 
             var query = $@"customEvents
 | where  name == 'LuisResult'
