@@ -1,4 +1,5 @@
-﻿using Microsoft.ApplicationInsights.Extensibility;
+﻿using System.IO;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.StaticFiles;
@@ -8,7 +9,10 @@ using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using SSW.SophieBot.Components;
+using SSW.SophieBot.Components.Services;
 using SSW.SophieBot.HttpClientComponents.Abstractions;
 using SSW.SophieBot.HttpClientComponents.PersonQuery;
 using SSW.SophieBot.Integration;
@@ -37,10 +41,10 @@ namespace SSW.SophieBot
 			services.Replace(ServiceDescriptor.Singleton<BotAdapter>(sp => sp.GetRequiredService<SophieBotAdapter>()));
 
 			services.AddSingleton<ITelemetryInitializer, SophieBotTelemetryInitializer>();
-
 			services.AddSingleton<IMiddleware, TeamsAuthenticationMiddleware>();
 
 			services.Configure<ApplicationSettings>(Configuration.GetSection(ConfigurationConstants.AppSettingsKey));
+			services.Configure<AppInsightsSettings>(Configuration.GetSection(ConfigurationConstants.AppInsightsSettingsKey));
 
 			services.ConfigureSophieBotHttpClient()
 				.AddPersonQueryClient();

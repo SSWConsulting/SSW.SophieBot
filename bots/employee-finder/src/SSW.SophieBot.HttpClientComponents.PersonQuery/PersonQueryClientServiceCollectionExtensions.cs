@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SSW.SophieBot.Components;
 using SSW.SophieBot.HttpClientComponents.PersonQuery.Clients;
 using System;
 using System.Net.Http;
@@ -9,8 +10,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
     {
         public static IServiceCollection AddPersonQueryClient(this IServiceCollection services, Action<HttpClient> action = null)
         {
-            services.AddSingleton<IAvatarManager, GravatarManager>();
             return services
+                .AddCommonComponent()
+                .AddSingleton<IAvatarManager, GravatarManager>()
                 .AddGetProfileClient(action)
                 .AddGetOrganisationsClient(action);
         }

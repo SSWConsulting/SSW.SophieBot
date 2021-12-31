@@ -605,3 +605,14 @@
 	- on which day
 
 @ intent GetCalendar usesFeature GetFreeDayPhraseList, available, unavailable
+
+
+# GetUsageByUser
+- who's been using sophiebot
+- who are using sophiebot?
+- who used sophiebot?
+- show me user usages
+- show me usage for this bot
+- I want to see usage report
+- usage report
+- who else is using you?

@@ -453,3 +453,135 @@ ${IntranetInfo()}
 	    "horizontalAlignment": "Right"
 	}
 	```
+
+# UsageByUserReport(usage)
+- ```
+{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Usage by User",
+                            "wrap": true,
+                            "size": "ExtraLarge"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "FactSet",
+            "facts": [
+                {
+                    "title": "📆",
+                    "value": "Last month"
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "items": [
+                ${join(select(usage, item, UsageByUserReportRow(item, first(usage).usageCount)), ',')}
+            ],
+            "spacing": "Medium"
+        },
+        {
+            "type": "TextBlock",
+            "text": "See more at [Azure Workbook](${settings.App.AppInsights.BaseUrl})",
+            "wrap": true,
+            "horizontalAlignment": "Right",
+            "size": "Small",
+            "spacing": "Medium"
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2"
+}
+```
+
+# GetFirstName(displayName)
+- IF: ${count(split(trim(displayName), ' ')) > 0}
+	- ```${split(displayName, ' ')[0]}```
+- ELSE: 
+	- ``````
+
+# GetLastName(displayName)
+- IF: ${count(split(trim(displayName), ' ')) > 1}
+	- ```${split(displayName, ' ')[1]}```
+- ELSE: 
+	- ``````
+
+# UsageByUserReportRow(usageItem, maxCount)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+		${ClickableName(
+			replace(usageItem.userName, ' www.ssw.com.au', ''), 
+			GetFirstName(replace(usageItem.userName, ' www.ssw.com.au', '')), 
+			GetLastName(replace(usageItem.userName, ' www.ssw.com.au', '')), 
+			'stretch', 
+			'Default', 
+			'Default', 
+			'GetUsageByUser')},
+        {
+            "type": "Column",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+						${GetUsageBarColumn(round(130/maxCount*usageItem.usageCount))}
+                    ]
+                }
+            ],
+            "width": "stretch",
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${usageItem.usageCount}",
+                    "wrap": true
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        }
+    ]
+}
+```
+
+# GetUsageBarColumn(px)
+- IF: ${px >= 32}
+	- ```
+	{
+        "type": "Column",
+        "backgroundImage": {
+            "verticalAlignment": "Center",
+            "fillMode": "RepeatHorizontally",
+            "url": "${settings.App.BaseUrl}/Images/bar-unit.png"
+        },
+        "width": "${px + 'px'}"
+    }
+	```
+- ELSE:
+	- ```
+	{
+        "type": "Column",
+        "backgroundImage": {
+            "verticalAlignment": "Center",
+            "fillMode": "RepeatHorizontally",
+            "url": "${settings.App.BaseUrl + '/Images/bar-' + max(px, 1) + 'px.png'}"
+        },
+        "width": "1px"
+    }
+	```

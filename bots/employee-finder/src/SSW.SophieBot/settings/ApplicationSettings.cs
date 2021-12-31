@@ -4,10 +4,6 @@
 	{
 		public string TenantId { get; set; }
 
-		public string CloudRoleName { get; set; }
-
-		public string CloudRoleInstance { get; set; }
-
 		public string CRMBookingEndpoint { get; set; }
 
 		public string CRMProjectUrl { get; set; }

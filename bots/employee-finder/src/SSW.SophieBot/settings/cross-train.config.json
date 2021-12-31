@@ -46,7 +46,8 @@
       ],
       "GetFreeDay": [
         "GetFreeDayDialog.en-us"
-      ]
+      ],
+      "GetUsageByUser": ""
     }
   }
 }

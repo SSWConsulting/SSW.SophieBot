@@ -506,6 +506,9 @@
       "$ref": "#/definitions/TimeFormatAction"
     },
     {
+      "$ref": "#/definitions/UsageByUserAction"
+    },
+    {
       "$ref": "#/definitions/UtcConvertAction"
     }
   ],
@@ -1772,6 +1775,10 @@
         "skillEntity": {
           "$ref": "#/definitions/GetPeopleBySkills.dialog/definitions/stringExpression",
           "title": "Skill Entity"
+        },
+        "locationEntity": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Location Entity"
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -8422,6 +8429,9 @@
           "$ref": "#/definitions/TimeFormatAction"
         },
         {
+          "$ref": "#/definitions/UsageByUserAction"
+        },
+        {
           "$ref": "#/definitions/UtcConvertAction"
         },
         {
@@ -14021,6 +14031,51 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "TimeFormatAction"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "UsageByUserAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "UsageByUser",
+      "description": "This will return the result of usages by user telemetry query",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "pastDays": {
+          "$ref": "#/definitions/integerExpression",
+          "title": "Past days",
+          "description": "How many past days to query"
+        },
+        "maxItemsCount": {
+          "$ref": "#/definitions/integerExpression",
+          "title": "Max items counr",
+          "description": "Max count of items returned"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result property",
+          "description": "Target path of the memory variable storing the result"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "UsageByUserAction"
         },
         "$designer": {
           "title": "Designer information",

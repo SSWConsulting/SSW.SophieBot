@@ -1421,6 +1421,63 @@
         }
       ],
       "entities": []
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "AJLrpJ",
+        "name": "OnIntent (GetUsageByUser)"
+      },
+      "intent": "GetUsageByUser",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "To3fdy"
+          },
+          "name": "SSWSophieBot.OnIntent_GetUsageByUser"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "mdyYZo"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "UsageByUserAction",
+          "$designer": {
+            "id": "v4nAsI"
+          },
+          "resultProperty": "turn.usage",
+          "pastDays": "30"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Uo9GzJ"
+          },
+          "condition": "=count(turn.usage) > 0",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "dn7XpZ"
+              },
+              "activity": "${SendActivity_dn7XpZ()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "4IC23x"
+              },
+              "activity": "${SendActivity_4IC23x()}"
+            }
+          ]
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",

@@ -117,3 +117,16 @@
 - Getting current employees on location is still a work in progress.
 # SendActivity_HTkwlL_text()
 - Sorry I didn't understand. Can you please try again?
+
+# SendActivity_dn7XpZ()
+[Activity
+    Text = ${SendActivity_dn7XpZ_text()}
+]
+
+# SendActivity_dn7XpZ_text()
+- Sorry I couldn't find any usage data.
+
+# SendActivity_4IC23x()
+[Activity
+    Attachments = ${json(UsageByUserReport(turn.usage))}
+]

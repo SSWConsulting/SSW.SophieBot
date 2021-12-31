@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "UsageByUser",
+  "description": "This will return the result of usages by user telemetry query",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "pastDays": {
+      "$ref": "schema:#/definitions/integerExpression",
+      "title": "Past days",
+      "description": "How many past days to query"
+    },
+    "maxItemsCount": {
+      "$ref": "schema:#/definitions/integerExpression",
+      "title": "Max items counr",
+      "description": "Max count of items returned"
+    },
+    "resultProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Result property",
+      "description": "Target path of the memory variable storing the result"
+    }
+  }
+}
