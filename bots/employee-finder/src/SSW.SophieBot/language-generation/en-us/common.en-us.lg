@@ -570,7 +570,7 @@ ${IntranetInfo()}
             "fillMode": "RepeatHorizontally",
             "url": "${settings.App.BaseUrl}/Images/bar-unit.png"
         },
-        "width": "${px + 'px'}"，
+        "width": "${px + 'px'}",
 		"items": []
     }
 	```
@@ -583,7 +583,7 @@ ${IntranetInfo()}
             "fillMode": "RepeatHorizontally",
             "url": "${settings.App.BaseUrl + '/Images/bar-' + max(px, 1) + 'px.png'}"
         },
-        "width": "1px"，
+        "width": "1px",
 		"items": []
     }
 	```
