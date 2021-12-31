@@ -7,19 +7,19 @@ using Microsoft.Bot.Builder.Integration.ApplicationInsights.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
-using SSW.SophieBot.settings;
+using SSW.SophieBot.Components;
 
 namespace SSW.SophieBot.Integration
 {
 	public class SophieBotTelemetryInitializer : ITelemetryInitializer
 	{
 		private readonly IServiceProvider _serviceProvider;
-		private readonly ApplicationSettings _applicationSettings;
+		private readonly AppInsightsSettings _appInsightsSettings;
 
-		public SophieBotTelemetryInitializer(IServiceProvider serviceProvider, IOptions<ApplicationSettings> options)
+		public SophieBotTelemetryInitializer(IServiceProvider serviceProvider, IOptions<AppInsightsSettings> options)
 		{
 			_serviceProvider = serviceProvider;
-			_applicationSettings = options.Value;
+			_appInsightsSettings = options.Value;
 		}
 
 		public void Initialize(ITelemetry telemetry)
@@ -50,14 +50,14 @@ namespace SSW.SophieBot.Integration
 
 			if (string.IsNullOrEmpty(telemetry.Context.Cloud.RoleName))
 			{
-				if (!string.IsNullOrEmpty(_applicationSettings.CloudRoleName))
+				if (!string.IsNullOrEmpty(_appInsightsSettings.CloudRoleName))
 				{
-					telemetry.Context.Cloud.RoleName = _applicationSettings.CloudRoleName;
+					telemetry.Context.Cloud.RoleName = _appInsightsSettings.CloudRoleName;
 				}
 
-				if (!string.IsNullOrEmpty(_applicationSettings.CloudRoleInstance))
+				if (!string.IsNullOrEmpty(_appInsightsSettings.CloudRoleInstance))
 				{
-					telemetry.Context.Cloud.RoleInstance = _applicationSettings.CloudRoleInstance;
+					telemetry.Context.Cloud.RoleInstance = _appInsightsSettings.CloudRoleInstance;
 				}
 			}
 		}
