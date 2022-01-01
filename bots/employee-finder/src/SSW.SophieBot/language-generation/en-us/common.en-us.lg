@@ -481,14 +481,18 @@ ${IntranetInfo()}
             "facts": [
                 {
                     "title": "📆",
-                    "value": "Last month"
+                    "value": "Last 30 days"
                 }
             ]
         },
         {
             "type": "Container",
             "items": [
-                ${join(select(usage, item, UsageByUserReportRow(item, first(usage).usageCount)), ',')}
+                ${join(select(
+					indicesAndValues(usage), 
+					item, 
+					UsageByUserReportRow(item.index+1, item.value, first(usage).usageCount)
+				  ), ',')}
             ],
             "spacing": "Medium"
         },
@@ -518,16 +522,29 @@ ${IntranetInfo()}
 - ELSE: 
 	- ``````
 
-# UsageByUserReportRow(usageItem, maxCount)
+# UsageByUserReportRow(index, usageItem, maxCount)
 - ```
 {
     "type": "ColumnSet",
     "columns": [
+        {
+            "type": "Column",
+            "width": 2,
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${index}",
+                    "size": "Default",
+                    "wrap": true
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
 		${ClickableName(
 			replace(usageItem.userName, ' www.ssw.com.au', ''), 
 			GetFirstName(replace(usageItem.userName, ' www.ssw.com.au', '')), 
 			GetLastName(replace(usageItem.userName, ' www.ssw.com.au', '')), 
-			'stretch', 
+			15, 
 			'Default', 
 			'Default', 
 			'GetUsageByUser')},
@@ -541,12 +558,12 @@ ${IntranetInfo()}
                     ]
                 }
             ],
-            "width": "stretch",
+            "width": 15,
             "verticalContentAlignment": "Center"
         },
         {
             "type": "Column",
-            "width": "stretch",
+            "width": 15,
             "items": [
                 {
                     "type": "TextBlock",

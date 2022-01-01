@@ -24,7 +24,17 @@ namespace SSW.SophieBot.Components.Models
                 {
                     if (row[userNameKey] is string userName && int.TryParse(Convert.ToString(row[usageCountKey]), out var usageCount))
                     {
-                        Add(new UsageByUserQueryResultItem(userName, usageCount));
+                        var newItem = new UsageByUserQueryResultItem(userName, usageCount);
+                        var duplication = Find(item => item.Equals(newItem));
+
+                        if (duplication != null)
+                        {
+                            duplication.UsageCount += newItem.UsageCount;
+                        }
+                        else
+                        {
+                            Add(newItem);
+                        }
                     }
                 }
             }
@@ -47,6 +57,12 @@ namespace SSW.SophieBot.Components.Models
         [JsonProperty("userName")]
         public string UserName { get; set; }
 
+        [JsonProperty("firstName")]
+        public string FirstName { get; set; }
+
+        [JsonProperty("lastName")]
+        public string LastName { get; set; }
+
         [JsonProperty("usageCount")]
         public int UsageCount { get; set; }
 
@@ -54,6 +70,52 @@ namespace SSW.SophieBot.Components.Models
         {
             UserName = userName;
             UsageCount = usageCount;
+            SetFirstNameAndLastName(userName);
+        }
+
+        public void SetFirstNameAndLastName(string fullName)
+        {
+            fullName = fullName.Trim();
+            if (string.IsNullOrEmpty(fullName))
+            {
+                return;
+            }
+
+            var sections = fullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (sections.Length > 0)
+            {
+                FirstName = sections[0];
+            }
+
+            if (sections.Length > 1)
+            {
+                LastName = sections[1];
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj is UsageByUserQueryResultItem resultItem)
+            {
+                return FirstName == resultItem.FirstName && LastName == resultItem.LastName;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return $"{FirstName}-{LastName}".GetHashCode();
         }
     }
 }

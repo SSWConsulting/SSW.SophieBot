@@ -36,7 +36,7 @@ namespace SSW.SophieBot.Components.Actions
             var pastDays = PastDays?.GetValue(dc.State);
             var maxItemsCount = MaxItemsCount?.GetValue(dc.State);
 
-            var result = await telemetryService.GetUsageByUserAsync(pastDays, maxItemsCount);
+            var result = await telemetryService.GetUsageByUserAsync(pastDays, maxItemsCount, groupKey => $"replace_string({groupKey}, ' www.ssw.com.au', '')");
 
             if (ResultProperty != null)
             {

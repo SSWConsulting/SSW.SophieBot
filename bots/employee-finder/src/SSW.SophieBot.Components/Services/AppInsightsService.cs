@@ -18,16 +18,24 @@ namespace SSW.SophieBot.Components.Services
             _settings = settings.Value;
         }
 
-        public async Task<UsageByUserQueryResult> GetUsageByUserAsync(int? spanDays = null, int? maxItemCount = null)
+        public async Task<UsageByUserQueryResult> GetUsageByUserAsync(
+            int? spanDays = null,
+            int? maxItemCount = null,
+            Func<string, string> userNameGroupKeyFunc = null)
         {
             var validPastDays = Math.Min(90, Math.Max(0, spanDays ?? 7));
-            var validMaxItemCount = Math.Min(10, Math.Max(0, maxItemCount ?? 50));
+            var validMaxItemCount = Math.Min(50, Math.Max(0, maxItemCount ?? 10));
+            var userNameGroupKey = "user_AccountId";
+            if (userNameGroupKeyFunc != null)
+            {
+                userNameGroupKey = userNameGroupKeyFunc.Invoke(userNameGroupKey);
+            }
 
             var query = $@"customEvents
 | where  name == 'LuisResult'
     and isnotnull(customDimensions.intent)
     and isnotempty(user_AccountId)
-| summarize usageCount = dcount(tostring(customDimensions.activityId), 2) by user = user_AccountId
+| summarize usageCount = dcount(tostring(customDimensions.activityId), 2) by user={userNameGroupKey}
 | order by usageCount desc
 | limit {validMaxItemCount}";
 
