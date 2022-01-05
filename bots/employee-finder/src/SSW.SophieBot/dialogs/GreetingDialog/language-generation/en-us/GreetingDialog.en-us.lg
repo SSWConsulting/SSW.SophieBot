@@ -23,13 +23,13 @@
 - IF: ${exists(user.Identity)}
     - ```
     ${if(!user.welcomed, WelcomeText(), '')}
-    <b>Hi ${user.Identity.givenName}</b> 🖐<br/><br/>
+    <b>Hi ${user.Identity.givenName}</b> 🖐<br/><b>Tip: Pin this chat, so you can always find me!</b><br/><br/>
     ${SummaryText()}
     ```
 - ELSE: 
     - ```
     ${if(!user.welcomed, WelcomeText(), '')}
-    <b>Hi there</b> 🖐<br/>
+    <b>Hi there</b> 🖐<br/><b>Tip: Pin this chat, so you can always find me!</b><br/><br/>
     ${SummaryText()}
     ```
 
