@@ -38,10 +38,11 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
 
             var date = dateString != null && dateString != ""
                 ? DateTime.Parse(dateString).FromUserLocalTime(dc).AddHours(9)
-                : DateTime.Now.ToUniversalTime();
+                : DateTime.Now.ToUserLocalTime(dc);
 
-            var result = EmployeesHelper.GetInternalBookedEmployees(EmployeesHelper.FilterDevelopers(employees), date);
-
+            var filteredEmployees = EmployeesHelper.FilterDevelopers(employees);
+            filteredEmployees.ForEach(e => e.NormalizeAppointments(dc));
+            var result = EmployeesHelper.GetInternalBookedEmployees(filteredEmployees, date);
 
             if (Result != null)
             {

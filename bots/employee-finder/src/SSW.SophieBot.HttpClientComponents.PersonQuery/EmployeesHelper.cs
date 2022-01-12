@@ -19,6 +19,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 
         public static List<EmployeeBillableItemModel> GetBillableEmployees(
             IEnumerable<GetEmployeeModel> employees,
+            DateTime date,
             string queriedProjectName,
             bool isProject,
             out string projectName)
@@ -34,7 +35,6 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             }
             projectName = isProject ? project?.ProjectName : project?.CustomerName;
 
-            var date = DateTime.Now.ToUniversalTime();
             return employees
                 .Select(e => new EmployeeBillableItemModel
                 {
@@ -58,6 +58,10 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 return BookingStatus.Unknown;
             }
 
+            if (IsOnLeaveFunc(appointment))
+            {
+                return BookingStatus.Leave;
+            }
             if (IsOnClientWorkFunc(appointment))
             {
                 return BookingStatus.ClientWork;
@@ -65,10 +69,6 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             if (IsOnInternalWorkFunc(appointment))
             {
                 return BookingStatus.InternalWork;
-            }
-            if (IsOnLeaveFunc(appointment))
-            {
-                return BookingStatus.Leave;
             }
 
             return BookingStatus.Unknown;
@@ -81,11 +81,28 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 return null;
             }
 
-            foreach (var appointment in appointments.OrderBy(a => a.Start))
+            var currentLeaveAppointment = GetCurrentLeaveAppointment(appointments, date);
+            if (currentLeaveAppointment != null)
             {
-                if (appointment.Start.UtcTicks >= date.Ticks && GetBookingStatus(appointment) != BookingStatus.Leave)
+                var futureAppointments = appointments.Where(a => a.End > currentLeaveAppointment.End);
+
+                if (!futureAppointments.Any())
                 {
-                    return appointment.Start.UtcDateTime.ToUserLocalTime(dc);
+                    return null;
+                }
+
+                var daysToCheck = (int)Math.Ceiling((futureAppointments.Max(a => a.End.Date) - date.Date).TotalDays);
+
+                for (int i = 0; i <= daysToCheck; i++)
+                {
+                    var checkDate = date.AddDays(i);
+
+                    var appointmentsWithinDate = GetEnumerableAppointmentsByDate(futureAppointments, checkDate);
+                    if (appointmentsWithinDate.Any()
+                        && !IsOnLeaveFunc(appointmentsWithinDate.OrderByDescending(appointment => GetOverlapsTimeSpan(appointment, date)).First()))
+                    {
+                        return checkDate.Date.ToUserLocalTime(dc);
+                    }
                 }
             }
 
@@ -103,6 +120,10 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             {
                 return BookingStatus.Free;
             }
+            if (IsOnLeave(employee, date))
+            {
+                return BookingStatus.Leave;
+            }
             if (IsOnClientWork(employee, date))
             {
                 return BookingStatus.ClientWork;
@@ -110,10 +131,6 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             if (IsOnInternalWork(employee, date))
             {
                 return BookingStatus.InternalWork;
-            }
-            if (IsOnLeave(employee, date))
-            {
-                return BookingStatus.Leave;
             }
 
             return BookingStatus.Unknown;
@@ -132,6 +149,23 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             }
 
             return billableHours == 0 ? 0 : (int)Math.Ceiling(billableHours / 8);
+        }
+
+        public static int GetBookedDays(GetEmployeeModel employee, DateTime startDate)
+        {
+            var maxEndTime = employee.NormalizedAppointments.Max(appointment => appointment.End);
+            var checkDays = (int)Math.Ceiling((maxEndTime.Date - startDate.Date).TotalDays);
+            var bookedDays = 0;
+
+            for (int i = 0; i <= checkDays; i++)
+            {
+                if (IsOnClientWork(employee.NormalizedAppointments, startDate.AddDays(i)))
+                {
+                    bookedDays++;
+                }
+            }
+
+            return bookedDays;
         }
 
         public static string GetLastSeen(GetEmployeeModel model)
@@ -180,48 +214,40 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 
         public static NextClientModel GetNextUnavailability(GetEmployeeModel employee, DateTime date, out int freeDays)
         {
-            const int daysForNext4Weeks = 4 * 7;
-            const int daysFor4Weekends = 4 * 2;
-
-            freeDays = daysForNext4Weeks - daysFor4Weekends;
-            var unfreeAppointments = new List<GetAppointmentModel>();
-            var lastDate = DateTimeOffset.MinValue;
-
-            var startDate = date;
-            var endDate = date.AddDays(daysForNext4Weeks);
-
-            foreach (var a in employee.Appointments
-                .Where(a => a.Start.UtcTicks >= startDate.Ticks
-                    && a.End.UtcTicks < endDate.Ticks
-                    && !string.IsNullOrWhiteSpace(a.Regarding))
-                .OrderBy(a => a.Start.UtcTicks))
+            freeDays = 0;
+            if (!employee.NormalizedAppointments.Any())
             {
-                if (!IsOnInternalWorkFunc(a) && !IsOnLeaveFunc(a))
+                return null;
+            }
+
+            var endTime = employee.NormalizedAppointments.Max(appointment => appointment.End);
+            var checkDays = Math.Min((int)Math.Ceiling((endTime - date).TotalDays), 4 * 7);
+            GetAppointmentModel unavailableAppointment = null;
+
+            for (int i = 1; i <= checkDays; i++)
+            {
+                var checkDate = date.AddDays(i);
+                if (TryGetUnavailableAppointment(employee.NormalizedAppointments, date, out unavailableAppointment))
                 {
-                    unfreeAppointments.Add(a);
-
-                    if (a.End.UtcDateTime >= lastDate)
-                    {
-                        var unfreeDays = (int)Math.Ceiling((a.End.UtcDateTime - (a.Start.UtcDateTime < lastDate ? lastDate : a.Start.UtcDateTime)).TotalHours / 24);
-
-                        freeDays -= unfreeDays;
-                        lastDate = a.End.UtcDateTime;
-                    }
+                    break;
+                }
+                else if (checkDate.DayOfWeek != DayOfWeek.Saturday && checkDate.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    freeDays++;
                 }
             }
 
-            var appointment = unfreeAppointments.FirstOrDefault();
-
-            if (appointment?.Regarding == null)
+            if (string.IsNullOrEmpty(unavailableAppointment?.Regarding))
             {
                 return null;
             }
 
             return new NextClientModel
             {
-                Name = appointment.Regarding,
-                Date = appointment.Start.ToString("ddd, dd/MM/yyyy"),
-                Type = IsOnLeaveFunc(appointment) ? BookingStatus.Leave : BookingStatus.ClientWork
+                Name = unavailableAppointment.Regarding,
+                Date = unavailableAppointment.Start.DateTime,
+                DateText = unavailableAppointment.Start.ToString("ddd, dd/MM/yyyy"),
+                Type = IsOnLeaveFunc(unavailableAppointment) ? BookingStatus.Leave : BookingStatus.ClientWork
             };
         }
 
@@ -235,59 +261,84 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 
         public static List<string> GetClientsByDate(DateTime date, List<GetAppointmentModel> appointments)
         {
-            var clientAppointments = GetEnumerableAppointmentsByDate(appointments, date)
+            return GetEnumerableAppointmentsByDate(appointments, date)
                 .Where(appointment => !_internalCompanyNames.Contains(appointment.Regarding?.ToLower()))
                 .Select(appointment => appointment.Regarding)
-                .Distinct();
+                .Distinct()
+                .ToList();
+        }
 
-            return clientAppointments.Any()
-                ? clientAppointments.ToList()
-                : null;
+        public static GetAppointmentModel GetCurrentLeaveAppointment(IEnumerable<GetAppointmentModel> appointments, DateTime date)
+        {
+            return appointments
+                .Where(a => a.Start.Ticks <= date.Ticks && a.End.Ticks >= date.Ticks)
+                .OrderByDescending(a => a.End)
+                .FirstOrDefault(IsOnLeaveFunc);
         }
 
         public static bool IsOnClientWork(GetEmployeeModel employee, DateTime date)
         {
-            return GetEnumerableAppointmentsByDate(employee.Appointments, date)
-                .Any(IsOnClientWorkFunc);
+            return IsOnClientWork(employee.NormalizedAppointments, date);
         }
 
-        public static bool IsOnClientWorkFunc(GetAppointmentModel appointment)
+        public static bool IsOnClientWork(IEnumerable<GetAppointmentModel> appointments, DateTime date)
         {
-            return !_internalCompanyNames.Contains(appointment.Regarding?.ToLower());
+            var appointmentsWithinDate = GetEnumerableAppointmentsByDate(appointments, date);
+            return appointmentsWithinDate.Any()
+                && IsOnClientWorkFunc(appointmentsWithinDate.OrderByDescending(appointment => GetOverlapsTimeSpan(appointment, date)).First());
         }
 
-        public static bool IsOnInternalWorkFunc(GetAppointmentModel appointment)
+        public static bool TryGetUnavailableAppointment(
+            IEnumerable<GetAppointmentModel> appointments,
+            DateTime date,
+            out GetAppointmentModel unavailableAppointment)
         {
-            return _internalCompanyNames.Contains(appointment.Regarding?.ToLower())
-                && !IsOnLeaveFunc(appointment);
-        }
+            unavailableAppointment = null;
+            var appointmentsWithinDate = GetEnumerableAppointmentsByDate(appointments, date);
 
-        public static bool IsOnLeaveFunc(GetAppointmentModel appointment)
-        {
-            return appointment.RequiredAttendees.Any(attendee => attendee.ToLower().Contains("absence"));
+            if (appointmentsWithinDate.Any())
+            {
+                var targetAppointment = appointmentsWithinDate
+                    .OrderByDescending(appointment => GetOverlapsTimeSpan(appointment, date))
+                    .First();
+
+                if (IsOnLeaveFunc(targetAppointment) || IsOnClientWorkFunc(targetAppointment))
+                {
+                    unavailableAppointment = targetAppointment;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public static bool IsOnInternalWork(GetEmployeeModel employee, DateTime date)
         {
-            return GetEnumerableAppointmentsByDate(employee.Appointments, date)
-                .Any(IsOnInternalWorkFunc);
+            return IsOnInternalWork(employee.NormalizedAppointments, date);
+        }
+
+        public static bool IsOnInternalWork(IEnumerable<GetAppointmentModel> appointments, DateTime date)
+        {
+            var appointmentsWithinDate = GetEnumerableAppointmentsByDate(appointments, date);
+            return appointmentsWithinDate.Any()
+                && IsOnInternalWorkFunc(appointmentsWithinDate.OrderByDescending(appointment => GetOverlapsTimeSpan(appointment, date)).First());
         }
 
         public static bool IsOnLeave(GetEmployeeModel employee, DateTime date)
         {
-            var appointments = GetEnumerableAppointmentsByDate(employee.Appointments, date);
-            return appointments.Any() && appointments
-                .All(IsOnLeaveFunc);
+            return IsOnLeave(employee.NormalizedAppointments, date);
+        }
+
+        public static bool IsOnLeave(IEnumerable<GetAppointmentModel> appointments, DateTime date)
+        {
+            var appointmentsWithinDate = GetEnumerableAppointmentsByDate(appointments, date);
+            return appointmentsWithinDate.Any()
+                && IsOnLeaveFunc(appointmentsWithinDate.OrderByDescending(appointment => GetOverlapsTimeSpan(appointment, date)).First());
         }
 
         public static bool IsFree(GetEmployeeModel employee, DateTime date)
         {
-            return !GetEnumerableAppointmentsByDate(employee.Appointments, date).Any();
-        }
-
-        private static long GetTicksFrom(DateTimeOffset date)
-        {
-            return date.UtcDateTime.Date.Ticks;
+            return !GetEnumerableAppointmentsByDate(employee.NormalizedAppointments, date).Any();
         }
 
         public static bool IsProjectNameMatch(string sourceProjectName, string originalProjectName)
@@ -330,30 +381,44 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             return appointments
                 .Where(appointment =>
                     !string.IsNullOrWhiteSpace(appointment.Regarding)
-                    && date.Date.Ticks <= GetTicksFrom(appointment.End)
-                    && date.Date.Ticks >= GetTicksFrom(appointment.Start));
+                    && date.Date <= appointment.End.Date
+                    && date.Date.AddDays(1) > appointment.Start.Date);
         }
 
-        public static DateTime GetFreeDate(IEnumerable<GetAppointmentModel> appointments, DateTime startTime, bool isFree = true)
+        public static DateTime GetFreeDate(IEnumerable<GetAppointmentModel> appointments, DateTime startTime)
         {
-            var checkDate = startTime.Date;
+            static DateTime GetNextWorkDay(DateTime startDate)
+            {
+                if (startDate.DayOfWeek == DayOfWeek.Friday)
+                {
+                    return startDate.AddDays(3);
+                }
 
+                if (startDate.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    return startDate.AddDays(2);
+                }
+
+                return startDate.AddDays(1);
+            }
+
+            if (appointments == null || !appointments.Any())
+            {
+                return GetNextWorkDay(startTime);
+            }
+
+            var checkDate = startTime.Date;
             var appointmentsEndDate = appointments.Max(appointment => appointment.End);
 
-            while (checkDate <= appointmentsEndDate)
+            while (checkDate <= appointmentsEndDate.Date)
             {
                 var checkAppointments = GetEnumerableAppointmentsByDate(appointments, checkDate);
-                if (isFree
-                    ? (checkAppointments.Count() == 0 || !checkAppointments.Any(appointment => !IsOnInternalWorkFunc(appointment)))
-                    : checkAppointments.Any(appointment => IsOnClientWorkFunc(appointment)))
+                if (!checkAppointments.Any() || IsOnInternalWork(appointments, checkDate))
                 {
                     return checkDate;
                 }
 
-                do
-                {
-                    checkDate = checkDate.AddDays(1);
-                } while (checkDate.DayOfWeek == DayOfWeek.Saturday || checkDate.DayOfWeek == DayOfWeek.Sunday);
+                checkDate = GetNextWorkDay(checkDate);
             }
 
             return checkDate;
@@ -403,7 +468,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 var monthes = GetInteger(totalDays / 30);
                 var days = totalDays % 30;
 
-                var monthString = $"{monthes} {(monthes == 1 ? "week" : "weeks")}";
+                var monthString = $"{monthes} {(monthes == 1 ? "month" : "months")}";
 
                 if (days == 0)
                 {
@@ -411,6 +476,47 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 }
 
                 return $"{monthString} and {GetDayString(days)} from now";
+            }
+        }
+
+        private static bool IsOnClientWorkFunc(GetAppointmentModel appointment)
+        {
+            return !_internalCompanyNames.Contains(appointment.Regarding?.ToLower());
+        }
+
+        private static bool IsOnInternalWorkFunc(GetAppointmentModel appointment)
+        {
+            return _internalCompanyNames.Contains(appointment.Regarding?.ToLower())
+                && !IsOnLeaveFunc(appointment);
+        }
+
+        private static bool IsOnLeaveFunc(GetAppointmentModel appointment)
+        {
+            return appointment.RequiredAttendees.Any(attendee => attendee.ToLower().Contains("absence"));
+        }
+
+        private static TimeSpan GetOverlapsTimeSpan(GetAppointmentModel appointment, DateTime date)
+        {
+            if (appointment == null)
+            {
+                return TimeSpan.Zero;
+            }
+
+            var currentDate = date.Date;
+            var nextDate = date.Date.AddDays(1);
+
+            if (appointment.End < currentDate || appointment.Start > nextDate)
+            {
+                return TimeSpan.Zero;
+            }
+
+            if (appointment.Start.DateTime <= currentDate)
+            {
+                return appointment.End <= nextDate ? appointment.End - currentDate : nextDate - currentDate;
+            }
+            else
+            {
+                return appointment.End <= nextDate ? appointment.End - appointment.Start : nextDate - appointment.Start;
             }
         }
     }

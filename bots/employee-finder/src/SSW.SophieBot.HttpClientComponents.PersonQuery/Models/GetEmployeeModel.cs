@@ -1,4 +1,6 @@
-﻿using SSW.SophieBot.HttpClientComponents.PersonQuery;
+﻿using Microsoft.Bot.Builder.Dialogs;
+using SSW.SophieBot.Components;
+using SSW.SophieBot.HttpClientComponents.PersonQuery;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +22,7 @@ namespace SSW.SophieBot.HttpClientAction.Models
         public GetLocationModel DefaultSite { get; set; }
         public List<GetDeviceModel> Devices { get; set; }
         public List<GetAppointmentModel> Appointments { get; set; }
+        public List<GetAppointmentModel> NormalizedAppointments { get; set; }
         public List<GetEmployeeProjectModel> Projects { get; set; }
         public GetLastSeenAtSiteModel LastSeenAt { get; set; }
         public List<GetSkillModel> Skills { get; set; }
@@ -72,6 +75,19 @@ namespace SSW.SophieBot.HttpClientAction.Models
 
                 return true;
             });
+        }
+
+        public void NormalizeAppointments(DialogContext dc)
+        {
+            NormalizedAppointments = Appointments.Select(appointment =>
+            {
+                var normalizedAppointment = appointment.Clone();
+                normalizedAppointment.Start = appointment.Start.DateTime.ToUserLocalTime(dc);
+                normalizedAppointment.End = appointment.End.DateTime.ToUserLocalTime(dc);
+
+                return normalizedAppointment;
+            })
+            .ToList();
         }
     }
 }

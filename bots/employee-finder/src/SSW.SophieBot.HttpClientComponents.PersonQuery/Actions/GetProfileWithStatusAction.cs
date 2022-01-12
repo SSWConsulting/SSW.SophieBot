@@ -34,7 +34,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
         {
             var employees = dc.GetValue(Employees);
 
-            var date = DateTime.Now.ToUniversalTime();
+            var date = DateTime.Now.ToUserLocalTime(dc);
 
             var result = employees.Select(e => ConvertToProfile(e, dc, date)).ToList();
 
@@ -48,13 +48,15 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
 
         private EmployeeProfileWithStatusModel ConvertToProfile(GetEmployeeModel employee, DialogContext dc, DateTime date)
         {
+            employee.NormalizeAppointments(dc);
+
             var profile = new EmployeeProfileWithStatusModel
             {
                 UserId = employee.UserId,
                 AvatarUrl = employee.AvatarUrl,
                 DisplayName = $"{employee.FirstName} {employee.LastName}",
                 Title = employee.Title,
-                Clients = EmployeesHelper.GetClientsByDate(date, employee.Appointments),
+                Clients = EmployeesHelper.GetClientsByDate(date, employee.NormalizedAppointments),
                 BookingStatus = EmployeesHelper.GetBookingStatus(employee, date),
                 LastSeenAt = employee.LastSeenAt,
                 LastSeenTime = EmployeesHelper.GetLastSeen(employee),
@@ -65,13 +67,11 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
                 BillableRate = employee.BillableRate,
-                BookedDays = employee.Appointments
-                    .Where(appointment => appointment.End.UtcTicks >= date.Ticks)
-                    .Count(appointment => EmployeesHelper.IsOnClientWorkFunc(appointment)),
-                Appointments = EmployeesHelper.GetAppointments(employee.Appointments, date, 10)
+                BookedDays = EmployeesHelper.GetBookedDays(employee, date),
+                Appointments = EmployeesHelper.GetAppointments(employee.NormalizedAppointments, date, 10)
                     .Select(a => new EmployeeProfileAppointment
                     {
-                        Start = a.Start.DateTime.ToUserLocalTime(dc).ToUserFriendlyDate(date),
+                        Start = a.Start.DateTime.ToUserFriendlyDate(date),
                         Duration = (a.End - a.Start).ToUserFriendlyDuration(),
                         BookingStatus = EmployeesHelper.GetBookingStatus(a),
                         Subject = a.Subject.Trim(),

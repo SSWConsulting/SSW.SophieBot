@@ -49,6 +49,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
 
             var result = EmployeesHelper.FilterDevelopers(employees).Select(employee =>
             {
+                employee.NormalizeAppointments(dc);
                 var nextUnavailability = EmployeesHelper.GetNextUnavailability(employee, date, out var freeDays);
                 return new FreeEmployeeModel
                 {

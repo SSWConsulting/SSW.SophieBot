@@ -7,7 +7,7 @@ namespace SSW.SophieBot.Components
     {
         public static DateTime ToUserLocalTime(this DateTime serverTime, DialogContext dc)
         {
-            serverTime = DateTime.SpecifyKind(serverTime, DateTimeKind.Utc);
+            serverTime = DateTime.SpecifyKind(serverTime.ToUniversalTime(), DateTimeKind.Utc);
             var utcOffset = dc.Context.Activity.LocalTimestamp.GetValueOrDefault().Offset;
             return serverTime.Add(utcOffset);
         }
