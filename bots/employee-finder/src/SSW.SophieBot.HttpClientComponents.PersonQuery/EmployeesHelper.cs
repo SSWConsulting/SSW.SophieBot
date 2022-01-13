@@ -81,8 +81,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 return null;
             }
 
-            var currentLeaveAppointment = GetCurrentLeaveAppointment(appointments, date);
-            if (currentLeaveAppointment != null)
+            if (TryGetUnavailableAppointment(appointments, date, out var currentLeaveAppointment))
             {
                 var futureAppointments = appointments.Where(a => a.End > currentLeaveAppointment.End);
 
@@ -93,19 +92,21 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 
                 var daysToCheck = (int)Math.Ceiling((futureAppointments.Max(a => a.End.Date) - date.Date).TotalDays);
 
-                for (int i = 0; i <= daysToCheck; i++)
+                for (int i = 1; i <= daysToCheck; i++)
                 {
-                    var checkDate = date.AddDays(i);
+                    var checkDate = date.Date.AddDays(i);
 
                     var appointmentsWithinDate = GetEnumerableAppointmentsByDate(futureAppointments, checkDate);
-                    if (appointmentsWithinDate.Any()
-                        && !IsOnLeaveFunc(appointmentsWithinDate.OrderByDescending(appointment => GetOverlapsTimeSpan(appointment, date)).First()))
+                    var mainAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, checkDate);
+
+                    if (mainAppointment != null
+                        && !IsOnLeaveFunc(mainAppointment))
                     {
-                        return checkDate.Date.ToUserLocalTime(dc);
+                        return checkDate.Date;
                     }
                 }
             }
-
+            
             return null;
         }
 
@@ -220,16 +221,21 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 return null;
             }
 
-            var endTime = employee.NormalizedAppointments.Max(appointment => appointment.End);
-            var checkDays = Math.Min((int)Math.Ceiling((endTime - date).TotalDays), 4 * 7);
+            var checkDays = 4 * 7;
             GetAppointmentModel unavailableAppointment = null;
+
+            var offsetDaysTillNextWeek = 14 % ((int)date.DayOfWeek + 7);
+            date = date.Date.AddDays(offsetDaysTillNextWeek);
 
             for (int i = 1; i <= checkDays; i++)
             {
                 var checkDate = date.AddDays(i);
-                if (TryGetUnavailableAppointment(employee.NormalizedAppointments, date, out unavailableAppointment))
+                if (TryGetUnavailableAppointment(employee.NormalizedAppointments, checkDate, out var currentUnavailability))
                 {
-                    break;
+                    if (unavailableAppointment == null)
+                    {
+                        unavailableAppointment = currentUnavailability;
+                    }
                 }
                 else if (checkDate.DayOfWeek != DayOfWeek.Saturday && checkDate.DayOfWeek != DayOfWeek.Sunday)
                 {
@@ -268,14 +274,6 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 .ToList();
         }
 
-        public static GetAppointmentModel GetCurrentLeaveAppointment(IEnumerable<GetAppointmentModel> appointments, DateTime date)
-        {
-            return appointments
-                .Where(a => a.Start.Ticks <= date.Ticks && a.End.Ticks >= date.Ticks)
-                .OrderByDescending(a => a.End)
-                .FirstOrDefault(IsOnLeaveFunc);
-        }
-
         public static bool IsOnClientWork(GetEmployeeModel employee, DateTime date)
         {
             return IsOnClientWork(employee.NormalizedAppointments, date);
@@ -284,8 +282,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
         public static bool IsOnClientWork(IEnumerable<GetAppointmentModel> appointments, DateTime date)
         {
             var appointmentsWithinDate = GetEnumerableAppointmentsByDate(appointments, date);
-            return appointmentsWithinDate.Any()
-                && IsOnClientWorkFunc(appointmentsWithinDate.OrderByDescending(appointment => GetOverlapsTimeSpan(appointment, date)).First());
+            var mainAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, date);
+            return mainAppointment != null
+                && IsOnClientWorkFunc(mainAppointment);
         }
 
         public static bool TryGetUnavailableAppointment(
@@ -298,11 +297,10 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 
             if (appointmentsWithinDate.Any())
             {
-                var targetAppointment = appointmentsWithinDate
-                    .OrderByDescending(appointment => GetOverlapsTimeSpan(appointment, date))
-                    .First();
-
-                if (IsOnLeaveFunc(targetAppointment) || IsOnClientWorkFunc(targetAppointment))
+                var targetAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, date);
+                if (targetAppointment != null
+                    && (IsOnLeaveFunc(targetAppointment) 
+                    || IsOnClientWorkFunc(targetAppointment)))
                 {
                     unavailableAppointment = targetAppointment;
                     return true;
@@ -320,8 +318,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
         public static bool IsOnInternalWork(IEnumerable<GetAppointmentModel> appointments, DateTime date)
         {
             var appointmentsWithinDate = GetEnumerableAppointmentsByDate(appointments, date);
-            return appointmentsWithinDate.Any()
-                && IsOnInternalWorkFunc(appointmentsWithinDate.OrderByDescending(appointment => GetOverlapsTimeSpan(appointment, date)).First());
+            var mainAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, date);
+            return mainAppointment != null
+                && IsOnInternalWorkFunc(mainAppointment);
         }
 
         public static bool IsOnLeave(GetEmployeeModel employee, DateTime date)
@@ -332,8 +331,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
         public static bool IsOnLeave(IEnumerable<GetAppointmentModel> appointments, DateTime date)
         {
             var appointmentsWithinDate = GetEnumerableAppointmentsByDate(appointments, date);
-            return appointmentsWithinDate.Any()
-                && IsOnLeaveFunc(appointmentsWithinDate.OrderByDescending(appointment => GetOverlapsTimeSpan(appointment, date)).First());
+            var mainAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, date);
+            return mainAppointment != null
+                && IsOnLeaveFunc(mainAppointment);
         }
 
         public static bool IsFree(GetEmployeeModel employee, DateTime date)
@@ -495,29 +495,53 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             return appointment.RequiredAttendees.Any(attendee => attendee.ToLower().Contains("absence"));
         }
 
-        private static TimeSpan GetOverlapsTimeSpan(GetAppointmentModel appointment, DateTime date)
+        private static GetAppointmentModel GetMainAppointmentWithinDate(IEnumerable<GetAppointmentModel> appointments, DateTime date)
         {
+            GetAppointmentModel mainAppointment = null;
+            var mainOverlaps = TimeSpan.Zero;
+            if (appointments == null || !appointments.Any())
+            {
+                return mainAppointment;
+            }
+
+            foreach(var appointment in appointments)
+            {
+                if (TryGetOverlapsTimeSpan(appointment, date, out var overlaps) && overlaps > mainOverlaps)
+                {
+                    mainAppointment = appointment;
+                    mainOverlaps = overlaps;
+                }
+            }
+
+            return mainAppointment;
+        }
+
+        private static bool TryGetOverlapsTimeSpan(GetAppointmentModel appointment, DateTime date, out TimeSpan overlaps)
+        {
+            overlaps = TimeSpan.Zero;
             if (appointment == null)
             {
-                return TimeSpan.Zero;
+                return false;
             }
 
             var currentDate = date.Date;
             var nextDate = date.Date.AddDays(1);
 
-            if (appointment.End < currentDate || appointment.Start > nextDate)
+            if (appointment.End <= currentDate || appointment.Start >= nextDate)
             {
-                return TimeSpan.Zero;
+                return false;
             }
 
             if (appointment.Start.DateTime <= currentDate)
             {
-                return appointment.End <= nextDate ? appointment.End - currentDate : nextDate - currentDate;
+                overlaps = appointment.End <= nextDate ? appointment.End - currentDate : nextDate - currentDate;
             }
             else
             {
-                return appointment.End <= nextDate ? appointment.End - appointment.Start : nextDate - appointment.Start;
+                overlaps = appointment.End <= nextDate ? appointment.End - appointment.Start : nextDate - appointment.Start;
             }
+
+            return true;
         }
     }
 }

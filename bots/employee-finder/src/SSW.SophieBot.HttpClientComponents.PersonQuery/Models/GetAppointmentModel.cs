@@ -23,5 +23,10 @@ namespace SSW.SophieBot.HttpClientAction.Models
                 Subject = Subject
             };
         }
+
+        public bool IsAllDay()
+        {
+            return Start == Start.Date && End == End.Date;
+        }
     }
 }

@@ -82,7 +82,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
 
             if (profile.BookingStatus == BookingStatus.Leave)
             {
-                var returningDate = EmployeesHelper.GetReturningDate(employee.Appointments, date, dc);
+                var returningDate = EmployeesHelper.GetReturningDate(employee.NormalizedAppointments, date, dc);
 
                 if (returningDate.HasValue)
                 {
