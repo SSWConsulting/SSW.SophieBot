@@ -47,7 +47,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
                 throw new ArgumentNullException(nameof(Employees));
             }
 
-            var billableEmployees = EmployeesHelper.GetBillableEmployees(employees, queriedProject, isProject, out var projectName);
+            var date = DateTime.Now.ToUserLocalTime(dc);
+            employees.ForEach(employee => employee.NormalizeAppointments(dc));
+            var billableEmployees = EmployeesHelper.GetBillableEmployees(employees, date, queriedProject, isProject, out var projectName);
 
             var workingEmployees = new EmployeesByProjectListModel
             {

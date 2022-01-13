@@ -34,22 +34,25 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
         {
             var employees = dc.GetValue(Employees);
 
-            var date = DateTime.Now.ToUniversalTime();
+            var date = DateTime.Now.ToUserLocalTime(dc);
 
-            var result = employees.Select(employee => new EmployeeWithBookingInfoModel
+            var result = employees.Select(employee =>
             {
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                AvatarUrl = employee.AvatarUrl,
-                DisplayName = $"{employee.FirstName} {employee.LastName}",
-                BookingStatus = EmployeesHelper.GetBookingStatus(employee, date),
-                Clients = EmployeesHelper.GetClientsByDate(date, employee.Appointments),
-                LastSeenAt = employee.LastSeenAt,
-                LastSeenTime = EmployeesHelper.GetLastSeen(employee),
-                EmailAddress = employee.EmailAddress,
-                BookedDays = employee.Appointments
-                    .Where(appointment => appointment.End.UtcTicks >= date.Ticks)
-                    .Count(appointment => EmployeesHelper.IsOnClientWorkFunc(appointment)),
+                employee.NormalizeAppointments(dc);
+
+                return new EmployeeWithBookingInfoModel
+                {
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    AvatarUrl = employee.AvatarUrl,
+                    DisplayName = $"{employee.FirstName} {employee.LastName}",
+                    BookingStatus = EmployeesHelper.GetBookingStatus(employee, date),
+                    Clients = EmployeesHelper.GetClientsByDate(date, employee.NormalizedAppointments),
+                    LastSeenAt = employee.LastSeenAt,
+                    LastSeenTime = EmployeesHelper.GetLastSeen(employee),
+                    EmailAddress = employee.EmailAddress,
+                    BookedDays = EmployeesHelper.GetBookedDays(employee, date),
+                };
             })
             .ToList();
 

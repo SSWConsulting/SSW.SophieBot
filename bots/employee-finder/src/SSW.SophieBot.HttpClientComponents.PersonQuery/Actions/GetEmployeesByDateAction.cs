@@ -40,21 +40,25 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
 
             var date = dateString != null && dateString != ""
                 ? DateTime.Parse(dateString).FromUserLocalTime(dc).AddHours(9)
-                : DateTime.Now.ToUniversalTime();
+                : DateTime.Now.ToUserLocalTime(dc);
 
-            var result = EmployeesHelper.FilterDevelopers(employees).Select(e => new EmployeeByDateModel
-            {
-                UserId = e.UserId,
-                FirstName = e.FirstName,
-                LastName = e.LastName,
-                DefaultSite = e.DefaultSite,
-                AvatarUrl = e.AvatarUrl,
-                DisplayName = $"{e.FirstName} {e.LastName}",
-                Clients = EmployeesHelper.GetClientsByDate(date, e.Appointments),
-                Title = e.Title,
-            })
-            .Where(employee => employee.Clients != null)
-            .ToList();
+            var filteredEmployees = EmployeesHelper.FilterDevelopers(employees);
+            filteredEmployees.ForEach(employee => employee.NormalizeAppointments(dc));
+
+            var result = filteredEmployees
+                .Where(e => EmployeesHelper.IsOnClientWork(e, date))
+                .Select(e => new EmployeeByDateModel
+                {
+                    UserId = e.UserId,
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    DefaultSite = e.DefaultSite,
+                    AvatarUrl = e.AvatarUrl,
+                    DisplayName = $"{e.FirstName} {e.LastName}",
+                    Clients = EmployeesHelper.GetClientsByDate(date, e.NormalizedAppointments),
+                    Title = e.Title,
+                })
+                .ToList();
 
 
             if (Result != null)

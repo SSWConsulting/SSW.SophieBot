@@ -13,7 +13,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Models
         [JsonProperty("displayName")]
         public string DisplayName { get; set; }
 
-        [JsonProperty("FreeDate")]
+        [JsonProperty("freeDate")]
         public string FreeDate { get; set; }
 
         [JsonProperty("bookedDays")]
