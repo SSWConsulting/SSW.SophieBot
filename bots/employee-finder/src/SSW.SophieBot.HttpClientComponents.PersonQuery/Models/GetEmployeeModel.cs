@@ -82,8 +82,12 @@ namespace SSW.SophieBot.HttpClientAction.Models
             NormalizedAppointments = Appointments.Select(appointment =>
             {
                 var normalizedAppointment = appointment.Clone();
-                normalizedAppointment.Start = appointment.Start.DateTime.ToUserLocalTime(dc);
-                normalizedAppointment.End = appointment.End.DateTime.ToUserLocalTime(dc);
+
+                if (!normalizedAppointment.IsAllDay())
+                {
+                    normalizedAppointment.Start = appointment.Start.DateTime.ToUserLocalTime(dc);
+                    normalizedAppointment.End = appointment.End.DateTime.ToUserLocalTime(dc);
+                }
 
                 return normalizedAppointment;
             })
