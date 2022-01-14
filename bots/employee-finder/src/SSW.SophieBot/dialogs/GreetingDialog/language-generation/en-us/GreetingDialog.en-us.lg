@@ -10,7 +10,7 @@
 {
     "type": "AdaptiveCard",
     "body": [
-		${if(!user.welcomed, GreetingImage() + ',', '')}
+        ${if(!user.welcomed, GreetingImage() + ',', '')}
         {
             "type": "TextBlock",
             "text": "Welcome to [SSW SophieBot](${settings.App.ProductUrl})!",
@@ -33,42 +33,43 @@
         {
             "type": "ActionSet",
             "actions": [
-	    	{
-				"type": "Action.Submit",
-				"title": "Who is Adam Cogan?",
-				"data": 
-				{
-		    		"msteams": {
-						"type": "imBack",
-						"title": "Who is Adam Cogan?",
-						"value": "Who is Adam Cogan?"
-					}
-				}
-			},
-			{
-				"type": "Action.Submit",
-				"title": "Who knows Azure?",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Who knows Azure?",
-						"value": "Who knows Azure?"
-					}
-				}
-			},
-        	{
-            	"type": "Action.Submit",
-            	"title": "Who is on client work?",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Who is on client work?",
-						"value": "Who is on client work?"
-					}
-				}
-        	}]
+                {
+                    "type": "Action.Submit",
+                    "title": "Who is Adam Cogan?",
+                    "data": 
+                    {
+                        "msteams": {
+                            "type": "imBack",
+                            "title": "Who is Adam Cogan?",
+                            "value": "Who is Adam Cogan?"
+                        }
+                    }
+                },
+                {
+                    "type": "Action.Submit",
+                    "title": "Who knows Azure?",
+                    "data": 
+                    {
+                        "msteams": {
+                            "type": "imBack",
+                            "title": "Who knows Azure?",
+                            "value": "Who knows Azure?"
+                        }
+                    }
+                },
+                {
+                    "type": "Action.Submit",
+                    "title": "Who is on client work?",
+                    "data": 
+                    {
+                        "msteams": {
+                            "type": "imBack",
+                            "title": "Who is on client work?",
+                            "value": "Who is on client work?"
+                        }
+                    }
+                }
+            ]
         },
         {
             "type": "TextBlock",
@@ -97,7 +98,7 @@
 # GreetingImage()
 - ```
 {
-	"type": "Image",
+    "type": "Image",
     "url": "${settings.App.BaseUrl}/sophiebot-branding.png"
 }
 ```
