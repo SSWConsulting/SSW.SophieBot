@@ -2,10 +2,10 @@
 
 # WelcomeAttachment()
 [Activity
-    Attachments = ${json(GreetingAdaptiveCard())}
+    Attachments = ${json(GreetingCard())}
 ]
 
-# GreetingAdaptiveCard()
+# GreetingCard()
 - ```
 {
     "type": "AdaptiveCard",
@@ -33,43 +33,42 @@
         {
             "type": "ActionSet",
             "actions": [
+	    	{
+				"type": "Action.Submit",
+				"title": "Who is Adam Cogan?",
+				"data": 
 				{
-					"type": "Action.Submit",
-					"title": "Who is Adam Cogan?",
-					"data": 
-					{
-					    "msteams": {
-					        "type": "imBack",
-					        "title": "Who is Adam Cogan?",
-					        "value": "Who is Adam Cogan?"
-					    }
+		    		"msteams": {
+						"type": "imBack",
+						"title": "Who is Adam Cogan?",
+						"value": "Who is Adam Cogan?"
 					}
-				},
+				}
+			},
+			{
+				"type": "Action.Submit",
+				"title": "Who knows Azure?",
+				"data": 
 				{
-					"type": "Action.Submit",
-					"title": "Who knows Azure?",
-					"data": 
-					{
-					    "msteams": {
-					        "type": "imBack",
-					        "title": "Who knows Azure?",
-					        "value": "Who knows Azure?"
-					    }
+					"msteams": {
+						"type": "imBack",
+						"title": "Who knows Azure?",
+						"value": "Who knows Azure?"
 					}
-				},
-                {
-                    "type": "Action.Submit",
-                    "title": "Who is on client work?",
-					"data": 
-					{
-						"msteams": {
-					        "type": "imBack",
-					        "title": "Who is on client work?",
-					        "value": "Who is on client work?"
-					    }
+				}
+			},
+        	{
+            	"type": "Action.Submit",
+            	"title": "Who is on client work?",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Who is on client work?",
+						"value": "Who is on client work?"
 					}
-                }
-            ]
+				}
+        	}]
         },
         {
             "type": "TextBlock",
