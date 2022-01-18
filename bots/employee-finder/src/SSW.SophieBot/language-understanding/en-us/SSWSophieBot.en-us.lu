@@ -469,6 +469,8 @@
 - who is mr. {@contact={@lastName=andy}}
 - who is {@contact={@firstName=Kaique}}
 - who is {@contact={@firstName=Kaique} {lastName=Biancatti}}
+- {@contact}[?]
+
 
 @ intent GetProfile usesFeature contact,profileProperty
 
@@ -496,6 +498,7 @@
 - what are {@contact={@firstName=toms}} {@profileProperty={@skillProperty=techs}}
 - whats {@contact={@firstName=jims}} {@profileProperty={@skillProperty=skills}}?
 - show me {@contact={@firstName=adams}} {@profileProperty={@skillProperty=techs}}
+- {@contact}[?]
 
 @ intent GetSkills usesFeature contact,SkillInfoPhraseList
 
