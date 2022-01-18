@@ -128,7 +128,7 @@
             },
             {
               "key": "endDate",
-              "value": "=if(turn.isNowQuery, turn.utcEndTime, null)"
+              "value": "=if(turn.isNowQuery, null, turn.utcEndTime)"
             }
           ],
           "statusCodeProperty": "turn.statusCode",
