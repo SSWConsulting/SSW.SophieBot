@@ -31,13 +31,17 @@ namespace SSW.SophieBot.Components.Actions
 
         public override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
-            var dateTime = dc.GetValue(DateTimeString) ?? throw new ArgumentNullException(nameof(DateTimeString));
+            var dateTime = dc.GetValue(DateTimeString);
             var targetFormat = dc.GetValue(TargetFormat);
 
             string result;
-            if (DateTime.TryParse(dateTime, out var dateTimeLocal))
+            if (string.IsNullOrEmpty(dateTime))
             {
-                dateTimeLocal = TimeZoneInfo.ConvertTimeToUtc(dateTimeLocal);
+                result = null;
+            }
+            else if (DateTime.TryParse(dateTime, out var dateTimeLocal))
+            {
+                dateTimeLocal = dateTimeLocal.FromUserLocalTime(dc);
                 result = dateTimeLocal.ToString(targetFormat ?? "yyyy-MM-ddTHH:mm:ss.fffZ");
             }
             else

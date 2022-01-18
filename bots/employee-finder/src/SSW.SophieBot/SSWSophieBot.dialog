@@ -953,7 +953,9 @@
               "activityProcessed": true,
               "dialog": "GetCurrentEmployeesOnLocationDialog",
               "options": {
-                "locationEntity": "=$options.location"
+                "locationEntity": "=$options.location",
+                "dateEntity": "=$options.rawDatetime",
+                "rawDateEntity": "=$options.rawDatetime"
               }
             }
           ]
@@ -1108,10 +1110,19 @@
             {
               "$kind": "EnrichDatatimeAction",
               "$designer": {
-                "id": "BxpzvI"
+                "id": "BxpzvI",
+                "comment": "Remove this and make use of LUIS raw response. See https://github.com/SSWConsulting/SSW.SophieBot/issues/117#issue-1007346339"
               },
               "datetime": "=@datetime",
               "resultProperty": "turn.datetime"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "ZQupur"
+              },
+              "property": "turn.rawDatetime",
+              "value": "=turn.recognized.luisResult.prediction.entities.datetimeV2[0]"
             }
           ],
           "elseActions": [
@@ -1158,6 +1169,10 @@
             {
               "property": "$options.booked",
               "value": "=if(exists(coalesce(@available, @unavailable)), if($options.preset.positive, @available, @unavailable), null)"
+            },
+            {
+              "property": "$options.rawDatetime",
+              "value": "=turn.rawDatetime"
             },
             {
               "property": "$options.implemented",

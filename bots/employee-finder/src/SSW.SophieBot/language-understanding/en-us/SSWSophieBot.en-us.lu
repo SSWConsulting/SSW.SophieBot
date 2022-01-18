@@ -200,10 +200,15 @@
 - Show me who are in Newcastle now?
 - anyone in hangzhou office right now?
 - Who is on remote right now?
+- who was in the sydney office last week
+- who was in the melbourne office on Jan 12
+- who is in sydney today
+- who is working in newcastle today
+- who is in the newcastle office today
 
 @ phraselist CurrentPhraseList(interchangeable) disabledForAllModels =
 	- now,right now,currently,today,at the moment
-@ intent GetCurrentEmployeesOnLocation usesFeature CurrentPhraseList,geographyV2
+@ intent GetCurrentEmployeesOnLocation usesFeature CurrentPhraseList,geographyV2,datetimeV2
 
 # GetEmailAddress
 - {@contact={@firstName=antonio}}'s {@profileProperty={@emailAddressProperty=email}} please
@@ -498,7 +503,6 @@
 - what are {@contact={@firstName=toms}} {@profileProperty={@skillProperty=techs}}
 - whats {@contact={@firstName=jims}} {@profileProperty={@skillProperty=skills}}?
 - show me {@contact={@firstName=adams}} {@profileProperty={@skillProperty=techs}}
-- {@contact}[?]
 
 @ intent GetSkills usesFeature contact,SkillInfoPhraseList
 

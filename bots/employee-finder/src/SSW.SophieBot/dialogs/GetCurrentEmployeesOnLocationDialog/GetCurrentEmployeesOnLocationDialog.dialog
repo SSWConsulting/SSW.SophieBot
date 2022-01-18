@@ -3,7 +3,7 @@
   "$designer": {
     "id": "nJ8YL5",
     "name": "GetCurrentEmployeesOnLocationDialog",
-    "comment": ""
+    "comment": "Rename this to indicate support for current/date/date range"
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -47,6 +47,110 @@
           "actions": []
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "dpA1hy"
+          },
+          "condition": "=exists(dialog.rawDateEntity)",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "jhwmNx"
+              },
+              "activity": "${SendActivity_jhwmNx()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "PevW1K"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "JnhZGb"
+          },
+          "property": "turn.isNowQuery",
+          "value": "=dialog.rawDateEntity.values[0].timex == \"PRESENT_REF\""
+        },
+        {
+          "$kind": "Microsoft.LogAction",
+          "$designer": {
+            "id": "r9hggX"
+          },
+          "text": "${LogAction_Text_r9hggX()}",
+          "label": "dialog.rawDateEntity",
+          "traceActivity": true
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "MRBoPZ"
+          },
+          "condition": "=indexOf(dialog.rawDateEntity.type, \"time\") == -1 || turn.isNowQuery",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "9oo780"
+              },
+              "activity": "${SendActivity_9oo780()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "n0JvgW"
+              }
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "Fcfg0B"
+              },
+              "assignments": [
+                {
+                  "property": "turn.startDate",
+                  "value": "=coalesce(dialog.rawDateEntity.values[0].resolution[0].value, dialog.rawDateEntity.values[0].resolution[0].start) "
+                },
+                {
+                  "property": "turn.endDate",
+                  "value": "=dialog.rawDateEntity.values[0].resolution[0].end"
+                }
+              ]
+            },
+            {
+              "$kind": "UtcConvertAction",
+              "$designer": {
+                "id": "Qh7zdF"
+              },
+              "datetime": "=turn.startDate",
+              "resultProperty": "turn.utcStartDate"
+            },
+            {
+              "$kind": "UtcConvertAction",
+              "$designer": {
+                "id": "BKSfIx"
+              },
+              "datetime": "=turn.endDate",
+              "resultProperty": "turn.utcEndDate"
+            },
+            {
+              "$kind": "Microsoft.LogAction",
+              "$designer": {
+                "id": "8dDa6W"
+              },
+              "text": "${LogAction_Text_8dDa6W()}",
+              "label": "start date and end date",
+              "traceActivity": true
+            }
+          ]
+        },
+        {
           "$kind": "GetProfileAction",
           "$designer": {
             "id": "H3FuOa"
@@ -54,11 +158,23 @@
           "queryString": [
             {
               "key": "currentLocation",
-              "value": "=dialog.locationEntity"
+              "value": "=if(turn.isNowQuery, dialog.locationEntity, null)"
+            },
+            {
+              "key": "location",
+              "value": "=if(!turn.isNowQuery, dialog.locationEntity, null)"
             },
             {
               "key": "inoffice",
               "value": "=true"
+            },
+            {
+              "key": "fromDate",
+              "value": "=turn.utcStartDate"
+            },
+            {
+              "key": "endDate",
+              "value": "=turn.utcEndDate"
             }
           ],
           "statusCodeProperty": "turn.statusCode",
@@ -106,10 +222,11 @@
                   "workingEmployeesProperty": "turn.billableEmployees"
                 },
                 {
-                  "$kind": "ClientNowAction",
+                  "$kind": "TimeFormatAction",
                   "$designer": {
-                    "id": "Uez8NF"
+                    "id": "3J7JGS"
                   },
+                  "datetime": "=turn.startDate",
                   "format": "dddd d MMMM",
                   "resultProperty": "turn.clientNow"
                 },
