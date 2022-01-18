@@ -46,10 +46,3 @@
 
 # SendActivity_jhwmNx_text()
 - Please specify a valid date to query.
-# SendActivity_9oo780()
-[Activity
-    Text = ${SendActivity_9oo780_text()}
-]
-
-# SendActivity_9oo780_text()
-- Sorry I can't answer with a specific time for now. Try using a date like "today" or "last Friday"
