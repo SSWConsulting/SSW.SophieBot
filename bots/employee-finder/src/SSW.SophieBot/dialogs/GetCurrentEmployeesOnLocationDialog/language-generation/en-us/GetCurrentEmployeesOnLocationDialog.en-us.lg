@@ -14,8 +14,7 @@
 ]
 
 # SendActivity_MfjfA1_text()
-- Sorry, I couldn't find anyone in the **${dialog.locationEntity}** office right now. Please try again.
-
+- Sorry, I couldn't find anyone in the **${dialog.locationEntity}** office at this time. Please try again.
 # SendActivity_0iZBft()
 [Activity
     Text = ${SendActivity_0iZBft_text()}
