@@ -130,3 +130,10 @@
 [Activity
     Attachments = ${json(UsageByUserReport(turn.usage))}
 ]
+# LogAction_Text_6rc4LF()
+[Activity
+    Text = ${LogAction_Text_6rc4LF_text()}
+]
+
+# LogAction_Text_6rc4LF_text()
+- ${turn.rawDatetime}

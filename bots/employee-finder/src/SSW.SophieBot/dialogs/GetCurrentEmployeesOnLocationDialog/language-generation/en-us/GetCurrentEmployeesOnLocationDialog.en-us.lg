@@ -39,3 +39,39 @@
 
 # CardTitle(location, count)
 - ```${location} - All [${count}]```
+
+# SendActivity_jhwmNx()
+[Activity
+    Text = ${SendActivity_jhwmNx_text()}
+]
+
+# SendActivity_jhwmNx_text()
+- Please specify a valid date to query.
+# SendActivity_9oo780()
+[Activity
+    Text = ${SendActivity_9oo780_text()}
+]
+
+# SendActivity_9oo780_text()
+- Sorry I can't answer with a specific time for now. Try using a date like "today" or "last Friday"
+# LogAction_Text_8dDa6W()
+[Activity
+    Text = ${LogAction_Text_8dDa6W_text()}
+]
+
+# LogAction_Text_8dDa6W_text()
+- startDate is ${turn.startDate} and endDate is ${turn.endDate}
+# LogAction_Text_BShn7d()
+[Activity
+    Text = ${LogAction_Text_BShn7d_text()}
+]
+
+# LogAction_Text_BShn7d_text()
+- ${dialog.rawDateEntity}
+# LogAction_Text_r9hggX()
+[Activity
+    Text = ${LogAction_Text_r9hggX_text()}
+]
+
+# LogAction_Text_r9hggX_text()
+- ${dialog.rawDateEntity}

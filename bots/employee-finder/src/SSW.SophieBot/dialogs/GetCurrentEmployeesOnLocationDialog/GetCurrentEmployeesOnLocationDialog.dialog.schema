@@ -8,6 +8,11 @@
       "description": "Location where employees are currently in",
       "$ref": "#/definitions/stringExpression",
       "title": "Location Entity"
+    },
+    "rawDateEntity": {
+      "description": "Date to query",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/objectExpression",
+      "title": "Raw Date Entity"
     }
   },
   "$result": {
