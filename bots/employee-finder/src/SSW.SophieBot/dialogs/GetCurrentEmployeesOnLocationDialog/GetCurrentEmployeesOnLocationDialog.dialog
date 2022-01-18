@@ -115,12 +115,8 @@
           },
           "queryString": [
             {
-              "key": "currentLocation",
-              "value": "=if(turn.isNowQuery, dialog.locationEntity, null)"
-            },
-            {
               "key": "location",
-              "value": "=if(!turn.isNowQuery, dialog.locationEntity, null)"
+              "value": "=dialog.locationEntity"
             },
             {
               "key": "inoffice",
@@ -128,11 +124,11 @@
             },
             {
               "key": "fromDate",
-              "value": "=turn.utcStartTime"
+              "value": "=if(turn.isNowQuery, null, turn.utcStartTime)"
             },
             {
               "key": "endDate",
-              "value": "=turn.utcEndTime"
+              "value": "=if(turn.isNowQuery, turn.utcEndTime, null)"
             }
           ],
           "statusCodeProperty": "turn.statusCode",
