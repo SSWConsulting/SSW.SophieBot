@@ -27,7 +27,7 @@
 [Activity
     Attachments = ${json(PeopleListByBilled(
         if(dialog.foreach.pageindex == 1, CardTitle(dialog.locationEntity, count(turn.billableEmployees.employees)), GetNextTitle(dialog.foreach.pageindex, 10)), 
-        turn.clientNow,
+        turn.clientTime,
         if(dialog.foreach.pageindex == 1, true, false),
         dialog.foreach.page,
         dialog.foreach.pageindex * 10 >= count(turn.billableEmployees.employees),
@@ -46,31 +46,3 @@
 
 # SendActivity_jhwmNx_text()
 - Please specify a valid date to query.
-# SendActivity_9oo780()
-[Activity
-    Text = ${SendActivity_9oo780_text()}
-]
-
-# SendActivity_9oo780_text()
-- Sorry I can't answer with a specific time for now. Try using a date like "today" or "last Friday"
-# LogAction_Text_8dDa6W()
-[Activity
-    Text = ${LogAction_Text_8dDa6W_text()}
-]
-
-# LogAction_Text_8dDa6W_text()
-- startDate is ${turn.startDate} and endDate is ${turn.endDate}
-# LogAction_Text_BShn7d()
-[Activity
-    Text = ${LogAction_Text_BShn7d_text()}
-]
-
-# LogAction_Text_BShn7d_text()
-- ${dialog.rawDateEntity}
-# LogAction_Text_r9hggX()
-[Activity
-    Text = ${LogAction_Text_r9hggX_text()}
-]
-
-# LogAction_Text_r9hggX_text()
-- ${dialog.rawDateEntity}

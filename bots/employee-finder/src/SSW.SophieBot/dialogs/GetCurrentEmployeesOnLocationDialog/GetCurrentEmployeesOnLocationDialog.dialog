@@ -77,78 +77,36 @@
           "value": "=dialog.rawDateEntity.values[0].timex == \"PRESENT_REF\""
         },
         {
-          "$kind": "Microsoft.LogAction",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "r9hggX"
+            "id": "Fcfg0B"
           },
-          "text": "${LogAction_Text_r9hggX()}",
-          "label": "dialog.rawDateEntity",
-          "traceActivity": true
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "MRBoPZ"
-          },
-          "condition": "=indexOf(dialog.rawDateEntity.type, \"time\") == -1 || turn.isNowQuery",
-          "elseActions": [
+          "assignments": [
             {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "9oo780"
-              },
-              "activity": "${SendActivity_9oo780()}"
+              "property": "turn.startTime",
+              "value": "=coalesce(dialog.rawDateEntity.values[0].resolution[0].value, dialog.rawDateEntity.values[0].resolution[0].start) "
             },
             {
-              "$kind": "Microsoft.EndDialog",
-              "$designer": {
-                "id": "n0JvgW"
-              }
-            }
-          ],
-          "actions": [
-            {
-              "$kind": "Microsoft.SetProperties",
-              "$designer": {
-                "id": "Fcfg0B"
-              },
-              "assignments": [
-                {
-                  "property": "turn.startDate",
-                  "value": "=coalesce(dialog.rawDateEntity.values[0].resolution[0].value, dialog.rawDateEntity.values[0].resolution[0].start) "
-                },
-                {
-                  "property": "turn.endDate",
-                  "value": "=dialog.rawDateEntity.values[0].resolution[0].end"
-                }
-              ]
-            },
-            {
-              "$kind": "UtcConvertAction",
-              "$designer": {
-                "id": "Qh7zdF"
-              },
-              "datetime": "=turn.startDate",
-              "resultProperty": "turn.utcStartDate"
-            },
-            {
-              "$kind": "UtcConvertAction",
-              "$designer": {
-                "id": "BKSfIx"
-              },
-              "datetime": "=turn.endDate",
-              "resultProperty": "turn.utcEndDate"
-            },
-            {
-              "$kind": "Microsoft.LogAction",
-              "$designer": {
-                "id": "8dDa6W"
-              },
-              "text": "${LogAction_Text_8dDa6W()}",
-              "label": "start date and end date",
-              "traceActivity": true
+              "property": "turn.endTime",
+              "value": "=dialog.rawDateEntity.values[0].resolution[0].end"
             }
           ]
+        },
+        {
+          "$kind": "UtcConvertAction",
+          "$designer": {
+            "id": "Qh7zdF"
+          },
+          "datetime": "=turn.startTime",
+          "resultProperty": "turn.utcStartTime"
+        },
+        {
+          "$kind": "UtcConvertAction",
+          "$designer": {
+            "id": "BKSfIx"
+          },
+          "datetime": "=turn.endTime",
+          "resultProperty": "turn.utcEndTime"
         },
         {
           "$kind": "GetProfileAction",
@@ -170,11 +128,11 @@
             },
             {
               "key": "fromDate",
-              "value": "=turn.utcStartDate"
+              "value": "=turn.utcStartTime"
             },
             {
               "key": "endDate",
-              "value": "=turn.utcEndDate"
+              "value": "=turn.utcEndTime"
             }
           ],
           "statusCodeProperty": "turn.statusCode",
@@ -226,9 +184,35 @@
                   "$designer": {
                     "id": "3J7JGS"
                   },
-                  "datetime": "=turn.startDate",
+                  "datetime": "=turn.startTime",
                   "format": "dddd d MMMM",
-                  "resultProperty": "turn.clientNow"
+                  "resultProperty": "turn.displayStartTime"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "PoS3N1"
+                  },
+                  "condition": "=length(turn.endTime) > 0",
+                  "actions": [
+                    {
+                      "$kind": "TimeFormatAction",
+                      "$designer": {
+                        "id": "5UTZQg"
+                      },
+                      "datetime": "=turn.endTime",
+                      "format": "dddd d MMMM",
+                      "resultProperty": "turn.displayEndTime"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "JbHzKZ"
+                  },
+                  "property": "turn.clientTime",
+                  "value": "=concat(turn.displayStartTime, if(exists(turn.displayEndTime), '-'+turn.displayEndTime, ''))"
                 },
                 {
                   "$kind": "Microsoft.SetProperty",
