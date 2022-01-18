@@ -129,7 +129,7 @@
                 "id": "Qh7zdF"
               },
               "datetime": "=turn.startDate",
-              "resultProperty": "turn.startDate"
+              "resultProperty": "turn.utcStartDate"
             },
             {
               "$kind": "UtcConvertAction",
@@ -137,7 +137,7 @@
                 "id": "BKSfIx"
               },
               "datetime": "=turn.endDate",
-              "resultProperty": "turn.endDate"
+              "resultProperty": "turn.utcEndDate"
             },
             {
               "$kind": "Microsoft.LogAction",
@@ -170,11 +170,11 @@
             },
             {
               "key": "fromDate",
-              "value": "=turn.startDate"
+              "value": "=turn.utcStartDate"
             },
             {
               "key": "endDate",
-              "value": "=turn.endDate"
+              "value": "=turn.utcEndDate"
             }
           ],
           "statusCodeProperty": "turn.statusCode",
@@ -222,10 +222,11 @@
                   "workingEmployeesProperty": "turn.billableEmployees"
                 },
                 {
-                  "$kind": "ClientNowAction",
+                  "$kind": "TimeFormatAction",
                   "$designer": {
-                    "id": "Uez8NF"
+                    "id": "3J7JGS"
                   },
+                  "datetime": "=turn.startDate",
                   "format": "dddd d MMMM",
                   "resultProperty": "turn.clientNow"
                 },
