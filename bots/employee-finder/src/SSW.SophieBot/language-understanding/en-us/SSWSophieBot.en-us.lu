@@ -139,7 +139,8 @@
 	- working on ssw projects
 	- non-booked
 	- bookable
-	- availablity
+	- availability
+	- finish his current booking
 
 @ phraselist UnavailablePhraseList(interchangeable) disabledForAllModels = 
 	- on client work
@@ -580,17 +581,20 @@
 - when will {@contact={@firstName=adam} {@lastName=cogan}} be {@available = available}
 - when will {@contact={@firstName=adam}} be {@available = working for ssw}?
 - when will {@contact={@firstName=adam} {@lastName=cogan}} be {@available = internal}?
+- when will {@contact={@firstName=adam} {@lastName=cogan}} {@available= finish his current booking}
 
 - when is {@contact={@firstName=calum}} {@available = free}
 - when is {@contact={@firstName=calum}} next {@available = free}
 - when is {@contact={@firstName=calum}} next be {@available = free}
+- when is {@contact={@firstName=adam} {@lastName=cogan}} next be {@available = free}
 - when is {@contact={@firstName=calum}}'s next {@available = free}
 - when is {@contact={@firstName=calum}} {@available = bookable}
 - when is {@contact={@firstName=calum}} next {@available = bookable}
 - when is {@contact={@firstName=calum}}'s next {@available = bookable}
 - when is {@contact={@firstName=calum} {@lastName=simpson}} {@available = available}
 - when is {@contact={@firstName=calum}}'s next {@available = available}
-- when is {@contact={@firstName=calum}}'s next {@available = availablity}
+- when is {@contact={@firstName=calum}}'s next {@available = availability}
+- when is {@contact={@firstName=adam} {@lastName=cogan}}'s next {@available = availability}
 - when is {@contact={@firstName=calum}} {@available = working for ssw}?
 - when is {@contact={@firstName=calum} {@lastName=simpson}} {@available = internal}?
 
