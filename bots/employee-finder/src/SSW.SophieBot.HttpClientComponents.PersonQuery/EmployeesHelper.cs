@@ -426,12 +426,8 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 
         public static string GetFormatedTimeDuration(DateTime startDate, DateTime endDate)
         {
-            static int GetInteger(double value)
-            {
-                return Math.Max(1, (int)Math.Floor(value));
-            }
 
-            static string GetDayString(double days)
+            static string GetDayString(int days)
             {
                 return $"{days} {(days == 1 ? "day" : "days")}";
             }
@@ -443,7 +439,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 return String.Empty;
             }
 
-            var totalDays = timeOffset.TotalDays;
+            var totalDays = (int)timeOffset.TotalDays;
 
             if (totalDays < 7)
             {
@@ -451,7 +447,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             }
             else if (totalDays < 30)
             {
-                var weeks = GetInteger(totalDays / 7);
+                var weeks = totalDays / 7;
                 var days = totalDays % 7;
 
                 var weekString = $"{weeks} {(weeks == 1 ? "week" : "weeks")}";
@@ -465,7 +461,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             }
             else
             {
-                var monthes = GetInteger(totalDays / 30);
+                var monthes = totalDays / 30;
                 var days = totalDays % 30;
 
                 var monthString = $"{monthes} {(monthes == 1 ? "month" : "months")}";
