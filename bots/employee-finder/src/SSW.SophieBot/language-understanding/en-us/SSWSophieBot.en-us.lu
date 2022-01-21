@@ -628,3 +628,9 @@
 - I want to see usage report
 - usage report
 - who else is using you?
+
+# GetEmployeeProjects
+- what is {@contact} working on[?]
+- what are the {@contact={@firstName=jake}}'s projects ?
+- What is adam working on?
+- Get the {@contact={@firstName=jake}}'s projects

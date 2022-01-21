@@ -137,3 +137,9 @@
 
 # LogAction_Text_6rc4LF_text()
 - ${turn.rawDatetime}
+# SendActivity_sE4iX8_text()
+- Getting current employees on location is still a work in progress.
+# SendActivity_sE4iX8()
+[Activity
+    Text = ${SendActivity_sE4iX8_text()}
+]

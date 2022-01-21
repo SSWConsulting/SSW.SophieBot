@@ -1,0 +1,164 @@
+[import](common.lg)
+
+# SendActivity_4yqLzB()
+[Activity
+    Text = ${SendActivity_4yqLzB_text()}
+]
+
+# SendActivity_4yqLzB_text()
+- Please specify a person name to query.
+# SendActivity_3xGxzX()
+[Activity
+    Attachments = ${json(NameButtons('GetCalendar', 'GetCalendar'))}
+]
+# SendActivity_QG9SIV_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
+# SendActivity_QG9SIV()
+[Activity
+    Text = ${SendActivity_QG9SIV_text()}
+]
+
+# SendActivity_2AjG13_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
+# SendActivity_2AjG13()
+[Activity
+    Text = ${SendActivity_2AjG13_text()}
+]
+
+# SendActivity_0xpU8F_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_0xpU8F()
+[Activity
+    Text = ${SendActivity_0xpU8F_text()}
+]
+
+# SendActivity_W7ne5z()
+[Activity
+    Attachments = ${json(ProjectListCard(turn.employees[0]))}
+]
+
+# ProjectListCard(profile)
+- ```
+{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "TextBlock",
+            "size": "ExtraLarge",
+            "text": "${profile.firstName}'s projects",
+            "wrap": true,
+            "weight": "Bolder"
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Project ID",
+                            "wrap": true,
+                            "weight": "Bolder",
+                            "horizontalAlignment": "Center"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Project Name",
+                            "weight": "Bolder",
+                            "horizontalAlignment": "Center"
+                        }
+                    ],
+                    "verticalContentAlignment": "Center"
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Client Name",
+                            "wrap": true,
+                            "weight": "Bolder",
+                            "horizontalAlignment": "Center"
+                        }
+                    ],
+                    "verticalContentAlignment": "Center"
+                }
+            ],
+            "bleed": true,
+            "style": "default",
+            "height": "stretch",
+            "spacing": "Medium"
+        },
+        {
+            "type": "Container",
+            "items": [
+                ${join(select(profile.projects, project, ProjectListRow(project)), ',')}
+            ],
+            "bleed": true,
+            "horizontalAlignment": "Center"
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2"
+}
+```
+
+# ProjectListRow(project)
+- ```
+{
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "${project.projectId}",
+                                    "size": "Small",
+                                    "wrap": true
+                                }
+                            ],
+                            "verticalContentAlignment": "Center"
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "wrap": true,
+                                    "text": "${project.projectName}",
+                                    "size": "Small",
+                                    "horizontalAlignment": "Center"
+                                }
+                            ],
+                            "verticalContentAlignment": "Center"
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "wrap": true,
+                                    "text": "${}",
+                                    "size": "Small",
+                                    "horizontalAlignment": "Center"
+                                }
+                            ],
+                            "verticalContentAlignment": "Center"
+                        }
+                    ],
+                    "bleed": true
+                }
+```
