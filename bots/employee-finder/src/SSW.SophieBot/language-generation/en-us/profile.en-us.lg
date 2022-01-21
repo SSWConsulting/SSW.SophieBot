@@ -360,7 +360,8 @@
                     ChatInTeamsAction(profile.emailAddress),
                     ViewBookingsAction(turn.displayName, turn.employees[0].bookedDays, 'GetProfile'),
                     ViewInPeopleAction(profile), 
-                    ViewInCRMAction(profile)
+                    ViewInCRMAction(profile),
+					ViewInEmployeeResponsibilities(profile)
                     ], action => exists(action) && length(action) > 0), ',')},
             ]
         }
@@ -392,6 +393,19 @@
         "title": "View in CRM",
         "url": "${settings.App.CRMUserUrl}&id=${profile.userId}",
         "iconUrl": "${Dynamics365Icon()}"
+    }
+    ```
+- ELSE:
+    -
+
+# ViewInEmployeeResponsibilities(profile)
+- IF: ${exists(settings.App.EmployeeResponsibilitiesUrl) && length(settings.App.EmployeeResponsibilitiesUrl) > 0}
+    - ```
+    {
+        "type": "Action.OpenUrl",
+        "title": "View in Employee Responsibilities",
+        "url": "${replace(replace(settings.App.EmployeeResponsibilitiesUrl, '{0}', profile.firstName), '{1}', profile.lastName)}",
+        "iconUrl": "${SharePointIcon()}"
     }
     ```
 - ELSE:
