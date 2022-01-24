@@ -32,7 +32,7 @@
         {
             "type": "TextBlock",
             "wrap": true,
-            "text": "There seems to be more than one ${if(turn.isProject, 'project', 'client')} with the name **${queriedProjectName}**. Which one were you looking for?"
+            "text": "Which **${queriedProjectName}**?"
         },
         {
             "type": "ActionSet",

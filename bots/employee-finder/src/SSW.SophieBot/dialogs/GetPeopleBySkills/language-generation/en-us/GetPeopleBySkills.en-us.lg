@@ -81,7 +81,7 @@
         {
             "type": "TextBlock",
             "wrap": true,
-            "text": "There seems to be more than one skills relate to **${titleCase(dialog.skillEntity)}**. Which one were you looking for?"
+            "text": "Which **${titleCase(dialog.skillEntity)}**?"
         },
         {
             "type": "ActionSet",
