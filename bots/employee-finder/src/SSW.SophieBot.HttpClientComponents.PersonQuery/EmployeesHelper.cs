@@ -36,18 +36,24 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             projectName = isProject ? project?.ProjectName : project?.CustomerName;
 
             return employees
-                .Select(e => new EmployeeBillableItemModel
+                .Select(e =>
                 {
-                    UserId = e.UserId,
-                    AvatarUrl = e.AvatarUrl,
-                    FirstName = e.FirstName,
-                    LastName = e.LastName,
-                    DisplayName = $"{e.FirstName} {e.LastName}",
-                    BilledDays = GetBilledDays(e, project),
-                    BookingStatus = GetBookingStatus(e, date),
-                    LastSeen = GetLastSeen(e)
+                    var employeeProject = e.Projects?.FirstOrDefault(p => IsProjectNameMatch(queriedProjectName, isProject ? p.ProjectName : p.CustomerName));
+                    var billableDays = GetBilledDays(e, employeeProject, out var billableHours);
+                    return new EmployeeBillableItemModel
+                    {
+                        UserId = e.UserId,
+                        AvatarUrl = e.AvatarUrl,
+                        FirstName = e.FirstName,
+                        LastName = e.LastName,
+                        DisplayName = $"{e.FirstName} {e.LastName}",
+                        BilledDays = billableDays,
+                        BilledHours = (int)billableHours,
+                        BookingStatus = GetBookingStatus(e, date),
+                        LastSeen = GetLastSeen(e)
+                    };
                 })
-                .OrderByDescending(i => i.BilledDays)
+                .OrderByDescending(i => i.BilledHours)
                 .ToList();
         }
 
@@ -137,9 +143,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             return BookingStatus.Unknown;
         }
 
-        public static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project)
+        public static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project, out double billableHours)
         {
-            double billableHours = 0;
+            billableHours = 0;
             if (project != null)
             {
                 billableHours = project?.BillableHours ?? 0;
