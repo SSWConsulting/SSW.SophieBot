@@ -51,6 +51,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
             {
                 employee.NormalizeAppointments(dc);
                 var nextUnavailability = EmployeesHelper.GetNextUnavailability(employee, date, out var freeDays);
+                var billableDays = EmployeesHelper.GetBilledDays(employee, null, out var billableHours);
                 return new FreeEmployeeModel
                 {
                     FirstName = employee.FirstName,
@@ -58,14 +59,15 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
                     DefaultSite = employee.DefaultSite,
                     AvatarUrl = employee.AvatarUrl,
                     DisplayName = $"{employee.FirstName} {employee.LastName}",
-                    BilledDays = EmployeesHelper.GetBilledDays(employee, null),
+                    BilledDays = billableDays,
+                    BilledHours = (int)billableHours,
                     InOffice = employee.InOffice,
                     LastSeen = EmployeesHelper.GetLastSeen(employee),
                     NextClient = nextUnavailability,
                     FreeDays = freeDays
                 };
             })
-            .OrderByDescending(employee => employee.BilledDays)
+            .OrderByDescending(employee => employee.BilledHours)
             .ToList();
 
             if (Result != null)
