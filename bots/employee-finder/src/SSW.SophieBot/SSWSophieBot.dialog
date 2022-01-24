@@ -879,7 +879,8 @@
                 "dateEntity": "=$options.datetime",
                 "locationEntity": "=$options.location",
                 "availableEntity": "=$options.booked",
-                "skillEntity": "=$options.skill"
+                "skillEntity": "=$options.skill",
+                "rawDateEntity": "=$options.rawDatetime"
               }
             }
           ]
