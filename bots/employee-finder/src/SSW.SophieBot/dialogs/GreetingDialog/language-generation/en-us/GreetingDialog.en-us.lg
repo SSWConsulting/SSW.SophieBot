@@ -1,0 +1,109 @@
+[Common](common.en-us.lg)
+
+# WelcomeAttachment()
+[Activity
+    Attachments = ${json(GreetingCard())}
+]
+
+# GreetingCard()
+- ```
+{
+    "type": "AdaptiveCard",
+    "body": [
+        ${if(!user.welcomed, GreetingImage() + ',', '')}
+        {
+            "type": "TextBlock",
+            "text": "Welcome to [SSW SophieBot](${settings.App.ProductUrl})!",
+            "wrap": true,
+            "weight": "Bolder",
+            "size": "Large"
+        },
+        {
+            "type": "TextBlock",
+            "text": "${SayHi()}",
+            "wrap": true,
+            "spacing": "Medium",
+            "weight": "Bolder"
+        },
+        {
+            "type": "TextBlock",
+            "text": "${SummaryText()}",
+            "wrap": true
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.Submit",
+                    "title": "Who is Adam Cogan?",
+                    "data": 
+                    {
+                        "msteams": {
+                            "type": "imBack",
+                            "title": "Who is Adam Cogan?",
+                            "value": "Who is Adam Cogan?"
+                        }
+                    }
+                },
+                {
+                    "type": "Action.Submit",
+                    "title": "Who knows Azure?",
+                    "data": 
+                    {
+                        "msteams": {
+                            "type": "imBack",
+                            "title": "Who knows Azure?",
+                            "value": "Who knows Azure?"
+                        }
+                    }
+                },
+                {
+                    "type": "Action.Submit",
+                    "title": "Who is on client work?",
+                    "data": 
+                    {
+                        "msteams": {
+                            "type": "imBack",
+                            "title": "Who is on client work?",
+                            "value": "Who is on client work?"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "TextBlock",
+            "text": "💡Tip: Pin this chat, so you can always find me!",
+            "wrap": true,
+            "horizontalAlignment": "Right",
+            "size": "Small",
+            "spacing": "Large"
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2"
+}
+```
+
+# SayHi()
+- IF: ${exists(user.Identity)}
+    - ```
+    Hi ${user.Identity.givenName} 🖐
+    ```
+- ELSE: 
+    - ```
+    Hi there 🖐
+    ```
+
+# GreetingImage()
+- ```
+{
+    "type": "Image",
+    "url": "${settings.App.BaseUrl}/sophiebot-branding.png"
+}
+```
+
+# SummaryText()
+- I can help you search for people in your organization. Try asking...
+- I'm ready to help answer questions about people in your organization. Try asking...
+- I'm here to help you find people in your organization. Try asking...

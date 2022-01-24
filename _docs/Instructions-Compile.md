@@ -23,7 +23,7 @@ Go to [SSW.SophieBot](https://github.com/SSWConsulting/SSW.SophieBot) and clone 
 
 ### Step 2. Create appsettings.json
 
-1. From the cloned repo, go to "{your cloned repo}/src/SSW.SophieBot/SSWSophieBot/settings" folder
+1. From the cloned repo, go to "{your cloned repo}/bots/employee-finder/src/SSW.SophieBot/settings" folder
 2. Make a copy of the file `appsettings.example.json` and rename it to `appsettings.json`. 
 3. Add necessary configurations to `appsettings.json`. 
 > Note: For `adapters` and `components` sections in `runtimeSettings`, do not modify the initial settings from `appsettings.example.json` as they are needed for the test run.
@@ -35,20 +35,11 @@ Open the Bot Framework Composer.
 ![composer-open-solution](images/composer-open-solution.png)
 **Figure: Click Open on Composer's homepage**
 
-![composer-select-solution](images/composer-select-solution.png)
-**Figure: Select repo directory**
-
 ### Step 4. Configure your bot
 
-In Bot Framework Composer, go to Publish | Publishing profile
+In Bot Framework Composer, go to Configure | Development resources.
 
-1. Add your publishing profile as per [Microsoft Doc](https://docs.microsoft.com/en-au/composer/how-to-publish-bot)
-
-![create-publishing-profile](images/create_publishing_profile.png)
-
-Then go to Configure | Development resources.
-
-2. Set up Language Understanding.
+1. Set up Language Understanding.
 
 ![composer-set-up-luis](images/composer-set-up-luis.png)
 **Figure: Click Set up Language Understanding**
@@ -56,15 +47,15 @@ Then go to Configure | Development resources.
 ![composer-select-luis-resource-type](images/composer-select-luis-resource-type.png)
 **Figure: Select Use existing resources and click next**
 
-![composer-select-subscription-and-luis-resource](images/composer-select-subscription-and-luis-resource.png)
+![image](https://user-images.githubusercontent.com/37203901/146319906-2d65b4fc-fb57-4200-aa0d-cc1276213d2e.png)
 **Figure: Select the subscription and luis resource and click next**
 
-3. Set up App ID. Still in the Configure | Development resources, scroll to the bottom.
+2. Set up App ID. Still in the Configure | Development resources, scroll to the bottom.
 
 ![composer-retrieve-app-id](images/composer-retrieve-app-id.png)
 **Figure: Click Retrieve App ID**
 
-![composer-select-publishing-profile](images/composer-select-publishing-profile.png)
+![image](https://user-images.githubusercontent.com/37203901/146319988-83039f34-7380-42e6-b193-a1f89066e368.png)
 **Figure: Select publishing profile**
 
 ### Step 5. Test run

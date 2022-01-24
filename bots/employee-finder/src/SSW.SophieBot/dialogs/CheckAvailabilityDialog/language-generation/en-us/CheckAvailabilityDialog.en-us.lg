@@ -1,0 +1,174 @@
+[common](common.en-us.lg)
+[Icons](icons.en-us.lg)
+
+# SendActivity_RA2SOG_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
+# SendActivity_RA2SOG()
+[Activity
+    Text = ${SendActivity_RA2SOG_text()}
+]
+
+# SendActivity_yFDz4n_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_yFDz4n()
+[Activity
+    Text = ${SendActivity_yFDz4n_text()}
+]
+
+# EmployeeStatusCard(profile)
+-```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                ${Avatar(profile.avatarUrl, profile.firstName, profile.lastName, 'auto', '70px')},
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        ${join(createArray(Status(profile), ColumnSet('Client', ClientText(profile)), ColumnSet('Last seen', LastSeen(profile))), ',')}
+                    ],
+                    "verticalContentAlignment": "Center"
+                }
+            ]
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                    ${ViewBookingsAction(employee.displayName, employee.bookedDays, 'GetFreeDay')}
+            ]
+        }
+    ]
+}
+```
+
+# Status(profile)
+- ```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "80px",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Today:",
+                    "wrap": true,
+                    "color": "Accent"
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        ${ClickableName(profile.displayName, profile.firstName, profile.lastName, 'auto', 'Default', 'None', 'CheckAvailability')},
+                        {
+                            "type": "Column",
+                            "width": "auto",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "​ ${BookingStatus(profile)}",
+                                    "wrap": true
+                                }
+                            ],
+                            "spacing": "None"
+                        }
+                    ],
+                }
+            ],
+            "spacing": "None"
+        }
+    ]
+}
+```
+
+# BookingStatus(profile)
+- IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
+    - is booked
+- ELSEIF: ${ profile.bookingStatus == 3 }
+    - is on leave
+- ELSE:
+    - is free
+
+# ClientText(profile)
+- IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
+    - ${if(!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false, '\\\\*\\\\*\\\\*', join(profile.clients, ','))}
+- ELSE:
+    - ```—```
+
+# LastSeen(profile)
+- IF: ${ profile.lastSeenAt != null }
+    - ${LastSeenText(profile.lastSeenAt.siteId, profile.lastSeenTime)}
+- ELSE:
+    - ```—```
+
+# LastSeenText(location, time)
+- IF: ${ location != null && time != null }
+    - ${location} ${time}
+- ELSEIF: ${ location == null }
+    - ${time}
+- ELSEIF: ${ time == null }:
+    - ${location}
+- ELSE:
+    - ```—```
+
+# ColumnSet(name, value)
+-```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "80px",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${name}:",
+                    "wrap": true,
+                    "color": "Accent"
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${value}",
+                    "wrap": true
+                }
+            ],
+            "spacing": "None"
+        }
+    ]
+}
+```
+
+# SendActivity_5SDlSO()
+[Activity
+    Text = ${SendActivity_5SDlSO_text()}
+]
+
+# SendActivity_5SDlSO_text()
+- Please specify a person name to query.
+
+# SendActivity_27H1kR()
+[Activity
+    Attachments = ${json(NameButtons('CheckAvailability', 'CheckAvailability'))}
+]
+
+# SendActivity_FASez8()
+[Activity
+    Attachments = ${json(EmployeeStatusCard(turn.employees[0]))}
+]

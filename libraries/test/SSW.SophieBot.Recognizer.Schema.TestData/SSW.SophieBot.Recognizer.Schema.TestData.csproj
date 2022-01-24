@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\libraries\src\SSW.SophieBot.Recognizer.Schema\SSW.SophieBot.Recognizer.Schema.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,48 @@
+[Common](common.en-us.lg)
+[PeopleList](peopleList.en-us.lg)
+
+# SendActivity_5SdoY2()
+[Activity
+    Text = ${SendActivity_5SdoY2_text()}
+]
+
+# SendActivity_5SdoY2_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_MfjfA1()
+[Activity
+    Text = ${SendActivity_MfjfA1_text()}
+]
+
+# SendActivity_MfjfA1_text()
+- I couldn't find anyone in the **${dialog.locationEntity}** office at this time.
+# SendActivity_0iZBft()
+[Activity
+    Text = ${SendActivity_0iZBft_text()}
+]
+
+# SendActivity_0iZBft_text()
+- Please specify a valid location to query.
+
+# SendActivity_WXpguy()
+[Activity
+    Attachments = ${json(PeopleListByBilled(
+        if(dialog.foreach.pageindex == 1, CardTitle(dialog.locationEntity, count(turn.billableEmployees.employees)), GetNextTitle(dialog.foreach.pageindex, 10)), 
+        turn.clientTime,
+        if(dialog.foreach.pageindex == 1, true, false),
+        dialog.foreach.page,
+        dialog.foreach.pageindex * 10 >= count(turn.billableEmployees.employees),
+        '',
+        false,
+        'GetCurrentEmployeesOnLocation'))}
+]
+
+# CardTitle(location, count)
+- ```${location} - All [${count}]```
+
+# SendActivity_jhwmNx()
+[Activity
+    Text = ${SendActivity_jhwmNx_text()}
+]
+
+# SendActivity_jhwmNx_text()
+- Please specify a valid date to query.

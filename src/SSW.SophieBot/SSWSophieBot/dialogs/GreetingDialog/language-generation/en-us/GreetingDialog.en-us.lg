@@ -1,8 +1,0 @@
-[common](common.en-us.lg)
-[Greeting](greeting.en-us.lg)
-
-# WelcomeAttachment()
-[Attachment
-    contenttype = herocard
-    content = ${json(GreetingHeroCard())}
-]

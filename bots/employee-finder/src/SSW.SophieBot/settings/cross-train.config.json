@@ -1,0 +1,53 @@
+{
+  "SSWSophieBot.en-us": {
+    "rootDialog": true,
+    "triggers": {
+      "": [
+        "GreetingDialog.en-us"
+      ],
+      "Greeting": [
+        "GreetingDialog.en-us"
+      ],
+      "GetProfile": [
+        "GetProfileDialog.en-us"
+      ],
+      "GetEmailAddress": [
+        "GetEmailAddressDialog.en-us"
+      ],
+      "GetPhoneNumber": [
+        "GetPhoneNumberDialog.en-us"
+      ],
+      "GetSkills": [
+        "GetSkillsDialog.en-us"
+      ],
+      "GetPeopleBasedOnLocation": [
+        "GetPeopleBasedOnLocationDialog.en-us"
+      ],
+      "GetEmployeesOnProject": [
+        "GetPeopleOnClientWorkDialog.en-us",
+        "GetEmployeesByProjectDialog.en-us"
+      ],
+      "CheckAvailability": [
+        "CheckAvailabilityDialog.en-us"
+      ],
+      "GetPeopleBySkills": [
+        "GetPeopleBySkills.en-us"
+      ],
+      "GetPeopleOnClientWork": [
+        "GetPeopleOnClientWorkDialog.en-us"
+      ],
+      "GetCurrentEmployeesOnLocation": [
+        "GetCurrentEmployeesOnLocationDialog.en-us"
+      ],
+      "BugReport": "",
+      "Goodbye": "",
+      "GetCalendar": [
+        "GetCalendarDialog.en-us"
+      ],
+      "GetFreeDay": [
+        "GetFreeDayDialog.en-us"
+      ],
+      "GetUsageByUser": ""
+    }
+  }
+}

@@ -1,0 +1,81 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A7CC1EAE-06AC-40E4-AB17-B7964A1E8424}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E6335D6B-73EA-4F2D-B0F2-E6E9C989F65D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.AzureFunction", "src\SSW.SophieBot.AzureFunction\SSW.SophieBot.AzureFunction.csproj", "{C786B4CF-7672-4E62-A038-3432C0F44B97}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Core", "src\SSW.SophieBot.Core\SSW.SophieBot.Core.csproj", "{E7150808-DDD2-42A3-9986-D7681BDE0546}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.LUIS", "src\SSW.SophieBot.Recognizer.LUIS\SSW.SophieBot.Recognizer.LUIS.csproj", "{64EEDE7B-F85C-4E1E-BC55-F0ECDAB984CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.Schema", "src\SSW.SophieBot.Recognizer.Schema\SSW.SophieBot.Recognizer.Schema.csproj", "{6E09623F-9E08-46B9-AD87-28BC61FC1954}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.LUIS.Tests", "test\SSW.SophieBot.Recognizer.LUIS.Tests\SSW.SophieBot.Recognizer.LUIS.Tests.csproj", "{9E0B5570-950B-407D-8557-E43A4A836269}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.Schema.TestData", "test\SSW.SophieBot.Recognizer.Schema.TestData\SSW.SophieBot.Recognizer.Schema.TestData.csproj", "{7A093551-AFB6-4D36-8786-F076D6E7AF25}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.Recognizer.Schema.Tests", "test\SSW.SophieBot.Recognizer.Schema.Tests\SSW.SophieBot.Recognizer.Schema.Tests.csproj", "{B4357D9F-0912-4ECC-B967-9895E142E959}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSW.SophieBot.TestBase", "test\SSW.SophieBot.TestBase\SSW.SophieBot.TestBase.csproj", "{DB6D9210-3DA8-4E1F-A91E-98D5C5A07C6C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C786B4CF-7672-4E62-A038-3432C0F44B97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C786B4CF-7672-4E62-A038-3432C0F44B97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C786B4CF-7672-4E62-A038-3432C0F44B97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C786B4CF-7672-4E62-A038-3432C0F44B97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7150808-DDD2-42A3-9986-D7681BDE0546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7150808-DDD2-42A3-9986-D7681BDE0546}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7150808-DDD2-42A3-9986-D7681BDE0546}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7150808-DDD2-42A3-9986-D7681BDE0546}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64EEDE7B-F85C-4E1E-BC55-F0ECDAB984CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64EEDE7B-F85C-4E1E-BC55-F0ECDAB984CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64EEDE7B-F85C-4E1E-BC55-F0ECDAB984CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64EEDE7B-F85C-4E1E-BC55-F0ECDAB984CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E09623F-9E08-46B9-AD87-28BC61FC1954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E09623F-9E08-46B9-AD87-28BC61FC1954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E09623F-9E08-46B9-AD87-28BC61FC1954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E09623F-9E08-46B9-AD87-28BC61FC1954}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E0B5570-950B-407D-8557-E43A4A836269}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E0B5570-950B-407D-8557-E43A4A836269}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E0B5570-950B-407D-8557-E43A4A836269}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E0B5570-950B-407D-8557-E43A4A836269}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A093551-AFB6-4D36-8786-F076D6E7AF25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A093551-AFB6-4D36-8786-F076D6E7AF25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A093551-AFB6-4D36-8786-F076D6E7AF25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A093551-AFB6-4D36-8786-F076D6E7AF25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4357D9F-0912-4ECC-B967-9895E142E959}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4357D9F-0912-4ECC-B967-9895E142E959}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4357D9F-0912-4ECC-B967-9895E142E959}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4357D9F-0912-4ECC-B967-9895E142E959}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB6D9210-3DA8-4E1F-A91E-98D5C5A07C6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB6D9210-3DA8-4E1F-A91E-98D5C5A07C6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB6D9210-3DA8-4E1F-A91E-98D5C5A07C6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB6D9210-3DA8-4E1F-A91E-98D5C5A07C6C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C786B4CF-7672-4E62-A038-3432C0F44B97} = {A7CC1EAE-06AC-40E4-AB17-B7964A1E8424}
+		{E7150808-DDD2-42A3-9986-D7681BDE0546} = {A7CC1EAE-06AC-40E4-AB17-B7964A1E8424}
+		{64EEDE7B-F85C-4E1E-BC55-F0ECDAB984CB} = {A7CC1EAE-06AC-40E4-AB17-B7964A1E8424}
+		{6E09623F-9E08-46B9-AD87-28BC61FC1954} = {A7CC1EAE-06AC-40E4-AB17-B7964A1E8424}
+		{9E0B5570-950B-407D-8557-E43A4A836269} = {E6335D6B-73EA-4F2D-B0F2-E6E9C989F65D}
+		{7A093551-AFB6-4D36-8786-F076D6E7AF25} = {E6335D6B-73EA-4F2D-B0F2-E6E9C989F65D}
+		{B4357D9F-0912-4ECC-B967-9895E142E959} = {E6335D6B-73EA-4F2D-B0F2-E6E9C989F65D}
+		{DB6D9210-3DA8-4E1F-A91E-98D5C5A07C6C} = {E6335D6B-73EA-4F2D-B0F2-E6E9C989F65D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F8AE4E9E-9D28-4D5C-AB64-EA1361E65C78}
+	EndGlobalSection
+EndGlobal

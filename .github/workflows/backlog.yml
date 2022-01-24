@@ -1,0 +1,18 @@
+name: Backlog Created
+
+on:
+  issues:
+    types: [opened]
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  assign_to_org_project:
+    runs-on: ubuntu-latest
+    name: Assign to Org Project
+    steps:
+    - name: Assign NEW issues and NEW pull requests to SSW SophieBot project
+      uses: srggrs/assign-one-project-github-action@1.2.1
+      if: github.event.action == 'opened'
+      with:
+        project: 'https://github.com/orgs/SSWConsulting/projects/5'

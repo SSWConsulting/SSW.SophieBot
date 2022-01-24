@@ -1,0 +1,187 @@
+[Common](common.en-us.lg)
+[Profile](profile.en-us.lg)
+
+# SendActivity_fAH1iZ_text()
+- Sorry, I couldn't find anyone in ${dialog.location}.
+
+# SendActivity_fAH1iZ()
+[Activity
+    Text = ${SendActivity_fAH1iZ_text()}
+]
+
+# SendActivity_nvgfb0_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_nvgfb0()
+[Activity
+    Text = ${SendActivity_nvgfb0_text()}
+]
+
+# SendActivity_CR9ta7()
+[Activity
+    Text = ${SendActivity_CR9ta7_text()}
+]
+
+# SendActivity_CR9ta7_text()
+- Sorry, I don't know the place you are talking about.
+
+# SendActivity_j1tmY1()
+[Activity
+    Attachments = ${json(ProfileCardWithSSWPeopleAPI(turn.employees[0]))}
+]
+
+# SendActivity_OesKIP()
+[Activity
+    Text = ${SendActivity_OesKIP_text()}
+]
+
+# SendActivity_OesKIP_text()
+- In **${dialog.location}**, there is **1** person (${if(turn.employees[0].inOffice, '', 'not')} in the office right now).
+# SendActivity_Jcjj19()
+[Activity
+    Attachments = ${json(EmployeesGroupActionCard(GetTitleForAll(dialog.location, count(turn.employees)), 
+    null, RichTextInfo(), turn.groupedEmployees, dialog.location, GetEntities(), 'GetPeopleBasedOnLocation'))}
+]
+
+# GetTitleForAll(location, count)
+- ```${location} - All [${count}]```
+
+# RichTextInfo()
+-```
+{
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "auto",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "There are **${turn.employees.count}** people",
+                    "wrap": true
+                }
+            ]
+        },
+        {
+            "type": "Column",
+            "width": "auto",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "​ (${count(turn.employeesInOffice)} in the office right now)",
+                    "wrap": true,
+                    "color": "Accent"
+                }
+            ],
+            "spacing": "None",
+            "selectAction": {
+                "type": "Action.Submit",
+                "data": {
+                    "intent": "GetCurrentEmployeesOnLocation",
+                    "location": "${dialog.location}",
+					"rawDateTime": "${utcNow('yyyy-MM-dd')}",
+                    "msteams": {
+                        "type": "messageBack",
+                        "displayText": "Who is in the ${dialog.location} office right now?"
+                    }
+                }
+            }
+        }
+    ]
+}
+```
+
+# GetEntities()
+- ```
+"byBillable": true,
+"experienceLevel": "Advanced, Intermediate"
+```
+
+# EmployeesGroupActionCard(title, subTitle, text, groupedEmployees, location, entities, sourceIntent)
+- ```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        ${join(where([GetTitle(title), GetSubTitle(subTitle), text], t, exists(t) && length(t) > 0), ',')},
+        {
+            "type": "TextBlock",
+            "text": "Narrow your search..."
+        },
+		${join(select(groupedEmployees.sets, set => GetActionSet(set, location, entities, sourceIntent)), ',')}
+    ]
+}
+```
+
+# GetTitle(title)
+- IF: ${exists(title) && length(title) > 0}
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${title}",
+        "wrap": true,
+        "size": "ExtraLarge",
+        "weight": "Bolder"
+    }
+    ```
+- ELSE: 
+    - ``````
+
+# GetSubTitle(subTitle)
+- IF: ${exists(subTitle) && length(subTitle) > 0}
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${subTitle}",
+        "isSubtle": true,
+        "size": "Medium",
+        "wrap": true
+    }
+    ```
+- ELSE: 
+    - ``````
+
+# GetText(text)
+- IF: ${exists(text) && length(text) > 0}
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "${text}",
+        "wrap": true
+    }
+    ```
+- ELSE: 
+    - ``````
+
+# GetActionSet(groupSet, location, entities, sourceIntent)
+- ```
+{
+    "type": "ActionSet",
+    "actions": [${join(select(groupSet.groups, group => GetAction(group, location, entities, sourceIntent)), ',')}],
+    "height": "stretch"
+}
+```
+
+# GetOriginalTitle(location, category)
+- ```${location} - ${category}```
+
+# GetAction(group, location, entities, sourceIntent)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${group.title}",
+    "data": 
+    {
+        "intent": "GetExpertsByLocation",
+        "skill" : "${group.key}",
+        "location": "${location}",
+        "title": "${replace(GetOriginalTitle(location, group.title), 'Show ', '')}",
+        ${IntentRedirectTelemetry('Filter', sourceIntent, group.title)},
+		${entities},
+        "msteams": {
+            "type": "messageBack",
+			"displayText": "${group.title}"
+        }
+    }
+}
+```

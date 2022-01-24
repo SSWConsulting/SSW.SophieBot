@@ -1,0 +1,273 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "Ke8mfV",
+    "name": "GetCalendarDialog",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "zmUWcf"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "p2VEis"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "OSSap5"
+          },
+          "condition": "=exists(dialog.nameEntity) && (exists(dialog.nameEntity.firstname) || exists(dialog.nameEntity.lastname))",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "2NqXcv"
+              },
+              "activity": "${SendActivity_2NqXcv()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "cfYCZl"
+              }
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "ZIynOJ"
+              },
+              "condition": "=!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "8XHMsU"
+                  },
+                  "activity": "${SendActivity_8XHMsU()}"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "yF2MmE"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "KHL6mr"
+          },
+          "property": "turn.userInputName",
+          "value": "=concat(if(exists(dialog.nameEntity.firstname), dialog.nameEntity.firstname[0], \"Mr.\"), if(exists(dialog.nameEntity.lastname), concat(\" \", dialog.nameEntity.lastname[0]), \"\"))"
+        },
+        {
+          "$kind": "GetProfileAction",
+          "$designer": {
+            "id": "3sCJxK"
+          },
+          "queryString": [
+            {
+              "key": "firstName",
+              "value": "=dialog.nameEntity.firstname[0]"
+            },
+            {
+              "key": "lastName",
+              "value": "=dialog.nameEntity.lastname[0]"
+            }
+          ],
+          "statusCodeProperty": "turn.statusCode",
+          "reasonPhraseProperty": "turn.reasonPhrase",
+          "employeesProperty": "turn.employees"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "2ruyJ5"
+          },
+          "condition": "=turn.statusCode == 200",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "qP71PG"
+              },
+              "activity": "${SendActivity_qP71PG()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "aqnM5d"
+              },
+              "condition": "=exists(turn.employees) && count(turn.employees) > 0",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "pIH54A"
+                  },
+                  "condition": "=dialog.altered",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "yEShBq"
+                      },
+                      "activity": "${SendActivity_yEShBq()}"
+                    },
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "yxEElB"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "X2AMdw"
+                  },
+                  "value": "=join([dialog.nameEntity.firstname[0], dialog.nameEntity.lastname[0]], ' ')",
+                  "property": "turn.originalName"
+                },
+                {
+                  "$kind": "PersonNameAlterateAction",
+                  "$designer": {
+                    "id": "mPCP7Y"
+                  },
+                  "resultLastNameProperty": "dialog.suggestedLastName",
+                  "resultFirstNameProperty": "dialog.suggestedFirstName",
+                  "alteredProperty": "turn.altered",
+                  "originalName": "=turn.originalName"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "4vAImT"
+                  },
+                  "condition": "=turn.altered",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "B9SCa5"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.nameEntity",
+                          "value": "=setProperty(dialog.nameEntity, 'firstname', if(length(dialog.suggestedFirstName)>0, [dialog.suggestedFirstName], null))"
+                        },
+                        {
+                          "property": "dialog.nameEntity",
+                          "value": "=setProperty(dialog.nameEntity, 'lastname', if(length(dialog.suggestedLastName)>0, [dialog.suggestedLastName], null))"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "Microsoft.RepeatDialog",
+                      "$designer": {
+                        "id": "uYLTAm"
+                      },
+                      "activityProcessed": true,
+                      "options": {
+                        "nameEntity": "=dialog.nameEntity",
+                        "altered": "=true"
+                      }
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "iPYUuZ"
+                      },
+                      "activity": "${SendActivity_iPYUuZ()}"
+                    }
+                  ]
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "QJQ3m0"
+                  },
+                  "condition": "=count(turn.employees) > 1",
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperties",
+                      "$designer": {
+                        "id": "qG2Tta"
+                      },
+                      "assignments": [
+                        {
+                          "property": "dialog.displayName",
+                          "value": "=concat(turn.employees[0].firstName, \" \", turn.employees[0].lastName)"
+                        },
+                        {
+                          "property": "dialog.appointments",
+                          "value": "=turn.employees[0].appointments"
+                        }
+                      ]
+                    },
+                    {
+                      "$kind": "GetProfileWithStatusAction",
+                      "$designer": {
+                        "id": "FJbad2"
+                      },
+                      "employees": "=turn.employees",
+                      "result": "turn.employeesWithStatus"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "LB1FzJ"
+                      },
+                      "activity": "${SendActivity_LB1FzJ()}"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "e2zip0"
+                      },
+                      "activity": "${SendActivity_e2zip0()}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "W8BpKi"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "GetCalendarDialog.lg",
+  "recognizer": "GetCalendarDialog.lu.qna",
+  "id": "GetCalendarDialog"
+}

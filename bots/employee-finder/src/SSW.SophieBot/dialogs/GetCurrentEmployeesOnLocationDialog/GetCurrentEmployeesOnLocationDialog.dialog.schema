@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "GetCurrentEmployeesOnLocationDialog",
+  "type": "object",
+  "properties": {
+    "locationEntity": {
+      "description": "Location where employees are currently in",
+      "$ref": "#/definitions/stringExpression",
+      "title": "Location Entity"
+    },
+    "rawDateEntity": {
+      "description": "Date to query",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/objectExpression",
+      "title": "Raw Date Entity"
+    }
+  },
+  "$result": {
+    "type": "object",
+    "properties": {}
+  },
+  "definitions": {
+    "equalsExpression": {
+      "$role": "expression",
+      "type": "string",
+      "title": "Equals Expression",
+      "description": "Expression starting with =.",
+      "pattern": "^=.*\\S.*",
+      "examples": [
+        "=user.name"
+      ]
+    },
+    "stringExpression": {
+      "$role": "expression",
+      "title": "String or expression",
+      "description": "Interpolated string or expression to evaluate.",
+      "oneOf": [
+        {
+          "type": "string",
+          "title": "String",
+          "description": "Interpolated string",
+          "pattern": "^(?!(=)).*",
+          "examples": [
+            "Hello ${user.name}"
+          ]
+        },
+        {
+          "$ref": "#/definitions/equalsExpression",
+          "examples": [
+            "=concat('x','y','z')"
+          ]
+        }
+      ]
+    }
+  }
+}

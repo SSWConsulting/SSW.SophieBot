@@ -1,0 +1,1507 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "$designer": {
+      "name": "SSWSophieBot",
+      "description": "",
+      "id": "BC6ByC"
+    }
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "5oW8CV"
+          },
+          "name": "SSWSophieBot.Greeting",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Lkj14X"
+          },
+          "activityProcessed": true,
+          "dialog": "GreetingDialog",
+          "options": {}
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "DFYpr5"
+          },
+          "property": "user.welcomed",
+          "value": true
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "xo5s5D"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Qu86q3",
+        "name": "OnIntent (Greeting)"
+      },
+      "intent": "Greeting",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "SUZSpA"
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "v1WCKm"
+          },
+          "activityProcessed": true,
+          "dialog": "GreetingDialog",
+          "options": {}
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "0zINy2"
+          },
+          "property": "user.welcomed",
+          "value": true
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "tGb7Qz"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "GRE2OG",
+        "name": "OnIntent (GetProfile)"
+      },
+      "intent": "GetProfile",
+      "entities": [],
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "wiVPuM"
+          },
+          "name": "SSWSophieBot.OnIntent_GetProfile",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "6GpwgQ"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "yJh7Ux"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetProfile",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "h88r5H"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "aIJund"
+          },
+          "condition": "=contains($options.implemented, \"GetProfile\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "ea2BG1"
+              },
+              "activity": "${SendActivity_ea2BG1()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "ddWzjj"
+              },
+              "activityProcessed": true,
+              "dialog": "GetProfileDialog",
+              "options": {
+                "nameEntity": "=$options.contactEntity"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "22Refo",
+        "name": "OnIntent (GetEmailAddress)"
+      },
+      "intent": "GetEmailAddress",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "LLDQcc"
+          },
+          "name": "SSWSophieBot.OnIntent_GetEmailAddress",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "LTqbpg"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "h36QgH"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetEmailAddress",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "caV2Vr"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "BKPWih"
+          },
+          "condition": "=contains($options.implemented, \"GetEmailAddress\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Z0VDAj"
+              },
+              "activity": "${SendActivity_Z0VDAj()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "yc7bMc"
+              },
+              "activityProcessed": true,
+              "dialog": "GetEmailAddressDialog",
+              "options": {
+                "nameEntity": "=$options.contactEntity"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "8zzS4g",
+        "name": "OnIntent (GetPhoneNumber)"
+      },
+      "intent": "GetPhoneNumber",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "1ZZm4i"
+          },
+          "name": "SSWSophieBot.OnIntent_GetPhoneNumber",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "x3tHdF"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "jWvyfh"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetPhoneNumber",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "bCD1pL"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "SXRf5q"
+          },
+          "condition": "=contains($options.implemented, \"GetPhoneNumber\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "RXwe62"
+              },
+              "activity": "${SendActivity_RXwe62()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "UbIGQ7"
+              },
+              "activityProcessed": true,
+              "dialog": "GetPhoneNumberDialog",
+              "options": {
+                "nameEntity": "=$options.contactEntity"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "NbU19T",
+        "name": "OnIntent (GetSkills)"
+      },
+      "intent": "GetSkills",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "TlSUpR"
+          },
+          "name": "SSWSophieBot.OnIntent_GetProfile",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "HpWt5c"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "jUNJfD"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetSkills",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "mvvGwc"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "bwWZ9k"
+          },
+          "condition": "=contains($options.implemented, \"GetSkills\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "980h76"
+              },
+              "activity": "${SendActivity_980h76()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "xuVQ57"
+              },
+              "activityProcessed": true,
+              "dialog": "GetSkillsDialog",
+              "options": {
+                "nameEntity": "=$options.contactEntity"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "lF1RtN",
+        "name": "OnIntent (GetPeopleBasedOnLocation)"
+      },
+      "intent": "GetPeopleBasedOnLocation",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "WXzsMI"
+          },
+          "name": "SSWSophieBot.OnIntent_GetPeopleBasedOnLocation",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "c2sktJ"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "qG8jw8"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetPeopleBasedOnLocation",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "Yl7beK"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "OLeHcJ"
+          },
+          "condition": "=contains($options.implemented, \"GetPeopleBasedOnLocation\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "I3wW7h"
+              },
+              "activity": "${SendActivity_I3wW7h()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "tmjoDB"
+              },
+              "activityProcessed": true,
+              "dialog": "GetPeopleBasedOnLocationDialog",
+              "options": {
+                "location": "=$options.location"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "mBzfYS",
+        "name": "OnIntent (GetExpertsByLocation)"
+      },
+      "intent": "GetExpertsByLocation",
+      "entities": [],
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "6Yd16Q"
+          },
+          "name": "SSWSophieBot.OnIntent_GetExpertsByLocation",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ATIN53"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "pdzSoX"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetExpertsByLocation",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "DHZDW5"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "5ewWN6"
+          },
+          "condition": "=contains($options.implemented, \"GetExpertsByLocation\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "eQ0O3I"
+              },
+              "activity": "${SendActivity_eQ0O3I()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "eOKgOm"
+              },
+              "activityProcessed": true,
+              "dialog": "GetExpertsByLocationDialog",
+              "options": {
+                "skillEntity": "=$options.skill",
+                "locationEntity": "=coalesce($options.location, 'all')",
+                "byBillable": "=@byBillable",
+                "isCurrentLocation": "=@isCurrentLocation",
+                "experienceLevel": "=coalesce(@experienceLevel, 'Advanced, Intermediate')",
+                "title": "=@title",
+                "clientNowSubtitle": "=@clientNowSubTitle"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "yY8DAH",
+        "name": "OnIntent (GetEmployeesByProject)"
+      },
+      "intent": "GetEmployeesOnProject",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "I4Knmm"
+          },
+          "name": "SSWSophieBot.OnIntent_GetEmployeesByProject",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "LRUUVE"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "K7tQJE"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetEmployeesOnProject",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "08wYT4"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "X9givN"
+          },
+          "condition": "=contains($options.implemented, \"GetEmployeesOnProject\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "lPfvXI"
+              },
+              "activity": "${SendActivity_lPfvXI()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "Bt7gk0"
+              },
+              "condition": "=exists(@ssw) && !exists(@project)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "B0CvUh"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetPeopleOnClientWorkDialog",
+                  "options": {
+                    "dateEntity": "=$options.datetime",
+                    "locationEntity": "=$options.location",
+                    "availableEntity": "available"
+                  }
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "XwUh1r"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetEmployeesByProjectDialog",
+                  "options": {
+                    "projectEntity": "=$options.project",
+                    "exactMatch": "=@exactMatch"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "mm9uIt",
+        "name": "OnIntent (CheckAvailability)"
+      },
+      "intent": "CheckAvailability",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "3XS4I3"
+          },
+          "name": "SSWSophieBot.OnIntent_CheckAvailability",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ncTwLj"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "6OFpyA"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "CheckAvailability",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "64qiAl"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "2z09U0"
+          },
+          "condition": "=contains($options.implemented, \"CheckAvailability\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "FVjYof"
+              },
+              "activity": "${SendActivity_FVjYof()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "52hOTH"
+              },
+              "activityProcessed": true,
+              "dialog": "CheckAvailabilityDialog",
+              "options": {
+                "nameEntity": "=$options.contactEntity"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "qgPZNf",
+        "name": "OnIntent (GetPeopleBySkills)"
+      },
+      "intent": "GetPeopleBySkills",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "QLyv73"
+          },
+          "name": "SSWSophieBot.OnIntent_GetPeopleBySkills",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "g8Qp9U"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "SotIHa"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetPeopleBySkills",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "SeVrki"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "5HgWi8"
+          },
+          "condition": "=contains($options.implemented, \"GetPeopleBySkills\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "8YrZa2"
+              },
+              "activity": "${SendActivity_8YrZa2()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "GqlkbX"
+              },
+              "activityProcessed": true,
+              "dialog": "GetPeopleBySkills",
+              "options": {
+                "skillEntity": "=$options.skill",
+                "locationEntity": "=$options.location"
+              }
+            }
+          ]
+        }
+      ],
+      "entities": []
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "7pKAin",
+        "name": "OnIntent (GetPeopleOnClientWork)"
+      },
+      "intent": "GetPeopleOnClientWork",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "iGkelH"
+          },
+          "name": "SSWSophieBot.OnIntent_GetPeopleOnClientWork",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "hIiUwf"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "dIiB7E"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetPeopleOnClientWork",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "z7EoN3"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ZJy5KL"
+          },
+          "condition": "=contains($options.implemented, \"GetPeopleOnClientWork\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "yCiUft"
+              },
+              "activity": "${SendActivity_yCiUft()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "10NTzH"
+              },
+              "activityProcessed": true,
+              "dialog": "GetPeopleOnClientWorkDialog",
+              "options": {
+                "dateEntity": "=$options.datetime",
+                "locationEntity": "=$options.location",
+                "availableEntity": "=$options.booked",
+                "skillEntity": "=$options.skill",
+                "rawDateEntity": "=$options.rawDatetime"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "m57GCB",
+        "name": "OnIntent (GetCurrentEmployeesOnLocation)"
+      },
+      "intent": "GetCurrentEmployeesOnLocation",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "CnGhT5"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "mhUz0R"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "sxega6"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetCurrentEmployeesOnLocation",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "SJQiup"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "6yXkzc"
+          },
+          "condition": "=contains($options.implemented, \"GetCurrentEmployeesOnLocation\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "e0PYdC"
+              },
+              "activity": "${SendActivity_e0PYdC()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "amDi9C"
+              },
+              "activityProcessed": true,
+              "dialog": "GetCurrentEmployeesOnLocationDialog",
+              "options": {
+                "locationEntity": "=$options.location",
+                "dateEntity": "=$options.rawDatetime",
+                "rawDateEntity": "=$options.rawDatetime"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Xjv7aN",
+        "name": "OnIntent (BugReport)"
+      },
+      "intent": "BugReport",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "YjwNu9"
+          },
+          "name": "SSWSophieBot.OnIntent_BugReport",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "BYZO4e"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "jRbE6g"
+          },
+          "condition": "=exists($options.project)",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "8fHHcb"
+              },
+              "activity": "${SendActivity_8fHHcb()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Ql6zUr"
+              },
+              "activity": "${SendActivity_Ql6zUr()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "RY2ct8"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "ypo1PI",
+        "name": "OnIntent (Goodbye)"
+      },
+      "intent": "Goodbye",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "HBvExO"
+          },
+          "name": "SSWSophieBot.OnIntent_Goodbye"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "JcLjcy"
+          },
+          "activity": "${SendActivity_JcLjcy()}"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "INxz6g"
+          },
+          "property": "user.welcomed",
+          "value": false
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "593gjl"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "JlhWE9",
+        "name": "OnEvent (SetOptions)"
+      },
+      "event": "SetOptions",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ruudtx"
+          },
+          "name": "SSWSophieBot.OnEvent_SetOptions",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "1P6lHo"
+          },
+          "assignments": [
+            {
+              "value": "=if(exists(@contact), @contact, if(exists(@personName), json(concat('{\"firstname\":[\"', @personName, '\"]}')), null))",
+              "property": "$options.preset.contactEntity"
+            },
+            {
+              "property": "$options.preset.locationEntity",
+              "value": "=coalesce(@geographyV2.location, @site, @location, @remote)"
+            },
+            {
+              "property": "$options.preset.beEntity",
+              "value": "=json(turn.recognized.entities)"
+            },
+            {
+              "property": "$options.preset.be",
+              "value": "=coalesce($options.preset.beEntity.presentBe, $options.preset.beEntity.futureBe)"
+            },
+            {
+              "property": "$options.preset.positive",
+              "value": "=if(exists($options.preset.be), if(mod(count(where($options.preset.be, be, be[0] == 'negative')), 2) == 0, true, false), true)"
+            },
+            {
+              "property": "$options.preset.rawDateTime",
+              "value": "=@rawDateTime"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "roR7IR"
+          },
+          "condition": "=exists(@datetime)",
+          "actions": [
+            {
+              "$kind": "EnrichDatatimeAction",
+              "$designer": {
+                "id": "BxpzvI",
+                "comment": "Remove this and make use of LUIS raw response. See https://github.com/SSWConsulting/SSW.SophieBot/issues/117#issue-1007346339"
+              },
+              "datetime": "=@datetime",
+              "resultProperty": "turn.datetime"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "ZQupur"
+              },
+              "property": "$options.preset.rawDateTime",
+              "value": "=turn.recognized.luisResult.prediction.entities.datetimeV2[0]"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "WwaJNu"
+              },
+              "property": "turn.datetime",
+              "value": "=@datetime"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "JGABEb"
+          },
+          "assignments": [
+            {
+              "property": "$options.contactEntity",
+              "value": "=$options.preset.contactEntity"
+            },
+            {
+              "property": "$options.user",
+              "value": "=turn.activity.value.user"
+            },
+            {
+              "property": "$options.location",
+              "value": "=if(exists($options.preset.locationEntity), titleCase($options.preset.locationEntity), null)"
+            },
+            {
+              "property": "$options.skill",
+              "value": "=if(exists(@skill), titleCase(@skill), null)"
+            },
+            {
+              "property": "$options.project",
+              "value": "=@project"
+            },
+            {
+              "property": "$options.datetime",
+              "value": "=turn.datetime"
+            },
+            {
+              "property": "$options.booked",
+              "value": "=if(exists(coalesce(@available, @unavailable)), if($options.preset.positive, @available, @unavailable), null)"
+            },
+            {
+              "property": "$options.rawDatetime",
+              "value": "=$options.preset.rawDateTime"
+            },
+            {
+              "property": "$options.implemented",
+              "value": [
+                "GetEmailAddress",
+                "GetPhoneNumber",
+                "GetProfile",
+                "GetSkills",
+                "GetPeopleBasedOnLocation",
+                "GetExpertsByLocation",
+                "GetEmployeesOnProject",
+                "GetAvailableExpertsByLocation",
+                "CheckAvailability",
+                "GetPeopleBySkills",
+                "GetPeopleOnClientWork",
+                "GetCurrentEmployeesOnLocation",
+                "GetFreeDay"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "YhLqAm"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "njVcFH"
+          },
+          "name": "SSWSophieBot.UnknownIntent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "HTkwlL"
+          },
+          "activity": "${SendActivity_HTkwlL()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnError",
+      "$designer": {
+        "id": "0XJm0e",
+        "name": "OnError"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "BnGy6N"
+          },
+          "name": "SSWSophieBot.OnError",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "FSXy40"
+          },
+          "condition": "=turn.activity.channelId",
+          "cases": [
+            {
+              "value": "emulator",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "Pszd6H"
+                  },
+                  "name": "Error",
+                  "label": "Error",
+                  "valueType": "string",
+                  "value": "=turn.dialogEvent.value"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "ipHTXS"
+                  },
+                  "activity": "${SendActivity_ipHTXS()}"
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "AV87xs"
+              },
+              "activity": "${SendActivity_AV87xs()}"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "y3gv3g"
+              },
+              "activity": "${SendActivity_y3gv3g()}"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Tcje3O"
+              },
+              "activity": "${SendActivity_Tcje3O()}"
+            },
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "26G8Zg"
+              },
+              "properties": {
+                "TurnEvent": "=turn.dialogEvent.value"
+              },
+              "eventName": "BotError"
+            }
+          ]
+        }
+      ],
+      "runOnce": true
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "yKhTIj",
+        "name": "OnIntent (GetCalendar)"
+      },
+      "intent": "GetCalendar",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "eL4ML7"
+          },
+          "name": "SSWSophieBot.OnIntent_GetCalendar"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "hVuS50"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "1qPfSI"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetCalendar",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "B2qI7w"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "7Xk8Nm"
+          },
+          "activityProcessed": true,
+          "dialog": "GetCalendarDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "7xP4nj",
+        "name": "OnIntent (GetFreeDay)"
+      },
+      "intent": "GetFreeDay",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "dIt1g1"
+          },
+          "name": "SSWSophieBot.OnIntent_GetFreeDay",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "dv12ns"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "C0yHAT"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetFreeDay",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "g7uQ0S"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "e5shlB"
+          },
+          "condition": "=contains($options.implemented, \"GetFreeDay\")",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "LOOiml"
+              },
+              "activity": "${SendActivity_LOOiml()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "bdHfZJ"
+              },
+              "activityProcessed": true,
+              "dialog": "GetFreeDayDialog",
+              "options": {
+                "nameEntity": "=$options.contactEntity",
+                "booked": "=$options.booked",
+                "isFree": "=length($options.booked) > 0"
+              }
+            }
+          ]
+        }
+      ],
+      "entities": []
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "AJLrpJ",
+        "name": "OnIntent (GetUsageByUser)"
+      },
+      "intent": "GetUsageByUser",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "To3fdy"
+          },
+          "name": "SSWSophieBot.OnIntent_GetUsageByUser"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "mdyYZo"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "UsageByUserAction",
+          "$designer": {
+            "id": "v4nAsI"
+          },
+          "resultProperty": "turn.usage",
+          "pastDays": "30"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Uo9GzJ"
+          },
+          "condition": "=count(turn.usage) > 0",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "dn7XpZ"
+              },
+              "activity": "${SendActivity_dn7XpZ()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "4IC23x"
+              },
+              "activity": "${SendActivity_4IC23x()}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "SSWSophieBot.lg",
+  "id": "SSWSophieBot",
+  "recognizer": "SSWSophieBot.lu.qna"
+}

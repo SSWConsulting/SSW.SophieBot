@@ -1,0 +1,274 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "nJ8YL5",
+    "name": "GetCurrentEmployeesOnLocationDialog",
+    "comment": "Rename this to indicate support for current/date/date range"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "oHdYPe"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "IMIzT4"
+          },
+          "name": "SSWSophieBot.GetCurrentEmployeesOnLocation.BeginDialog"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "iRae1n"
+          },
+          "condition": "=exists(dialog.locationEntity) && length(dialog.locationEntity) > 0",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "0iZBft"
+              },
+              "activity": "${SendActivity_0iZBft()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "Cg630n"
+              }
+            }
+          ],
+          "actions": []
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "dpA1hy"
+          },
+          "condition": "=exists(dialog.rawDateEntity)",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "jhwmNx"
+              },
+              "activity": "${SendActivity_jhwmNx()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "PevW1K"
+              }
+            }
+          ],
+          "actions": []
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "JnhZGb"
+          },
+          "property": "turn.isNowQuery",
+          "value": "=dialog.rawDateEntity.values[0].timex == \"PRESENT_REF\""
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "MfMu9M"
+          },
+          "assignments": [
+            {
+              "property": "turn.startTime",
+              "value": "=coalesce(dialog.rawDateEntity.values[0].resolution[0].value, dialog.rawDateEntity.values[0].resolution[0].start) "
+            },
+            {
+              "property": "turn.endTime",
+              "value": "=dialog.rawDateEntity.values[0].resolution[0].end"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "KEplDg"
+          },
+          "condition": "=indexOf(turn.recognized.text, 'today') != -1 && dialog.rawDateEntity.type == 'date'",
+          "actions": [
+            {
+              "$kind": "ClientNowAction",
+              "$designer": {
+                "id": "CgYNSA"
+              },
+              "format": "yyyy-MM-dd",
+              "resultProperty": "turn.startTime"
+            }
+          ]
+        },
+        {
+          "$kind": "UtcConvertAction",
+          "$designer": {
+            "id": "Qh7zdF"
+          },
+          "datetime": "=turn.startTime",
+          "resultProperty": "turn.utcStartTime"
+        },
+        {
+          "$kind": "UtcConvertAction",
+          "$designer": {
+            "id": "BKSfIx"
+          },
+          "datetime": "=turn.endTime",
+          "resultProperty": "turn.utcEndTime"
+        },
+        {
+          "$kind": "GetProfileAction",
+          "$designer": {
+            "id": "H3FuOa"
+          },
+          "queryString": [
+            {
+              "key": "location",
+              "value": "=dialog.locationEntity"
+            },
+            {
+              "key": "inoffice",
+              "value": "=true"
+            },
+            {
+              "key": "fromDate",
+              "value": "=if(turn.isNowQuery, null, turn.utcStartTime)"
+            },
+            {
+              "key": "endDate",
+              "value": "=if(turn.isNowQuery, null, turn.utcEndTime)"
+            }
+          ],
+          "statusCodeProperty": "turn.statusCode",
+          "reasonPhraseProperty": "turn.reasonPhrase",
+          "employeesProperty": "turn.employees"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "PxzoJn"
+          },
+          "condition": "=turn.statusCode == 200",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "5SdoY2"
+              },
+              "activity": "${SendActivity_5SdoY2()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "DRQtOv"
+              },
+              "condition": "=exists(turn.employees) && count(turn.employees) > 0",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "MfjfA1"
+                  },
+                  "activity": "${SendActivity_MfjfA1()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "GetEmployeesByBillableAction",
+                  "$designer": {
+                    "id": "kg2QbE"
+                  },
+                  "employees": "=turn.employees",
+                  "workingEmployeesProperty": "turn.billableEmployees"
+                },
+                {
+                  "$kind": "TimeFormatAction",
+                  "$designer": {
+                    "id": "3J7JGS"
+                  },
+                  "datetime": "=turn.startTime",
+                  "format": "dddd d MMMM",
+                  "resultProperty": "turn.displayStartTime"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "PoS3N1"
+                  },
+                  "condition": "=length(turn.endTime) > 0",
+                  "actions": [
+                    {
+                      "$kind": "TimeFormatAction",
+                      "$designer": {
+                        "id": "5UTZQg"
+                      },
+                      "datetime": "=turn.endTime",
+                      "format": "dddd d MMMM",
+                      "resultProperty": "turn.displayEndTime"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "JbHzKZ"
+                  },
+                  "property": "turn.clientTime",
+                  "value": "=concat(turn.displayStartTime, if(exists(turn.displayEndTime), '-'+turn.displayEndTime, ''))"
+                },
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "2pvKG2"
+                  },
+                  "property": "dialog.billableTitle",
+                  "value": "=coalesce(dialog.title, titleCase(dialog.locationEntity))"
+                },
+                {
+                  "$kind": "Microsoft.ForeachPage",
+                  "$designer": {
+                    "id": "HKghNG"
+                  },
+                  "pageIndex": "dialog.foreach.pageindex",
+                  "page": "dialog.foreach.page",
+                  "pageSize": 10,
+                  "itemsProperty": "turn.billableEmployees.employees",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "WXpguy"
+                      },
+                      "activity": "${SendActivity_WXpguy()}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "pHHQtB"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "GetCurrentEmployeesOnLocationDialog.lg",
+  "recognizer": "GetCurrentEmployeesOnLocationDialog.lu.qna",
+  "id": "GetCurrentEmployeesOnLocationDialog"
+}
