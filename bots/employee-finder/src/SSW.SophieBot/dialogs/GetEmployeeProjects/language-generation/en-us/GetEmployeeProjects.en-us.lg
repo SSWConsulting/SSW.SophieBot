@@ -1,4 +1,4 @@
-[import](common.lg)
+[Common](common.en-us.lg)
 
 # SendActivity_4yqLzB()
 [Activity
@@ -44,10 +44,12 @@
     "body": [
         {
             "type": "TextBlock",
-            "size": "ExtraLarge",
+            "size": "large",
             "text": "${profile.firstName}'s projects",
             "wrap": true,
-            "weight": "Bolder"
+            "weight": "bolder",
+            "style": "heading",
+            "fontType": "Default"
         },
         {
             "type": "ColumnSet",
@@ -61,7 +63,8 @@
                             "text": "Project ID",
                             "wrap": true,
                             "weight": "Bolder",
-                            "horizontalAlignment": "Center"
+                            "horizontalAlignment": "Left",
+                            "style": "columnHeader"
                         }
                     ]
                 },
@@ -73,7 +76,8 @@
                             "type": "TextBlock",
                             "text": "Project Name",
                             "weight": "Bolder",
-                            "horizontalAlignment": "Center"
+                            "horizontalAlignment": "Left",
+                            "style": "columnHeader"
                         }
                     ],
                     "verticalContentAlignment": "Center"
@@ -87,7 +91,8 @@
                             "text": "Client Name",
                             "wrap": true,
                             "weight": "Bolder",
-                            "horizontalAlignment": "Center"
+                            "horizontalAlignment": "Left",
+                            "style": "columnHeader"
                         }
                     ],
                     "verticalContentAlignment": "Center"
@@ -95,8 +100,7 @@
             ],
             "bleed": true,
             "style": "default",
-            "height": "stretch",
-            "spacing": "Medium"
+            "horizontalAlignment": "Center"
         },
         {
             "type": "Container",
@@ -104,61 +108,84 @@
                 ${join(select(profile.projects, project, ProjectListRow(project)), ',')}
             ],
             "bleed": true,
-            "horizontalAlignment": "Center"
+            "horizontalAlignment": "Left",
+            "verticalContentAlignment": "Center",
+            "backgroundImage": {
+            "verticalAlignment": "Center"
+            },
+            "separator": true
         }
     ],
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "version": "1.2"
+    "version": "1.2",
+    "verticalContentAlignment": "Center"
 }
 ```
 
 # ProjectListRow(project)
 - ```
 {
-                    "type": "ColumnSet",
-                    "columns": [
-                        {
-                            "type": "Column",
-                            "width": "stretch",
-                            "items": [
-                                {
-                                    "type": "TextBlock",
-                                    "text": "${project.projectId}",
-                                    "size": "Small",
-                                    "wrap": true
-                                }
-                            ],
-                            "verticalContentAlignment": "Center"
-                        },
-                        {
-                            "type": "Column",
-                            "width": "stretch",
-                            "items": [
-                                {
-                                    "type": "TextBlock",
-                                    "wrap": true,
-                                    "text": "${project.projectName}",
-                                    "size": "Small",
-                                    "horizontalAlignment": "Center"
-                                }
-                            ],
-                            "verticalContentAlignment": "Center"
-                        },
-                        {
-                            "type": "Column",
-                            "width": "stretch",
-                            "items": [
-                                {
-                                    "type": "TextBlock",
-                                    "wrap": true,
-                                    "text": "${}",
-                                    "size": "Small",
-                                    "horizontalAlignment": "Center"
-                                }
-                            ],
-                            "verticalContentAlignment": "Center"
-                        }
-                    ],
-                    "bleed": true
+    "type": "ColumnSet",
+    "columns": [
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${project.projectId}",
+                    "size": "Default",
+                    "wrap": true,
+                    "horizontalAlignment": "Left"
                 }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "text": "${project.projectName}",
+                    "size": "Default",
+                    "horizontalAlignment": "Left"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "text": "${project.customerName}",
+                    "size": "Default",
+                    "horizontalAlignment": "Left"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        }
+    ],
+    "bleed": true,
+    "style": "default",
+    "horizontalAlignment": "Left"
+}
 ```
+# SendActivity_SB0mZY_text()
+- You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.
+# SendActivity_SB0mZY()
+[Activity
+    Text = ${SendActivity_SB0mZY_text()}
+]
+
+# SendActivity_8LLs4d()
+[Activity
+    Text = ${SendActivity_8LLs4d_text()}
+]
+
+# SendActivity_8LLs4d_text()
+- You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.

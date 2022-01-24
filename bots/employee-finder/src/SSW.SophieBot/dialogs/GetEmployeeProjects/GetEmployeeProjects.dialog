@@ -28,7 +28,30 @@
             "id": "l7KLKB"
           },
           "condition": "=exists(dialog.nameEntity) && (exists(dialog.nameEntity.firstname) || exists(dialog.nameEntity.lastname))",
-          "actions": [],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "1YMRSQ"
+              },
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "8LLs4d"
+                  },
+                  "activity": "${SendActivity_8LLs4d()}"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "74Xx7J"
+                  }
+                }
+              ],
+              "condition": "=!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false"
+            }
+          ],
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",

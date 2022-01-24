@@ -443,6 +443,7 @@
 
 # GetProfile
 - who is {@contact}[?]
+- ^{@contact}[?]^
 - what's {@contact={@firstName=calum}}'s {@profileProperty=rate}
 - what is the {@profileProperty=youtube account} of {@contact={@firstName=mehmet}}
 - what is {@profileProperty=title} of {@contact={@firstName=bill} {@lastName=gates}}?
@@ -476,7 +477,6 @@
 - who is mr. {@contact={@lastName=andy}}
 - who is {@contact={@firstName=Kaique}}
 - who is {@contact={@firstName=Kaique} {lastName=Biancatti}}
-- {@contact}[?]
 
 
 @ intent GetProfile usesFeature contact,profileProperty
@@ -520,9 +520,15 @@
 - how do you do
 - what's up
 - hey sophie
+- hey sophiebot
 - help
 - what can you do
 - what can i do
+- what is sophie
+- what is sophiebot
+- what can you 
+- who is sophie
+- who is sophiebot
 
 @ phraseList GreetingPhraseList(interchangeable) disabledForAllModels =
 	- hi
@@ -630,7 +636,15 @@
 - who else is using you?
 
 # GetEmployeeProjects
-- what is {@contact} working on[?]
-- what are the {@contact={@firstName=jake}}'s projects ?
-- What is adam working on?
-- Get the {@contact={@firstName=jake}}'s projects
+- what {@presentBe} {@contact}['s] projects
+- what is {@contact={@firstName=adam}} doing[?]
+- what is {@contact={@firstName=jack} {@lastName=smith}} working on[?]
+- what are {@contact={@firstName=piers}}'s projects?
+- show me {@contact={@firstName=michael}}'s projects
+- what's {@contact={@firstName=jim}}'s projects
+
+@ phraselist EmployeeProjectsPhraseList(interchangeable) disabledForAllModels =
+	- projects
+	- doing
+	- working on
+@ intent GetEmployeeProjects usesFeature EmployeeProjectsPhraseList

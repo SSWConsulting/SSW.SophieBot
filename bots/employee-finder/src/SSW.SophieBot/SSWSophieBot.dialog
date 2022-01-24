@@ -1543,7 +1543,10 @@
             "id": "VLr5dA"
           },
           "activityProcessed": true,
-          "dialog": "GetEmployeeProjects"
+          "dialog": "GetEmployeeProjects",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
+          }
         }
       ]
     }
