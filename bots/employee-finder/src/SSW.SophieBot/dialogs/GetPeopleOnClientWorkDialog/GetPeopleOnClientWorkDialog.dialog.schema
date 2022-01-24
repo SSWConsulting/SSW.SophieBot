@@ -19,6 +19,10 @@
     "skillEntity": {
       "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
       "title": "Skill Entity"
+    },
+    "rawDateEntity": {
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Raw Date Entity"
     }
   },
   "$result": {

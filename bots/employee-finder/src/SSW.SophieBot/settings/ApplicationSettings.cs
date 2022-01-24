@@ -16,6 +16,8 @@
 
 		public string SharePointUrl { get; set; }
 
+		public string EmployeeResponsibilitiesUrl { get; set; }
+
 		public string BaseUrl { get; set; }
 	}
 }

@@ -54,7 +54,7 @@
           "queryString": [
             {
               "value": "=dialog.location",
-              "key": "currentLocation"
+              "key": "location"
             },
             {
               "key": "inoffice",

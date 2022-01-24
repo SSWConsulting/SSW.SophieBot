@@ -35,7 +35,7 @@
 ]
 
 # SendActivity_OesKIP_text()
-- In **${dialog.location}**, there is **1** person (${if(turn.employees[0].inOffice, '', 'not')} in the office today).
+- In **${dialog.location}**, there is **1** person (${if(turn.employees[0].inOffice, '', 'not')} in the office right now).
 # SendActivity_Jcjj19()
 [Activity
     Attachments = ${json(EmployeesGroupActionCard(GetTitleForAll(dialog.location, count(turn.employees)), 
@@ -67,7 +67,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "​ (${count(turn.employeesInOffice)} in the office today)",
+                    "text": "​ (${count(turn.employeesInOffice)} in the office right now)",
                     "wrap": true,
                     "color": "Accent"
                 }
@@ -78,6 +78,7 @@
                 "data": {
                     "intent": "GetCurrentEmployeesOnLocation",
                     "location": "${dialog.location}",
+					"rawDateTime": "${utcNow('yyyy-MM-dd')}",
                     "msteams": {
                         "type": "messageBack",
                         "displayText": "Who is in the ${dialog.location} office right now?"
