@@ -270,6 +270,7 @@
 - Who {@presentBe} {@prep} {@project} project[?]
 - Who {@presentBe} {@prep} project {@project}[?]
 - Who {@presentBe} {@prep} ({@project} | {@ssw})[?]
+- who works on {@project=ssw timepro}
 - Who is working on {@project = sophiebot}?
 - Who are working for {@project = baidu}?
 - Who is working for {@project = sophie}?
@@ -282,8 +283,10 @@
 
 @ phraselist WorkingPhraseList(interchangeable) disabledForAllModels =
 	- working,involved,involved in,booked for,busy on,doing
-@ intent GetEmployeesOnProject usesFeature WorkingPhraseList,project,ssw
-
+@ phraselist SSWProjects(interchangeable) disabledForAllModels =
+	- ssw timepro, ssw.timepro, ssw people, ssw.people, ssw rules, ssw.rules, ssw sophiehub, ssw.sophiehub, ssw rewards, ssw.rewards, ssw sophiebot, ssw.sophiebot, ssw website, ssw.website
+@ intent GetEmployeesOnProject usesFeature WorkingPhraseList,SSWProjects,project,ssw
+@ ml project usesFeature SSWProjects
 
 # GetPeopleBasedOnLocation
 - melbourne staff
