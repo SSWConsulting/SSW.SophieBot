@@ -183,12 +183,13 @@
         {
             "type": "TextBlock",
             "wrap": true,
-            "text": "There seems to be more than one **${titleCase(turn.userInputName)}**. Which one were you looking for?"
+            "text": "Which **${titleCase(turn.userInputName)}**?"
         },
         {
             "type": "ActionSet",
             "actions": [
-                ${join(select(take(turn.employees, 6), employee, NameButton(targetIntent, sourceIntent, employee.firstName, employee.lastName)), ',')}
+                ${join(select(take(turn.employees, 6), employee, 
+					NameButton(targetIntent, sourceIntent, employee.firstName, employee.lastName, employee.defaultSite.name)), ',')}
             ],
             "height": "stretch"
         }
@@ -198,11 +199,11 @@
 }
 ```
 
-# NameButton(targetIntent, sourceIntent, firstName, lastName)
+# NameButton(targetIntent, sourceIntent, firstName, lastName, baseSite)
 - ```
 {
     "type": "Action.Submit",
-    "title": "${firstName} ${lastName}",
+    "title": "${firstName} ${lastName}${if(length(baseSite) > 0, concat(' (', baseSite, ')'), '')}",
     "data": {
         "intent": "${targetIntent}",
         ${IntentRedirectTelemetry('NameButton', sourceIntent, concat(firstName, ' ', lastName))},

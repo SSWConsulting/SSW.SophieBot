@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime.Extensions;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
+using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -56,6 +57,11 @@ namespace SSW.SophieBot
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
+
+				if (ChannelValidation.ToBotFromChannelTokenValidationParameters != null)
+				{
+					ChannelValidation.ToBotFromChannelTokenValidationParameters.ValidateLifetime = false;
+				}
 			}
 
 			app.UseDefaultFiles();

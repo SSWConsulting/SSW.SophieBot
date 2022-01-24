@@ -1,5 +1,4 @@
 ﻿using Microsoft.Bot.Builder.Dialogs;
-using SSW.SophieBot.Components;
 using SSW.SophieBot.HttpClientAction.Models;
 using SSW.SophieBot.HttpClientComponents.PersonQuery.Models;
 using System;
@@ -112,7 +111,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                     }
                 }
             }
-            
+
             return null;
         }
 
@@ -160,6 +159,11 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 
         public static int GetBookedDays(GetEmployeeModel employee, DateTime startDate)
         {
+            if (!employee.NormalizedAppointments.Any())
+            {
+                return 0;
+            }
+
             var maxEndTime = employee.NormalizedAppointments.Max(appointment => appointment.End);
             var checkDays = (int)Math.Ceiling((maxEndTime.Date - startDate.Date).TotalDays);
             var bookedDays = 0;
@@ -305,7 +309,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             {
                 var targetAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, date);
                 if (targetAppointment != null
-                    && (IsOnLeaveFunc(targetAppointment) 
+                    && (IsOnLeaveFunc(targetAppointment)
                     || IsOnClientWorkFunc(targetAppointment)))
                 {
                     unavailableAppointment = targetAppointment;
@@ -506,7 +510,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 return mainAppointment;
             }
 
-            foreach(var appointment in appointments)
+            foreach (var appointment in appointments)
             {
                 if (TryGetOverlapsTimeSpan(appointment, date, out var overlaps) && overlaps > mainOverlaps)
                 {
