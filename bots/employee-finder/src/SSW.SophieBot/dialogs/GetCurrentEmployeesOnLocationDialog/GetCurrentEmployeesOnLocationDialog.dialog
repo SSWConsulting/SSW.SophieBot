@@ -66,7 +66,8 @@
                 "id": "PevW1K"
               }
             }
-          ]
+          ],
+          "actions": []
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -79,7 +80,7 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "Fcfg0B"
+            "id": "MfMu9M"
           },
           "assignments": [
             {
@@ -89,6 +90,23 @@
             {
               "property": "turn.endTime",
               "value": "=dialog.rawDateEntity.values[0].resolution[0].end"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "KEplDg"
+          },
+          "condition": "=indexOf(turn.recognized.text, 'today') != -1 && dialog.rawDateEntity.type == 'date'",
+          "actions": [
+            {
+              "$kind": "ClientNowAction",
+              "$designer": {
+                "id": "CgYNSA"
+              },
+              "format": "yyyy-MM-dd",
+              "resultProperty": "turn.startTime"
             }
           ]
         },

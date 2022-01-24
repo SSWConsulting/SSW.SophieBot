@@ -78,6 +78,7 @@
                 "data": {
                     "intent": "GetCurrentEmployeesOnLocation",
                     "location": "${dialog.location}",
+					"rawDateTime": "${utcNow('yyyy-MM-dd')}",
                     "msteams": {
                         "type": "messageBack",
                         "displayText": "Who is in the ${dialog.location} office right now?"

@@ -41,7 +41,7 @@
             {
               "$kind": "Microsoft.EndDialog",
               "$designer": {
-                "id": "EkOXsE"
+                "id": "9pofbV"
               }
             }
           ]
@@ -67,6 +67,23 @@
             {
               "value": "=if(dialog.locationEntity == 'All', '', dialog.locationEntity)",
               "property": "dialog.location"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "0pJH3f"
+          },
+          "condition": "=indexOf(turn.recognized.text, 'today') != -1 && dialog.rawDateEntity.type == 'date'",
+          "actions": [
+            {
+              "$kind": "ClientNowAction",
+              "$designer": {
+                "id": "8gzEsK"
+              },
+              "format": "yyyy-MM-dd",
+              "resultProperty": "dialog.fromDate"
             }
           ]
         },
