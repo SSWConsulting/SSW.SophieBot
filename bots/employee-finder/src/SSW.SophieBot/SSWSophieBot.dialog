@@ -618,7 +618,7 @@
               "$designer": {
                 "id": "Bt7gk0"
               },
-              "condition": "=exists(@ssw)",
+              "condition": "=exists(@ssw) && !exists(@project)",
               "actions": [
                 {
                   "$kind": "Microsoft.BeginDialog",
