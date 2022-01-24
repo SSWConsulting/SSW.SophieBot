@@ -28,7 +28,7 @@ namespace SSW.SophieBot.Components.Actions
 
         public override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
-            var clientNow = DateTime.Now.ToUserLocalTime(dc);
+            var clientNow = DateTime.UtcNow.ToUserLocalTime(dc);
             var result = clientNow.ToString(dc.GetValue(TargetFormat) ?? "d");
 
             if (ResultProperty != null)

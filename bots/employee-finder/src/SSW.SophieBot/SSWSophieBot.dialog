@@ -1097,6 +1097,10 @@
             {
               "property": "$options.preset.positive",
               "value": "=if(exists($options.preset.be), if(mod(count(where($options.preset.be, be, be[0] == 'negative')), 2) == 0, true, false), true)"
+            },
+            {
+              "property": "$options.preset.rawDateTime",
+              "value": "=@rawDateTime"
             }
           ]
         },
@@ -1121,7 +1125,7 @@
               "$designer": {
                 "id": "ZQupur"
               },
-              "property": "turn.rawDatetime",
+              "property": "$options.preset.rawDateTime",
               "value": "=turn.recognized.luisResult.prediction.entities.datetimeV2[0]"
             }
           ],
@@ -1172,7 +1176,7 @@
             },
             {
               "property": "$options.rawDatetime",
-              "value": "=turn.rawDatetime"
+              "value": "=$options.preset.rawDateTime"
             },
             {
               "property": "$options.implemented",
