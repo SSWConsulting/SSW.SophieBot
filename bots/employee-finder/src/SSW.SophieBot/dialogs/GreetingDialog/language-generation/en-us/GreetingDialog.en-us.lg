@@ -11,13 +11,7 @@
     "type": "AdaptiveCard",
     "body": [
         ${if(!user.welcomed, GreetingImage() + ',', '')}
-        {
-            "type": "TextBlock",
-            "text": "Welcome to [SSW SophieBot](${settings.App.ProductUrl})!",
-            "wrap": true,
-            "weight": "Bolder",
-            "size": "Large"
-        },
+        ${if(!user.welcomed, WelcomeTitle() + ',','')}
         {
             "type": "TextBlock",
             "text": "${SayHi()}",
@@ -100,6 +94,17 @@
 {
     "type": "Image",
     "url": "${settings.App.BaseUrl}/sophiebot-branding.png"
+}
+```
+
+# WelcomeTitle()
+- ```
+{
+    "type": "TextBlock",
+    "text": "Welcome to [SSW SophieBot](${settings.App.ProductUrl})!",
+    "wrap": true,
+    "weight": "Bolder",
+    "size": "Large"
 }
 ```
 

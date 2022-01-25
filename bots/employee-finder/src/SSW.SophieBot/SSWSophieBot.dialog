@@ -1498,6 +1498,62 @@
           ]
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "QmFmob",
+        "name": "OnIntent (GetEmployeeProjects)"
+      },
+      "intent": "GetEmployeeProjects",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "SriMJi"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "qa6qCb"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "6xNa8B"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetEmployeeProjects",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "blbbyw"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "VLr5dA"
+          },
+          "activityProcessed": true,
+          "dialog": "GetEmployeeProjects",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
+          }
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
