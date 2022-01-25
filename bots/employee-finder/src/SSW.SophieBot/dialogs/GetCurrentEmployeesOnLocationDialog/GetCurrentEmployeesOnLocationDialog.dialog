@@ -70,12 +70,28 @@
           "actions": []
         },
         {
-          "$kind": "Microsoft.SetProperty",
+          "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "JnhZGb"
+            "id": "bB3Ryd"
           },
-          "property": "turn.isNowQuery",
-          "value": "=dialog.rawDateEntity.values[0].timex == \"PRESENT_REF\""
+          "assignments": [
+            {
+              "value": "=dialog.rawDateEntity.values[0].timex == \"PRESENT_REF\"",
+              "property": "turn.isNowQuery"
+            },
+            {
+              "value": "=indexOf(turn.recognized.text, 'today') != -1 && dialog.rawDateEntity.type == 'date'",
+              "property": "turn.isTodayQuery"
+            },
+            {
+              "property": "turn.isDateQuery",
+              "value": "=dialog.rawDateEntity.type == 'date'"
+            },
+            {
+              "property": "turn.isRangeQuery",
+              "value": "=dialog.rawDateEntity.type == 'daterange'"
+            }
+          ]
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -98,7 +114,7 @@
           "$designer": {
             "id": "KEplDg"
           },
-          "condition": "=indexOf(turn.recognized.text, 'today') != -1 && dialog.rawDateEntity.type == 'date'",
+          "condition": "=turn.isTodayQuery",
           "actions": [
             {
               "$kind": "ClientNowAction",
@@ -199,7 +215,6 @@
                     "id": "3J7JGS"
                   },
                   "datetime": "=turn.startTime",
-                  "format": "dddd d MMMM",
                   "resultProperty": "turn.displayStartTime"
                 },
                 {
@@ -215,8 +230,78 @@
                         "id": "5UTZQg"
                       },
                       "datetime": "=turn.endTime",
-                      "format": "dddd d MMMM",
                       "resultProperty": "turn.displayEndTime"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "zOkZZa"
+                  },
+                  "condition": "=turn.isNowQuery",
+                  "actions": [
+                    {
+                      "$kind": "ClientNowAction",
+                      "$designer": {
+                        "id": "IIwFHY"
+                      },
+                      "resultProperty": "turn.clientNow",
+                      "format": "yyyy-MM-ddTHH:mm:ss.fffZ"
+                    },
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "Y5N5oT"
+                      },
+                      "property": "turn.clientTime",
+                      "value": "=concat(formatDateTime(addHours(turn.clientNow, -1), 'h:mm t'),' - ',formatDateTime(turn.clientNow, 'h:mm t'))"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.IfCondition",
+                      "$designer": {
+                        "id": "YIV20Q"
+                      },
+                      "condition": "=turn.isTodayQuery",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "pQV3BY"
+                          },
+                          "property": "turn.clientTime",
+                          "value": "='All day'"
+                        }
+                      ],
+                      "elseActions": [
+                        {
+                          "$kind": "Microsoft.IfCondition",
+                          "$designer": {
+                            "id": "WfrXuJ"
+                          },
+                          "condition": "=turn.isDateQuery",
+                          "actions": [
+                            {
+                              "$kind": "TimeDifferenceAction",
+                              "$designer": {
+                                "id": "0M6TUv"
+                              },
+                              "date": "=turn.startTime",
+                              "result": "turn.dateDiff"
+                            },
+                            {
+                              "$kind": "Microsoft.SetProperty",
+                              "$designer": {
+                                "id": "WxdFaN"
+                              },
+                              "property": "turn.clientTime",
+                              "value": "='(' + turn.dateDiff + ')'"
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 },
@@ -225,8 +310,8 @@
                   "$designer": {
                     "id": "JbHzKZ"
                   },
-                  "property": "turn.clientTime",
-                  "value": "=concat(turn.displayStartTime, if(exists(turn.displayEndTime), '-'+turn.displayEndTime, ''))"
+                  "property": "turn.clientDateTime",
+                  "value": "=concat(formatDateTime(turn.displayStartTime, 'ddd d MMM'), if(exists(turn.displayEndTime), ' - '+formatDateTime(turn.displayEndTime, 'ddd d MMM'), ''), ' ', turn.clientTime)"
                 },
                 {
                   "$kind": "Microsoft.SetProperty",

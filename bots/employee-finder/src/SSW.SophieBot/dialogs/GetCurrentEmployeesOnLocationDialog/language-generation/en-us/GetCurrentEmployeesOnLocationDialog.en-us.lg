@@ -27,7 +27,7 @@
 [Activity
     Attachments = ${json(PeopleListByBilled(
         if(dialog.foreach.pageindex == 1, CardTitle(dialog.locationEntity, count(turn.billableEmployees.employees)), GetNextTitle(dialog.foreach.pageindex, 10)), 
-        turn.clientTime,
+        turn.clientDateTime,
         if(dialog.foreach.pageindex == 1, true, false),
         dialog.foreach.page,
         dialog.foreach.pageindex * 10 >= count(turn.billableEmployees.employees),
