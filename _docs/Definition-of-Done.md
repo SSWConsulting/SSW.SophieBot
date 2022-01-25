@@ -6,5 +6,5 @@
 -   All acceptance criteria have been met
 -   Deployed to Dev
 -   Complex code is documented (removing technical debt)
--   Product Owner acceptance
 -   Deployed to Production
+-   (Optional) A Done Video
