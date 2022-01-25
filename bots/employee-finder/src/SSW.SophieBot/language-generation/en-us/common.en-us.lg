@@ -239,7 +239,7 @@
         },
         {
             "type": "TextBlock",
-            "text": "(Last 30 days)",
+            "text": "(Last 90 days)",
             "size": "Small",
             "wrap": true,
             "spacing": "None",
