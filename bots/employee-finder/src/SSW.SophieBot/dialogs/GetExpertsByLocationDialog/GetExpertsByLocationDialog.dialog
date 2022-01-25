@@ -219,7 +219,7 @@
                           "$designer": {
                             "id": "m3Sb5b"
                           },
-                          "format": "dddd d MMMM",
+                          "format": "ddd d MMM",
                           "resultProperty": "turn.clientNow"
                         }
                       ]

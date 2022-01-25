@@ -3,7 +3,7 @@
   "$designer": {
     "id": "DLIumR",
     "name": "GetAvailableExpertsByLocationDialog",
-    "comment": ""
+    "comment": "To be removed as this is not used anywhere"
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",

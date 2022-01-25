@@ -35,6 +35,16 @@
 		- isnt
 		- arent
 
+@ list pastBe = 
+	- positive :
+		- was
+		- were
+	- negative :
+		- wasnt
+		- wasn't
+		- werent
+		- weren't
+
 @ list futureBe = 
 	- positive:
 		- will
@@ -192,9 +202,8 @@
 @ intent CheckAvailability usesFeature contact,available,unavailable
 
 # GetCurrentEmployeesOnLocation
-- who is [(in|on)] {@geographyV2} [office] [right] now[?]^
-- who was in [the] ({geographyV2}|{site}) [office] [on] {datetimeV2}[?]^
-- who has been [(to|in)] [the] ({geographyV2}|{site}) [office] [on] {datetimeV2}[?]^
+- who ({@pastBe}|{@presentBe}) [(in|at)] [the] ({@geographyV2}|{@site}) [office] [on] {@datetimeV2}[?]^
+- who has been [(to|in|at)] [the] ({@geographyV2}|{@site}) [office] [on] {@datetimeV2}[?]^
 - who is in brisbane right now
 - who is in newcastle now
 - Who are in the Sydney office right now?
@@ -211,7 +220,7 @@
 
 @ phraselist CurrentPhraseList(interchangeable) disabledForAllModels =
 	- now,right now,currently,today,at the moment
-@ intent GetCurrentEmployeesOnLocation usesFeature CurrentPhraseList,geographyV2,datetimeV2
+@ intent GetCurrentEmployeesOnLocation usesFeature CurrentPhraseList,geographyV2,datetimeV2,site
 
 # GetEmailAddress
 - {@contact={@firstName=antonio}}'s {@profileProperty={@emailAddressProperty=email}} please
