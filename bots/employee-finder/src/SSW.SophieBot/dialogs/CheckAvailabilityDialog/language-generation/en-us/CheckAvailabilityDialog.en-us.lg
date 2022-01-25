@@ -165,7 +165,7 @@
 
 # SendActivity_27H1kR()
 [Activity
-    Attachments = ${json(NameButtons('CheckAvailability', 'CheckAvailability'))}
+    Attachments = ${json(NameButtons('CheckAvailability', 'CheckAvailability', null))}
 ]
 
 # SendActivity_FASez8()

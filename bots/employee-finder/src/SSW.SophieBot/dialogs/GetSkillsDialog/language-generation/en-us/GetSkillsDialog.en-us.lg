@@ -28,7 +28,7 @@
 
 # SendActivity_14L7mP()
 [Activity
-    Attachments = ${json(NameButtons('GetSkills', 'GetSkills'))}
+    Attachments = ${json(NameButtons('GetSkills', 'GetSkills', null))}
 ]
 # SendActivity_EPfIcV()
 [Activity

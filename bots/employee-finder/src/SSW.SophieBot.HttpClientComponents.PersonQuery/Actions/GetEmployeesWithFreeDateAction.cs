@@ -45,7 +45,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
                 e.NormalizeAppointments(dc);
                 var rawFreeDate = isFree 
                     ? EmployeesHelper.GetFreeDate(e.Appointments, date) 
-                    : EmployeesHelper.GetNextUnavailability(e, date, out var _).Date;
+                    : EmployeesHelper.GetNextUnavailability(e, date, out var _, false).Date;
                 return new EmployeeWithFreeDateModel
                 {
                     DisplayName = $"{e.FirstName} {e.LastName}",
