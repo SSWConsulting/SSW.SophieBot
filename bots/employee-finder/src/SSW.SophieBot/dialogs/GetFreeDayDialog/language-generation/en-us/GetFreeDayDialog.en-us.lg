@@ -9,8 +9,18 @@
 
 # SendActivity_CwfI6O()
 [Activity
-    Attachments = ${json(NameButtons('GetFreeDay', 'GetFreeDay'))}
+    Attachments = ${json(NameButtons('GetFreeDay', 'GetFreeDay', GetEntity()))}
 ]
+
+# GetEntity()
+- IF: ${dialog.isFree}
+	- ```
+	"available": "available"
+	```
+- ELSE:
+	- ```
+	"unavailable": "unavailable"
+	```
 
 # SendActivity_cH9ywD()
 [Activity

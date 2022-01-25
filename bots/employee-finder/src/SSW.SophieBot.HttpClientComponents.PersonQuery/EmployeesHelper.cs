@@ -37,8 +37,31 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             return employees
                 .Select(e =>
                 {
-                    var employeeProject = e.Projects?.FirstOrDefault(p => IsProjectNameMatch(queriedProjectName, isProject ? p.ProjectName : p.CustomerName));
-                    var billableDays = GetBilledDays(e, employeeProject, out var billableHours);
+                    var employeeProjects = new List<GetEmployeeProjectModel>();
+                    var billedProjects = new List<BilledProject>();
+                    if (project != null)
+                    {
+                        var employeeProject = e.Projects?.FirstOrDefault(p => IsProjectNameMatch(queriedProjectName, isProject ? p.ProjectName : p.CustomerName));
+                        employeeProjects.Add(employeeProject);
+                    }
+                    else
+                    {
+                        employeeProjects = e.Projects ?? new List<GetEmployeeProjectModel>();
+                    }
+
+                    foreach (var employeeProject in employeeProjects)
+                    {
+                        var billedDays = GetBilledDays(e, employeeProject, out var billableHours);
+                        billedProjects.Add(new BilledProject
+                        {
+                            ProjectId = employeeProject.ProjectId,
+                            BilledDays = billedDays,
+                            BilledHours = (int)billableHours,
+                            ProjectName = employeeProject.ProjectName,
+                            CustomerName = employeeProject.CustomerName
+                        });
+                    }
+
                     return new EmployeeBillableItemModel
                     {
                         UserId = e.UserId,
@@ -46,8 +69,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                         FirstName = e.FirstName,
                         LastName = e.LastName,
                         DisplayName = $"{e.FirstName} {e.LastName}",
-                        BilledDays = billableDays,
-                        BilledHours = (int)billableHours,
+                        BilledDays = billedProjects.FirstOrDefault()?.BilledDays ?? 0,
+                        BilledHours = billedProjects.FirstOrDefault()?.BilledHours ?? 0,
+                        BilledProjects = billedProjects,
                         BookingStatus = GetBookingStatus(e, date),
                         LastSeen = GetLastSeen(e)
                     };
@@ -223,7 +247,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             }
         }
 
-        public static NextClientModel GetNextUnavailability(GetEmployeeModel employee, DateTime date, out int freeDays)
+        public static NextClientModel GetNextUnavailability(GetEmployeeModel employee, DateTime date, out int freeDays, bool startFromNextWeek = true)
         {
             freeDays = 0;
             if (!employee.NormalizedAppointments.Any())
@@ -234,10 +258,13 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             var checkDays = 4 * 7;
             GetAppointmentModel unavailableAppointment = null;
 
-            var offsetDaysTillNextWeek = 14 % ((int)date.DayOfWeek + 7);
-            date = date.Date.AddDays(offsetDaysTillNextWeek);
+            if (startFromNextWeek)
+            {
+                var offsetDaysTillNextWeek = 14 % ((int)date.DayOfWeek + 7);
+                date = date.Date.AddDays(offsetDaysTillNextWeek);
+            }
 
-            for (int i = 1; i <= checkDays; i++)
+            for (int i = 0; i <= checkDays; i++)
             {
                 var checkDate = date.AddDays(i);
                 if (TryGetUnavailableAppointment(employee.NormalizedAppointments, checkDate, out var currentUnavailability))

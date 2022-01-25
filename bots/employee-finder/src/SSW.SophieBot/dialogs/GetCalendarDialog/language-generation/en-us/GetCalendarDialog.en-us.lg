@@ -31,7 +31,7 @@
 - Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
 # SendActivity_e2zip0()
 [Activity
-    Attachments = ${json(NameButtons('GetCalendar', 'GetCalendar'))}
+    Attachments = ${json(NameButtons('GetCalendar', 'GetCalendar', null))}
 ]
 # SendActivity_LB1FzJ()
 [Activity

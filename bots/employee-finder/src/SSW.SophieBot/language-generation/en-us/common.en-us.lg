@@ -175,7 +175,7 @@
     - (${10 * (current - 1) + 1}-${10 * (current - 1) + if(total >= current * 10, 10, total - 10 * (current - 1))})
 
 
-# NameButtons(targetIntent, sourceIntent)
+# NameButtons(targetIntent, sourceIntent, entities)
 - ```
 {
     "type": "AdaptiveCard",
@@ -189,7 +189,7 @@
             "type": "ActionSet",
             "actions": [
                 ${join(select(take(turn.employees, 6), employee, 
-					NameButton(targetIntent, sourceIntent, employee.firstName, employee.lastName, employee.defaultSite.name)), ',')}
+					NameButton(targetIntent, sourceIntent, employee.firstName, employee.lastName, employee.defaultSite.name, entities)), ',')}
             ],
             "height": "stretch"
         }
@@ -199,7 +199,7 @@
 }
 ```
 
-# NameButton(targetIntent, sourceIntent, firstName, lastName, baseSite)
+# NameButton(targetIntent, sourceIntent, firstName, lastName, baseSite, entities)
 - ```
 {
     "type": "Action.Submit",
@@ -207,6 +207,7 @@
     "data": {
         "intent": "${targetIntent}",
         ${IntentRedirectTelemetry('NameButton', sourceIntent, concat(firstName, ' ', lastName))},
+		${if(exists(entities), entities + ',', '')}
         "contact": {
             "firstName": [
                 "${firstName}"

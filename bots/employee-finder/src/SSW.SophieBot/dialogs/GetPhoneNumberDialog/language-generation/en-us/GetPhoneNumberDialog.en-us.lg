@@ -41,5 +41,5 @@
 ]
 # SendActivity_JT0ACh()
 [Activity
-    Attachments = ${json(NameButtons('GetPhoneNumber', 'GetPhoneNumber'))}
+    Attachments = ${json(NameButtons('GetPhoneNumber', 'GetPhoneNumber', null))}
 ]
