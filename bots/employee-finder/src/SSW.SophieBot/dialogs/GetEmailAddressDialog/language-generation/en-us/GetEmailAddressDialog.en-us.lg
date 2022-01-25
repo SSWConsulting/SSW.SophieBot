@@ -42,5 +42,5 @@
 ]
 # SendActivity_3TXOcW()
 [Activity
-    Attachments = ${json(NameButtons('GetEmailAddress', 'GetEmailAddress'))}
+    Attachments = ${json(NameButtons('GetEmailAddress', 'GetEmailAddress', null))}
 ]
