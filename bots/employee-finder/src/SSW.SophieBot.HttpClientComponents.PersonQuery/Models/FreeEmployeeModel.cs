@@ -23,6 +23,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Models
         [JsonProperty("billedDays")]
         public int BilledDays { get; set; }
 
+        [JsonProperty("billedHours")]
+        public int BilledHours { get; set; }
+
         [JsonProperty("inOffice")]
         public bool InOffice { get; set; }
 

@@ -6,5 +6,7 @@
 -   All acceptance criteria have been met
 -   Deployed to Dev
 -   Complex code is documented (removing technical debt)
--   Product Owner acceptance
 -   Deployed to Production
+-   Add description about the changes for the PBI
+-   Tick off the definition of done tasks in the PBI
+-   (Optional) A Done Video, particularly for PBI with multiple stages

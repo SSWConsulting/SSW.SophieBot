@@ -31,6 +31,33 @@
           },
           "elseActions": [
             {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "AOPAnh"
+              },
+              "condition": "=exists(@prep) && @prep == 'on'",
+              "actions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "oPivoF"
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetEmployeesByProjectDialog",
+                  "options": {
+                    "projectEntity": "=@project",
+                    "exactMatch": "=@exactMatch"
+                  }
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "k15nK4"
+                  }
+                }
+              ]
+            },
+            {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
                 "id": "CR9ta7"
