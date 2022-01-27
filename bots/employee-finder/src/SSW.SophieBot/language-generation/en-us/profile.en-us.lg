@@ -414,7 +414,9 @@
 
 # Status(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - Busy working for ${if(!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false, '\\\\*\\\\*\\\\*', join(profile.clients, ','))}
+    - Busy working for ${if(!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false, 
+		'\\\\*\\\\*\\\\*', 
+		concat(GetClientNumber(profile.clients[0]), profile.clients[0].name, GetAccountManager(profile.clients[0])))}
 - ELSEIF: ${ profile.bookingStatus == 1 && profile.clients.count == 0 }
     - Busy on client work
 - ELSEIF: ${ profile.bookingStatus == 2 }
@@ -423,6 +425,12 @@
     - On leave${if(profile.additionalStatus.length > 0, '...' + profile.additionalStatus, '')}
 - ELSE:
     - Free
+
+# GetClientNumber(client)
+- ${if(length(client.number) > 0, concat(client.number, ' - '), '')}
+
+# GetAccountManager(client)
+- ${if(length(client.accountManager) > 0, concat(' (Account Manager: ', client.accountManager, ')'), '')}
 
 # LastSeen(location, defaultLocation, time)
 - IF: ${ location != null && time != null }

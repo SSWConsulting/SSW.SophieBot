@@ -102,7 +102,7 @@
 
 # ClientText(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - ${if(!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false, '\\\\*\\\\*\\\\*', join(profile.clients, ','))}
+    - ${if(!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false, '\\\\*\\\\*\\\\*', join(select(profile.clients, client, client.name), ','))}
 - ELSE:
     - ```—```
 

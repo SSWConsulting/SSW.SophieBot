@@ -22,7 +22,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Models
         public BookingStatus BookingStatus { get; set; }
 
         [JsonProperty("clients")]
-        public List<string> Clients { get; set; }
+        public List<EmployeeProfileClient> Clients { get; set; }
 
         [JsonProperty("lastSeenAt")]
         public GetLastSeenAtSiteModel LastSeenAt { get; set; }
