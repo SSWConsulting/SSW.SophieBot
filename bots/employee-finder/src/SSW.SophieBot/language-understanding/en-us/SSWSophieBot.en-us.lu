@@ -526,6 +526,8 @@
 - {@goodbye}
 
 # Greeting
+- where do you get your data?
+- where do you get your data from?
 - hello
 - hi
 - nice to meet you
@@ -543,8 +545,11 @@
 - what can you 
 - who is sophie
 - who is sophiebot
-- where do you get your data [from][?]
-
+- show all commands
+- what can you do
+- what can I ask
+- commands list
+- what are the questions
 
 @ phraseList GreetingPhraseList(interchangeable) disabledForAllModels =
 	- hi
@@ -650,3 +655,12 @@
 - I want to see usage report
 - usage report
 - who else is using you?
+
+# ShowAllCommands
+- show all commands
+- what can you do
+- what can I ask
+- commands list
+- what are the questions
+- help
+- 
