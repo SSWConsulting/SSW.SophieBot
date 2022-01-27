@@ -7,5 +7,6 @@
 -   Deployed to Dev
 -   Complex code is documented (removing technical debt)
 -   Deployed to Production
--   Tick off the definition of done task in the PBI
+-   Add description about the changes for the PBI
+-   Tick off the definition of done tasks in the PBI
 -   (Optional) A Done Video, particularly for PBI with multiple stages

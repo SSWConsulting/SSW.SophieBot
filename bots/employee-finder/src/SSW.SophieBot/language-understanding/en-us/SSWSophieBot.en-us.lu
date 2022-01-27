@@ -35,6 +35,16 @@
 		- isnt
 		- arent
 
+@ list pastBe = 
+	- positive :
+		- was
+		- were
+	- negative :
+		- wasnt
+		- wasn't
+		- werent
+		- weren't
+
 @ list futureBe = 
 	- positive:
 		- will
@@ -173,6 +183,7 @@
 - I want to report a bug in {@project = Rules} project
 - I have a bug that needs to be report to {@project = SugarLearning} Team
 - I have a {@project = TimePro} bug to report
+
 # CheckAvailability
 - ^is {@contact} ({@available} | {@unavailable})[?]
 - ^is {@contact} ({@available} | {@unavailable}) or ({@available} | {@unavailable})[?]
@@ -192,9 +203,8 @@
 @ intent CheckAvailability usesFeature contact,available,unavailable
 
 # GetCurrentEmployeesOnLocation
-- who is [(in|on)] {@geographyV2} [office] [right] now[?]^
-- who was in [the] ({geographyV2}|{site}) [office] [on] {datetimeV2}[?]^
-- who has been [(to|in)] [the] ({geographyV2}|{site}) [office] [on] {datetimeV2}[?]^
+- who ({@pastBe}|{@presentBe}) [(in|at)] [the] ({@geographyV2}|{@site}) [office] [on] {@datetimeV2}[?]^
+- who has been [(to|in|at)] [the] ({@geographyV2}|{@site}) [office] [on] {@datetimeV2}[?]^
 - who is in brisbane right now
 - who is in newcastle now
 - Who are in the Sydney office right now?
@@ -211,7 +221,7 @@
 
 @ phraselist CurrentPhraseList(interchangeable) disabledForAllModels =
 	- now,right now,currently,today,at the moment
-@ intent GetCurrentEmployeesOnLocation usesFeature CurrentPhraseList,geographyV2,datetimeV2
+@ intent GetCurrentEmployeesOnLocation usesFeature CurrentPhraseList,geographyV2,datetimeV2,site
 
 # GetEmailAddress
 - {@contact={@firstName=antonio}}'s {@profileProperty={@emailAddressProperty=email}} please
@@ -516,6 +526,8 @@
 - {@goodbye}
 
 # Greeting
+- where do you get your data?
+- where do you get your data from?
 - hello
 - hi
 - nice to meet you
@@ -533,6 +545,11 @@
 - what can you 
 - who is sophie
 - who is sophiebot
+- show all commands
+- what can you do
+- what can I ask
+- commands list
+- what are the questions
 
 @ phraseList GreetingPhraseList(interchangeable) disabledForAllModels =
 	- hi
@@ -586,7 +603,7 @@
 @ intent GetCalendar usesFeature contact, CalendarPhraseList
 
 # GetFreeDay
-- when ({@presentBe} | {@futureBe}) [not] {@contact} [be] [not] ({@available} | {@unavailable})[?]
+- when ({@presentBe} | {@futureBe}) [not] {@contact}['s] [be] [not] [next] ({@available} | {@unavailable}) [next] [?]
 - when will {@contact={@firstName=adam}} be {@available = free}
 - when will {@contact={@firstName=adam} {@lastName=cogan}} be {@available = available}
 - when will {@contact={@firstName=adam}} be {@available = working for ssw}?
@@ -654,3 +671,11 @@
 	- doing
 	- working on
 @ intent GetEmployeeProjects usesFeature EmployeeProjectsPhraseList
+
+# ShowAllCommands
+- show all commands
+- what can you do
+- what can I ask
+- commands list
+- what are the questions
+- help

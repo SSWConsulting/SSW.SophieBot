@@ -245,35 +245,38 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 			}
 		}
 
-		public static NextClientModel GetNextUnavailability(GetEmployeeModel employee, DateTime date, out int freeDays)
-		{
-			freeDays = 0;
-			if (!employee.NormalizedAppointments.Any())
-			{
-				return null;
-			}
+        public static NextClientModel GetNextUnavailability(GetEmployeeModel employee, DateTime date, out int freeDays, bool startFromNextWeek = true)
+        {
+            freeDays = 0;
+            if (!employee.NormalizedAppointments.Any())
+            {
+                return null;
+            }
 
 			var checkDays = 4 * 7;
 			GetAppointmentModel unavailableAppointment = null;
 
-			var offsetDaysTillNextWeek = 14 % ((int)date.DayOfWeek + 7);
-			date = date.Date.AddDays(offsetDaysTillNextWeek);
+            if (startFromNextWeek)
+            {
+                var offsetDaysTillNextWeek = 14 % ((int)date.DayOfWeek + 7);
+                date = date.Date.AddDays(offsetDaysTillNextWeek);
+            }
 
-			for (int i = 1; i <= checkDays; i++)
-			{
-				var checkDate = date.AddDays(i);
-				if (TryGetUnavailableAppointment(employee.NormalizedAppointments, checkDate, out var currentUnavailability))
-				{
-					if (unavailableAppointment == null)
-					{
-						unavailableAppointment = currentUnavailability;
-					}
-				}
-				else if (checkDate.DayOfWeek != DayOfWeek.Saturday && checkDate.DayOfWeek != DayOfWeek.Sunday)
-				{
-					freeDays++;
-				}
-			}
+            for (int i = 0; i <= checkDays; i++)
+            {
+                var checkDate = date.AddDays(i);
+                if (TryGetUnavailableAppointment(employee.NormalizedAppointments, checkDate, out var currentUnavailability))
+                {
+                    if (unavailableAppointment == null)
+                    {
+                        unavailableAppointment = currentUnavailability;
+                    }
+                }
+                else if (checkDate.DayOfWeek != DayOfWeek.Saturday && checkDate.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    freeDays++;
+                }
+            }
 
 			if (string.IsNullOrEmpty(unavailableAppointment?.Regarding))
 			{

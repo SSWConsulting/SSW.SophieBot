@@ -144,7 +144,7 @@
                     "id": "D6HuU2"
                   },
                   "datetime": "=dialog.dateEntity.value",
-                  "format": "dddd d MMMM",
+                  "format": "ddd d MMM",
                   "resultProperty": "turn.formatDate"
                 }
               ],
@@ -155,7 +155,7 @@
                     "id": "1fqjqj"
                   },
                   "resultProperty": "turn.formatDate",
-                  "format": "dddd d MMMM"
+                  "format": "ddd d MMM"
                 }
               ]
             },
