@@ -183,6 +183,7 @@
 - I want to report a bug in {@project = Rules} project
 - I have a bug that needs to be report to {@project = SugarLearning} Team
 - I have a {@project = TimePro} bug to report
+
 # CheckAvailability
 - ^is {@contact} ({@available} | {@unavailable})[?]
 - ^is {@contact} ({@available} | {@unavailable}) or ({@available} | {@unavailable})[?]
@@ -589,7 +590,7 @@
 @ intent GetCalendar usesFeature contact, CalendarPhraseList
 
 # GetFreeDay
-- when ({@presentBe} | {@futureBe}) [not] {@contact} [be] [not] ({@available} | {@unavailable})[?]
+- when ({@presentBe} | {@futureBe}) [not] {@contact}['s] [be] [not] [next] ({@available} | {@unavailable}) [next] [?]
 - when will {@contact={@firstName=adam}} be {@available = free}
 - when will {@contact={@firstName=adam} {@lastName=cogan}} be {@available = available}
 - when will {@contact={@firstName=adam}} be {@available = working for ssw}?
