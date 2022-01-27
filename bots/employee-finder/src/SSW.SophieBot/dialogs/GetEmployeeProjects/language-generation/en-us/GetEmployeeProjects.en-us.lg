@@ -34,7 +34,7 @@
 
 # SendActivity_W7ne5z()
 [Activity
-    Attachments = ${json(ProjectListCard(turn.employees[0]))}
+    Attachments = ${json(ProjectListCard(turn.billableEmployees.employees[0]))}
 ]
 
 # ProjectListCard(profile)
@@ -43,13 +43,10 @@
     "type": "AdaptiveCard",
     "body": [
         {
-            "type": "TextBlock",
-            "size": "large",
-            "text": "${profile.firstName}'s projects",
-            "wrap": true,
-            "weight": "bolder",
-            "style": "heading",
-            "fontType": "Default"
+            "type": "ColumnSet",
+            "columns": [ 
+                ${ClickableName(profile.firstName + "'s projects" , profile.firstName, profile.lastName, 'auto', 'large', 'None', 'GetEmployeeProjects')},
+            ]
         },
         {
             "type": "ColumnSet",
@@ -61,12 +58,11 @@
                         {
                             "type": "TextBlock",
                             "text": "Project ID",
-                            "wrap": true,
                             "weight": "Bolder",
-                            "horizontalAlignment": "Left",
-                            "style": "columnHeader"
+                            "horizontalAlignment": "Left"
                         }
-                    ]
+                    ],
+                    "verticalContentAlignment": "Center"
                 },
                 {
                     "type": "Column",
@@ -76,8 +72,7 @@
                             "type": "TextBlock",
                             "text": "Project Name",
                             "weight": "Bolder",
-                            "horizontalAlignment": "Left",
-                            "style": "columnHeader"
+                            "horizontalAlignment": "Left"
                         }
                     ],
                     "verticalContentAlignment": "Center"
@@ -91,21 +86,41 @@
                             "text": "Client Name",
                             "wrap": true,
                             "weight": "Bolder",
-                            "horizontalAlignment": "Left",
-                            "style": "columnHeader"
+                            "horizontalAlignment": "Left"
+                        }
+                    ],
+                    "verticalContentAlignment": "Center"
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Worked ",
+                            "wrap": true,
+                            "weight": "Bolder",
+                            "horizontalAlignment": "Center"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "(Last 90 days)",
+                            "size": "Small",
+                            "wrap": true,
+                            "spacing": "None",
+                            "horizontalAlignment": "Center"
                         }
                     ],
                     "verticalContentAlignment": "Center"
                 }
             ],
             "bleed": true,
-            "style": "default",
             "horizontalAlignment": "Center"
         },
         {
             "type": "Container",
             "items": [
-                ${join(select(profile.projects, project, ProjectListRow(project)), ',')}
+                ${join(select(profile.billedProjects, project, ProjectListRow(project)), ',')}
             ],
             "bleed": true,
             "horizontalAlignment": "Left",
@@ -114,6 +129,17 @@
             "verticalAlignment": "Center"
             },
             "separator": true
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                    {
+                        "type": "Action.OpenUrl",
+                        "title": "View in CRM",
+                        "url": "${settings.App.CRMActiveProjectList}",
+                        "iconUrl": "${Dynamics365Icon()}"
+                    }
+                ]
         }
     ],
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
@@ -153,7 +179,11 @@
                     "horizontalAlignment": "Left"
                 }
             ],
-            "verticalContentAlignment": "Center"
+            "verticalContentAlignment": "Center",
+            "selectAction": {
+                "type": "Action.OpenUrl",
+                "url": "${settings.App.CRMProjectUrl}&id=${project.crmProjectId}"
+            }
         },
         {
             "type": "Column",
@@ -165,6 +195,20 @@
                     "text": "${project.customerName}",
                     "size": "Default",
                     "horizontalAlignment": "Left"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "text": "${project.billedDays}",
+                    "size": "Small",
+                    "horizontalAlignment": "Center"
                 }
             ],
             "verticalContentAlignment": "Center"
@@ -181,11 +225,3 @@
 [Activity
     Text = ${SendActivity_SB0mZY_text()}
 ]
-
-# SendActivity_8LLs4d()
-[Activity
-    Text = ${SendActivity_8LLs4d_text()}
-]
-
-# SendActivity_8LLs4d_text()
-- You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.
