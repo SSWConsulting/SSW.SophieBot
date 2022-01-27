@@ -534,9 +534,17 @@
 - how do you do
 - what's up
 - hey sophie
+- hey sophiebot
 - help
 - what can you do
 - what can i do
+- what is sophie
+- what is sophiebot
+- what can you 
+- who is sophie
+- who is sophiebot
+- where do you get your data [from][?]
+
 
 @ phraseList GreetingPhraseList(interchangeable) disabledForAllModels =
 	- hi

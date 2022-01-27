@@ -11,13 +11,7 @@
     "type": "AdaptiveCard",
     "body": [
         ${if(!user.welcomed, GreetingImage() + ',', '')}
-        {
-            "type": "TextBlock",
-            "text": "Welcome to [SSW SophieBot](${settings.App.ProductUrl})!",
-            "wrap": true,
-            "weight": "Bolder",
-            "size": "Large"
-        },
+         ${if(!user.welcomed, WelcomeTitle() + ',','')}
         {
             "type": "TextBlock",
             "text": "${SayHi()}",
@@ -104,6 +98,17 @@
 ```
 
 # SummaryText()
-- I can help you search for people in your organization. Try asking...
-- I'm ready to help answer questions about people in your organization. Try asking...
-- I'm here to help you find people in your organization. Try asking...
+- I can help you search for people in your organization using data from your CRM system. Currently, I am getting data from [here](${settings.App.CRMHost}). Try asking...
+- I'm ready to help answer questions about people in your organization using data from your CRM system. Currently, I am getting data from [here](${settings.App.CRMHost}). Try asking...
+- I'm here to help you find people in your organization using data from your CRM system. Currently, I am getting data from [here](${settings.App.CRMHost}). Try asking...
+
+# WelcomeTitle()
+ - ```
+ {
+     "type": "TextBlock",
+     "text": "Welcome to [SSW SophieBot](${settings.App.ProductUrl})!",
+     "wrap": true,
+     "weight": "Bolder",
+     "size": "Large"
+ }
+ ```
