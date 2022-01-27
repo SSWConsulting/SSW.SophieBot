@@ -9,7 +9,7 @@
 - Please specify a person name to query.
 # SendActivity_3xGxzX()
 [Activity
-    Attachments = ${json(NameButtons('GetCalendar', 'GetCalendar'))}
+    Attachments = ${json(NameButtons('GetEmployeeProjects', 'GetEmployeeProjects', null))}
 ]
 # SendActivity_QG9SIV_text()
 - Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
@@ -136,7 +136,7 @@
                     {
                         "type": "Action.OpenUrl",
                         "title": "View in CRM",
-                        "url": "${settings.App.CRMActiveProjectList}",
+                        "url": "${settings.App.CRMActiveProjectUrl}",
                         "iconUrl": "${Dynamics365Icon()}"
                     }
                 ]

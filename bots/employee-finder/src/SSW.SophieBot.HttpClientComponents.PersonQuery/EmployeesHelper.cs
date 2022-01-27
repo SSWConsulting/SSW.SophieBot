@@ -47,6 +47,8 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 					{
 						employeeProjects = e.Projects ?? new List<GetEmployeeProjectModel>();
 					}
+
+
 					foreach (var employeeProject in employeeProjects)
 					{
 						var billedDays = GetBilledDays(e, employeeProject, out var billableHours);
@@ -60,6 +62,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 							CrmProjectId = employeeProject.CrmProjectId
 						});
 					}
+
+					billedProjects = billedProjects.OrderByDescending(project => project.BilledHours).ToList();
+
 					return new EmployeeBillableItemModel
 					{
 						UserId = e.UserId,
