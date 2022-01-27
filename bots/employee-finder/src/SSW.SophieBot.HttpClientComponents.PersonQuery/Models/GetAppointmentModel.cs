@@ -10,6 +10,10 @@ namespace SSW.SophieBot.HttpClientAction.Models
         public DateTimeOffset End { get; set; }
         public string Regarding { get; set; }
         public string Subject { get; set; }
+        public string ClientNumber { get; set; }
+        public string AccountManagerName { get; set; }
+        public int? StateCode { get; set; }
+        public string StateCodeName { get; set; }
 
         public GetAppointmentModel Clone()
         {
@@ -20,7 +24,11 @@ namespace SSW.SophieBot.HttpClientAction.Models
                 Start = Start,
                 End = End,
                 Regarding = Regarding,
-                Subject = Subject
+                Subject = Subject,
+                ClientNumber = ClientNumber,
+                AccountManagerName = AccountManagerName,
+                StateCode = StateCode,
+                StateCodeName = StateCodeName
             };
         }
 

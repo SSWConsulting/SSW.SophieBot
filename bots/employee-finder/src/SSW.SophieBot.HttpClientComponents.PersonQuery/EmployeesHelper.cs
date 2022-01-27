@@ -305,11 +305,16 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 				.Take(maxCount);
 		}
 
-		public static List<string> GetClientsByDate(DateTime date, List<GetAppointmentModel> appointments)
+		public static List<EmployeeProfileClient> GetClientsByDate(DateTime date, List<GetAppointmentModel> appointments)
 		{
 			return GetEnumerableAppointmentsByDate(appointments, date)
 				.Where(appointment => !_internalCompanyNames.Contains(appointment.Regarding?.ToLower()))
-				.Select(appointment => appointment.Regarding)
+				.Select(appointment => new EmployeeProfileClient
+                {
+					Name = appointment.Regarding,
+					Number = appointment.ClientNumber,
+					AccountManager = appointment.AccountManagerName
+                })
 				.Distinct()
 				.ToList();
 		}

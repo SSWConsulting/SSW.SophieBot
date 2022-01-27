@@ -414,7 +414,9 @@
 
 # Status(profile)
 - IF: ${ profile.bookingStatus == 1 && profile.clients.count != 0 }
-    - Busy working for ${if(!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false, '\\\\*\\\\*\\\\*', join(profile.clients, ','))}
+    - Busy working for ${if(!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false, 
+		'\\\\*\\\\*\\\\*', 
+		concat(profile.clients[0].number, ' - ', profile.clients[0].name, ' (Account Manager: ', profile.clients[0].accountManager, ')'))}
 - ELSEIF: ${ profile.bookingStatus == 1 && profile.clients.count == 0 }
     - Busy on client work
 - ELSEIF: ${ profile.bookingStatus == 2 }

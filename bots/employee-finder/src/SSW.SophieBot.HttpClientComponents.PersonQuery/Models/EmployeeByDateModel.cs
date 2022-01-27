@@ -25,7 +25,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Models
         public string AvatarUrl { get; set; }
 
         [JsonProperty("Clients")]
-        public List<string> Clients { get; set; }
+        public List<EmployeeProfileClient> Clients { get; set; }
 
         [JsonProperty("title")]
         public string Title { get; set; }

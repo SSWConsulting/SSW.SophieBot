@@ -19,7 +19,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Models
         public string Title { get; set; }
 
         [JsonProperty("clients")]
-        public List<string> Clients { get; set; }
+        public List<EmployeeProfileClient> Clients { get; set; }
 
         [JsonProperty("bookingStatus")]
         public BookingStatus BookingStatus { get; set; }
@@ -80,5 +80,17 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Models
 
         [JsonProperty("additionalStatus")]
         public string AdditionalStatus { get; set; }
+    }
+
+    public class EmployeeProfileClient
+    {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("number")]
+        public string Number { get; set; }
+
+        [JsonProperty("accountManager")]
+        public string AccountManager { get; set; }
     }
 }

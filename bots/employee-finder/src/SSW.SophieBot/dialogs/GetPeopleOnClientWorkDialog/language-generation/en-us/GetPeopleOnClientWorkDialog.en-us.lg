@@ -314,7 +314,7 @@ Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
     - ${join(createArray(
             Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
             ClickableName(employee.displayName, employee.firstName, employee.lastName, '150px', 'Small', 'Default', 'GetPeopleOnClientWork'),
-            ClientColumn(employee.clients, 'stretch', 'Center', employee.userId, warningId)
+            ClientColumn(select(employee.clients, client, client.name), 'stretch', 'Center', employee.userId, warningId)
         ), ',')}
 - ELSE:
     - ${join(createArray(
