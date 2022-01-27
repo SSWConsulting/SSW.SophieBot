@@ -68,7 +68,17 @@
                             "value": "Who is on client work?"
                         }
                     }
-                }
+                },
+				{
+					"type": "Action.ShowCard",
+                    "title": "See all commands",
+					"card": {
+						"type": "AdaptiveCard",
+						"body": [
+							${CommandList()}
+						]
+					}
+				}
             ]
         },
         {
