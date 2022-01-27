@@ -648,11 +648,23 @@
 - who's been using sophiebot
 - who are using sophiebot?
 - who used sophiebot?
+- who talked with sophiebot
+- who have tried sophiebot
 - show me user usages
 - show me usage for this bot
 - I want to see usage report
 - usage report
 - who else is using you?
+
+@ phraseList UsagePhraseList(interchangeable) disabledForAllModels =
+	- use
+	- using
+	- uses
+	- used
+	- talk with
+	- chat with
+	- tried
+@ intent GetUsageByUser usesFeature UsagePhraseList
 
 # GetEmployeeProjects
 - ^{@contact}['s] projects^
