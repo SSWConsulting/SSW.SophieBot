@@ -225,3 +225,11 @@
 [Activity
     Text = ${SendActivity_SB0mZY_text()}
 ]
+
+# SendActivity_1R8imB()
+[Activity
+    Text = ${SendActivity_1R8imB_text()}
+]
+
+# SendActivity_1R8imB_text()
+- You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.

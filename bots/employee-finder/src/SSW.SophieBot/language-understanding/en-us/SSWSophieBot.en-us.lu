@@ -641,11 +641,13 @@
 
 # GetEmployeeProjects
 - what {@presentBe} {@contact}['s] projects
-- what is {@contact={@firstName=adam}} doing[?]
-- what is {@contact={@firstName=jack} {@lastName=smith}} working on[?]
+- what is {@contact={@firstName=adam}} doing?
+- what is {@contact={@firstName=adam} {@lastName=cogan}} doing?
+- what is {@contact={@firstName=adam} {@lastName=cogan}} working on?
 - what are {@contact={@firstName=piers}}'s projects?
 - show me {@contact={@firstName=michael}}'s projects
-- what's {@contact={@firstName=jim}}'s projects
+- what's {@contact={@firstName=jim}}'s projects?
+- ^{@contact}['s] projects^
 
 @ phraselist EmployeeProjectsPhraseList(interchangeable) disabledForAllModels =
 	- projects

@@ -611,6 +611,7 @@ ${IntranetInfo()}
 {
     "type": "Action.Submit",
     "title": "View Projects",
+    "iconUrl": "${Dynamics365Icon()}",
     "data": 
     {
         "intent": "GetEmployeeProjects",

@@ -32,24 +32,24 @@
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "1YMRSQ"
+                "id": "qLYzhL"
               },
+              "condition": "=!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false",
               "actions": [
                 {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "8LLs4d"
+                    "id": "1R8imB"
                   },
-                  "activity": "${SendActivity_8LLs4d()}"
+                  "activity": "${SendActivity_1R8imB()}"
                 },
                 {
                   "$kind": "Microsoft.EndDialog",
                   "$designer": {
-                    "id": "74Xx7J"
+                    "id": "LH1Vtq"
                   }
                 }
-              ],
-              "condition": "=!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false"
+              ]
             }
           ],
           "elseActions": [
@@ -205,6 +205,15 @@
                 }
               ],
               "actions": [
+                {
+                  "$kind": "GetEmployeesByBillableAction",
+                  "$designer": {
+                    "id": "W9w9Gc"
+                  },
+                  "isProject": true,
+                  "employees": "=turn.employees",
+                  "workingEmployeesProperty": "turn.billableEmployees"
+                },
                 {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
