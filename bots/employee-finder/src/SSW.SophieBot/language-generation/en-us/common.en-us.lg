@@ -606,3 +606,527 @@ ${IntranetInfo()}
 		"items": []
     }
 	```
+
+# CommandList()
+- ```
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Who works in Melbourne?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Who works in Melbourne?",
+						"value": "Who works in Melbourne?"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Who knows Azure?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Who knows Azure?",
+						"value": "Who knows Azure?"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "I need to talk to a DevOps expert in Melbourne"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "I need to talk to a DevOps expert in Melbourne",
+						"value": "I need to talk to a DevOps expert in Melbourne"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Who is Adam Cogan?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Who is Adam Cogan?",
+						"value": "Who is Adam Cogan?"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "What is Uly's mobile?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "What is Uly's mobile?",
+						"value": "What is Uly's mobile?"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "What is Uly's email?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "What is Uly's email?",
+						"value": "What is Uly's email?"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Show me Uly's bookings"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Show me Uly's bookings",
+						"value": "Show me Uly's bookings"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Is Adam booked or free?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Is Adam booked or free?",
+						"value": "Is Adam booked or free?"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "When will Calum be free?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "When will Calum be free?",
+						"value": "When will Calum be free?"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Show me Adam's skills"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Show me Adam's skills",
+						"value": "Show me Adam's skills"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Who is working on SugarLearning?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Who is working on SugarLearning?",
+						"value": "Who is working on SugarLearning?"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Who is on client work?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Who is on client work?",
+						"value": "Who is on client work?"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Who is free next Friday?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Who is free next Friday?",
+						"value": "Who is free next Friday?"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Who is on client work next Friday?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Who is on client work next Friday?",
+						"value": "Who is on client work next Friday?"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Who is free next Friday in Melbourne with Angular skills?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Who is free next Friday in Melbourne with Angular skills?",
+						"value": "Who is free next Friday in Melbourne with Angular skills?"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Who is in the Sydney office right now?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Who is in the Sydney office right now?",
+						"value": "Who is in the Sydney office right now?"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "What is Adam doing?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "What is Adam doing?",
+						"value": "What is Adam doing?"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Who's been using SophieBot?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Who's been using SophieBot?",
+						"value": "Who's been using SophieBot?"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Hey this is broken"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Hey this is broken",
+						"value": "Hey this is broken"
+					}
+				}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Goodbye"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"data": 
+				{
+					"msteams": {
+						"type": "imBack",
+						"title": "Goodbye",
+						"value": "Goodbye"
+					}
+				}
+			}
+		}
+	]
+}
+```
