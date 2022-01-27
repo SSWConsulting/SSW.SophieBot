@@ -125,9 +125,6 @@
             "bleed": true,
             "horizontalAlignment": "Left",
             "verticalContentAlignment": "Center",
-            "backgroundImage": {
-            "verticalAlignment": "Center"
-            },
             "separator": true
         },
         {
