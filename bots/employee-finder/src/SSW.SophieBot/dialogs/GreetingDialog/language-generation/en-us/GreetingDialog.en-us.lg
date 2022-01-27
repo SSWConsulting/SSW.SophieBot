@@ -11,7 +11,7 @@
     "type": "AdaptiveCard",
     "body": [
         ${if(!user.welcomed, GreetingImage() + ',', '')}
-         ${if(!user.welcomed, WelcomeTitle() + ',','')}
+        ${if(!user.welcomed, WelcomeTitle() + ',','')}
         {
             "type": "TextBlock",
             "text": "${SayHi()}",

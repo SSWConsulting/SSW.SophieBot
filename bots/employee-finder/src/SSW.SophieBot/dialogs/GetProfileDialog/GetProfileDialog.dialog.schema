@@ -27,7 +27,7 @@
     },
     "stringExpression": {
       "$role": "expression",
-      "title": "String or expression",
+      "title": "String",
       "description": "Interpolated string or expression to evaluate.",
       "oneOf": [
         {

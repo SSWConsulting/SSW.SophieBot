@@ -1,8 +1,8 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "id": "Ke8mfV",
-    "name": "GetCalendarDialog",
+    "id": "a179tr",
+    "name": "GetEmployeeProjects",
     "comment": ""
   },
   "autoEndDialog": true,
@@ -13,65 +13,65 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "zmUWcf"
+        "id": "VYbskV"
       },
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "p2VEis"
+            "id": "vSCUFG"
           }
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "OSSap5"
+            "id": "l7KLKB"
           },
           "condition": "=exists(dialog.nameEntity) && (exists(dialog.nameEntity.firstname) || exists(dialog.nameEntity.lastname))",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "2NqXcv"
-              },
-              "activity": "${SendActivity_2NqXcv()}"
-            },
-            {
-              "$kind": "Microsoft.EndDialog",
-              "$designer": {
-                "id": "cfYCZl"
-              }
-            }
-          ],
           "actions": [
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "ZIynOJ"
+                "id": "qLYzhL"
               },
               "condition": "=!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false",
               "actions": [
                 {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "8XHMsU"
+                    "id": "1R8imB"
                   },
-                  "activity": "${SendActivity_8XHMsU()}"
+                  "activity": "${SendActivity_1R8imB()}"
                 },
                 {
                   "$kind": "Microsoft.EndDialog",
                   "$designer": {
-                    "id": "yqRvZ8"
+                    "id": "IRu4HG"
                   }
                 }
               ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "4yqLzB"
+              },
+              "activity": "${SendActivity_4yqLzB()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "FGJ6zK"
+              }
             }
           ]
         },
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "KHL6mr"
+            "id": "SLGMBW"
           },
           "property": "turn.userInputName",
           "value": "=concat(if(exists(dialog.nameEntity.firstname), dialog.nameEntity.firstname[0], \"Mr.\"), if(exists(dialog.nameEntity.lastname), concat(\" \", dialog.nameEntity.lastname[0]), \"\"))"
@@ -79,7 +79,7 @@
         {
           "$kind": "GetProfileAction",
           "$designer": {
-            "id": "3sCJxK"
+            "id": "a3fEbi"
           },
           "queryString": [
             {
@@ -98,44 +98,44 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "2ruyJ5"
+            "id": "64zZbr"
           },
           "condition": "=turn.statusCode == 200",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "qP71PG"
+                "id": "0xpU8F"
               },
-              "activity": "${SendActivity_qP71PG()}"
+              "activity": "${SendActivity_0xpU8F()}"
             }
           ],
           "actions": [
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "aqnM5d"
+                "id": "8NhUz0"
               },
               "condition": "=exists(turn.employees) && count(turn.employees) > 0",
               "elseActions": [
                 {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "pIH54A"
+                    "id": "1DBCCd"
                   },
                   "condition": "=dialog.altered",
                   "actions": [
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "yEShBq"
+                        "id": "QG9SIV"
                       },
-                      "activity": "${SendActivity_yEShBq()}"
+                      "activity": "${SendActivity_QG9SIV()}"
                     },
                     {
                       "$kind": "Microsoft.EndDialog",
                       "$designer": {
-                        "id": "yxEElB"
+                        "id": "IhHDV1"
                       }
                     }
                   ]
@@ -143,7 +143,7 @@
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
-                    "id": "X2AMdw"
+                    "id": "qHzsi1"
                   },
                   "value": "=join([dialog.nameEntity.firstname[0], dialog.nameEntity.lastname[0]], ' ')",
                   "property": "turn.originalName"
@@ -151,7 +151,7 @@
                 {
                   "$kind": "PersonNameAlterateAction",
                   "$designer": {
-                    "id": "mPCP7Y"
+                    "id": "DPcfvU"
                   },
                   "resultLastNameProperty": "dialog.suggestedLastName",
                   "resultFirstNameProperty": "dialog.suggestedFirstName",
@@ -161,14 +161,14 @@
                 {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "4vAImT"
+                    "id": "7511Pt"
                   },
                   "condition": "=turn.altered",
                   "actions": [
                     {
                       "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "B9SCa5"
+                        "id": "AXolm4"
                       },
                       "assignments": [
                         {
@@ -184,7 +184,7 @@
                     {
                       "$kind": "Microsoft.RepeatDialog",
                       "$designer": {
-                        "id": "uYLTAm"
+                        "id": "StaG5a"
                       },
                       "activityProcessed": true,
                       "options": {
@@ -197,25 +197,34 @@
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "iPYUuZ"
+                        "id": "2AjG13"
                       },
-                      "activity": "${SendActivity_iPYUuZ()}"
+                      "activity": "${SendActivity_2AjG13()}"
                     }
                   ]
                 }
               ],
               "actions": [
                 {
+                  "$kind": "GetEmployeesByBillableAction",
+                  "$designer": {
+                    "id": "W9w9Gc"
+                  },
+                  "isProject": true,
+                  "employees": "=turn.employees",
+                  "workingEmployeesProperty": "turn.billableEmployees"
+                },
+                {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "QJQ3m0"
+                    "id": "sqd8TO"
                   },
                   "condition": "=count(turn.employees) > 1",
                   "elseActions": [
                     {
                       "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "qG2Tta"
+                        "id": "ty669D"
                       },
                       "assignments": [
                         {
@@ -229,28 +238,20 @@
                       ]
                     },
                     {
-                      "$kind": "GetProfileWithStatusAction",
-                      "$designer": {
-                        "id": "FJbad2"
-                      },
-                      "employees": "=turn.employees",
-                      "result": "turn.employeesWithStatus"
-                    },
-                    {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "LB1FzJ"
+                        "id": "W7ne5z"
                       },
-                      "activity": "${SendActivity_LB1FzJ()}"
+                      "activity": "${SendActivity_W7ne5z()}"
                     }
                   ],
                   "actions": [
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "e2zip0"
+                        "id": "3xGxzX"
                       },
-                      "activity": "${SendActivity_e2zip0()}"
+                      "activity": "${SendActivity_3xGxzX()}"
                     }
                   ]
                 }
@@ -261,13 +262,13 @@
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "W8BpKi"
+            "id": "0e9DfN"
           }
         }
       ]
     }
   ],
-  "generator": "GetCalendarDialog.lg",
-  "recognizer": "GetCalendarDialog.lu.qna",
-  "id": "GetCalendarDialog"
+  "generator": "GetEmployeeProjects.lg",
+  "recognizer": "GetEmployeeProjects.lu.qna",
+  "id": "GetEmployeeProjects"
 }

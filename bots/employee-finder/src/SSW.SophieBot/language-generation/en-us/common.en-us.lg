@@ -607,6 +607,25 @@ ${IntranetInfo()}
     }
 	```
 
+# ViewEmployeeProjectsAction(displayName, sourceIntent)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "View Projects",
+    "iconUrl": "${Dynamics365Icon()}",
+    "data": 
+    {
+        "intent": "GetEmployeeProjects",
+        "contact": ${dialog.nameEntity},
+        ${IntentRedirectTelemetry('ViewProjects', sourceIntent, 'View Projects')},
+        "msteams": {
+            "type": "messageBack",
+			"displayText": "Show ${displayName}'s projects"
+        }
+    }
+}
+```
+
 # CommandList()
 - ```
 {

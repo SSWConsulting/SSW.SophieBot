@@ -8,244 +8,247 @@ using System.Text.RegularExpressions;
 
 namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 {
-    public static class EmployeesHelper
-    {
-        private static readonly string[] _internalCompanyNames = new[]
-        {
-            "ssw",
-            "ssw test"
-        };
+	public static class EmployeesHelper
+	{
+		private static readonly string[] _internalCompanyNames = new[]
+		{
+			"ssw",
+			"ssw test"
+		};
 
-        public static List<EmployeeBillableItemModel> GetBillableEmployees(
-            IEnumerable<GetEmployeeModel> employees,
-            DateTime date,
-            string queriedProjectName,
-            bool isProject,
-            out string projectName)
-        {
-            GetEmployeeProjectModel project;
-            if (string.IsNullOrWhiteSpace(queriedProjectName))
-            {
-                project = null;
-            }
-            else
-            {
-                project = employees?.FirstOrDefault()?.Projects?.FirstOrDefault(p => IsProjectNameMatch(queriedProjectName, isProject ? p.ProjectName : p.CustomerName));
-            }
-            projectName = isProject ? project?.ProjectName : project?.CustomerName;
+		public static List<EmployeeBillableItemModel> GetBillableEmployees(
+			IEnumerable<GetEmployeeModel> employees,
+			DateTime date,
+			string queriedProjectName,
+			bool isProject,
+			out string projectName)
+		{
+			GetEmployeeProjectModel project;
+			if (string.IsNullOrWhiteSpace(queriedProjectName))
+			{
+				project = null;
+			}
+			else
+			{
+				project = employees?.FirstOrDefault()?.Projects?.FirstOrDefault(p => IsProjectNameMatch(queriedProjectName, isProject ? p.ProjectName : p.CustomerName));
+			}
+			projectName = isProject ? project?.ProjectName : project?.CustomerName;
+			return employees
+				.Select(e =>
+				{
+					var employeeProjects = new List<GetEmployeeProjectModel>();
+					var billedProjects = new List<BilledProject>();
+					if (project != null)
+					{
+						var employeeProject = e.Projects?.FirstOrDefault(p => IsProjectNameMatch(queriedProjectName, isProject ? p.ProjectName : p.CustomerName));
+						employeeProjects.Add(employeeProject);
+					}
+					else
+					{
+						employeeProjects = e.Projects ?? new List<GetEmployeeProjectModel>();
+					}
 
-            return employees
-                .Select(e =>
-                {
-                    var employeeProjects = new List<GetEmployeeProjectModel>();
-                    var billedProjects = new List<BilledProject>();
-                    if (project != null)
-                    {
-                        var employeeProject = e.Projects?.FirstOrDefault(p => IsProjectNameMatch(queriedProjectName, isProject ? p.ProjectName : p.CustomerName));
-                        employeeProjects.Add(employeeProject);
-                    }
-                    else
-                    {
-                        employeeProjects = e.Projects ?? new List<GetEmployeeProjectModel>();
-                    }
 
-                    foreach (var employeeProject in employeeProjects)
-                    {
-                        var billedDays = GetBilledDays(e, employeeProject, out var billableHours);
-                        billedProjects.Add(new BilledProject
-                        {
-                            ProjectId = employeeProject.ProjectId,
-                            BilledDays = billedDays,
-                            BilledHours = (int)billableHours,
-                            ProjectName = employeeProject.ProjectName,
-                            CustomerName = employeeProject.CustomerName
-                        });
-                    }
+					foreach (var employeeProject in employeeProjects)
+					{
+						var billedDays = GetBilledDays(e, employeeProject, out var billableHours);
+						billedProjects.Add(new BilledProject
+						{
+							BilledDays = billedDays,
+							BilledHours = (int)billableHours,
+							ProjectName = employeeProject.ProjectName,
+							ProjectId = employeeProject.ProjectId,
+							CustomerName = employeeProject.CustomerName,
+							CrmProjectId = employeeProject.CrmProjectId
+						});
+					}
 
-                    return new EmployeeBillableItemModel
-                    {
-                        UserId = e.UserId,
-                        AvatarUrl = e.AvatarUrl,
-                        FirstName = e.FirstName,
-                        LastName = e.LastName,
-                        DisplayName = $"{e.FirstName} {e.LastName}",
-                        BilledDays = billedProjects.FirstOrDefault()?.BilledDays ?? 0,
-                        BilledHours = billedProjects.FirstOrDefault()?.BilledHours ?? 0,
-                        BilledProjects = billedProjects,
-                        BookingStatus = GetBookingStatus(e, date),
-                        LastSeen = GetLastSeen(e)
-                    };
-                })
-                .OrderByDescending(i => i.BilledHours)
-                .ToList();
-        }
+					billedProjects = billedProjects.OrderByDescending(project => project.BilledHours).ToList();
 
-        public static BookingStatus GetBookingStatus(GetAppointmentModel appointment)
-        {
-            if (appointment == null)
-            {
-                return BookingStatus.Unknown;
-            }
+					return new EmployeeBillableItemModel
+					{
+						UserId = e.UserId,
+						AvatarUrl = e.AvatarUrl,
+						FirstName = e.FirstName,
+						LastName = e.LastName,
+						DisplayName = $"{e.FirstName} {e.LastName}",
+						BilledDays = billedProjects.FirstOrDefault()?.BilledDays ?? 0,
+						BilledHours = billedProjects.FirstOrDefault()?.BilledHours ?? 0,
+						BilledProjects = billedProjects,
+						BookingStatus = GetBookingStatus(e, date),
+						LastSeen = GetLastSeen(e)
+					};
+				})
+				.OrderByDescending(i => i.BilledHours)
+				.ToList();
+		}
 
-            if (IsOnLeaveFunc(appointment))
-            {
-                return BookingStatus.Leave;
-            }
-            if (IsOnClientWorkFunc(appointment))
-            {
-                return BookingStatus.ClientWork;
-            }
-            if (IsOnInternalWorkFunc(appointment))
-            {
-                return BookingStatus.InternalWork;
-            }
+		public static BookingStatus GetBookingStatus(GetAppointmentModel appointment)
+		{
+			if (appointment == null)
+			{
+				return BookingStatus.Unknown;
+			}
 
-            return BookingStatus.Unknown;
-        }
+			if (IsOnLeaveFunc(appointment))
+			{
+				return BookingStatus.Leave;
+			}
+			if (IsOnClientWorkFunc(appointment))
+			{
+				return BookingStatus.ClientWork;
+			}
+			if (IsOnInternalWorkFunc(appointment))
+			{
+				return BookingStatus.InternalWork;
+			}
 
-        public static DateTime? GetReturningDate(IEnumerable<GetAppointmentModel> appointments, DateTime date, DialogContext dc)
-        {
-            if (appointments == null || !appointments.Any())
-            {
-                return null;
-            }
+			return BookingStatus.Unknown;
+		}
 
-            if (TryGetUnavailableAppointment(appointments, date, out var currentLeaveAppointment))
-            {
-                var futureAppointments = appointments.Where(a => a.End > currentLeaveAppointment.End);
+		public static DateTime? GetReturningDate(IEnumerable<GetAppointmentModel> appointments, DateTime date, DialogContext dc)
+		{
+			if (appointments == null || !appointments.Any())
+			{
+				return null;
+			}
 
-                if (!futureAppointments.Any())
-                {
-                    return null;
-                }
+			if (TryGetUnavailableAppointment(appointments, date, out var currentLeaveAppointment))
+			{
+				var futureAppointments = appointments.Where(a => a.End > currentLeaveAppointment.End);
 
-                var daysToCheck = (int)Math.Ceiling((futureAppointments.Max(a => a.End.Date) - date.Date).TotalDays);
+				if (!futureAppointments.Any())
+				{
+					return null;
+				}
 
-                for (int i = 1; i <= daysToCheck; i++)
-                {
-                    var checkDate = date.Date.AddDays(i);
+				var daysToCheck = (int)Math.Ceiling((futureAppointments.Max(a => a.End.Date) - date.Date).TotalDays);
 
-                    var appointmentsWithinDate = GetEnumerableAppointmentsByDate(futureAppointments, checkDate);
-                    var mainAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, checkDate);
+				for (int i = 1; i <= daysToCheck; i++)
+				{
+					var checkDate = date.Date.AddDays(i);
 
-                    if (mainAppointment != null
-                        && !IsOnLeaveFunc(mainAppointment))
-                    {
-                        return checkDate.Date;
-                    }
-                }
-            }
+					var appointmentsWithinDate = GetEnumerableAppointmentsByDate(futureAppointments, checkDate);
+					var mainAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, checkDate);
 
-            return null;
-        }
+					if (mainAppointment != null
+						&& !IsOnLeaveFunc(mainAppointment))
+					{
+						return checkDate.Date;
+					}
+				}
+			}
 
-        public static BookingStatus GetBookingStatus(GetEmployeeModel employee, DateTime date)
-        {
-            if (employee == null)
-            {
-                return BookingStatus.Unknown;
-            }
+			return null;
+		}
 
-            if (IsFree(employee, date))
-            {
-                return BookingStatus.Free;
-            }
-            if (IsOnLeave(employee, date))
-            {
-                return BookingStatus.Leave;
-            }
-            if (IsOnClientWork(employee, date))
-            {
-                return BookingStatus.ClientWork;
-            }
-            if (IsOnInternalWork(employee, date))
-            {
-                return BookingStatus.InternalWork;
-            }
+		public static BookingStatus GetBookingStatus(GetEmployeeModel employee, DateTime date)
+		{
+			if (employee == null)
+			{
+				return BookingStatus.Unknown;
+			}
 
-            return BookingStatus.Unknown;
-        }
+			if (IsFree(employee, date))
+			{
+				return BookingStatus.Free;
+			}
+			if (IsOnLeave(employee, date))
+			{
+				return BookingStatus.Leave;
+			}
+			if (IsOnClientWork(employee, date))
+			{
+				return BookingStatus.ClientWork;
+			}
+			if (IsOnInternalWork(employee, date))
+			{
+				return BookingStatus.InternalWork;
+			}
 
-        public static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project, out double billableHours)
-        {
-            billableHours = 0;
-            if (project != null)
-            {
-                billableHours = project?.BillableHours ?? 0;
-            }
-            else
-            {
-                billableHours = employee.Projects.Where(project => !project.CustomerName.Equals("ssw", StringComparison.OrdinalIgnoreCase)).Sum(p => p.BillableHours);
-            }
+			return BookingStatus.Unknown;
+		}
 
-            return billableHours == 0 ? 0 : (int)Math.Ceiling(billableHours / 8);
-        }
+		public static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project, out double billableHours)
+		{
+			billableHours = 0;
+			if (project != null)
+			{
+				billableHours = project?.BillableHours ?? 0;
+			}
+			else
+			{
+				billableHours = employee.Projects.Where(project => !project.CustomerName.Equals("ssw", StringComparison.OrdinalIgnoreCase)).Sum(p => p.BillableHours);
+			}
 
-        public static int GetBookedDays(GetEmployeeModel employee, DateTime startDate)
-        {
-            if (!employee.NormalizedAppointments.Any())
-            {
-                return 0;
-            }
+			return billableHours == 0 ? 0 : (int)Math.Ceiling(billableHours / 8);
+		}
 
-            var maxEndTime = employee.NormalizedAppointments.Max(appointment => appointment.End);
-            var checkDays = (int)Math.Ceiling((maxEndTime.Date - startDate.Date).TotalDays);
-            var bookedDays = 0;
+		public static int GetBookedDays(GetEmployeeModel employee, DateTime startDate)
+		{
+			if (!employee.NormalizedAppointments.Any())
+			{
+				return 0;
+			}
 
-            for (int i = 0; i <= checkDays; i++)
-            {
-                if (IsOnClientWork(employee.NormalizedAppointments, startDate.AddDays(i)))
-                {
-                    bookedDays++;
-                }
-            }
+			var maxEndTime = employee.NormalizedAppointments.Max(appointment => appointment.End);
+			var checkDays = (int)Math.Ceiling((maxEndTime.Date - startDate.Date).TotalDays);
+			var bookedDays = 0;
 
-            return bookedDays;
-        }
+			for (int i = 0; i <= checkDays; i++)
+			{
+				if (IsOnClientWork(employee.NormalizedAppointments, startDate.AddDays(i)))
+				{
+					bookedDays++;
+				}
+			}
 
-        public static string GetLastSeen(GetEmployeeModel model)
-        {
-            var lastSeenDateTime = model.LastSeenAt?.LastSeen.ToUniversalTime();
+			return bookedDays;
+		}
 
-            if (!lastSeenDateTime.HasValue)
-            {
-                return string.Empty;
-            }
+		public static string GetLastSeen(GetEmployeeModel model)
+		{
+			var lastSeenDateTime = model.LastSeenAt?.LastSeen.ToUniversalTime();
 
-            static int GetInteger(double value)
-            {
-                return Math.Max(1, (int)Math.Floor(value));
-            }
+			if (!lastSeenDateTime.HasValue)
+			{
+				return string.Empty;
+			}
 
-            var now = DateTimeOffset.UtcNow;
-            var timeOffset = now - lastSeenDateTime.Value;
+			static int GetInteger(double value)
+			{
+				return Math.Max(1, (int)Math.Floor(value));
+			}
 
-            if (timeOffset.TotalMinutes < 1)
-            {
-                var seconds = GetInteger(timeOffset.TotalSeconds);
-                return $"{seconds} {(seconds == 1 ? "second" : "seconds")} ago";
-            }
-            else if (timeOffset.TotalHours < 1)
-            {
-                var minutes = GetInteger(timeOffset.TotalMinutes);
-                return $"{minutes} {(minutes == 1 ? "minute" : "minutes")} ago";
-            }
-            else if (timeOffset.TotalDays < 1)
-            {
-                var hours = GetInteger(timeOffset.TotalHours);
-                return $"{hours} {(hours == 1 ? "hour" : "hours")} ago";
-            }
-            else if (timeOffset.TotalDays < 30)
-            {
-                var days = GetInteger(timeOffset.TotalDays);
-                return $"{days} {(days == 1 ? "day" : "days")} ago";
-            }
-            else
-            {
-                var months = GetInteger(timeOffset.TotalDays / 30);
-                return $"{months} {(months == 1 ? "month" : "months")} ago";
-            }
-        }
+			var now = DateTimeOffset.UtcNow;
+			var timeOffset = now - lastSeenDateTime.Value;
+
+			if (timeOffset.TotalMinutes < 1)
+			{
+				var seconds = GetInteger(timeOffset.TotalSeconds);
+				return $"{seconds} {(seconds == 1 ? "second" : "seconds")} ago";
+			}
+			else if (timeOffset.TotalHours < 1)
+			{
+				var minutes = GetInteger(timeOffset.TotalMinutes);
+				return $"{minutes} {(minutes == 1 ? "minute" : "minutes")} ago";
+			}
+			else if (timeOffset.TotalDays < 1)
+			{
+				var hours = GetInteger(timeOffset.TotalHours);
+				return $"{hours} {(hours == 1 ? "hour" : "hours")} ago";
+			}
+			else if (timeOffset.TotalDays < 30)
+			{
+				var days = GetInteger(timeOffset.TotalDays);
+				return $"{days} {(days == 1 ? "day" : "days")} ago";
+			}
+			else
+			{
+				var months = GetInteger(timeOffset.TotalDays / 30);
+				return $"{months} {(months == 1 ? "month" : "months")} ago";
+			}
+		}
 
         public static NextClientModel GetNextUnavailability(GetEmployeeModel employee, DateTime date, out int freeDays, bool startFromNextWeek = true)
         {
@@ -255,8 +258,8 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 return null;
             }
 
-            var checkDays = 4 * 7;
-            GetAppointmentModel unavailableAppointment = null;
+			var checkDays = 4 * 7;
+			GetAppointmentModel unavailableAppointment = null;
 
             if (startFromNextWeek)
             {
@@ -280,301 +283,301 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 }
             }
 
-            if (string.IsNullOrEmpty(unavailableAppointment?.Regarding))
-            {
-                return null;
-            }
+			if (string.IsNullOrEmpty(unavailableAppointment?.Regarding))
+			{
+				return null;
+			}
 
-            return new NextClientModel
-            {
-                Name = unavailableAppointment.Regarding,
-                Date = unavailableAppointment.Start.DateTime,
-                DateText = unavailableAppointment.Start.ToString("ddd, dd/MM/yyyy"),
-                Type = IsOnLeaveFunc(unavailableAppointment) ? BookingStatus.Leave : BookingStatus.ClientWork
-            };
-        }
+			return new NextClientModel
+			{
+				Name = unavailableAppointment.Regarding,
+				Date = unavailableAppointment.Start.DateTime,
+				DateText = unavailableAppointment.Start.ToString("ddd, dd/MM/yyyy"),
+				Type = IsOnLeaveFunc(unavailableAppointment) ? BookingStatus.Leave : BookingStatus.ClientWork
+			};
+		}
 
-        public static IEnumerable<GetAppointmentModel> GetAppointments(IEnumerable<GetAppointmentModel> appointments, DateTime startTime, int maxCount = int.MaxValue)
-        {
-            return appointments
-                .Where(a => !string.IsNullOrWhiteSpace(a.Regarding) && a.End.UtcTicks >= startTime.Ticks)
-                .OrderBy(a => a.Start)
-                .Take(maxCount);
-        }
+		public static IEnumerable<GetAppointmentModel> GetAppointments(IEnumerable<GetAppointmentModel> appointments, DateTime startTime, int maxCount = int.MaxValue)
+		{
+			return appointments
+				.Where(a => !string.IsNullOrWhiteSpace(a.Regarding) && a.End.UtcTicks >= startTime.Ticks)
+				.OrderBy(a => a.Start)
+				.Take(maxCount);
+		}
 
-        public static List<string> GetClientsByDate(DateTime date, List<GetAppointmentModel> appointments)
-        {
-            return GetEnumerableAppointmentsByDate(appointments, date)
-                .Where(appointment => !_internalCompanyNames.Contains(appointment.Regarding?.ToLower()))
-                .Select(appointment => appointment.Regarding)
-                .Distinct()
-                .ToList();
-        }
+		public static List<string> GetClientsByDate(DateTime date, List<GetAppointmentModel> appointments)
+		{
+			return GetEnumerableAppointmentsByDate(appointments, date)
+				.Where(appointment => !_internalCompanyNames.Contains(appointment.Regarding?.ToLower()))
+				.Select(appointment => appointment.Regarding)
+				.Distinct()
+				.ToList();
+		}
 
-        public static bool IsOnClientWork(GetEmployeeModel employee, DateTime date)
-        {
-            return IsOnClientWork(employee.NormalizedAppointments, date);
-        }
+		public static bool IsOnClientWork(GetEmployeeModel employee, DateTime date)
+		{
+			return IsOnClientWork(employee.NormalizedAppointments, date);
+		}
 
-        public static bool IsOnClientWork(IEnumerable<GetAppointmentModel> appointments, DateTime date)
-        {
-            var appointmentsWithinDate = GetEnumerableAppointmentsByDate(appointments, date);
-            var mainAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, date);
-            return mainAppointment != null
-                && IsOnClientWorkFunc(mainAppointment);
-        }
+		public static bool IsOnClientWork(IEnumerable<GetAppointmentModel> appointments, DateTime date)
+		{
+			var appointmentsWithinDate = GetEnumerableAppointmentsByDate(appointments, date);
+			var mainAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, date);
+			return mainAppointment != null
+				&& IsOnClientWorkFunc(mainAppointment);
+		}
 
-        public static bool TryGetUnavailableAppointment(
-            IEnumerable<GetAppointmentModel> appointments,
-            DateTime date,
-            out GetAppointmentModel unavailableAppointment)
-        {
-            unavailableAppointment = null;
-            var appointmentsWithinDate = GetEnumerableAppointmentsByDate(appointments, date);
+		public static bool TryGetUnavailableAppointment(
+			IEnumerable<GetAppointmentModel> appointments,
+			DateTime date,
+			out GetAppointmentModel unavailableAppointment)
+		{
+			unavailableAppointment = null;
+			var appointmentsWithinDate = GetEnumerableAppointmentsByDate(appointments, date);
 
-            if (appointmentsWithinDate.Any())
-            {
-                var targetAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, date);
-                if (targetAppointment != null
-                    && (IsOnLeaveFunc(targetAppointment)
-                    || IsOnClientWorkFunc(targetAppointment)))
-                {
-                    unavailableAppointment = targetAppointment;
-                    return true;
-                }
-            }
+			if (appointmentsWithinDate.Any())
+			{
+				var targetAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, date);
+				if (targetAppointment != null
+					&& (IsOnLeaveFunc(targetAppointment)
+					|| IsOnClientWorkFunc(targetAppointment)))
+				{
+					unavailableAppointment = targetAppointment;
+					return true;
+				}
+			}
 
-            return false;
-        }
+			return false;
+		}
 
-        public static bool IsOnInternalWork(GetEmployeeModel employee, DateTime date)
-        {
-            return IsOnInternalWork(employee.NormalizedAppointments, date);
-        }
+		public static bool IsOnInternalWork(GetEmployeeModel employee, DateTime date)
+		{
+			return IsOnInternalWork(employee.NormalizedAppointments, date);
+		}
 
-        public static bool IsOnInternalWork(IEnumerable<GetAppointmentModel> appointments, DateTime date)
-        {
-            var appointmentsWithinDate = GetEnumerableAppointmentsByDate(appointments, date);
-            var mainAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, date);
-            return mainAppointment != null
-                && IsOnInternalWorkFunc(mainAppointment);
-        }
+		public static bool IsOnInternalWork(IEnumerable<GetAppointmentModel> appointments, DateTime date)
+		{
+			var appointmentsWithinDate = GetEnumerableAppointmentsByDate(appointments, date);
+			var mainAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, date);
+			return mainAppointment != null
+				&& IsOnInternalWorkFunc(mainAppointment);
+		}
 
-        public static bool IsOnLeave(GetEmployeeModel employee, DateTime date)
-        {
-            return IsOnLeave(employee.NormalizedAppointments, date);
-        }
+		public static bool IsOnLeave(GetEmployeeModel employee, DateTime date)
+		{
+			return IsOnLeave(employee.NormalizedAppointments, date);
+		}
 
-        public static bool IsOnLeave(IEnumerable<GetAppointmentModel> appointments, DateTime date)
-        {
-            var appointmentsWithinDate = GetEnumerableAppointmentsByDate(appointments, date);
-            var mainAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, date);
-            return mainAppointment != null
-                && IsOnLeaveFunc(mainAppointment);
-        }
+		public static bool IsOnLeave(IEnumerable<GetAppointmentModel> appointments, DateTime date)
+		{
+			var appointmentsWithinDate = GetEnumerableAppointmentsByDate(appointments, date);
+			var mainAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, date);
+			return mainAppointment != null
+				&& IsOnLeaveFunc(mainAppointment);
+		}
 
-        public static bool IsFree(GetEmployeeModel employee, DateTime date)
-        {
-            return !GetEnumerableAppointmentsByDate(employee.NormalizedAppointments, date).Any();
-        }
+		public static bool IsFree(GetEmployeeModel employee, DateTime date)
+		{
+			return !GetEnumerableAppointmentsByDate(employee.NormalizedAppointments, date).Any();
+		}
 
-        public static bool IsProjectNameMatch(string sourceProjectName, string originalProjectName)
-        {
-            if (string.IsNullOrWhiteSpace(originalProjectName) && string.IsNullOrWhiteSpace(sourceProjectName))
-            {
-                return true;
-            }
+		public static bool IsProjectNameMatch(string sourceProjectName, string originalProjectName)
+		{
+			if (string.IsNullOrWhiteSpace(originalProjectName) && string.IsNullOrWhiteSpace(sourceProjectName))
+			{
+				return true;
+			}
 
-            if (string.IsNullOrWhiteSpace(originalProjectName) || string.IsNullOrWhiteSpace(sourceProjectName))
-            {
-                return false;
-            }
+			if (string.IsNullOrWhiteSpace(originalProjectName) || string.IsNullOrWhiteSpace(sourceProjectName))
+			{
+				return false;
+			}
 
-            var _rgx = new Regex("[^a-zA-Z0-9]", RegexOptions.Compiled);
-            var prjName = _rgx.Replace(sourceProjectName, string.Empty);
-            return _rgx.Replace(originalProjectName, string.Empty).IndexOf(prjName, StringComparison.OrdinalIgnoreCase) >= 0;
-        }
+			var _rgx = new Regex("[^a-zA-Z0-9]", RegexOptions.Compiled);
+			var prjName = _rgx.Replace(sourceProjectName, string.Empty);
+			return _rgx.Replace(originalProjectName, string.Empty).IndexOf(prjName, StringComparison.OrdinalIgnoreCase) >= 0;
+		}
 
-        public static List<GetEmployeeModel> FilterDevelopers(List<GetEmployeeModel> employees)
-        {
-            var devCategories = new[] { ProfileCategory.Developers, ProfileCategory.Designers };
-            return employees.Where(employee => devCategories.Any(category => category == employee.ProfileCategory)).ToList();
-        }
+		public static List<GetEmployeeModel> FilterDevelopers(List<GetEmployeeModel> employees)
+		{
+			var devCategories = new[] { ProfileCategory.Developers, ProfileCategory.Designers };
+			return employees.Where(employee => devCategories.Any(category => category == employee.ProfileCategory)).ToList();
+		}
 
-        public static List<GetEmployeeModel> GetInternalBookedEmployees(List<GetEmployeeModel> employees, DateTime date)
-        {
-            return employees
-                .Where(employee => IsOnInternalWork(employee, date))
-                .ToList();
-        }
+		public static List<GetEmployeeModel> GetInternalBookedEmployees(List<GetEmployeeModel> employees, DateTime date)
+		{
+			return employees
+				.Where(employee => IsOnInternalWork(employee, date))
+				.ToList();
+		}
 
-        public static IEnumerable<GetAppointmentModel> GetEnumerableAppointmentsByDate(IEnumerable<GetAppointmentModel> appointments, DateTime date)
-        {
-            if (appointments == null || !appointments.Any())
-            {
-                return Enumerable.Empty<GetAppointmentModel>();
-            }
+		public static IEnumerable<GetAppointmentModel> GetEnumerableAppointmentsByDate(IEnumerable<GetAppointmentModel> appointments, DateTime date)
+		{
+			if (appointments == null || !appointments.Any())
+			{
+				return Enumerable.Empty<GetAppointmentModel>();
+			}
 
-            return appointments
-                .Where(appointment =>
-                    !string.IsNullOrWhiteSpace(appointment.Regarding)
-                    && date.Date <= appointment.End.Date
-                    && date.Date.AddDays(1) > appointment.Start.Date);
-        }
+			return appointments
+				.Where(appointment =>
+					!string.IsNullOrWhiteSpace(appointment.Regarding)
+					&& date.Date <= appointment.End.Date
+					&& date.Date.AddDays(1) > appointment.Start.Date);
+		}
 
-        public static DateTime GetFreeDate(IEnumerable<GetAppointmentModel> appointments, DateTime startTime)
-        {
-            static DateTime GetNextWorkDay(DateTime startDate)
-            {
-                if (startDate.DayOfWeek == DayOfWeek.Friday)
-                {
-                    return startDate.AddDays(3);
-                }
+		public static DateTime GetFreeDate(IEnumerable<GetAppointmentModel> appointments, DateTime startTime)
+		{
+			static DateTime GetNextWorkDay(DateTime startDate)
+			{
+				if (startDate.DayOfWeek == DayOfWeek.Friday)
+				{
+					return startDate.AddDays(3);
+				}
 
-                if (startDate.DayOfWeek == DayOfWeek.Saturday)
-                {
-                    return startDate.AddDays(2);
-                }
+				if (startDate.DayOfWeek == DayOfWeek.Saturday)
+				{
+					return startDate.AddDays(2);
+				}
 
-                return startDate.AddDays(1);
-            }
+				return startDate.AddDays(1);
+			}
 
-            if (appointments == null || !appointments.Any())
-            {
-                return GetNextWorkDay(startTime);
-            }
+			if (appointments == null || !appointments.Any())
+			{
+				return GetNextWorkDay(startTime);
+			}
 
-            var checkDate = startTime.Date;
-            var appointmentsEndDate = appointments.Max(appointment => appointment.End);
+			var checkDate = startTime.Date;
+			var appointmentsEndDate = appointments.Max(appointment => appointment.End);
 
-            while (checkDate <= appointmentsEndDate.Date)
-            {
-                var checkAppointments = GetEnumerableAppointmentsByDate(appointments, checkDate);
-                if (!checkAppointments.Any() || IsOnInternalWork(appointments, checkDate))
-                {
-                    return checkDate;
-                }
+			while (checkDate <= appointmentsEndDate.Date)
+			{
+				var checkAppointments = GetEnumerableAppointmentsByDate(appointments, checkDate);
+				if (!checkAppointments.Any() || IsOnInternalWork(appointments, checkDate))
+				{
+					return checkDate;
+				}
 
-                checkDate = GetNextWorkDay(checkDate);
-            }
+				checkDate = GetNextWorkDay(checkDate);
+			}
 
-            return checkDate;
-        }
+			return checkDate;
+		}
 
-        public static string GetFormatedTimeDuration(DateTime startDate, DateTime endDate)
-        {
+		public static string GetFormatedTimeDuration(DateTime startDate, DateTime endDate)
+		{
 
-            static string GetDayString(int days)
-            {
-                return $"{days} {(days == 1 ? "day" : "days")}";
-            }
+			static string GetDayString(int days)
+			{
+				return $"{days} {(days == 1 ? "day" : "days")}";
+			}
 
-            var timeOffset = endDate - startDate;
+			var timeOffset = endDate - startDate;
 
-            if (timeOffset.TotalDays <= 2)
-            {
-                return String.Empty;
-            }
+			if (timeOffset.TotalDays <= 2)
+			{
+				return String.Empty;
+			}
 
-            var totalDays = (int)timeOffset.TotalDays;
+			var totalDays = (int)timeOffset.TotalDays;
 
-            if (totalDays < 7)
-            {
-                return $"{GetDayString(totalDays)} from now";
-            }
-            else if (totalDays < 30)
-            {
-                var weeks = totalDays / 7;
-                var days = totalDays % 7;
+			if (totalDays < 7)
+			{
+				return $"{GetDayString(totalDays)} from now";
+			}
+			else if (totalDays < 30)
+			{
+				var weeks = totalDays / 7;
+				var days = totalDays % 7;
 
-                var weekString = $"{weeks} {(weeks == 1 ? "week" : "weeks")}";
+				var weekString = $"{weeks} {(weeks == 1 ? "week" : "weeks")}";
 
-                if (days == 0)
-                {
-                    return $"{weekString} from now";
-                }
+				if (days == 0)
+				{
+					return $"{weekString} from now";
+				}
 
-                return $"{weekString} and {GetDayString(days)} from now";
-            }
-            else
-            {
-                var monthes = totalDays / 30;
-                var days = totalDays % 30;
+				return $"{weekString} and {GetDayString(days)} from now";
+			}
+			else
+			{
+				var monthes = totalDays / 30;
+				var days = totalDays % 30;
 
-                var monthString = $"{monthes} {(monthes == 1 ? "month" : "months")}";
+				var monthString = $"{monthes} {(monthes == 1 ? "month" : "months")}";
 
-                if (days == 0)
-                {
-                    return $"{monthString} from now";
-                }
+				if (days == 0)
+				{
+					return $"{monthString} from now";
+				}
 
-                return $"{monthString} and {GetDayString(days)} from now";
-            }
-        }
+				return $"{monthString} and {GetDayString(days)} from now";
+			}
+		}
 
-        private static bool IsOnClientWorkFunc(GetAppointmentModel appointment)
-        {
-            return !_internalCompanyNames.Contains(appointment.Regarding?.ToLower());
-        }
+		private static bool IsOnClientWorkFunc(GetAppointmentModel appointment)
+		{
+			return !_internalCompanyNames.Contains(appointment.Regarding?.ToLower());
+		}
 
-        private static bool IsOnInternalWorkFunc(GetAppointmentModel appointment)
-        {
-            return _internalCompanyNames.Contains(appointment.Regarding?.ToLower())
-                && !IsOnLeaveFunc(appointment);
-        }
+		private static bool IsOnInternalWorkFunc(GetAppointmentModel appointment)
+		{
+			return _internalCompanyNames.Contains(appointment.Regarding?.ToLower())
+				&& !IsOnLeaveFunc(appointment);
+		}
 
-        private static bool IsOnLeaveFunc(GetAppointmentModel appointment)
-        {
-            return appointment.RequiredAttendees.Any(attendee => attendee.ToLower().Contains("absence"));
-        }
+		private static bool IsOnLeaveFunc(GetAppointmentModel appointment)
+		{
+			return appointment.RequiredAttendees.Any(attendee => attendee.ToLower().Contains("absence"));
+		}
 
-        private static GetAppointmentModel GetMainAppointmentWithinDate(IEnumerable<GetAppointmentModel> appointments, DateTime date)
-        {
-            GetAppointmentModel mainAppointment = null;
-            var mainOverlaps = TimeSpan.Zero;
-            if (appointments == null || !appointments.Any())
-            {
-                return mainAppointment;
-            }
+		private static GetAppointmentModel GetMainAppointmentWithinDate(IEnumerable<GetAppointmentModel> appointments, DateTime date)
+		{
+			GetAppointmentModel mainAppointment = null;
+			var mainOverlaps = TimeSpan.Zero;
+			if (appointments == null || !appointments.Any())
+			{
+				return mainAppointment;
+			}
 
-            foreach (var appointment in appointments)
-            {
-                if (TryGetOverlapsTimeSpan(appointment, date, out var overlaps) && overlaps > mainOverlaps)
-                {
-                    mainAppointment = appointment;
-                    mainOverlaps = overlaps;
-                }
-            }
+			foreach (var appointment in appointments)
+			{
+				if (TryGetOverlapsTimeSpan(appointment, date, out var overlaps) && overlaps > mainOverlaps)
+				{
+					mainAppointment = appointment;
+					mainOverlaps = overlaps;
+				}
+			}
 
-            return mainAppointment;
-        }
+			return mainAppointment;
+		}
 
-        private static bool TryGetOverlapsTimeSpan(GetAppointmentModel appointment, DateTime date, out TimeSpan overlaps)
-        {
-            overlaps = TimeSpan.Zero;
-            if (appointment == null)
-            {
-                return false;
-            }
+		private static bool TryGetOverlapsTimeSpan(GetAppointmentModel appointment, DateTime date, out TimeSpan overlaps)
+		{
+			overlaps = TimeSpan.Zero;
+			if (appointment == null)
+			{
+				return false;
+			}
 
-            var currentDate = date.Date;
-            var nextDate = date.Date.AddDays(1);
+			var currentDate = date.Date;
+			var nextDate = date.Date.AddDays(1);
 
-            if (appointment.End <= currentDate || appointment.Start >= nextDate)
-            {
-                return false;
-            }
+			if (appointment.End <= currentDate || appointment.Start >= nextDate)
+			{
+				return false;
+			}
 
-            if (appointment.Start.DateTime <= currentDate)
-            {
-                overlaps = appointment.End <= nextDate ? appointment.End - currentDate : nextDate - currentDate;
-            }
-            else
-            {
-                overlaps = appointment.End <= nextDate ? appointment.End - appointment.Start : nextDate - appointment.Start;
-            }
+			if (appointment.Start.DateTime <= currentDate)
+			{
+				overlaps = appointment.End <= nextDate ? appointment.End - currentDate : nextDate - currentDate;
+			}
+			else
+			{
+				overlaps = appointment.End <= nextDate ? appointment.End - appointment.Start : nextDate - appointment.Start;
+			}
 
-            return true;
-        }
-    }
+			return true;
+		}
+	}
 }

@@ -52,5 +52,8 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Models
 
         [JsonProperty("customerName")]
         public string CustomerName { get; set; }
+
+        [JsonProperty("crmProjectId")]
+        public string CrmProjectId { get; set; }
     }
 }

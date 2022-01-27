@@ -358,6 +358,7 @@
             "actions": [
                 ${join(where([
                     ChatInTeamsAction(profile.emailAddress),
+                    ViewEmployeeProjectsAction(turn.displayName, 'GetProfile'),
                     ViewBookingsAction(turn.displayName, turn.employees[0].bookedDays, 'GetProfile'),
                     ViewInPeopleAction(profile), 
                     ViewInCRMAction(profile),
