@@ -494,8 +494,7 @@
 - who is {@contact={@firstName=Kaique}}
 - who is {@contact={@firstName=Kaique} {lastName=Biancatti}}
 
-
-@ intent GetProfile usesFeature contact,profileProperty
+@ intent GetProfile usesFeature contact,personNames
 
 # GetSkills
 - show all {@profileProperty={@skillProperty=skills}} for {@contact={@firstName=Eden} {@lastName=Liang}}
