@@ -7,7 +7,8 @@
 ]
 
 # SendActivity_5SdoY2_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- Oops, something went wrong and SophieBot was unable to complete your request. Please try again in a few minutes. If you keep getting this error message, please send us an email with screenshots to [SSWSophieBotDevs@ssw.com.au](mailto:SSWSophieBotDevs@ssw.com.au).
+
 # SendActivity_MfjfA1()
 [Activity
     Text = ${SendActivity_MfjfA1_text()}
