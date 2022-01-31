@@ -272,7 +272,7 @@
                             "id": "pQV3BY"
                           },
                           "property": "turn.clientTime",
-                          "value": "='All day'"
+                          "value": "='(Today) All day'"
                         }
                       ],
                       "elseActions": [
