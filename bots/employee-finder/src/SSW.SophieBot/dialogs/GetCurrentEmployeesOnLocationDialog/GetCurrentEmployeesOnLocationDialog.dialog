@@ -255,7 +255,7 @@
                         "id": "Y5N5oT"
                       },
                       "property": "turn.clientTime",
-                      "value": "=concat(formatDateTime(addHours(turn.clientNow, -1), 'htt'),' - ',formatDateTime(turn.clientNow, 'htt'))"
+                      "value": "=concat('(Today) ', formatDateTime(addHours(turn.clientNow, -1), 'htt'),' - ',formatDateTime(turn.clientNow, 'htt'))"
                     }
                   ],
                   "elseActions": [
@@ -272,7 +272,7 @@
                             "id": "pQV3BY"
                           },
                           "property": "turn.clientTime",
-                          "value": "='All day'"
+                          "value": "='(Today) All day'"
                         }
                       ],
                       "elseActions": [
