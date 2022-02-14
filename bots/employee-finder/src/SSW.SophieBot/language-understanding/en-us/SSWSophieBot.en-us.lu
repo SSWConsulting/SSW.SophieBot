@@ -115,6 +115,7 @@
 	- @ ml skillProperty usesFeature SkillInfoPhraseList
 	- @ ml calendarProperty usesFeature CalendarPhraseList
 	- @ ml projectProperty usesFeature EmployeeProjectsPhraseList
+	- @ ml birthdateProperty usesFeature BirthdatePhraseList
 
 @ ml skill
 
@@ -690,3 +691,26 @@
 - commands list
 - what are the questions
 - help
+
+@ intent GetBirthdate usesFeature contact,BirthdatePhraseList
+
+@ phraseList BirthdatePhraseList(interchangeable) disabledForAllModels =
+	- birthdate
+	- birthday
+	- birth
+	- day
+
+# GetBirthdate
+- what is {@contact={@firstName=adam}}['s] {@profileProperty={@birthdateProperty=birthdate}}[?]
+- whats {@contact={@firstName=adam}}['s] {@profileProperty={@birthdateProperty=birthdate}}[?]
+- when is {@contact={@firstName=calum}}['s] {@profileProperty={@birthdateProperty=birthdate}}?
+- when is {@contact={@firstName=calum}}['s] {@profileProperty={@birthdateProperty=birthday}}?
+- when is {@contact={@firstName=calum}}['s] {@profileProperty={@birthdateProperty=day}}?
+- {@contact={@firstName=calum}}['s] {@profileProperty={@birthdateProperty=birthdate}}[?]
+- tell me {@contact={@firstName=adam}}['s] {@profileProperty={@birthdateProperty=birthdate}}[?]
+- can you give me the {@contact={@firstName=piers}}['s] {@profileProperty={@birthdateProperty=birthday}}[?]
+- can you give me the {@contact={@firstName=jim}}['s] {@profileProperty={@birthdateProperty=birthday}}[?]
+- can you tell me {@profileProperty={@birthdateProperty=birth}} [of] {@contact={@firstName=adam}}[?]
+- could you give me {@contact={@firstName=ravi}}'s {@profileProperty={@birthdateProperty=birthday}}[?]
+- could you tell me {@contact={@firstName=calum}}'s {@profileProperty={@birthdateProperty=birthdate}}[?]
+- find {@contact={@firstName=adam}}['s] {@profileProperty={@birthdateProperty=birthdate}}[?]
