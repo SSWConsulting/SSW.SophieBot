@@ -673,7 +673,7 @@
 - give me all projects from {@contact={@firstName=jack}}
 - show me {@contact={@firstName=michael}}'s {@profileProperty={@projectProperty=projects}}
 - what's {@contact={@firstName=jim}}'s {@profileProperty={@projectProperty=project}}?
-- list {@contact={firstName=ravi}}'s recent {@profileProperty={@projectProperty=projects}}
+- list {@contact={@firstName=ravi}}'s recent {@profileProperty={@projectProperty=projects}}
 
 @ phraselist EmployeeProjectsPhraseList(interchangeable) disabledForAllModels =
 	- projects
@@ -701,19 +701,17 @@
 	- day
 
 # GetBirthdate
-- what {@presentBe} {@contact}['s] birthdate[?]
-- when {@presentBe} {@contact={@firstName=adam}}['s] (birthdate|birthday|day)[?]
-- what {@presentBe} {@contact={@firstName=adam}}['s] {@profileProperty={@birthdateProperty=birthdate}}[?]
-- what is {@contact={@firstName=adam}}['s] {@profileProperty={@birthdateProperty=birthdate}}[?]
-- whats {@contact={@firstName=adam}}['s] {@profileProperty={@birthdateProperty=birthdate}}[?]
-- when is {@contact={@firstName=calum}}['s] {@profileProperty={@birthdateProperty=birthdate}}?
-- when is {@contact={@firstName=calum}}['s] {@profileProperty={@birthdateProperty=birthday}}?
-- when is {@contact={@firstName=calum}}['s] {@profileProperty={@birthdateProperty=day}}?
-- {@contact={@firstName=calum}}['s] {@profileProperty={@birthdateProperty=birthdate}}[?]
-- tell me {@contact={@firstName=adam}}['s] {@profileProperty={@birthdateProperty=birthdate}}[?]
-- can you give me the {@contact={@firstName=piers}}['s] {@profileProperty={@birthdateProperty=birthday}}[?]
-- can you give me the {@contact={@firstName=jim}}['s] {@profileProperty={@birthdateProperty=birthday}}[?]
-- can you tell me {@profileProperty={@birthdateProperty=birth}} [of] {@contact={@firstName=adam}}[?]
-- could you give me {@contact={@firstName=ravi}}'s {@profileProperty={@birthdateProperty=birthday}}[?]
-- could you tell me {@contact={@firstName=calum}}'s {@profileProperty={@birthdateProperty=birthdate}}[?]
-- find {@contact={@firstName=adam}}['s] {@profileProperty={@birthdateProperty=birthdate}}[?]
+- what {@presentBe} {@contact}['s] (birthdate|birthday|day)[?]
+- what is {@contact={@firstName=adam}}'s {@profileProperty={@birthdateProperty=birthdate}}?
+- whats {@contact={@firstName=adam}} {@profileProperty={@birthdateProperty=birthdate}}
+- when is {@contact={@firstName=calum}} {@profileProperty={@birthdateProperty=birthdate}}?
+- when is {@contact={@firstName=calum}}'s {@profileProperty={@birthdateProperty=day}}?
+- {@contact={@firstName=calum}} {@profileProperty={@birthdateProperty=birthdate}}?
+- tell me {@contact={@firstName=adam}} {@profileProperty={@birthdateProperty=birthdate}}
+- can you give me the {@contact={@firstName=piers}} {@profileProperty={@birthdateProperty=birthday}}?
+- can you give me the {@contact={@firstName=jim}} {@profileProperty={@birthdateProperty=birthday}}?
+- can you tell me {@profileProperty={@birthdateProperty=birth}} of {@contact={@firstName=adam}}
+- could you give me {@contact={@firstName=ravi}}'s {@profileProperty={@birthdateProperty=birthday}}?
+- could you tell me {@contact={@firstName=calum}}'s {@profileProperty={@birthdateProperty=birthdate}}?
+- find {@contact={@firstName=adam}} {@profileProperty={@birthdateProperty=birthdate}}?
+- {@contact={@firstName=ravi}}'s {@profileProperty={@birthdateProperty=birthday}} please
