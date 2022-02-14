@@ -704,6 +704,7 @@
 - what {@presentBe} {@contact}['s] birthdate[?]
 - when {@presentBe} {@contact={@firstName=adam}}['s] (birthdate|birthday|day)[?]
 - what {@presentBe} {@contact={@firstName=adam}}['s] {@profileProperty={@birthdateProperty=birthdate}}[?]
+- what is {@contact={@firstName=adam}}['s] {@profileProperty={@birthdateProperty=birthdate}}[?]
 - whats {@contact={@firstName=adam}}['s] {@profileProperty={@birthdateProperty=birthdate}}[?]
 - when is {@contact={@firstName=calum}}['s] {@profileProperty={@birthdateProperty=birthdate}}?
 - when is {@contact={@firstName=calum}}['s] {@profileProperty={@birthdateProperty=birthday}}?
