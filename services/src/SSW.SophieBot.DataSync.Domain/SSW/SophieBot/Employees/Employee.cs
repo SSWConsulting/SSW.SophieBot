@@ -15,6 +15,7 @@ namespace SSW.SophieBot.Employees
         public string FullName { get; set; }
         public string EmailAddress { get; set; }
         public string PersonalEmailAddress { get; set; }
+        public string Birthdate { get; set; }
         public bool IsActive { get; set; }
         public string MobilePhone { get; set; }
         public Location DefaultSite { get; set; }

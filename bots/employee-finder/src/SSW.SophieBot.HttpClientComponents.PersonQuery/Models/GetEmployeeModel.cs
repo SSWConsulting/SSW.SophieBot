@@ -15,6 +15,7 @@ namespace SSW.SophieBot.HttpClientAction.Models
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
         public string PersonalEmailAddress { get; set; }
+        public string Birthdate { get; set; }
         public string MobilePhone { get; set; }
         public bool InOffice { get; set; }
         public bool IsActive { get; set; }
