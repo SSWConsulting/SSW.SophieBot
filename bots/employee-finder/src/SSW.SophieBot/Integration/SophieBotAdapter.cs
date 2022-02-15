@@ -50,9 +50,11 @@ namespace SSW.SophieBot.Integration
 			var errorMessage = MessageFactory.Text(errorMessageText, errorMessageText, InputHints.IgnoringInput);
 			await turnContext.SendActivityAsync(errorMessage);
 
-			errorMessageText = exception.Message;
-			errorMessage = MessageFactory.Text(errorMessageText, errorMessageText, InputHints.IgnoringInput);
-			await turnContext.SendActivityAsync(errorMessage);
+#if DEBUG
+				errorMessageText = exception.Message;
+				errorMessage = MessageFactory.Text(errorMessageText, errorMessageText, InputHints.IgnoringInput);
+				await turnContext.SendActivityAsync(errorMessage);
+#endif
 
 			var conversationState = turnContext.TurnState.Get<ConversationState>();
 			if (conversationState != null)
