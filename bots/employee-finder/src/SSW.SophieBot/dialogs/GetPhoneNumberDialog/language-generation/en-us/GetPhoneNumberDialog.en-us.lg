@@ -1,7 +1,7 @@
 [Common](common.en-us.lg)
 
 # SendActivity_ooStup_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- ${ErrorMessage()}
 # SendActivity_ooStup()
 [Activity
     Text = ${SendActivity_ooStup_text()}

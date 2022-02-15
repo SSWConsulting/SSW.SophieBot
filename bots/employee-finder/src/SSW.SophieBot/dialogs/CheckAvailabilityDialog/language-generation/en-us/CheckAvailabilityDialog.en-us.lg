@@ -9,7 +9,7 @@
 ]
 
 # SendActivity_yFDz4n_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- ${ErrorMessage()}
 # SendActivity_yFDz4n()
 [Activity
     Text = ${SendActivity_yFDz4n_text()}

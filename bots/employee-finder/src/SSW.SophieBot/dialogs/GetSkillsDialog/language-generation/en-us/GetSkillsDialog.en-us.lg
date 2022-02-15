@@ -6,7 +6,7 @@
 ]
 
 # SendActivity_sOvRvR_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- ${ErrorMessage()}
 # SendActivity_Ist81Z()
 [Activity
     Text = ${SendActivity_Ist81Z_text()}

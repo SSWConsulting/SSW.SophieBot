@@ -19,7 +19,7 @@
 ]
 
 # SendActivity_E1qghn_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- ${ErrorMessage()}
 
 # SendActivity_H4LLV0()
 [Activity

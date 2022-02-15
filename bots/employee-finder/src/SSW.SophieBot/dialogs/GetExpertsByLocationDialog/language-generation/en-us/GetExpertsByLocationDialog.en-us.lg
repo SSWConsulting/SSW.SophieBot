@@ -7,7 +7,7 @@
 ]
 
 # SendActivity_emJef2_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- ${ErrorMessage()}
 # SendActivity_LcKuck()
 [Activity
     Attachments = ${json(PeopleListBySkill(dialog.locationEntity, dialog.foreach.page, count(turn.sortedEmployees)))}

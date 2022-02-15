@@ -24,7 +24,7 @@
 ]
 
 # SendActivity_CObFyQ_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- ${ErrorMessage()}
 
 # SendActivity_RgIw3E()
 [Activity
