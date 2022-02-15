@@ -300,7 +300,7 @@
 
 # NextClient(client, freeDays)
 -```
-Note: Free for ${DaysText(freeDays, false)} over next 4 weeks.
+Note: Free for ${DaysText(freeDays, false)} over the next 4 weeks.
 ```
 
 # BodyColumns(employee, warningId)
