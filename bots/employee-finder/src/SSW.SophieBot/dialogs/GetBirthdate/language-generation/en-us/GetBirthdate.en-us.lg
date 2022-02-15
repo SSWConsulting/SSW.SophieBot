@@ -1,0 +1,44 @@
+[Common](common.en-us.lg)
+
+# SendActivity_r4oj40_text()
+- Please specify a person name to query.
+# SendActivity_r4oj40()
+[Activity
+    Text = ${SendActivity_r4oj40_text()}
+]
+
+# SendActivity_r75z8n()
+[Activity
+    Attachments = ${json(NameButtons('GetBirthdate', 'GetBirthdate', null))}
+]
+# SendActivity_ojOPMX_text()
+- IF: ${ IsNonEmptyString(dialog.birthdate) }
+    - **${dialog.displayName}**'s birthdate is:<br/>**${dialog.birthdate}**.
+- ELSE: 
+    - I couldn't find **${dialog.displayName}**'s birthdate in my system.
+
+# SendActivity_bICdVu()
+[Activity
+    Text = ${SendActivity_ojOPMX_text()}
+]
+
+# SendActivity_ZVSwYx_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
+# SendActivity_ZVSwYx()
+[Activity
+    Text = ${SendActivity_ZVSwYx_text()}
+]
+
+# SendActivity_N0Iqfq_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
+# SendActivity_N0Iqfq()
+[Activity
+    Text = ${SendActivity_N0Iqfq_text()}
+]
+
+# SendActivity_w1bdxD_text()
+- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+# SendActivity_w1bdxD()
+[Activity
+    Text = ${SendActivity_w1bdxD_text()}
+]

@@ -50,6 +50,9 @@
       "GetUsageByUser": "",
       "GetEmployeeProjects": [
         "GetEmployeeProjects.en-us"
+      ],
+      "GetBirthdate": [
+        "GetBirthdate.en-us"
       ]
     }
   }
