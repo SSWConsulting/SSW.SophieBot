@@ -8,7 +8,7 @@
 ]
 
 # SendActivity_mrti0A_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- ${ErrorMessage()}
 # SendActivity_mrti0A()
 [Activity
     Text = ${SendActivity_mrti0A_text()}

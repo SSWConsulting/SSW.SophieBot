@@ -10,7 +10,7 @@
 ]
 
 # SendActivity_nvgfb0_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- ${ErrorMessage()}
 # SendActivity_nvgfb0()
 [Activity
     Text = ${SendActivity_nvgfb0_text()}

@@ -37,7 +37,7 @@
 ]
 
 # SendActivity_w1bdxD_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- ${ErrorMessage()}
 # SendActivity_w1bdxD()
 [Activity
     Text = ${SendActivity_w1bdxD_text()}

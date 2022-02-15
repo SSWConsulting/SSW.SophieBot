@@ -14,7 +14,7 @@
 ]
 
 # SendActivity_qP71PG_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- ${ErrorMessage()}
 # SendActivity_yEShBq()
 [Activity
     Text = ${SendActivity_yEShBq_text()}

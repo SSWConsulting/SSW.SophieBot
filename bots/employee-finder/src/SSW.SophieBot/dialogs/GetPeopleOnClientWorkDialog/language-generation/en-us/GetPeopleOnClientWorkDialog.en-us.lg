@@ -125,7 +125,7 @@
     Text = ${SendActivity_jZGZUb_text()}
 ]
 # SendActivity_jZGZUb_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- ${ErrorMessage()}
 
 # SendActivity_CDte9G()
 [Activity

@@ -7,7 +7,7 @@
 ]
 
 # SendActivity_3tfngC_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- ${ErrorMessage()}
 # SendActivity_OeOolV()
 [Activity
     Attachments = ${json(PeopleListByBilled(
@@ -75,7 +75,7 @@
 ]
 
 # SendActivity_4hdGWH_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- ${ErrorMessage()}
 # SendActivity_ZjNjFQ()
 [Activity
     Text = ${SendActivity_ZjNjFQ_text()}

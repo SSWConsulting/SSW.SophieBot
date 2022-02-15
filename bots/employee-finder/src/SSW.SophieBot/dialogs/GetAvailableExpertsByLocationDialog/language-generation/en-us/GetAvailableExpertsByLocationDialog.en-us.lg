@@ -7,7 +7,7 @@
 ]
 
 # SendActivity_0L7CNj_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- ${ErrorMessage()}
 # SendActivity_sftkhO()
 [Activity
     Text = ${SendActivity_sftkhO_text()}
@@ -164,4 +164,4 @@ ${freeDays}/20 days
 ]
 
 # SendActivity_C1DsiX_text()
-- I got an error: ${turn.statusCode} ${turn.reasonPhrase}.
+- ${ErrorMessage()}
