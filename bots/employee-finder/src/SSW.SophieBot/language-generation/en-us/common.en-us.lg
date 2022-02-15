@@ -111,9 +111,9 @@
 - IF: ${exists(days) && days > 1}
     - ```${days} days```
 - ELSEIF: ${exists(days) && days > 0}
-    - ```${days} day```
+    - ```${days} days```
 - ELSEIF: ${(!exists(days) || days <= 0) && !useDash}
-    - ```${days} day```
+    - ```${days} days```
 - ELSE:
     - ```—```
 
