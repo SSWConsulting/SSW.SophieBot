@@ -15,7 +15,8 @@
 # GetEntity()
 - IF: ${dialog.isFree}
 	- ```
-	"available": "available"
+	"available": "available",
+    "number": ${dialog.isFreeForXDays}
 	```
 - ELSE:
 	- ```
