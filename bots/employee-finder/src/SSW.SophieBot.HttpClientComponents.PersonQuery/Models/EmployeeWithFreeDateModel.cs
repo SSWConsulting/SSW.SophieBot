@@ -21,5 +21,8 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Models
 
         [JsonProperty("timeDuration")]
         public string TimeDuration { get; set; }
+        
+        [JsonProperty("isFreeForXDaysFlag")]
+        public bool IsFreeForXDaysFlag { get; set; }
     }
 }

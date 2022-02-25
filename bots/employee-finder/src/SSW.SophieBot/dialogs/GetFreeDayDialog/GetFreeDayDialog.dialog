@@ -128,7 +128,8 @@
                       },
                       "employees": "=turn.employees",
                       "result": "turn.employees",
-                      "isFree": "=dialog.isFree"
+                      "isFree": "=dialog.isFree",
+                      "isFreeForXDays": "=dialog.isFreeForXDays"
                     },
                     {
                       "$kind": "Microsoft.SendActivity",

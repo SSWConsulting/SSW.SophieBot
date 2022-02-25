@@ -60,7 +60,7 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "${employee.displayName} ${AvailabilityText(employee.freeDate, dialog.isFree)} ${TimeDuration(employee.timeDuration)}",
+                            "text": "${employee.displayName} ${AvailabilityText(employee.freeDate, dialog.isFree, dialog.isFreeForXDays, employee.isFreeForXDaysFlag)} ${TimeDuration(employee.timeDuration)}",
                             "wrap": true
                         }
                     ],
@@ -80,11 +80,13 @@
 }
 ```
 
-# AvailabilityText(freeDate, isFree)
-- IF: ${length(freeDate) > 0}
-    -  ${AvailabilityDate(freeDate, isFree)}
+# AvailabilityText(freeDate, isFree, isFreeForXDays, isFreeForXDaysFlag)
+- IF: ${length(freeDate) > 0 && !isFreeForXDaysFlag }
+    - ${AvailabilityDate(freeDate, isFree)}
+- ELSEIF: ${ isFreeForXDaysFlag }
+    - ${IsFreeForXdays(freeDate, isFreeForXDays)}
 - ELSE:
-    -  seems to have no client work for now.
+    - seems to have no client work for now.
 
 # TimeDuration(timeDuration)
 - IF: ${ IsNonEmptyString(timeDuration) }
@@ -92,8 +94,14 @@
 - ELSE:
     -
 
+# IsFreeForXdays(date, isFreeForXDays)
+- IF: ${date == 'Today' && isFreeForXDays == 1}
+    - is free ${date}.
+- ELSE: 
+    - ${if(date == 'Today', 'is', 'will be')} free for ${isFreeForXDays} ${if(isFreeForXDays == 1, 'day', 'days')} from ${date}
+
 # AvailabilityDate(date, isFree)
 - IF: ${ date == 'Today' }
-    - is ${if(isFree, 'free', 'on client')} ${date}.
+    - is ${if(isFree, 'free', 'on client work')} ${date}.
 - ELSE:
     - will ${if(isFree, 'be free', 'be on client work')} on ${date}

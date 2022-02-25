@@ -600,8 +600,11 @@
 
 @ intent GetCalendar usesFeature contact, CalendarPhraseList
 
+@ prebuilt number
+
 # GetFreeDay
-- when ({@presentBe} | {@futureBe}) [not] {@contact}['s] [be] [not] [next] ({@available} | {@unavailable}) [next] [?]
+- when ({@presentBe} | {@futureBe}) [not] {@contact}['s] [be] [not] [next] ({@available} | {@unavailable}) [next] [for] {@number} [days]  [?]
+- when will {@contact={@firstName=piers}} next {@available=available} for 1 day?
 - when will {@contact={@firstName=adam}} be {@available = free}
 - when will {@contact={@firstName=adam} {@lastName=cogan}} be {@available = available}
 - when will {@contact={@firstName=adam}} be {@available = working for ssw}?
@@ -622,11 +625,15 @@
 - when is {@contact={@firstName=adam} {@lastName=cogan}}'s next {@available = availability}
 - when is {@contact={@firstName=calum}} {@available = working for ssw}?
 - when is {@contact={@firstName=calum} {@lastName=simpson}} {@available = internal}?
+- when is {@contact={@firstName=adam}} {@available=free} for 5 days?
+- when is {@contact={@firstName=piers}} next {@available=free} for 2 days?
+- when is {@contact={@firstName=christian} {@lastName=morford-waite}} next {@available=free} for 3 days?
 
 - when can I book {@contact={@firstName=piers}} 
 - when can I book {@contact={@firstName=piers} {@lastName=sinclair}} 
 - when can I book {@contact={@firstName=piers}}?
 - when can I book {@contact={@firstName=piers} {@lastName=sinclair}}?
+- when can I book {@contact={@firstName=christian}} for 2 days?
 
 - on which day won't {@contact={@firstName=piers}} be {@available = free}?
 - what date isn't {@contact={@firstName=piers} {@lastName=sinclair}} {@available = free}?
