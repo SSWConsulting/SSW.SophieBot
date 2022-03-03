@@ -6,7 +6,10 @@
 
 # SSW.SophieBot
 
-An Enterprise People Bot.
+The most advanced AI for work and home.
+
+- [Website](https://sswsophie.com/sophiebot/)
+- [Videos](https://www.youtube.com/playlist?list=PLnkcTBhDzoQ0uSLzyaS_9b8b99YB7Tz3p)
 
 # Introduction
 
