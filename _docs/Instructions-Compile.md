@@ -68,5 +68,7 @@ In Bot Framework Composer, go to Configure | Development resources.
 ![composer-test-in-emulator](images/composer-test-in-emulator.png)
 **Figure: Click Test in Emulator**
 
+> You can find GitHub repository for Bot Framework Emulator [here](https://github.com/microsoft/BotFramework-Emulator)
+
 ![emulator-welcome-message-after-login](images/emulator-welcome-message.png)
 **Figure: Get welcome message**
