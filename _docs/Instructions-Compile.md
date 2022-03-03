@@ -32,6 +32,8 @@ Go to [SSW.SophieBot](https://github.com/SSWConsulting/SSW.SophieBot) and clone 
 
 Open the Bot Framework Composer.
 
+> You can find GitHub repository for Bot Framework Composer [here](https://github.com/microsoft/BotFramework-Composer)
+
 ![composer-open-solution](images/composer-open-solution.png)
 **Figure: Click Open on Composer's homepage**
 
