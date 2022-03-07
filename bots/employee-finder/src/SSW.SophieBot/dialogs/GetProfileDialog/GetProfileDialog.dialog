@@ -106,6 +106,14 @@
               ],
               "actions": [
                 {
+                  "$kind": "GetEmployeesByBillableAction",
+                  "$designer": {
+                    "id": "ph1Un5"
+                  },
+                  "employees": "=turn.employees",
+                  "workingEmployeesProperty": "turn.billableEmployees"
+                },
+                {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
                     "id": "sm9K8b"
