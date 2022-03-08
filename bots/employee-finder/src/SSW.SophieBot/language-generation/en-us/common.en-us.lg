@@ -607,11 +607,11 @@ ${IntranetInfo()}
     }
 	```
 
-# ViewEmployeeProjectsAction(displayName, sourceIntent)
+# ViewEmployeeProjectsAction(displayName, projects, sourceIntent)
 - ```
 {
     "type": "Action.Submit",
-    "title": "View Projects",
+    "title": "View Projects (${if(count(projects.billedProjects) == 0, "none", count(projects.billedProjects))})",
     "iconUrl": "${Dynamics365Icon()}",
     "data": 
     {

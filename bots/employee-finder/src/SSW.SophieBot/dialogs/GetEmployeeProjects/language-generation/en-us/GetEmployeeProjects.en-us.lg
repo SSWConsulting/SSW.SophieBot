@@ -34,8 +34,37 @@
 
 # SendActivity_W7ne5z()
 [Activity
-    Attachments = ${json(ProjectListCard(turn.billableEmployees.employees[0]))}
+    Attachments = ${json(ViewProjects(turn.billableEmployees.employees[0]))}
 ]
+
+# ViewProjects(profile)
+- IF: ${count(profile.billedProjects) > 0}
+    - ```
+    ${ProjectListCard(profile)}
+    ```
+- ELSE:
+    - ```
+    ${NoProjects()}
+    ```
+
+# NoProjects()
+- ```
+{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "No projects available",
+            "wrap": true,
+            "horizontalAlignment": "Center",
+            "weight": "Lighter",
+            "isSubtle": true
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2"
+}
+```
 
 # ProjectListCard(profile)
 - ```
@@ -45,7 +74,20 @@
         {
             "type": "ColumnSet",
             "columns": [ 
-                ${ClickableName(profile.firstName + "'s projects" , profile.firstName, profile.lastName, 'auto', 'large', 'None', 'GetEmployeeProjects')},
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${profile.displayName}'s projects [${if(count(profile.billedProjects) == 0, "none", count(profile.billedProjects))}]",
+                            "wrap": true,
+                            "size": "Medium",
+                            "weight": "Bolder"
+                        }
+                    ],
+                    "verticalContentAlignment": "Center"
+                }
             ]
         },
         {
