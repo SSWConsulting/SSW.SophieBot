@@ -37,6 +37,8 @@ Hi
 - [ ] Code reviewed by one other team member (e.g. Checked by Bill)
 - [ ] All acceptance criteria have been met
 - [ ] Deployed to Dev
+- [ ] (If implemented) Pass automated UI testing
+- [ ] (If not implemented above) Do a manual test on all supported commands (at least one for each LUIS intent) against Dev
 - [ ] Complex code is documented (removing technical debt)
 - [ ] Deployed to Production
 - [ ] Add description about the changes for the PBI
