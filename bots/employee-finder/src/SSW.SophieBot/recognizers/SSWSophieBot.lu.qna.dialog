@@ -1,6 +1,7 @@
 {
   "$kind": "Microsoft.CrossTrainedRecognizerSet",
   "recognizers": [
-    "SSWSophieBot.lu"
+    "SSWSophieBot.lu",
+    "SSWSophieBot.qna"
   ]
 }

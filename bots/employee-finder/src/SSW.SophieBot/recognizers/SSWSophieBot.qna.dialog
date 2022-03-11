@@ -1,0 +1,8 @@
+{
+  "$kind": "Microsoft.MultiLanguageRecognizer",
+  "id": "QnA_SSWSophieBot",
+  "recognizers": {
+    "en-us": "SSWSophieBot.en-us.qna",
+    "": "SSWSophieBot.en-us.qna"
+  }
+}
