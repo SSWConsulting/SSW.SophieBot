@@ -99,7 +99,8 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "Project ID",
+                            "text": "Client Name",
+                            "wrap": true,
                             "weight": "Bolder",
                             "horizontalAlignment": "Left"
                         }
@@ -121,21 +122,7 @@
                 },
                 {
                     "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "Client Name",
-                            "wrap": true,
-                            "weight": "Bolder",
-                            "horizontalAlignment": "Left"
-                        }
-                    ],
-                    "verticalContentAlignment": "Center"
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
+                    "width": "80px",
                     "items": [
                         {
                             "type": "TextBlock",
@@ -157,7 +144,7 @@
                 }
             ],
             "bleed": true,
-            "horizontalAlignment": "Center"
+            "horizontalAlignment": "Left"
         },
         {
             "type": "Container",
@@ -198,38 +185,6 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "${project.projectId}",
-                    "size": "Default",
-                    "wrap": true,
-                    "horizontalAlignment": "Left"
-                }
-            ],
-            "verticalContentAlignment": "Center"
-        },
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
-                    "wrap": true,
-                    "text": "${project.projectName}",
-                    "size": "Default",
-                    "horizontalAlignment": "Left"
-                }
-            ],
-            "verticalContentAlignment": "Center",
-            "selectAction": {
-                "type": "Action.OpenUrl",
-                "url": "${settings.App.CRMProjectUrl}&id=${project.crmProjectId}"
-            }
-        },
-        {
-            "type": "Column",
-            "width": "stretch",
-            "items": [
-                {
-                    "type": "TextBlock",
                     "wrap": true,
                     "text": "${project.customerName}",
                     "size": "Default",
@@ -241,6 +196,31 @@
         {
             "type": "Column",
             "width": "stretch",
+            "items": [
+                {
+                    "type": "RichTextBlock",
+                    "inlines": 
+                    [
+                        {
+                            "type": "TextRun",
+                            "text": "${project.projectname}",
+                            "underline": true,
+                            "wrap": true,
+                            "size": "Default",
+                            "horizontalAlignment": "Left"
+                        }
+                    ]
+                }
+            ],
+            "verticalContentAlignment": "Center",
+            "selectAction": {
+                "type": "Action.OpenUrl",
+                "url": "${settings.App.CRMProjectUrl}&id=${project.crmProjectId}"
+            }
+        },
+        {
+            "type": "Column",
+            "width": "80px",
             "items": [
                 {
                     "type": "TextBlock",
