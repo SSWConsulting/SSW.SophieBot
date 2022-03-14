@@ -32,7 +32,7 @@
 - ```
 {
     "type": "Action.Submit",
-    "title": "📅 View Bookings",
+    "title": "📅 View Bookings (${if(bookedDays == 0, "none", bookedDays)})",
     "data": 
     {
         "intent": "GetCalendar",

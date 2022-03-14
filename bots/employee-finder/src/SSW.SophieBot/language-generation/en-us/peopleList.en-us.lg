@@ -208,7 +208,7 @@
         },
         {
             "type": "Column",
-            "width": "stretch",
+            "width": "85px",
             "items": [
                 {
                     "type": "TextBlock",
@@ -296,7 +296,7 @@
         },
         {
             "type": "Column",
-            "width": "stretch",
+            "width": "85px",
             "items": [
                 {
                     "type": "TextBlock",

@@ -226,22 +226,22 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 			if (timeOffset.TotalMinutes < 1)
 			{
 				var seconds = GetInteger(timeOffset.TotalSeconds);
-				return $"{seconds} {(seconds == 1 ? "second" : "seconds")} ago";
+				return $"{seconds}{(seconds == 1 ? "s" : "s")} ago";
 			}
 			else if (timeOffset.TotalHours < 1)
 			{
 				var minutes = GetInteger(timeOffset.TotalMinutes);
-				return $"{minutes} {(minutes == 1 ? "minute" : "minutes")} ago";
+				return $"{minutes}{(minutes == 1 ? "m" : "m")} ago";
 			}
 			else if (timeOffset.TotalDays < 1)
 			{
 				var hours = GetInteger(timeOffset.TotalHours);
-				return $"{hours} {(hours == 1 ? "hour" : "hours")} ago";
+				return $"{hours}{(hours == 1 ? "h" : "h")} ago";
 			}
 			else if (timeOffset.TotalDays < 30)
 			{
 				var days = GetInteger(timeOffset.TotalDays);
-				return $"{days} {(days == 1 ? "day" : "days")} ago";
+				return $"{days}{(days == 1 ? "d" : "d")} ago";
 			}
 			else
 			{
