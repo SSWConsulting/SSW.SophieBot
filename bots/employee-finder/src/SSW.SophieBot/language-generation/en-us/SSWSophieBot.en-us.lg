@@ -138,3 +138,11 @@
 
 # SendActivity_rzN1gx()
 - ${expandText(@answer)}
+
+# SendActivity_JivS6k()
+[Activity
+    Text = ${SendActivity_JivS6k_text()}
+]
+
+# SendActivity_JivS6k_text()
+- You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.
