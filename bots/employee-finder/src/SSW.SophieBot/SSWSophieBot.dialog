@@ -1627,6 +1627,28 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
+            "id": "4GBrO1"
+          },
+          "condition": "=!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "JivS6k"
+              },
+              "activity": "${SendActivity_JivS6k()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "l28WrS"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
             "id": "rAggD2"
           },
           "condition": "count(turn.recognized.answers[0].context.prompts) > 0",
