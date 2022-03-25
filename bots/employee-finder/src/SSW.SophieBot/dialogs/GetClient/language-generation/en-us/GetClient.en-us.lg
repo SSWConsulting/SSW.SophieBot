@@ -1,0 +1,276 @@
+[common](common.en-us.lg)
+[Icons](icons.en-us.lg)
+
+# SendActivity_DNuu7q_text()
+- Please specify a person name to query.
+# SendActivity_DNuu7q()
+[Activity
+    Text = ${SendActivity_DNuu7q_text()}
+]
+
+# ClientCard(client)
+-```
+{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "items": [
+                         {
+                            "type": "ColumnSet",
+                            "columns": [
+                                {
+                                    "type": "Column",
+                                    "width": "stretch",
+                                    "items": [
+                                        {
+                                            "type": "TextBlock",
+                                            "text": "${turn.employees[0].displayName} is working for ${client.clientName}.",
+                                            "wrap": true,
+                                            "size": "Medium",
+                                            "weight": "Bolder"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "TextBlock",
+                            "weight": "Bolder",
+                            "text": "${client.clientName} (${client.clientNumber})",
+                            "wrap": true,
+                            "size": "Large"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "${if(exists(client.industry), client.industry, '' )}",
+                            "isSubtle": true,
+                            "wrap": true,
+                            "spacing": "None"
+                        },
+                        {
+                            "type": "Container",
+                            "items": [
+                                {
+                                    "type": "ColumnSet",
+                                    "columns": [
+                                        {
+                                            "type": "Column",
+                                            "width": "stretch",
+                                            "items": [
+                                                {
+                                                    "type": "TextBlock",
+                                                    "text": "Address:",
+                                                    "wrap": true,
+                                                    "color": "Accent"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "ColumnSet",
+                                    "columns": [
+                                        {
+                                            "type": "Column",
+                                            "width": "auto",
+                                            "items": [
+                                                {
+                                                    "type": "TextBlock",
+                                                    "text": "📍",
+                                                    "wrap": true
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "Column",
+                                            "width": "stretch",
+                                            "items": [
+                                                {
+                                                    "type": "TextBlock",
+                                                    "text": "${if(exists(client.address), client.address, '-')}",
+                                                    "wrap": true
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "spacing": "Small"
+                                }
+                            ],
+                            "separator": true
+                        }
+                    ],
+                    "width": "380px"
+                }
+            ],
+            "style": "default"
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Primary Contact:",
+                            "wrap": true,
+                            "color": "Accent"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "👤 ${if(exists(client.primaryContactName), client.primaryContactName , '-')}",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "📞 ${if(exists(client.primaryContactPhone), client.primaryContactPhone , '-')}",
+                            "wrap": true
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "📧 ${if(exists(client.primaryContactEmail), client.primaryContactEmail , '-')}",
+                            "wrap": true
+                        }
+                    ]
+                }
+            ],
+            "style": "default",
+            "separator": true
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Account Manager: ",
+                            "wrap": true,
+                            "color": "Accent"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "👤 ${if(exists(client.accountManagerName), client.accountManagerName, '-')}",
+                            "wrap": true
+                        }
+                    ]
+                }
+            ],
+            "style": "default",
+            "separator": true
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                ${join(where([
+                    ViewBookingsAction(turn.employees[0].displayName, turn.employees[0].bookedDays, 'GetClients'),
+                    ViewInCRMAction(client)
+                    ], action => exists(action) && length(action) > 0), ',')},
+            ]
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "verticalContentAlignment": "Top"
+}
+```
+
+
+
+# SendActivity_nG74CA_text()
+- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
+# SendActivity_nG74CA()
+[Activity
+    Text = ${SendActivity_nG74CA_text()}
+]
+
+# SendActivity_FxC0xq_text()
+- ${ErrorMessage()}
+# SendActivity_FxC0xq()
+[Activity
+    Text = ${SendActivity_FxC0xq_text()}
+]
+
+# ViewInCRMAction(client)
+- IF: ${exists(settings.App.CRMClientUrl) && length(settings.App.CRMClientUrl) > 0}
+    - ```
+    {
+        "type": "Action.OpenUrl",
+        "title": "View in CRM ${turn.employees[0].clientsInfo.clientName}",
+        "url": "${settings.App.CRMClientUrl}&id=${client.accountId}",
+        "iconUrl": "${Dynamics365Icon()}"
+    }
+    ```
+- ELSE:
+    -
+# LogAction_Text_EupJtH()
+[Activity
+    Text = ${LogAction_Text_EupJtH_text()}
+]
+
+# LogAction_Text_EupJtH_text()
+- ${turn.employees}
+# LogAction_Text_8FWHrQ()
+[Activity
+    Text = ${LogAction_Text_8FWHrQ_text()}
+]
+
+# LogAction_Text_8FWHrQ_text()
+- ${turn.employees[0].clientsInfo}
+
+# IsBooked(employee)
+- IF: ${exists(employee.clientsInfo[0])}
+    - ```
+    ${ClientCard(employee.clientsInfo[0])}
+    ```
+- ELSE:
+    - ```
+    ${NotBooked(employee)}
+    ```
+
+# NotBooked(employee)
+- ```
+{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "${employee.displayName} is on internal work.",
+            "wrap": true,
+            "horizontalAlignment": "Center",
+            "weight": "Bolder",
+            "isSubtle": true
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2"
+}
+```
+
+# SendActivity_c8RAAq()
+[Activity
+    Attachments = ${json(NameButtons('GetClients', 'GetClients', null))}
+]
+
+# SendActivity_hr3kol()
+[Activity
+    Attachments = ${json(IsBooked(turn.employees[0]))}
+]
+
+
+
+# SendActivity_06sLgw()
+[Activity
+    Text = ${SendActivity_06sLgw_text()}
+]
+
+# SendActivity_06sLgw_text()
+- You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.

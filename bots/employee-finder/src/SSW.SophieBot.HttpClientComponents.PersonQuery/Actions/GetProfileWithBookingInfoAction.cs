@@ -48,6 +48,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
                     DisplayName = $"{employee.FirstName} {employee.LastName}",
                     BookingStatus = EmployeesHelper.GetBookingStatus(employee, date),
                     Clients = EmployeesHelper.GetClientsByDate(date, employee.NormalizedAppointments),
+                    ClientsInfo = EmployeesHelper.GetClientInfo(date, employee.NormalizedAppointments),
                     LastSeenAt = employee.LastSeenAt,
                     LastSeenTime = EmployeesHelper.GetLastSeen(employee),
                     EmailAddress = employee.EmailAddress,

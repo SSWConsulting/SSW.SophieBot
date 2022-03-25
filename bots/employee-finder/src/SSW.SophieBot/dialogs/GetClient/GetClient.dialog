@@ -1,0 +1,194 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "Rfb0SF",
+    "name": "GetClientDialog",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "uQGA5N"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "bExSiI"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "dJVy3G"
+          },
+          "condition": "=exists(dialog.nameEntity) && (exists(dialog.nameEntity.firstname) || exists(dialog.nameEntity.lastname))",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "VGjwsl"
+              },
+              "condition": "=!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "06sLgw"
+                  },
+                  "activity": "${SendActivity_06sLgw()}"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "qY9Txw"
+                  }
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "DNuu7q"
+              },
+              "activity": "${SendActivity_DNuu7q()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "w67Itg"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "4cVPF9"
+          },
+          "property": "turn.userInputName",
+          "value": "=concat(if(exists(dialog.nameEntity.firstname), dialog.nameEntity.firstname[0], \"Mr.\"), if(exists(dialog.nameEntity.lastname), concat(\" \", dialog.nameEntity.lastname[0]), \"\"))"
+        },
+        {
+          "$kind": "GetProfileAction",
+          "$designer": {
+            "id": "f10H2f"
+          },
+          "firstName": "=dialog.nameEntity",
+          "statusCodeProperty": "turn.responseCode",
+          "employeesProperty": "turn.employees",
+          "reasonPhraseProperty": "turn.reasonPhrase",
+          "queryString": [
+            {
+              "key": "firstName",
+              "value": "=dialog.nameEntity.firstname[0]"
+            },
+            {
+              "value": "=dialog.nameEntity.lastname[0]",
+              "key": "lastName"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "JSRPzs"
+          },
+          "condition": "=turn.responseCode == 200",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "FxC0xq"
+              },
+              "activity": "${SendActivity_FxC0xq()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "F8Vdm1"
+              },
+              "condition": "=exists(turn.employees) && count(turn.employees) > 0",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "nG74CA"
+                  },
+                  "activity": "${SendActivity_nG74CA()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "MYntTL"
+                  },
+                  "condition": "=count(turn.employees) > 1",
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "4x412q"
+                      },
+                      "value": "=concat(turn.employees[0].firstName, \" \", turn.employees[0].lastName)",
+                      "property": "turn.displayName"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "c8RAAq"
+                      },
+                      "activity": "${SendActivity_c8RAAq()}"
+                    },
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "wH8pmh"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "$kind": "GetProfileWithBookingInfoAction",
+                  "$designer": {
+                    "id": "CQCwi2"
+                  },
+                  "employees": "=turn.employees",
+                  "result": "turn.employees"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "hr3kol"
+                  },
+                  "activity": "${SendActivity_hr3kol()}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "VCFXVW"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "GetClient.lg",
+  "recognizer": "GetClient.lu.qna",
+  "id": "GetClient"
+}

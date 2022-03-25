@@ -722,3 +722,17 @@
 - could you tell me {@contact={@firstName=calum}}'s {@profileProperty={@birthdateProperty=birthdate}}?
 - find {@contact={@firstName=adam}} {@profileProperty={@birthdateProperty=birthdate}}?
 - {@contact={@firstName=ravi}}'s {@profileProperty={@birthdateProperty=birthday}} please
+
+
+
+# GetClients
+- which client [is] {@contact} (booked|working) [for][?]
+- which client is {@contact={@firstName=prem}} booked for?
+- which client is {@contact={@firstName=calum}} working for?
+- which client is {@contact={@firstName=jake}} booked for?
+- which client is {@contact={@firstName=patrick}} working for?
+- who is {@contact={@firstName=christian}} working for?
+- who is {@contact={@firstName=christian} {@lastName=morford-waite}} working for?
+- who is {@contact={@firstName=christian}} booked for?
+- who is {@contact={@firstName=patrick}} working for?
+

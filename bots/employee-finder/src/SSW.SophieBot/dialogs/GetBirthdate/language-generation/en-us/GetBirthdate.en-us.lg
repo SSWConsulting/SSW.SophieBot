@@ -13,7 +13,7 @@
 ]
 # SendActivity_ojOPMX_text()
 - IF: ${ IsNonEmptyString(dialog.birthdate) }
-    - **${dialog.displayName}**'s birthdate is:<br/>**${dialog.birthdate}**.
+    - **${dialog.displayName}**'s birthdate is on :**${dialog.birthdate}**.
 - ELSE: 
     - I couldn't find **${dialog.displayName}**'s birthdate in my system.
 
@@ -42,3 +42,10 @@
 [Activity
     Text = ${SendActivity_w1bdxD_text()}
 ]
+# SendActivity_zJsI09()
+[Activity
+    Text = ${SendActivity_zJsI09_text()}
+]
+
+# SendActivity_zJsI09_text()
+- You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.

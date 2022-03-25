@@ -39,7 +39,7 @@
         {
             "type": "ActionSet",
             "actions": [
-                    ${ViewBookingsAction(employee.displayName, employee.bookedDays, 'GetFreeDay')}
+                    ${ViewBookingsAction(turn.displayName, turn.employees[0].bookedDays, 'GetFreeDay')}
             ]
         }
     ]
