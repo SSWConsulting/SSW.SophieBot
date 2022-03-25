@@ -103,7 +103,7 @@
                             "separator": true
                         }
                     ],
-                    "width": "380px"
+                    "width": "stretch"
                 }
             ],
             "style": "default"
