@@ -13,7 +13,7 @@
 ]
 # SendActivity_ojOPMX_text()
 - IF: ${ IsNonEmptyString(dialog.birthdate) }
-    - **${dialog.displayName}**'s birthdate is on :**${dialog.birthdate}**.
+    - **${dialog.displayName}**'s birthdate is :**${dialog.birthdate}**.
 - ELSE: 
     - I couldn't find **${dialog.displayName}**'s birthdate in my system.
 
