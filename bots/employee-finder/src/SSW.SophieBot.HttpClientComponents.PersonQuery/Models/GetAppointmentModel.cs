@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SSW.SophieBot.HttpClientAction.Models
 {
@@ -14,6 +15,7 @@ namespace SSW.SophieBot.HttpClientAction.Models
         public string AccountManagerName { get; set; }
         public int? StateCode { get; set; }
         public string StateCodeName { get; set; }
+        public List<GetClientModel> Client { get; set; }
 
         public GetAppointmentModel Clone()
         {
@@ -28,7 +30,8 @@ namespace SSW.SophieBot.HttpClientAction.Models
                 ClientNumber = ClientNumber,
                 AccountManagerName = AccountManagerName,
                 StateCode = StateCode,
-                StateCodeName = StateCodeName
+                StateCodeName = StateCodeName,
+                Client = Client
             };
         }
 

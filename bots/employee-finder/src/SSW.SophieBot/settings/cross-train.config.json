@@ -53,6 +53,9 @@
       ],
       "GetBirthdate": [
         "GetBirthdate.en-us"
+      ],
+      "GetClients": [
+        "GetClient.en-us"
       ]
     }
   }

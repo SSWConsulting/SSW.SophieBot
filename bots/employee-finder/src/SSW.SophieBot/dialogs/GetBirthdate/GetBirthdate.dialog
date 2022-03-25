@@ -44,6 +44,30 @@
                 "id": "gkepLx"
               }
             }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "r4La9Q"
+              },
+              "condition": "=!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "zJsI09"
+                  },
+                  "activity": "${SendActivity_zJsI09()}"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "TgklKV"
+                  }
+                }
+              ]
+            }
           ]
         },
         {
