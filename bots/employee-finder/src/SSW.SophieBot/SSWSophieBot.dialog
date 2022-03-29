@@ -1773,7 +1773,7 @@
           "$designer": {
             "id": "9vVNTj"
           },
-          "condition": "=contains($options.contactEntity.firstName, \"bob\") || contains($options.contactEntity.firstName, \"Bob\")",
+          "condition": "=contains($options.contactEntity.firstName, \"bob\") || contains($options.contactEntity.firstName, \"Bob\") && contains($options.contactEntity.lastName, \"northwind\") || contains($options.contactEntity.lastName, \"Northwind\")",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
