@@ -1754,7 +1754,7 @@
               "eventName": "IntentRedirect",
               "properties": {
                 "SourceIntent": "=@redirect.sourceIntent",
-                "TargetIntent": "GetEmployeeProjects",
+                "TargetIntent": "GetClients",
                 "Action": "=@redirect.action",
                 "ActionType": "=@redirect.actionType"
               }
@@ -1767,6 +1767,30 @@
             "id": "FSBlAG"
           },
           "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "9vVNTj"
+          },
+          "condition": "=contains($options.contactEntity.firstName, \"bob\") || contains($options.contactEntity.firstName, \"Bob\")",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "SEDgp5"
+              },
+              "activityProcessed": true,
+              "dialog": "GetDummyClient",
+              "options": {}
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "AvlNWT"
+              }
+            }
+          ]
         },
         {
           "$kind": "Microsoft.BeginDialog",

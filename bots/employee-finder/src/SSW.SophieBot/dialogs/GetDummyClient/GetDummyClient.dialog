@@ -1,0 +1,44 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "wS813b",
+    "name": "GetDummyClient",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "bCuMwp"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "jI7lsN"
+          }
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "b5HPg4"
+          },
+          "activity": "${SendActivity_b5HPg4()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "MkIMDS"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "GetDummyClient.lg",
+  "recognizer": "GetDummyClient.lu.qna",
+  "id": "GetDummyClient"
+}

@@ -1,14 +1,12 @@
 [common](common.en-us.lg)
 [Icons](icons.en-us.lg)
 
-# SendActivity_DNuu7q_text()
-- Please specify a person name to query.
-# SendActivity_DNuu7q()
+# SendActivity_b5HPg4()
 [Activity
-    Text = ${SendActivity_DNuu7q_text()}
+    Attachments = ${json(SendActivity_b5HPg4_text())}
 ]
 
-# ClientCard(client)
+# SendActivity_b5HPg4_text()
 -```
 {
     "type": "AdaptiveCard",
@@ -28,7 +26,7 @@
                                     "items": [
                                         {
                                             "type": "TextBlock",
-                                            "text": "${turn.employees[0].displayName} is working for :",
+                                            "text": "Bob is working for :",
                                             "wrap": true,
                                             "size": "Medium",
                                             "weight": "Bolder"
@@ -40,13 +38,13 @@
                         {
                             "type": "TextBlock",
                             "weight": "Bolder",
-                            "text": "${client.clientName} (${client.clientNumber})",
+                            "text": "Northwind (NWIND)",
                             "wrap": true,
                             "size": "Large"
                         },
                         {
                             "type": "TextBlock",
-                            "text": "${if(exists(client.industry), client.industry, '' )}",
+                            "text": "Manufacturing",
                             "isSubtle": true,
                             "wrap": true,
                             "spacing": "None"
@@ -91,7 +89,7 @@
                                             "items": [
                                                 {
                                                     "type": "TextBlock",
-                                                    "text": "${if(exists(client.address), client.address, '-')}",
+                                                    "text": "Northwind Traders - 36 Trade Road State of Wind California US 2256",
                                                     "wrap": true
                                                 }
                                             ]
@@ -123,18 +121,18 @@
                         },
                         {
                             "type": "TextBlock",
-                            "text": "👤 ${if(exists(client.primaryContactName), client.primaryContactName , '-')}",
+                            "text": "👤 Bob Northwind",
                             "wrap": true,
                             "weight": "Bolder"
                         },
                         {
                             "type": "TextBlock",
-                            "text": "📞 ${if(exists(client.primaryContactPhone), client.primaryContactPhone , '-')}",
+                            "text": "📞 +61 918273645",
                             "wrap": true
                         },
                         {
                             "type": "TextBlock",
-                            "text": "📧 ${if(exists(client.primaryContactEmail), client.primaryContactEmail , '-')}",
+                            "text": "📧 Bob@Wind.com.au",
                             "wrap": true
                         }
                     ]
@@ -158,7 +156,7 @@
                         },
                         {
                             "type": "TextBlock",
-                            "text": "👤 ${if(exists(client.accountManagerName), client.accountManagerName, '-')}",
+                            "text": "👤 John Smith",
                             "wrap": true,
                             "weight": "Bolder"
                         }
@@ -171,10 +169,15 @@
         {
             "type": "ActionSet",
             "actions": [
-                ${join(where([
-                    ViewBookingsAction(turn.employees[0].displayName, turn.employees[0].bookedDays, 'GetClients'),
-                    ViewInCRMAction(client)
-                    ], action => exists(action) && length(action) > 0), ',')},
+                {
+                    "type": "Action.ToggleVisibility",
+                    "title": "📅 View Bookings (32)"
+                },
+                {
+                    "type": "Action.ToggleVisibility",
+                    "title": "View in CRM",
+                    "iconUrl": "${Dynamics365Icon()}"
+                }
             ]
         }
     ],
@@ -183,95 +186,3 @@
     "verticalContentAlignment": "Top"
 }
 ```
-
-
-
-# SendActivity_nG74CA_text()
-- Sorry, I couldn't find anyone named **${turn.userInputName}** in your organization. Please try again.
-# SendActivity_nG74CA()
-[Activity
-    Text = ${SendActivity_nG74CA_text()}
-]
-
-# SendActivity_FxC0xq_text()
-- ${ErrorMessage()}
-# SendActivity_FxC0xq()
-[Activity
-    Text = ${SendActivity_FxC0xq_text()}
-]
-
-# ViewInCRMAction(client)
-- IF: ${exists(settings.App.CRMClientUrl) && length(settings.App.CRMClientUrl) > 0}
-    - ```
-    {
-        "type": "Action.OpenUrl",
-        "title": "View in CRM ${turn.employees[0].clientsInfo.clientName}",
-        "url": "${settings.App.CRMClientUrl}&id=${client.accountId}",
-        "iconUrl": "${Dynamics365Icon()}"
-    }
-    ```
-- ELSE:
-    -
-# LogAction_Text_EupJtH()
-[Activity
-    Text = ${LogAction_Text_EupJtH_text()}
-]
-
-# LogAction_Text_EupJtH_text()
-- ${turn.employees}
-# LogAction_Text_8FWHrQ()
-[Activity
-    Text = ${LogAction_Text_8FWHrQ_text()}
-]
-
-# LogAction_Text_8FWHrQ_text()
-- ${turn.employees[0].clientsInfo}
-
-# IsBooked(employee)
-- IF: ${exists(employee.clientsInfo[0])}
-    - ```
-    ${ClientCard(employee.clientsInfo[0])}
-    ```
-- ELSE:
-    - ```
-    ${NotBooked(employee)}
-    ```
-
-# NotBooked(employee)
-- ```
-{
-    "type": "AdaptiveCard",
-    "body": [
-        {
-            "type": "TextBlock",
-            "text": "${employee.displayName} is on internal work.",
-            "wrap": true,
-            "horizontalAlignment": "Center",
-            "weight": "Bolder",
-            "isSubtle": true
-        }
-    ],
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "version": "1.2"
-}
-```
-
-# SendActivity_c8RAAq()
-[Activity
-    Attachments = ${json(NameButtons('GetClients', 'GetClients', null))}
-]
-
-# SendActivity_hr3kol()
-[Activity
-    Attachments = ${json(IsBooked(turn.employees[0]))}
-]
-
-
-
-# SendActivity_06sLgw()
-[Activity
-    Text = ${SendActivity_06sLgw_text()}
-]
-
-# SendActivity_06sLgw_text()
-- You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.
