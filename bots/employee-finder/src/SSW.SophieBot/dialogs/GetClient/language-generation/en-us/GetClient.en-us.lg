@@ -28,7 +28,7 @@
                                     "items": [
                                         {
                                             "type": "TextBlock",
-                                            "text": "${turn.employees[0].displayName} is working for ${client.clientName}.",
+                                            "text": "${turn.employees[0].displayName} is working for :",
                                             "wrap": true,
                                             "size": "Medium",
                                             "weight": "Bolder"
@@ -159,7 +159,8 @@
                         {
                             "type": "TextBlock",
                             "text": "👤 ${if(exists(client.accountManagerName), client.accountManagerName, '-')}",
-                            "wrap": true
+                            "wrap": true,
+                            "weight": "Bolder"
                         }
                     ]
                 }
@@ -274,3 +275,188 @@
 
 # SendActivity_06sLgw_text()
 - You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.
+# SendActivity_3ZIgyO()
+[Activity
+    Attachments = ${json(SendActivity_3ZIgyO_text())}
+]
+
+# SendActivity_3ZIgyO_text()
+-```
+{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "items": [
+                         {
+                            "type": "ColumnSet",
+                            "columns": [
+                                {
+                                    "type": "Column",
+                                    "width": "stretch",
+                                    "items": [
+                                        {
+                                            "type": "TextBlock",
+                                            "text": "Bob is working for :",
+                                            "wrap": true,
+                                            "size": "Medium",
+                                            "weight": "Bolder"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "TextBlock",
+                            "weight": "Bolder",
+                            "text": "Northwind (NWIND)",
+                            "wrap": true,
+                            "size": "Large"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "Manufacturing",
+                            "isSubtle": true,
+                            "wrap": true,
+                            "spacing": "None"
+                        },
+                        {
+                            "type": "Container",
+                            "items": [
+                                {
+                                    "type": "ColumnSet",
+                                    "columns": [
+                                        {
+                                            "type": "Column",
+                                            "width": "stretch",
+                                            "items": [
+                                                {
+                                                    "type": "TextBlock",
+                                                    "text": "Address:",
+                                                    "wrap": true,
+                                                    "color": "Accent"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "ColumnSet",
+                                    "columns": [
+                                        {
+                                            "type": "Column",
+                                            "width": "auto",
+                                            "items": [
+                                                {
+                                                    "type": "TextBlock",
+                                                    "text": "📍",
+                                                    "wrap": true
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "Column",
+                                            "width": "stretch",
+                                            "items": [
+                                                {
+                                                    "type": "TextBlock",
+                                                    "text": "Northwind Traders - 36 Trade Road State of Wind California US 2256",
+                                                    "wrap": true
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "spacing": "Small"
+                                }
+                            ],
+                            "separator": true
+                        }
+                    ],
+                    "width": "stretch"
+                }
+            ],
+            "style": "default"
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Primary Contact:",
+                            "wrap": true,
+                            "color": "Accent"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "👤 Bob Northwind",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "📞 +61 918273645",
+                            "wrap": true
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "📧 Bob@Wind.com.au",
+                            "wrap": true
+                        }
+                    ]
+                }
+            ],
+            "style": "default",
+            "separator": true
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "Account Manager: ",
+                            "wrap": true,
+                            "color": "Accent"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "👤 John Smith",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        }
+                    ]
+                }
+            ],
+            "style": "default",
+            "separator": true
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.ToggleVisibility",
+                    "title": "📅 View Bookings (32)"
+                },
+                {
+                    "type": "Action.ToggleVisibility",
+                    "title": "View in CRM",
+                    "iconUrl": "${Dynamics365Icon()}"
+                }
+            ]
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "verticalContentAlignment": "Top"
+}
+```

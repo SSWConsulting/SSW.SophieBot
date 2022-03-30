@@ -32,6 +32,28 @@
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
+                "id": "UlJFp6"
+              },
+              "condition": "=toLower(dialog.nameEntity.firstname[0]) == 'bob' && toLower(dialog.nameEntity.lastname[0]) == 'northwind'",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "3ZIgyO"
+                  },
+                  "activity": "${SendActivity_3ZIgyO()}"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "gDK71r"
+                  }
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
                 "id": "VGjwsl"
               },
               "condition": "=!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false",

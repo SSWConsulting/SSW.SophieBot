@@ -27,6 +27,28 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
+            "id": "LUZpVh"
+          },
+          "condition": "=!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "9GRpg5"
+              },
+              "activity": "${SendActivity_9GRpg5()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "U2bM6X"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
             "id": "cDHzU3"
           },
           "condition": "=dialog.dateEntity != null && dialog.dateEntity.type != 'date'",
