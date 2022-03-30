@@ -55,7 +55,6 @@
         "GetBirthdate.en-us"
       ],
       "GetClients": [
-        "GetDummyClient.en-us",
         "GetClient.en-us"
       ]
     }
