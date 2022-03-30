@@ -173,7 +173,8 @@
             "actions": [
                 ${join(where([
                     ViewBookingsAction(turn.employees[0].displayName, turn.employees[0].bookedDays, 'GetClients'),
-                    ViewInCRMAction(client)
+                    ViewInCRMAction(client),
+                    HowToBook()
                     ], action => exists(action) && length(action) > 0), ',')},
             ]
         }
@@ -184,6 +185,14 @@
 }
 ```
 
+# HowToBook()
+- ```
+    {
+        "type": "Action.OpenUrl",
+        "title": "🎓 How to book",
+        "url": "${settings.App.SugarLearningHowToBook}"
+    }
+    ```
 
 
 # SendActivity_nG74CA_text()
@@ -451,6 +460,10 @@
                     "type": "Action.ToggleVisibility",
                     "title": "View in CRM",
                     "iconUrl": "${Dynamics365Icon()}"
+                },
+                {
+                    "type": "Action.ToggleVisibility",
+                    "title": "🎓 How to book"
                 }
             ]
         }
