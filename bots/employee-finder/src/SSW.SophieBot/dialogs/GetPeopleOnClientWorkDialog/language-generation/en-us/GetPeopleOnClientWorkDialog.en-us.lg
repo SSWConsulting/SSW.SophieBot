@@ -314,7 +314,7 @@ Note: Free for ${DaysText(freeDays, false)} over the next 4 weeks.
     - ${join(createArray(
             Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
             ClickableName(employee.displayName, employee.firstName, employee.lastName, '150px', 'Small', 'Default', 'GetPeopleOnClientWork'),
-            ClientColumn(select(employee.clients, client, client.name), 'stretch', 'Center')
+            ClientColumn(select(employee.clients, client, client.name), 'stretch', 'Center', employee.userId, warningId)
         ), ',')}
 - ELSE:
     - ${join(createArray(
@@ -347,17 +347,13 @@ Note: Free for ${DaysText(freeDays, false)} over the next 4 weeks.
 - ${freeDays}/20 days
 
 
-# ClientColumn(clients, width, alignment)
+# ClientColumn(clients, width, alignment, id, warningId)
 -```
 {
     "type": "Column",
     "width": "${width}",
     "items": [
-        {
-            "type": "TextBlock",
-            "text": "${join(select(clients, client => ClientText(client)), ',')}",
-            "wrap": true
-        }
+        ${GetAuthenticationMaskedColumn(join(select(clients, client => ClientText(client)), ','), id, warningId)}
     ],
     "verticalContentAlignment": "${alignment}"
 }
@@ -367,6 +363,22 @@ Note: Free for ${DaysText(freeDays, false)} over the next 4 weeks.
 - ```
 ${if(text != null && text != '', text, '—')}
 ```
+
+# ClientTextBlock(clients)
+- IF: ${!exists(user.TenantAuthenticated) || user.TenantAuthenticated == false}
+    - ```
+    {
+        "type": "TextBlock",
+        "text": "\\\\*\\\\*\\\\*",
+        "wrap": true,
+        "size": "Small",
+        "horizontalAlignment": "Center"
+    }
+    ```
+- ELSE:
+    - ```
+    ${join(select(clients, client => ClientText(client)), ',')}
+    ```
 
 # BodyColumn(text, width)
 -```
@@ -436,11 +448,3 @@ ${if(text != null && text != '', text, '—')}
     - ``` on ${turn.formatDate}```
 - ELSE:
     -
-
-# SendActivity_9GRpg5()
-[Activity
-    Text = ${SendActivity_9GRpg5_text()}
-]
-
-# SendActivity_9GRpg5_text()
-- You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.

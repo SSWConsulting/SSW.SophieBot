@@ -1032,3 +1032,124 @@ ${IntranetInfo()}
 
 # ErrorMessage()
 -  Oops, something went wrong and SophieBot was unable to complete your request. Please try again in a few minutes. If you keep getting this error message, please send us an email with screenshots to [SSWSophieBotDevs@ssw.com.au](mailto:SSWSophieBotDevs@ssw.com.au).
+
+# GetAuthenticationMaskedColumn(originalText, id, warningId)
+- IF: ${exists(user.TenantAuthenticated) && user.TenantAuthenticated == true}
+	- ```
+	{
+	    "type": "ColumnSet",
+	    "columns": [
+	        {
+	            "type": "Column",
+	            "width": "stretch",
+	            "items": [
+	                {
+	                    "type": "TextBlock",
+	                    "text": "${originalText}",
+	                    "wrap": true
+	                }
+	            ]
+	        },
+	        {
+	            "type": "Column",
+	            "width": "stretch",
+	            "items": [
+	                {
+	                    "type": "TextBlock",
+	                    "text": "< Hide",
+	                    "wrap": true,
+	                    "color": "Accent"
+	                }
+	            ],
+	            "selectAction": {
+	                "type": "Action.ToggleVisibility",
+	                "targetElements": [
+	                    "${concat('o-', id)}",
+	                    "${concat('s-', id)}"
+	                ]
+	            }
+	        }
+	    ],
+	    "isVisible": false,
+	    "horizontalAlignment": "Right",
+	    "id": "${concat('o-', id)}"
+	},
+	{
+	    "type": "ColumnSet",
+	    "columns": [
+	        {
+	            "type": "Column",
+	            "width": "stretch",
+	            "items": [
+	                {
+	                    "type": "TextBlock",
+	                    "text": "\\\\*\\\\*\\\\*\\\\*\\\\*\\\\*\\\\*\\\\*\\\\*\\\\*",
+	                    "wrap": true
+	                }
+	            ]
+	        },
+	        {
+	            "type": "Column",
+	            "width": "stretch",
+	            "items": [
+	                {
+	                    "type": "TextBlock",
+	                    "text": "Show >",
+	                    "wrap": true,
+	                    "color": "Accent"
+	                }
+	            ],
+	            "selectAction": {
+	                "type": "Action.ToggleVisibility",
+	                "targetElements": [
+	                    "${concat('o-', id)}",
+	                    "${concat('s-', id)}"
+	                ]
+	            }
+	        }
+	    ],
+	    "horizontalAlignment": "Right",
+	    "id": "${concat('s-', id)}"
+	}
+	```
+- ELSE:
+	- ```
+	{
+	    "type": "ColumnSet",
+	    "columns": [
+	        {
+	            "type": "Column",
+	            "width": "stretch",
+	            "items": [
+	                {
+	                    "type": "TextBlock",
+	                    "text": "\\\\*\\\\*\\\\*\\\\*\\\\*\\\\*\\\\*\\\\*\\\\*\\\\*",
+	                    "wrap": true
+	                }
+	            ]
+	        },
+	        {
+	            "type": "Column",
+	            "width": "stretch",
+	            "items": [
+	                {
+	                    "type": "TextBlock",
+	                    "text": "Show >",
+	                    "wrap": true,
+	                    "color": "Accent"
+	                }
+	            ],
+	            "selectAction": {
+	                "type": "Action.ToggleVisibility",
+                    "targetElements": [
+						{
+						    "elementId": "${warningId}",
+						    "isVisible": true
+						}
+					]
+	            }
+	        }
+	    ],
+	    "horizontalAlignment": "Right"
+	}
+	```
