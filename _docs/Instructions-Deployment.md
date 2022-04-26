@@ -22,3 +22,5 @@ Use GitHub Actions to deploy bot to staging and production environments.
 For staging deployment, please refer to [SSW.SophieBot.dev.yml](https://github.com/SSWConsulting/SSW.SophieBot/blob/main/.github/workflows/SSW.SophieBot.dev.yml)
 
 For production deployment, please refer to [SSW.SophieBot.prod.yml](https://github.com/SSWConsulting/SSW.SophieBot/blob/main/.github/workflows/SSW.SophieBot.prod.yml)
+
+This is as per [SSW Rule - Environments](https://www.ssw.com.au/rules/do-you-have-separate-development-testing-and-production-environments)
