@@ -64,8 +64,10 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                         });
                     }
 
-                    //billedProjects = billedProjects.OrderByDescending(project => project.BilledHours).ToList();
+                    //TODO: evaluate is we still need this line of code, I think we can get rid of it
+                    billedProjects = billedProjects.OrderByDescending(project => project.BilledHours).ToList();
                     double totalHours = billedProjects.Sum(project => project.BilledHours);
+                    
 
                     return new EmployeeBillableItemModel
                     {
@@ -75,18 +77,19 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                         LastName = e.LastName,
                         DisplayName = $"{e.FirstName} {e.LastName}",
                         BilledDays = (int)Math.Ceiling(totalHours/ 8),
-                        BilledHours = billedProjects.FirstOrDefault()?.BilledHours ?? 0,
+                        BilledHours = (int)totalHours,
                         BilledProjects = billedProjects,
                         BookingStatus = GetBookingStatus(e, date),
                         LastSeen = GetLastSeen(e)
                     };
                 })
-                .OrderByDescending(i => i.BilledHours)
+                .OrderByDescending(i => i.BilledDays)
                 .ToList();
         }
 
         public static BookingStatus GetBookingStatus(GetAppointmentModel appointment)
         {
+
             if (appointment == null)
             {
                 return BookingStatus.Unknown;
@@ -171,6 +174,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             return BookingStatus.Unknown;
         }
 
+        //This function is to
+        // 1. decide if the the working hours are billable hours or internal hours(Client work or internal project)
+        // 2. calculate the billable days according to the billable hours
         public static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project, out double billableHours)
         {
 
