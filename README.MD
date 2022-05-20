@@ -29,7 +29,7 @@ SSW.SophieBot is an Enterprise People Bot build with Bot Framework Composer.
 
 # Solution Structure
 
-The projects are grouped into multiple solutions to reduce the loading time while using Visual Studio.:
+The projects are grouped into 3 solutions to reduce the loading time while using Visual Studio.:
 - [bots/employee-finder/SSW.SophieBot.EmployeeFinder.sln](bots/employee-finder/README.MD)
 - [libraries/SSW.SophieBot.sln](libraries/README.MD)
 - [services/SSW.SophieBot.Services.sln](services/README.MD)
