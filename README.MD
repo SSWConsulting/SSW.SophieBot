@@ -34,6 +34,8 @@ To decrease loading time when using Visual Studio, projects are grouped by multi
 - [libraries/SSW.SophieBot.sln](libraries/README.MD)
 - [services/SSW.SophieBot.Services.sln](services/README.MD)
 
+This [utility script](_scripts/build-all.ps1) can be used to build all solutions in one click.
+
 # Telemetry
 
 - You can monitor the application health [here](https://github.com/SSWConsulting/SSW.SophieBot.Private/blob/main/Instruction-Azure-Resources.md#telemetry).
