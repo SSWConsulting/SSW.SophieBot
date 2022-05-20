@@ -27,6 +27,15 @@ SSW.SophieBot is an Enterprise People Bot build with Bot Framework Composer.
 4. [Defination of Done](_docs/Definition-of-Done.md)
 5. [Deploy the bot](_docs/Instructions-Deployment.md)
 
+# Solution Structure
+
+The project consists of 3 solutions as following:
+- [SSW.SophieBot.EmployeeFinder.sln](bots/employee-finder/README.MD)
+- [SSW.SophieBot.sln](libraries/README.MD)
+- [SSW.SophieBot.Services.sln](services/README.MD)
+
+This [utility script](_scripts/build-all.ps1) can be used to build all solutions in one click.
+
 # Telemetry
 
 - You can monitor the application health [here](https://github.com/SSWConsulting/SSW.SophieBot.Private/blob/main/Instruction-Azure-Resources.md#telemetry).
