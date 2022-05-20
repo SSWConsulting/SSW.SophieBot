@@ -18,7 +18,11 @@ SSW.SophieBot is an Enterprise People Bot build with Bot Framework Composer.
 # Getting Started
 
 1. [Run bot with Bot Framework Composer](_docs/Instructions-Compile.md)
-2. [Definition of Ready](_docs/Definition-of-Ready.md)
+
+# Development
+
+1. [Definition of Ready](_docs/Definition-of-Ready.md)
+2. [Preflight Checks](_docs/Preflight-Checks.md)
 3. [Pre-release requirements](_docs/Sanity-Testing.md)
 4. [Defination of Done](_docs/Definition-of-Done.md)
 5. [Deploy the bot](_docs/Instructions-Deployment.md)

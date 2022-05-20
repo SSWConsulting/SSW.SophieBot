@@ -6,7 +6,7 @@
 - All acceptance criteria have been met
 - Deployed to Dev
 - (If implemented) Pass automated UI testing
-- (If not implemented above) Please ensure that you do a manual test and meet the [pre-release requirements](./Sanity-Testing.md)
+- Please ensure that you do a manual test and meet the [pre-release requirements](./Sanity-Testing.md)
 - Complex code is documented (removing technical debt)
 - Deployed to Production
 - Add description about the changes for the PBI
