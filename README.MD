@@ -25,8 +25,8 @@ SSW.SophieBot is an Enterprise People Bot build with Bot Framework Composer.
 2. [Preflight Checks](_docs/Preflight-Checks.md)
 2. [Branching & Merging Strategies](_docs/Branching-and-Merging.md)
 3. [Pre-release requirements](_docs/Sanity-Testing.md)
-4. [Defination of Done](_docs/Definition-of-Done.md)
-5. [Deploy the bot](_docs/Instructions-Deployment.md)
+4. [Deploy the bot](_docs/Instructions-Deployment.md)
+5. [Definition of Done](_docs/Definition-of-Done.md)
 
 # Solution Structure
 
