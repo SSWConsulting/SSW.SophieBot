@@ -38,7 +38,7 @@ namespace SSW.SophieBot.Components.Actions
 
             if (string.IsNullOrWhiteSpace(dateTimeString))
             {
-                result = DateTime.Now.ToString(targetFormat);
+                result = DateTime.Now.ToString(targetFormat ?? "yyyy-MM-ddTHH:mm:ss.fffZ");
             }
             else if (DateTime.TryParse(dateTimeString, out var dateTime))
             {
