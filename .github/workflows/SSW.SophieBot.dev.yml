@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@v2.3.4
 
       - id: setup 
-        uses: ./actions/set-up
+        uses: ${{ github.workspace }}/actions/set-up
        
 
       - name: Create appsettings file
