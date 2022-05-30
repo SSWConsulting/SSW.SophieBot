@@ -1,15 +1,6 @@
 name: Build and Deploy-Dev
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'bots/**'
-      - 'libraries/**'
-      - 'services/**'
-      - '.github/workflows/SSW.SophieBot.dev.yml'
-      - '.github/workflows/scripts/**'
+on: [push]
 
 concurrency:
   group: SSWSophieBotDev-BuildAndDeploy
