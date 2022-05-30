@@ -51,7 +51,8 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 
                     foreach (var employeeProject in employeeProjects)
                     {
-                        var billedDays = GetBilledDays(e, employeeProject, out var billableHours);
+                        double billableHours = employeeProject.BillableHours;
+                        var billedDays = GetBilledDays(e, employeeProject, out billableHours);
                         billedProjects.Add(new BilledProject
                         {
                             BilledDays = billedDays,
@@ -63,7 +64,10 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                         });
                     }
 
+                    //TODO: evaluate is we still need this line of code, I think we can get rid of it
                     billedProjects = billedProjects.OrderByDescending(project => project.BilledHours).ToList();
+                    double totalHours = billedProjects.Sum(project => project.BilledHours);
+                    
 
                     return new EmployeeBillableItemModel
                     {
@@ -72,19 +76,20 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                         FirstName = e.FirstName,
                         LastName = e.LastName,
                         DisplayName = $"{e.FirstName} {e.LastName}",
-                        BilledDays = billedProjects.FirstOrDefault()?.BilledDays ?? 0,
-                        BilledHours = billedProjects.FirstOrDefault()?.BilledHours ?? 0,
+                        BilledDays = (int)Math.Ceiling(totalHours/ 8),
+                        BilledHours = (int)totalHours,
                         BilledProjects = billedProjects,
                         BookingStatus = GetBookingStatus(e, date),
                         LastSeen = GetLastSeen(e)
                     };
                 })
-                .OrderByDescending(i => i.BilledHours)
+                .OrderByDescending(i => i.BilledDays)
                 .ToList();
         }
 
         public static BookingStatus GetBookingStatus(GetAppointmentModel appointment)
         {
+
             if (appointment == null)
             {
                 return BookingStatus.Unknown;
@@ -169,17 +174,21 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             return BookingStatus.Unknown;
         }
 
+        //This function is to
+        // 1. decide if the the working hours are billable hours or internal hours(Client work or internal project)
+        // 2. calculate the billable days according to the billable hours
         public static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project, out double billableHours)
         {
-            billableHours = 0;
-            if (project != null)
+
+
+            if (project != null && project.CustomerName != "SSW")
             {
                 billableHours = project?.BillableHours ?? 0;
             }
-            else
-            {
-                billableHours = employee.Projects.Where(project => !project.CustomerName.Equals("ssw", StringComparison.OrdinalIgnoreCase)).Sum(p => p.BillableHours);
+            else {
+                billableHours = 0;
             }
+         
 
             return billableHours == 0 ? 0 : (int)Math.Ceiling(billableHours / 8);
         }

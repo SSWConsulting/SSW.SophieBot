@@ -7,6 +7,7 @@ In order to get set up to work with SSW.SophieBot, you will need the following:
 1. [Bot Framework Composer](https://docs.microsoft.com/en-us/composer/install-composer?tabs=macos)
 2. [Bot Framework Emulator](https://github.com/Microsoft/BotFramework-Emulator/blob/master/README.md)
 3. [Installing & Configuring ngrok](<https://github.com/Microsoft/BotFramework-Emulator/wiki/Tunneling-(ngrok)>)
+4. [Azure Resources](https://github.com/SSWConsulting/SSW.SophieBot.Private/blob/main/Instruction-Azure-Resources.md#azure-resources)
 
 ## Initial Setup
 
@@ -24,9 +25,9 @@ Go to [SSW.SophieBot](https://github.com/SSWConsulting/SSW.SophieBot) and clone 
 ### Step 2. Create appsettings.json
 
 1. From the cloned repo, go to "{your cloned repo}/bots/employee-finder/src/SSW.SophieBot/settings" folder
-2. Make a copy of the file `appsettings.example.json` and rename it to `appsettings.json`. 
-3. Add necessary configurations to `appsettings.json`. 
-> Note: For `adapters` and `components` sections in `runtimeSettings`, do not modify the initial settings from `appsettings.example.json` as they are needed for the test run.
+2. Make a copy of the file `appsettings.example.json` and rename it to `appsettings.json`.
+3. Add necessary configurations to `appsettings.json`.
+   > Note: For `adapters` and `components` sections in `runtimeSettings`, do not modify the initial settings from `appsettings.example.json` as they are needed for the test run.
 
 ### Step 3. Open the repo with Composer
 

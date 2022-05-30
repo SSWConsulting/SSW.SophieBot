@@ -40,16 +40,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
 
-      - name: Use Node 13.x
-        uses: actions/setup-node@v2.4.0
-        with:
-          node-version: '13'
-      - name: Use BF CLI
-        run: npm install -g @microsoft/botframework-cli
-      - name: Use .Net sdk 6.0.x
-        uses: actions/setup-dotnet@v1.9.0
-        with:
-          dotnet-version: '6.0.x'
+      - id: setup 
+        uses: myactions/set-up-environtment@v1
 
       - name: Create appsettings file
         uses: jsdaniell/create-json@1.1.2
