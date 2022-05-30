@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@v2.3.4
 
       - id: setup 
-        uses: ./${{ env.SOURCE_DIR }}/actions/set-up
+        uses: "./${{ env.SOURCE_DIR }}/actions/set-up"
        
 
       - name: Create appsettings file
