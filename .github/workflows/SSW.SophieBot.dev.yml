@@ -39,16 +39,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{env.ENVIRONMENT}}
     steps:
-      - uses: actions/checkout@v2.3.4
-
-      # - uses: ${{env.SOURCE_DIR}}/.github/actions
-
-      - name: Create appsettings file
-        uses: jsdaniell/create-json@1.1.2
-        with:
-          name: "appsettings.json"
-          json: ${{ secrets.BOT_APP_APPSETTINGS }}
-          dir: "bots/employee-finder/src/SSW.SophieBot/settings"
+      - name: Run set up
+        uses: ${{env.SOURCE_DIR}}/.github/actions/set-up-environment@v1
 
       # Prepare working folders    
       - name: Prepare working folders

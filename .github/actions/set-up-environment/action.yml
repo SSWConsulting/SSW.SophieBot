@@ -4,7 +4,9 @@ description: "set up the build environment"
 runs:
   using: "composite"
   steps:
-    - name: Use Node 13.x
+    - uses: actions/checkout@v2.3.4
+
+    - name: Use Node 13.x jack
       uses: actions/setup-node@v2.4.0
       with:
         node-version: '13'
