@@ -40,7 +40,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
 
-      - uses: ./myactions/set-up-environtment
+      - id: setup 
+        uses: myactions/set-up-environtment@v1
 
       - name: Create appsettings file
         uses: jsdaniell/create-json@1.1.2
