@@ -31,7 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
       - id: setup 
-        uses: duanxinhuan/SSW.SophieBot/actions/set-up@v3.1
+        uses: duanxinhuan/SSW.SophieBot/actions/set-up@v3.2
         with: 
           bot-app-setting: ${{ secrets.BOT_APP_APPSETTINGS }}
           luis-key: ${{secrets.LUIS_AUTHORING_KEY}}
