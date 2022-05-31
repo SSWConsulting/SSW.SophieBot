@@ -1,0 +1,105 @@
+name: "set up build environment"
+description: "set up the build environment"
+inputs:
+  bot-app-setting:
+    required: true
+    description: "The app setting for Bot"
+  luis-key:
+    required: true
+    description: "The app setting for Bot"
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: Use Node 13.x jack
+      uses: actions/setup-node@v2.4.0
+      with:
+        node-version: '13'
+    - name: Use BF CLI
+      shell: pwsh
+      run: npm install -g @microsoft/botframework-cli 
+    - name: Use .Net sdk 6.0.x
+      uses: actions/setup-dotnet@v1.9.0
+      with:
+        dotnet-version: '6.0.x'  
+    - name: Create appsettings file
+      uses: jsdaniell/create-json@1.1.2
+      with:
+        name: "appsettings.json"
+        json: ${{ inputs.bot-app-setting }}
+        dir: "bots/employee-finder/src/SSW.SophieBot/settings"   
+
+    - name: Prepare working folders
+      shell: pwsh
+      if: env.BUILD_FLOW == 'composer'
+      run: |
+        $generatedDirectory = "${{ env.BOT_PROJECT_DIR }}/generated"
+      
+        # Clean and recreate the generated directory
+        if (Test-Path $generatedDirectory)
+        {
+          Remove-Item -Path $generatedDirectory -Force -Recurse
+        }
+
+        $outputDirectory = "$generatedDirectory/interruption"
+        New-Item -Path /. -name $outputDirectory -ItemType "directory" 
+    - name: Cross train LU models
+      shell: pwsh
+      if: env.BUILD_FLOW == 'composer'
+      run: |
+        $sourceDirectory = "${{ env.BOT_PROJECT_DIR }}"
+        $outputDirectory = "${{ env.BOT_PROJECT_DIR }}/generated/interruption"
+
+        # Cross train models
+        bf luis:cross-train --in $sourceDirectory --out $outputDirectory --config $sourceDirectory/settings/cross-train.config.json --force
+
+        # List generated files
+        cd $outputDirectory
+        ls -R      
+
+    - name: Publish LUIS
+      shell: pwsh
+      if: env.BUILD_FLOW == 'composer'
+      run: ${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-LUIS.ps1 -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -authoringKey ${{ inputs.luis-key }} -botName ${{ env.BOT_NAME }} -endpoint ${{ env.LUIS_AUTHORING_ENDPOINT }} -region ${{ env.LUIS_AUTHORING_REGION }}
+      working-directory: ${{ env.BOT_PROJECT_DIR }}          
+
+    - name: Upload bot models artifact
+      if: env.BUILD_FLOW == 'composer'
+      uses: actions/upload-artifact@v2.2.4
+      with:
+        name: "Bot_Models_${{ github.run_id }}"
+        path: ${{ env.BOT_PROJECT_DIR }}/generated
+        if-no-files-found: error
+
+      # Create bot app publishing package
+    - name: Create bot publishing package
+      shell: pwsh
+      run: |
+        $publishingProfileName = (${{ env.BUILD_FLOW }} -eq 'composer') ? "${{ env.PUBLISHING_PROFILE_NAME }}" : ""
+        & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Publish-WebApp.ps1" -botProjectFolder ${{ env.BOT_PROJECT_DIR }} -botProjectName ${{ env.BOT_PROJECT_NAME }} -outputFolder "${{ env.OUTPUT_DIR }}/deploy" -publishingProfile $publishingProfileName
+        working-directory: ${{ env.BOT_PROJECT_DIR }}
+
+      # Create LUIS migrator publishing package
+    - name: Create LUIS migrator publishing package
+      shell: pwsh
+      run: dotnet publish -c Release -o "${{ env.OUTPUT_DIR }}/luis-migrator" --self-contained -r win-x64
+      working-directory: ${{ env.LUIS_MIGRATOR_DIR }}
+
+      # Upload webapp artifact
+    - name: Upload webapp artifact
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: "Bot_Webapp_${{ github.run_id }}"
+        path: ${{ env.OUTPUT_DIR }}/deploy
+        if-no-files-found: error
+
+      # Upload LUIS migrator artifact
+    - name: Upload LUIS migrator artifact
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: "LUIS_Migrator_${{ github.run_id }}"
+        path: ${{ env.OUTPUT_DIR }}/luis-migrator
+        if-no-files-found: error
+
+  
