@@ -12,6 +12,7 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - run: echo "SHA IS ${{github.sha}}"
     - name: Use Node 13.x jack
       uses: actions/setup-node@v2.4.0
       with:
