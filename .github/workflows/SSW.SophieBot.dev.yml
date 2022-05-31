@@ -41,10 +41,10 @@ jobs:
       - uses: actions/checkout@v2.3.4
 
       - id: setup 
-        uses: duanxinhuan/SSW.SophieBot/actions/set-up@v2.6
+        uses: duanxinhuan/SSW.SophieBot/actions/set-up@v2.7
         with: 
           bot-app-setting: ${{ secrets.BOT_APP_APPSETTINGS }}
-          luis-key: secrets.LUIS_AUTHORING_KEY
+          luis-key: ${{secrets.LUIS_AUTHORING_KEY}}
 
 
   deploy-web-app:
@@ -55,7 +55,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
       - id: deploy-web 
-        uses: duanxinhuan/SSW.SophieBot/actions/deploy-web@v2.6
+        uses: duanxinhuan/SSW.SophieBot/actions/deploy-web@v2.7
         with: 
           bot-web-publish-profile: ${{ secrets.BOT_WEBAPP_PUBLISH_PROFILE }}
       
@@ -68,7 +68,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
 
-      - uses: duanxinhuan/SSW.SophieBot/actions/migrate-LUIS@v2.6
+      - uses: duanxinhuan/SSW.SophieBot/actions/migrate-LUIS@v2.7
         with: 
           luis-app-setting: ${{ secrets.LUIS_MIGRATOR_APPSETTINGS }}
 

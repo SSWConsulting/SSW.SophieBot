@@ -4,6 +4,7 @@ inputs:
   bot-web-publish-profile:
     description: the web publish profile
     required: true
+
 runs:
   using: "composite"
   steps:
