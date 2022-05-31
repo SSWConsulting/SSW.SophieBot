@@ -35,13 +35,8 @@ jobs:
         uses: duanxinhuan/SSW.SophieBot/actions/set-up@v2.1
         with: 
           bot-app-setting: ${{ secrets.BOT_APP_APPSETTINGS }}
-          bot-project-dir: ${{env.BOT_PROJECT_DIR }}
        
-
-      
-
-    
-        
+     
       # Cross train LU models
       - name: Cross train LU models
         if: env.BUILD_FLOW == 'composer'

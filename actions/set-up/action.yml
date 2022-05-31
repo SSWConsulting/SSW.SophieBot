@@ -4,9 +4,6 @@ inputs:
   bot-app-setting:
     required: true
     description: "The app setting for Bot"
-  bot-project-dir:
-    required: true
-    description: the location of bot project
 
 
 runs:
@@ -43,5 +40,18 @@ runs:
         }
 
         $outputDirectory = "$generatedDirectory/interruption"
-        New-Item -Path /. -name $outputDirectory -ItemType "directory"         
+        New-Item -Path /. -name $outputDirectory -ItemType "directory" 
+    - name: Cross train LU models
+      shell: pwsh
+      if: env.BUILD_FLOW == 'composer'
+      run: |
+        $sourceDirectory = "${{ env.BOT_PROJECT_DI }}"
+        $outputDirectory = "${{ env.BOT_PROJECT_DIR }}/generated/interruption"
+
+        # Cross train models
+        bf luis:cross-train --in $sourceDirectory --out $outputDirectory --config $sourceDirectory/settings/cross-train.config.json --force
+
+        # List generated files
+        cd $outputDirectory
+        ls -R            
 
