@@ -21,6 +21,10 @@ namespace SSW.SophieBot.Components.Components
             services.AddDeclarativeType<TimeDifferenceAction>(TimeDifferenceAction.Kind);
             services.AddDeclarativeType<EnrichDatatimeAction>(EnrichDatatimeAction.Kind);
             services.AddDeclarativeType<UsageByUserAction>(UsageByUserAction.Kind);
+            services.AddDeclarativeType<SetCacheAction>(SetCacheAction.Kind);
+            services.AddDeclarativeType<ReadCacheAction>(ReadCacheAction.Kind);
+            services.AddDeclarativeType<SendResponseFromCacheAction>(SendResponseFromCacheAction.Kind);
+            services.AddDeclarativeType<SophieBotSendActivity>(SophieBotSendActivity.Kind);
         }
     }
 }

@@ -26,11 +26,6 @@
 # SendActivity_CObFyQ_text()
 - ${ErrorMessage()}
 
-# SendActivity_RgIw3E()
-[Activity
-    Attachments = ${json(PeopleListBySkill(dialog.locationEntity, dialog.foreach.page, count(turn.sortedEmployees)))}
-]
-
 # SendActivity_lQMjCh()
 [Activity
     Attachments = ${json(SendActivity_X1CF9d_attachment_v9gcuo(turn.firstNames, turn.sortedEmployees, dialog.skillEntity, dialog.locationEntity, turn.locations))}
@@ -113,3 +108,13 @@
     }
 }
 ```
+
+# SophieBotSendActivity_Activity_Fo7fXm()
+[Activity
+    Attachments = ${json(PeopleListBySkill(dialog.locationEntity, dialog.foreach.page, count(turn.sortedEmployees)))}
+]
+
+# SophieBotSendActivity_Activity_HG96bG()
+[Activity
+    Attachments = ${json(PeopleListBySkill(dialog.locationEntity, dialog.foreach.page, count(turn.sortedEmployees)))}
+]

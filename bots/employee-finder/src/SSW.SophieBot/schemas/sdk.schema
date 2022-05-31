@@ -26,6 +26,9 @@
       "$ref": "#/definitions/GetEmailAddressDialog.dialog"
     },
     {
+      "$ref": "#/definitions/GetEmployeeProjects.dialog"
+    },
+    {
       "$ref": "#/definitions/GetEmployeesByBillableAction"
     },
     {
@@ -497,6 +500,18 @@
       "$ref": "#/definitions/PersonNameAlterateAction"
     },
     {
+      "$ref": "#/definitions/ReadCacheAction"
+    },
+    {
+      "$ref": "#/definitions/SendResponseFromCacheAction"
+    },
+    {
+      "$ref": "#/definitions/SetCacheAction"
+    },
+    {
+      "$ref": "#/definitions/SophieBotSendActivity"
+    },
+    {
       "$ref": "#/definitions/StringJoinAction"
     },
     {
@@ -945,6 +960,11 @@
           "$ref": "#/definitions/GetCurrentEmployeesOnLocationDialog.dialog/definitions/stringExpression",
           "title": "Location Entity"
         },
+        "rawDateEntity": {
+          "description": "Date to query",
+          "$ref": "#/definitions/objectExpression",
+          "title": "Raw Date Entity"
+        },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
@@ -1028,6 +1048,44 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "GetEmailAddressDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetEmployeeProjects.dialog": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetEmployeeProjects",
+      "type": "object",
+      "$result": {
+        "type": "object",
+        "properties": {}
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "nameEntity": {
+          "title": "Name Entity",
+          "description": "Employee Name",
+          "$ref": "#/definitions/stringExpression"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetEmployeeProjects.dialog"
         },
         "$designer": {
           "title": "Designer information",
@@ -1243,6 +1301,11 @@
           "$ref": "#/definitions/stringExpression",
           "title": "Result",
           "description": "The property that transformed employees are assign to"
+        },
+        "isFreeForXDays": {
+          "$ref": "#/definitions/integerExpression",
+          "title": "IsFreeForXDays",
+          "description": "It will set the number of free days user asking"
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -1863,6 +1926,10 @@
           "$ref": "#/definitions/stringExpression",
           "title": "Skill Entity"
         },
+        "rawDateEntity": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Raw Date Entity"
+        },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
@@ -2042,7 +2109,7 @@
         },
         "stringExpression": {
           "$role": "expression",
-          "title": "String or expression",
+          "title": "String",
           "description": "Interpolated string or expression to evaluate.",
           "oneOf": [
             {
@@ -8141,6 +8208,9 @@
           "$ref": "#/definitions/GetEmailAddressDialog.dialog"
         },
         {
+          "$ref": "#/definitions/GetEmployeeProjects.dialog"
+        },
+        {
           "$ref": "#/definitions/GetEmployeesByBillableAction"
         },
         {
@@ -8418,6 +8488,18 @@
         },
         {
           "$ref": "#/definitions/PersonNameAlterateAction"
+        },
+        {
+          "$ref": "#/definitions/ReadCacheAction"
+        },
+        {
+          "$ref": "#/definitions/SendResponseFromCacheAction"
+        },
+        {
+          "$ref": "#/definitions/SetCacheAction"
+        },
+        {
+          "$ref": "#/definitions/SophieBotSendActivity"
         },
         {
           "$ref": "#/definitions/StringJoinAction"
@@ -13871,11 +13953,167 @@
         }
       }
     },
+    "ReadCacheAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "ReadCache",
+      "description": "This will read caching result",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "cacheKey": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Cache key",
+          "description": "Cache key to use"
+        },
+        "resultProperty": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Result property",
+          "description": "Property name to set the cache result"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "ReadCacheAction"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
     "role": {
       "title": "$role",
       "description": "Defines the role played in the dialog schema from [expression|interface|implements($kind)|extends($kind)].",
       "type": "string",
       "pattern": "^((expression)|(interface)|(implements\\([a-zA-Z][a-zA-Z0-9.]*\\))|(extends\\([a-zA-Z][a-zA-Z0-9.]*\\)))$"
+    },
+    "SendResponseFromCacheAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "SendResponseFromCache",
+      "description": "This will send activity response from cache if the cache exists",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "SendResponseFromCacheAction"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "SetCacheAction": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "SetCache",
+      "description": "This will set caching result",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "cacheKey": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Cache key",
+          "description": "Cache key to use"
+        },
+        "cacheData": {
+          "$ref": "#/definitions/stringExpression",
+          "title": "Cache data",
+          "description": "Cache data to set"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "SetCacheAction"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "SophieBotSendActivity": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "Send an activity and set cache",
+      "description": "Respond with an activity and set cache.",
+      "type": "object",
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id",
+          "description": "Optional id for the dialog"
+        },
+        "disabled": {
+          "$ref": "#/definitions/booleanExpression",
+          "title": "Disabled",
+          "description": "Optional condition which if true will disable this action."
+        },
+        "activity": {
+          "$kind": "Microsoft.IActivityTemplate",
+          "title": "Activity",
+          "description": "Activity to send.",
+          "$ref": "#/definitions/Microsoft.IActivityTemplate"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "SophieBotSendActivity"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
     },
     "stringExpression": {
       "$role": "expression",

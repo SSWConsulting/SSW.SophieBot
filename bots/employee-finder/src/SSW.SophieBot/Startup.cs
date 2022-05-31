@@ -1,19 +1,20 @@
-﻿using System.IO;
+﻿using System.Linq;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime.Extensions;
+using Microsoft.Bot.Builder.Dialogs.Declarative;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using SSW.SophieBot.Components;
-using SSW.SophieBot.Components.Services;
+using SSW.SophieBot.Components.Actions;
 using SSW.SophieBot.HttpClientComponents.Abstractions;
 using SSW.SophieBot.HttpClientComponents.PersonQuery;
 using SSW.SophieBot.Integration;
@@ -41,11 +42,15 @@ namespace SSW.SophieBot
 			services.Replace(ServiceDescriptor.Singleton<IBotFrameworkHttpAdapter>(sp => sp.GetRequiredService<SophieBotAdapter>()));
 			services.Replace(ServiceDescriptor.Singleton<BotAdapter>(sp => sp.GetRequiredService<SophieBotAdapter>()));
 
+			services.Remove(services.Last(s => s.ServiceType == typeof(DeclarativeType)));
+			services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<SophieBotLuisAdaptiveRecognizer>(LuisAdaptiveRecognizer.Kind));
+
 			services.AddSingleton<ITelemetryInitializer, SophieBotTelemetryInitializer>();
 			services.AddSingleton<IMiddleware, TeamsAuthenticationMiddleware>();
 
 			services.Configure<ApplicationSettings>(Configuration.GetSection(ConfigurationConstants.AppSettingsKey));
 			services.Configure<AppInsightsSettings>(Configuration.GetSection(ConfigurationConstants.AppInsightsSettingsKey));
+			services.Configure<CacheSettings>(Configuration.GetSection(ConfigurationConstants.CacheSettingsKey));
 
 			services.ConfigureSophieBotHttpClient()
 				.AddPersonQueryClient();

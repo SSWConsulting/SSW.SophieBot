@@ -1,6 +1,7 @@
 ﻿using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs.Declarative;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using SSW.SophieBot.Components.Services;
 
 namespace SSW.SophieBot.Components
@@ -21,7 +22,9 @@ namespace SSW.SophieBot.Components
 
         public static IServiceCollection AddCommonComponent(this IServiceCollection services)
         {
-            return services.AddTransient<ITelemetryService, AppInsightsService>();
+            return services
+                .AddTransient<ITelemetryService, AppInsightsService>()
+                .AddBotApplicationService<IOptions<CacheSettings>>();
         }
     }
 }

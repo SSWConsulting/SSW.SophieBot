@@ -25,6 +25,18 @@
           "value": "=null"
         },
         {
+          "$kind": "SendResponseFromCacheAction",
+          "$designer": {
+            "id": "xu4dP9"
+          }
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "9nkUDY"
+          }
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "vT9g67"
@@ -216,11 +228,10 @@
                       "pageSize": 10,
                       "actions": [
                         {
-                          "$kind": "Microsoft.SendActivity",
+                          "$kind": "SophieBotSendActivity",
                           "$designer": {
-                            "id": "RgIw3E"
-                          },
-                          "activity": "${SendActivity_RgIw3E()}"
+                            "id": "HG96bG"
+                          }
                         }
                       ],
                       "itemsProperty": "turn.sortedEmployees"

@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.ApplicationInsights.Query" Version="1.0.0" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.13.2" />
+    <PackageReference Include="StackExchange.Redis" Version="2.5.61" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Models\" />
