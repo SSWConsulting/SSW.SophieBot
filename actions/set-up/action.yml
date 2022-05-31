@@ -1,19 +1,47 @@
 name: "set up build environment"
 description: "set up the build environment"
+inputs:
+  bot-app-setting:
+    required: true
+    description: "The app setting for Bot"
+  bot-project-dir:
+    required: true
+    description: the location of bot project
+
 
 runs:
   using: "composite"
   steps:
-
     - name: Use Node 13.x jack
       uses: actions/setup-node@v2.4.0
       with:
         node-version: '13'
     - name: Use BF CLI
-      shell: bash
+      shell: pwsh
       run: npm install -g @microsoft/botframework-cli 
     - name: Use .Net sdk 6.0.x
       uses: actions/setup-dotnet@v1.9.0
       with:
-        dotnet-version: '6.0.x'      
+        dotnet-version: '6.0.x'  
+    - name: Create appsettings file
+      uses: jsdaniell/create-json@1.1.2
+      with:
+        name: "appsettings.json"
+        json: ${{ inputs.bot-app-setting }}
+        dir: "bots/employee-finder/src/SSW.SophieBot/settings"   
+
+    - name: Prepare working folders
+      shell: pwsh
+      if: env.BUILD_FLOW == 'composer'
+      run: |
+        $generatedDirectory = "${{ iputs.bot-project-dir }}/generated"
+      
+        # Clean and recreate the generated directory
+        if (Test-Path $generatedDirectory)
+        {
+          Remove-Item -Path $generatedDirectory -Force -Recurse
+        }
+
+        $outputDirectory = "$generatedDirectory/interruption"
+        New-Item -Path /. -name $outputDirectory -ItemType "directory"         
 
