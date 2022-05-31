@@ -1,0 +1,27 @@
+name: "migrate LUIS"
+description: "migrate the LUIS model"
+
+inputs:
+  luis-app-setting:
+    required: true
+    description: app setting for LUIS
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/download-artifact@v2
+      with:
+        name: "LUIS_Migrator_${{ github.run_id }}"
+        path: ${{ env.OUTPUT_DIR }}/luis-migrator
+
+    - name: Create appsettings file
+      uses: jsdaniell/create-json@1.1.2
+      with:
+        name: "appsettings.json"
+        json: ${{ inputs.luis-app-setting }}
+        dir: "output/luis-migrator"
+          
+    - name: Run LUIS migrator
+      shell: pwsh
+      run: .\SSW.SophieBot.LUIS.EmployeeFinder.Migrator
+      working-directory: ${{ env.OUTPUT_DIR }}/luis-migrator

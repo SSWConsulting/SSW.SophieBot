@@ -1,0 +1,26 @@
+name: "deploy web pplication"
+description: "deploy web pplication"
+inputs:
+  bot-web-publish-profile:
+    description: the web publish profile
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Use .Net sdk 6.0.x
+      uses: actions/setup-dotnet@v1.9.0
+      with:
+        dotnet-version: '6.0.x'
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: "Bot_Webapp_${{ github.run_id }}"
+        path: ${{ env.OUTPUT_DIR }}/deploy
+
+      # Deploy the web app to azure
+    - name: "Deploy Azure Web App"
+      uses: Azure/webapps-deploy@v2
+      with:
+        app-Name: ${{ env.WEBAPP_NAME }}
+        publish-profile: ${{ secrets.BOT_WEBAPP_PUBLISH_PROFILE }}
+        package: "${{ env.OUTPUT_DIR }}/deploy"
