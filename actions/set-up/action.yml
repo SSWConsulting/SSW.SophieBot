@@ -78,7 +78,7 @@ runs:
       run: |
         $publishingProfileName = (${{ env.BUILD_FLOW }} -eq 'composer') ? "${{ env.PUBLISHING_PROFILE_NAME }}" : ""
         & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Publish-WebApp.ps1" -botProjectFolder ${{ env.BOT_PROJECT_DIR }} -botProjectName ${{ env.BOT_PROJECT_NAME }} -outputFolder "${{ env.OUTPUT_DIR }}/deploy" -publishingProfile $publishingProfileName
-        working-directory: ${{ env.BOT_PROJECT_DIR }}
+      working-directory: ${{ env.BOT_PROJECT_DIR }}
 
       # Create LUIS migrator publishing package
     - name: Create LUIS migrator publishing package
