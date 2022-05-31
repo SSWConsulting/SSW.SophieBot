@@ -34,7 +34,7 @@ runs:
       shell: pwsh
       if: env.BUILD_FLOW == 'composer'
       run: |
-        $generatedDirectory = "${{ inputs.bot-project-dir }}/generated"
+        $generatedDirectory = "${{ env.BOT_PROJECT_DIR }}/generated"
       
         # Clean and recreate the generated directory
         if (Test-Path $generatedDirectory)
