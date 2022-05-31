@@ -22,5 +22,5 @@ runs:
       uses: Azure/webapps-deploy@v2
       with:
         app-Name: ${{ env.WEBAPP_NAME }}
-        publish-profile: ${{ secrets.BOT_WEBAPP_PUBLISH_PROFILE }}
+        publish-profile: ${{ inputs.bot-web-publish-profile}}
         package: "${{ env.OUTPUT_DIR }}/deploy"
