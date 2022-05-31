@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "SetCache",
+  "description": "This will set caching result",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "cacheKey": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Cache key",
+      "description": "Cache key to use"
+    },
+    "cacheData": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Cache data",
+      "description": "Cache data to set"
+    }
+  }
+}

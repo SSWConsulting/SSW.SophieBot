@@ -1,0 +1,10 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "SendResponseFromCache",
+  "description": "This will send activity response from cache if the cache exists",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+  }
+}
