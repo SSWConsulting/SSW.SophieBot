@@ -30,103 +30,12 @@ jobs:
     environment: prod
     steps:
       - uses: actions/checkout@v2.3.4
+      - id: setup 
+        uses: duanxinhuan/SSW.SophieBot/actions/set-up@v3.1
+        with: 
+          bot-app-setting: ${{ secrets.BOT_APP_APPSETTINGS }}
+          luis-key: ${{secrets.LUIS_AUTHORING_KEY}}
 
-      - name: Use Node 13.x
-        uses: actions/setup-node@v2.4.0
-        with:
-          node-version: '13'
-      - name: Use BF CLI
-        run: npm install -g @microsoft/botframework-cli
-      - name: Use .Net sdk 6.0.x
-        uses: actions/setup-dotnet@v1.9.0
-        with:
-          dotnet-version: '6.0.x'
-
-      - name: Create appsettings file
-        uses: jsdaniell/create-json@1.1.2
-        with:
-          name: "appsettings.json"
-          json: ${{ secrets.BOT_APP_APPSETTINGS }}
-          dir: "bots/employee-finder/src/SSW.SophieBot/settings"
-
-      # Prepare working folders    
-      - name: Prepare working folders
-        if: env.BUILD_FLOW == 'composer'
-        run: |
-          $generatedDirectory = "${{ env.BOT_PROJECT_DIR }}/generated"
-      
-          # Clean and recreate the generated directory
-          if (Test-Path $generatedDirectory)
-          {
-            Remove-Item -Path $generatedDirectory -Force -Recurse
-          }
-
-          $outputDirectory = "$generatedDirectory/interruption"
-          New-Item -Path /. -name $outputDirectory -ItemType "directory"
-        
-      # Cross train LU models
-      - name: Cross train LU models
-        if: env.BUILD_FLOW == 'composer'
-        run: |
-          $sourceDirectory = "${{ env.BOT_PROJECT_DIR }}"
-          $outputDirectory = "${{ env.BOT_PROJECT_DIR }}/generated/interruption"
-
-          # Cross train models
-          bf luis:cross-train --in $sourceDirectory --out $outputDirectory --config $sourceDirectory/settings/cross-train.config.json --force
-
-          # List generated files
-          cd $outputDirectory
-          ls -R
-
-      # Publish LUIS models
-      - name: Publish LUIS
-        if: env.BUILD_FLOW == 'composer'
-        run: ${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-LUIS.ps1 -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -authoringKey ${{ secrets.LUIS_AUTHORING_KEY }} -botName ${{ env.BOT_NAME }} -endpoint ${{ env.LUIS_AUTHORING_ENDPOINT }} -region ${{ env.LUIS_AUTHORING_REGION }}
-        working-directory: ${{ env.BOT_PROJECT_DIR }}
-
-      # Publish Orchestrator models
-      # - name: Publish orchestrator
-      #   if: env.BUILD_FLOW == 'composer'
-      #   run: |
-      #     cd ${{ env.BOT_PROJECT_DIR }}
-      #     & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-Orchestrator.ps1" -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -appSettingsFile ./settings/appsettings.json
-
-      # Upload bot models artifact
-      - name: Upload bot models artifact
-        if: env.BUILD_FLOW == 'composer'
-        uses: actions/upload-artifact@v2.2.4
-        with:
-          name: "Bot_Models_${{ github.run_id }}"
-          path: ${{ env.BOT_PROJECT_DIR }}/generated
-          if-no-files-found: error
-
-      # Create bot app publishing package
-      - name: Create bot publishing package
-        run: |
-          $publishingProfileName = (${{ env.BUILD_FLOW }} -eq 'composer') ? "${{ env.PUBLISHING_PROFILE_NAME }}" : ""
-          & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Publish-WebApp.ps1" -botProjectFolder ${{ env.BOT_PROJECT_DIR }} -botProjectName ${{ env.BOT_PROJECT_NAME }} -outputFolder "${{ env.OUTPUT_DIR }}/deploy" -publishingProfile $publishingProfileName
-        working-directory: ${{ env.BOT_PROJECT_DIR }}
-
-      # Create LUIS migrator publishing package
-      - name: Create LUIS migrator publishing package
-        run: dotnet publish -c Release -o "${{ env.OUTPUT_DIR }}/luis-migrator" --self-contained -r win-x64
-        working-directory: ${{ env.LUIS_MIGRATOR_DIR }}
-
-      # Upload webapp artifact
-      - name: Upload webapp artifact
-        uses: actions/upload-artifact@v2.3.1
-        with:
-          name: "Bot_Webapp_${{ github.run_id }}"
-          path: ${{ env.OUTPUT_DIR }}/deploy
-          if-no-files-found: error
-
-      # Upload LUIS migrator artifact
-      - name: Upload LUIS migrator artifact
-        uses: actions/upload-artifact@v2.3.1
-        with:
-          name: "LUIS_Migrator_${{ github.run_id }}"
-          path: ${{ env.OUTPUT_DIR }}/luis-migrator
-          if-no-files-found: error
 
   deploy-web-app:
     name: Deploy web app
@@ -135,24 +44,11 @@ jobs:
     environment: prod
     steps:
       - uses: actions/checkout@v2.3.4
-
-      - name: Use .Net sdk 6.0.x
-        uses: actions/setup-dotnet@v1.9.0
-        with:
-          dotnet-version: '6.0.x'
-
-      - uses: actions/download-artifact@v2
-        with:
-          name: "Bot_Webapp_${{ github.run_id }}"
-          path: ${{ env.OUTPUT_DIR }}/deploy
-
-      # Deploy the web app to azure
-      - name: "Deploy Azure Web App"
-        uses: Azure/webapps-deploy@v2
-        with:
-          app-Name: ${{ env.WEBAPP_NAME }}
-          publish-profile: ${{ secrets.BOT_WEBAPP_PUBLISH_PROFILE }}
-          package: "${{ env.OUTPUT_DIR }}/deploy"
+      - id: deploy-web 
+        uses: duanxinhuan/SSW.SophieBot/actions/deploy-web@v3.1
+        with: 
+          bot-web-publish-profile: ${{ secrets.BOT_WEBAPP_PUBLISH_PROFILE }}
+      
 
   migrate-luis-model:
     name: Migrate LUIS model
@@ -162,18 +58,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
 
-      - uses: actions/download-artifact@v2
-        with:
-          name: "LUIS_Migrator_${{ github.run_id }}"
-          path: ${{ env.OUTPUT_DIR }}/luis-migrator
-
-      - name: Create appsettings file
-        uses: jsdaniell/create-json@1.1.2
-        with:
-          name: "appsettings.json"
-          json: ${{ secrets.LUIS_MIGRATOR_APPSETTINGS }}
-          dir: "output/luis-migrator"
-          
-      - name: Run LUIS migrator
-        run: .\SSW.SophieBot.LUIS.EmployeeFinder.Migrator
-        working-directory: ${{ env.OUTPUT_DIR }}/luis-migrator
+      - uses: duanxinhuan/SSW.SophieBot/actions/migrate-LUIS@v3.1
+        with: 
+          luis-app-setting: ${{ secrets.LUIS_MIGRATOR_APPSETTINGS }}
