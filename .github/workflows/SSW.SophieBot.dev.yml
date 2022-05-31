@@ -55,7 +55,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
       - id: deploy-web 
-        uses: duanxinhuan/SSW.SophieBot/actions/deploy-web@v3.1
+        uses: duanxinhuan/SSW.SophieBot/actions/deploy-web@v3.2
         with: 
           bot-web-publish-profile: ${{ secrets.BOT_WEBAPP_PUBLISH_PROFILE }}
       
