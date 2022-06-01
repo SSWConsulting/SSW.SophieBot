@@ -24,19 +24,8 @@ defaults:
     shell: pwsh
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    environment: prod
-    steps:
-      - uses: actions/checkout@v2.3.4
-      - id: setup 
-        uses: duanxinhuan/SSW.SophieBot/actions/set-up@v3.2
-        with: 
-          bot-app-setting: ${{ secrets.BOT_APP_APPSETTINGS }}
-          luis-key: ${{secrets.LUIS_AUTHORING_KEY}}
 
-
+  # deploy directly to the prod server because It has already beem built by prod
   deploy-web-app:
     name: Deploy web app
     needs: build
