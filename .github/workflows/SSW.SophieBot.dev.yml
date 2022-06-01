@@ -10,6 +10,7 @@ on:
       - 'services/**'
       - '.github/workflows/SSW.SophieBot.dev.yml'
       - '.github/workflows/scripts/**'
+      - 'actions/**'
 
 concurrency:
   group: SSWSophieBotDev-BuildAndDeploy
