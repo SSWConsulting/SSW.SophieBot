@@ -4,12 +4,13 @@ on:
   push:
     branches:
       - main
+      - 496-Unify-Workflow-Files
     paths:
       - 'bots/**'
       - 'libraries/**'
       - 'services/**'
-      - '.github/workflows/SSW.SophieBot.dev.yml'
-      - '.github/workflows/scripts/**'
+      # since now dev and prod is connected to each other so I will build it even if prod yml change
+      - '.github/workflows/**'
       - 'actions/**'
 
 concurrency:
