@@ -94,8 +94,11 @@ runs:
     #     if-no-files-found: error
 
       # Create bot app publishing package
+
+      # sorry Jim, I know it is really bad, let me know if you are not happy ; ) hahahahahahahahaha
     - name: Create bot publishing package
-      if: env.ENVIRONMENT_NAME == 'production'
+      # TODO create a seperate action for the following 4 tasks :(
+      if: env.ENVIRONMENT_NAME == 'development'
       shell: pwsh
       run: |
         $publishingProfileName = (${{ env.BUILD_FLOW }} -eq 'composer') ? "${{ env.PUBLISHING_PROFILE_NAME }}" : ""
@@ -104,14 +107,14 @@ runs:
 
       # Create LUIS migrator publishing package
     - name: Create LUIS migrator publishing package
-      if: env.ENVIRONMENT_NAME == 'production'
+      if: env.ENVIRONMENT_NAME == 'development'
       shell: pwsh
       run: dotnet publish -c Release -o "${{ env.OUTPUT_DIR }}/luis-migrator" --self-contained -r win-x64
       working-directory: ${{ env.LUIS_MIGRATOR_DIR }}
 
       # Upload webapp artifact
     - name: Upload webapp artifact
-      if: env.ENVIRONMENT_NAME == 'production'
+      if: env.ENVIRONMENT_NAME == 'development'
       uses: actions/upload-artifact@v2.3.1
       with:
         name: "Bot_Webapp_${{ github.sha }}"
@@ -120,7 +123,7 @@ runs:
 
       # Upload LUIS migrator artifact
     - name: Upload LUIS migrator artifact
-      if: env.ENVIRONMENT_NAME == 'production'
+      if: env.ENVIRONMENT_NAME == 'development'
       uses: actions/upload-artifact@v2.3.1
       with:
         name: "LUIS_Migrator_${{ github.sha }}"
