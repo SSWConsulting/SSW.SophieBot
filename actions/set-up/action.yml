@@ -70,7 +70,7 @@ runs:
       if: env.BUILD_FLOW == 'composer'
       uses: actions/upload-artifact@v2.2.4
       with:
-        name: "Bot_Models_${{ github.run_id }}"
+        name: "Bot_Models_${{ github.sha }}"
         path: ${{ env.BOT_PROJECT_DIR }}/generated
         if-no-files-found: error
 
@@ -92,7 +92,7 @@ runs:
     - name: Upload webapp artifact
       uses: actions/upload-artifact@v2.3.1
       with:
-        name: "Bot_Webapp_${{ github.run_id }}"
+        name: "Bot_Webapp_${{ github.sha }}"
         path: ${{ env.OUTPUT_DIR }}/deploy
         if-no-files-found: error
 
@@ -100,7 +100,7 @@ runs:
     - name: Upload LUIS migrator artifact
       uses: actions/upload-artifact@v2.3.1
       with:
-        name: "LUIS_Migrator_${{ github.run_id }}"
+        name: "LUIS_Migrator_${{ github.sha }}"
         path: ${{ env.OUTPUT_DIR }}/luis-migrator
         if-no-files-found: error
 
