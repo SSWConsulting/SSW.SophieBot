@@ -74,7 +74,8 @@
 					}
 				}
             ]
-        }
+        },
+		${if(turn.activity.channelId == "msteams", TipMessage(), '')}
     ],
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2"
@@ -112,5 +113,17 @@
      "wrap": true,
      "weight": "Bolder",
      "size": "Large"
+ }
+ ```
+
+ # TipMessage()
+ - ```
+ {
+	"type": "TextBlock",
+	"text": "💡Tip: Pin this chat, so you can always find me!",
+	"wrap": true,
+	"horizontalAlignment": "Right",
+	"size": "Small",
+	"spacing": "Large" 
  }
  ```
