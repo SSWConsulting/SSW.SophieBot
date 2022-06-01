@@ -11,7 +11,7 @@ runs:
   steps:
     - uses: actions/download-artifact@v2
       with:
-        name: "LUIS_Migrator_${{ github.run_id }}"
+        name: "LUIS_Migrator_${{ github.sha }}"
         path: ${{ env.OUTPUT_DIR }}/luis-migrator
 
     - name: Create appsettings file

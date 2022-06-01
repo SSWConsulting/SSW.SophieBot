@@ -15,7 +15,7 @@ runs:
 
     - uses: actions/download-artifact@v2
       with:
-        name: "Bot_Webapp_${{ github.run_id }}"
+        name: "Bot_Webapp_${{ github.sha }}"
         path: ${{ env.OUTPUT_DIR }}/deploy
 
       # Deploy the web app to azure
