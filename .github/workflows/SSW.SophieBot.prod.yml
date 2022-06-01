@@ -18,6 +18,7 @@ env:
   PUBLISHING_PROFILE_NAME: SSW.Bots
   LUIS_AUTHORING_ENDPOINT: https://australiaeast.api.cognitive.microsoft.com/
   LUIS_AUTHORING_REGION: australiaeast
+  ENVIRONMENT_NAME: production
 
 defaults:
   run:
