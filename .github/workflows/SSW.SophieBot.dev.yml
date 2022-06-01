@@ -68,7 +68,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
 
-      - uses: duanxinhuan/SSW.SophieBot/actions/migrate-LUIS@v3.1
+      - uses: duanxinhuan/SSW.SophieBot/actions/migrate-LUIS@v3.2
         with: 
           luis-app-setting: ${{ secrets.LUIS_MIGRATOR_APPSETTINGS }}
 
