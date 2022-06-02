@@ -506,6 +506,17 @@ ${IntranetInfo()}
 }
 ```
 
+ # SendMessageToTeams(message)
+ - ```
+{
+	"msteams": {
+		"type": "imBack",
+		"title": ${message},
+		"value": ${message}
+	}
+}
+ ```
+
 # CommandList()
 - ```
 {
@@ -522,14 +533,8 @@ ${IntranetInfo()}
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Who works in Melbourne?",
-						"value": "Who works in Melbourne?"
-					}
-				}
+				"title": "Who works in Melbourne?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who works in Melbourne?"'), '"Who works in Melbourne?"')}
 			}
 		}
 	]
@@ -542,20 +547,14 @@ ${IntranetInfo()}
 			"items": [
 				{
 					"type": "TextBlock",
-					"text": "Who knows Azure?"
+					"text": "Who knows EF Core?"
 				}
 			],
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Who knows Azure?",
-						"value": "Who knows Azure?"
-					}
-				}
+				"title": "Who knows EF Core?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who knows EF Core?"'), '"Who knows EF Core?"')}
 			}
 		}
 	]
@@ -574,14 +573,8 @@ ${IntranetInfo()}
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "I need to talk to a DevOps expert in Melbourne",
-						"value": "I need to talk to a DevOps expert in Melbourne"
-					}
-				}
+				"title": "I need to talk to a DevOps expert in Melbourne",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"I need to talk to a DevOps expert in Melbourne"'), '"I need to talk to a DevOps expert in Melbourne"')}
 			}
 		}
 	]
@@ -600,14 +593,8 @@ ${IntranetInfo()}
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Who is Adam Cogan?",
-						"value": "Who is Adam Cogan?"
-					}
-				}
+				"title": "Who is Adam Cogan?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who is Adam Cogan?"'), '"Who is Adam Cogan?"')}
 			}
 		}
 	]
@@ -620,20 +607,14 @@ ${IntranetInfo()}
 			"items": [
 				{
 					"type": "TextBlock",
-					"text": "What is Uly's mobile?"
+					"text": "What is the contact number of Uly?"
 				}
 			],
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "What is Uly's mobile?",
-						"value": "What is Uly's mobile?"
-					}
-				}
+				"title": "What is the contact number of Uly?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"What is the contact number of Uly?"'), '"What is the contact number of Uly?"')}
 			}
 		}
 	]
@@ -646,20 +627,14 @@ ${IntranetInfo()}
 			"items": [
 				{
 					"type": "TextBlock",
-					"text": "What is Uly's email?"
+					"text": "What is the email of Uly?"
 				}
 			],
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "What is Uly's email?",
-						"value": "What is Uly's email?"
-					}
-				}
+				"title": "What is the email of Uly?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"What is the email of Uly?"'), '"What is the email of Uly?"')}
 			}
 		}
 	]
@@ -672,20 +647,14 @@ ${IntranetInfo()}
 			"items": [
 				{
 					"type": "TextBlock",
-					"text": "Show me Uly's bookings"
+					"text": "Show calender for Uly"
 				}
 			],
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Show me Uly's bookings",
-						"value": "Show me Uly's bookings"
-					}
-				}
+				"title": "Show calender for Uly",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Show calender for Uly"'), '"Show calender for Uly"')}
 			}
 		}
 	]
@@ -704,14 +673,8 @@ ${IntranetInfo()}
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Is Adam booked or free?",
-						"value": "Is Adam booked or free?"
-					}
-				}
+				"title": "Is Adam booked or free?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Is Adam booked or free?"'), '"Is Adam booked or free?"')}
 			}
 		}
 	]
@@ -730,14 +693,8 @@ ${IntranetInfo()}
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "When will Calum be free?",
-						"value": "When will Calum be free?"
-					}
-				}
+				"title": "When will Calum be free?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"When will Calum be free?"'), '"When will Calum be free?"')}
 			}
 		}
 	]
@@ -750,20 +707,14 @@ ${IntranetInfo()}
 			"items": [
 				{
 					"type": "TextBlock",
-					"text": "Show me Adam's skills"
+					"text": "Show me skills for Adam."
 				}
 			],
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Show me Adam's skills",
-						"value": "Show me Adam's skills"
-					}
-				}
+				"title": "Show me skills for Adam.",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Show me skills for Adam."'), '"Show me skills for Adam."')}
 			}
 		}
 	]
@@ -782,14 +733,8 @@ ${IntranetInfo()}
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Who is working on SugarLearning?",
-						"value": "Who is working on SugarLearning?"
-					}
-				}
+				"title": "Who is working on SugarLearning?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who is working on SugarLearning?"'), '"Who is working on SugarLearning?"')}
 			}
 		}
 	]
@@ -808,14 +753,8 @@ ${IntranetInfo()}
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Who is on client work?",
-						"value": "Who is on client work?"
-					}
-				}
+				"title": "Who is on client work?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who is on client work?"'), '"Who is on client work?"')}
 			}
 		}
 	]
@@ -834,14 +773,8 @@ ${IntranetInfo()}
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Who is free next Friday?",
-						"value": "Who is free next Friday?"
-					}
-				}
+				"title": "Who is free next Friday?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who is free next Friday?"'), '"Who is free next Friday?"')}
 			}
 		}
 	]
@@ -860,14 +793,8 @@ ${IntranetInfo()}
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Who is on client work next Friday?",
-						"value": "Who is on client work next Friday?"
-					}
-				}
+				"title": "Who is on client work next Friday?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who is on client work next Friday?"'), '"Who is on client work next Friday?"')}
 			}
 		}
 	]
@@ -886,14 +813,8 @@ ${IntranetInfo()}
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Who is free next Friday in Melbourne with Angular skills?",
-						"value": "Who is free next Friday in Melbourne with Angular skills?"
-					}
-				}
+				"title": "Who is free next Friday in Melbourne with Angular skills?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who is free next Friday in Melbourne with Angular skills?"'), '"Who is free next Friday in Melbourne with Angular skills?"')}
 			}
 		}
 	]
@@ -912,14 +833,8 @@ ${IntranetInfo()}
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Who is in the Sydney office right now?",
-						"value": "Who is in the Sydney office right now?"
-					}
-				}
+				"title": "Who is in the Sydney office right now?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who is in the Sydney office right now?"'), '"Who is in the Sydney office right now?"')}
 			}
 		}
 	]
@@ -938,14 +853,8 @@ ${IntranetInfo()}
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "What is Adam doing?",
-						"value": "What is Adam doing?"
-					}
-				}
+				"title": "What is Adam doing?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"What is Adam doing?"'), '"What is Adam doing?"')}
 			}
 		}
 	]
@@ -958,20 +867,14 @@ ${IntranetInfo()}
 			"items": [
 				{
 					"type": "TextBlock",
-					"text": "Who's been using SophieBot?"
+					"text": "Who has been using SophieBot?"
 				}
 			],
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Who's been using SophieBot?",
-						"value": "Who's been using SophieBot?"
-					}
-				}
+				"title": "Who has been using SophieBot?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who has been using SophieBot?"'), '"Who has been using SophieBot?"')}
 			}
 		}
 	]
@@ -990,14 +893,8 @@ ${IntranetInfo()}
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Hey this is broken",
-						"value": "Hey this is broken"
-					}
-				}
+				"title": "Hey this is broken",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Hey this is broken"'), '"Hey this is broken"')}
 			}
 		}
 	]
@@ -1016,14 +913,8 @@ ${IntranetInfo()}
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"data": 
-				{
-					"msteams": {
-						"type": "imBack",
-						"title": "Goodbye",
-						"value": "Goodbye"
-					}
-				}
+				"title": "Goodbye",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Goodbye"'), '"Goodbye"')}
 			}
 		}
 	]
