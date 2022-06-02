@@ -11,7 +11,9 @@ on:
       - 'services/**'
       # since now dev and prod is connected to each other so I will build it even if prod yml change
       - '.github/workflows/**'
-      - 'actions/**'
+
+
+      #Bot_Models_0eea0b06a49abee087bcfaa3058d61068d9bff55
 
 concurrency:
   group: SSWSophieBotDev-BuildAndDeploy
@@ -29,7 +31,8 @@ env:
   PUBLISHING_PROFILE_NAME: SSW.Bots.Dev
   LUIS_AUTHORING_ENDPOINT: https://australiaeast.api.cognitive.microsoft.com/
   LUIS_AUTHORING_REGION: australiaeast
-  ENVIRONMENT_NAME: development
+  ENVIRONMENT_NAME_DEV: development
+  ENVIRONMENT_NAME_PROD: production
 
 defaults:
   run:
@@ -48,6 +51,7 @@ jobs:
         with: 
           bot-app-setting: ${{ secrets.BOT_APP_APPSETTINGS }}
           luis-key: ${{secrets.LUIS_AUTHORING_KEY}}
+          environment-value: ${{env.ENVIRONMENT_NAME_DEV}}
 
 
   deploy-web-app:
@@ -65,7 +69,7 @@ jobs:
 
   migrate-luis-model:
     name: Migrate LUIS model
-    needs: build
+    needs: build 
     runs-on: windows-latest
     environment: dev
     steps:
@@ -75,4 +79,45 @@ jobs:
         with: 
           luis-app-setting: ${{ secrets.LUIS_MIGRATOR_APPSETTINGS }}
 
-  
+  build-prod:
+    name: Build product
+    needs: [deploy-web-app,migrate-luis-model]      
+    runs-on: ubuntu-latest  
+    environment: prod
+    steps:
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: jimmidier
+      - uses: actions/checkout@v2.3.4
+      - id: setup 
+        uses: duanxinhuan/SSW.SophieBot/actions/set-up@v3.2
+        with: 
+          bot-app-setting: ${{ secrets.BOT_APP_APPSETTINGS }}
+          luis-key: ${{secrets.LUIS_AUTHORING_KEY}}
+          environment-value: ${{env.ENVIRONMENT_NAME_PROD}}
+
+  deploy-web-app-prod:
+    name: Deploy web app on production
+    needs: build-prod
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - id: deploy-web 
+        uses: duanxinhuan/SSW.SophieBot/actions/deploy-web@v3.2
+        with: 
+          bot-web-publish-profile: ${{ secrets.BOT_WEBAPP_PUBLISH_PROFILE }}
+      
+
+  migrate-luis-model-prod:
+    name: Migrate LUIS model on production
+    needs: build-prod
+    runs-on: windows-latest
+    environment: prod
+    steps:
+      - uses: actions/checkout@v2.3.4
+
+      - uses: duanxinhuan/SSW.SophieBot/actions/migrate-LUIS@v3.2
+        with: 
+          luis-app-setting: ${{ secrets.LUIS_MIGRATOR_APPSETTINGS }}

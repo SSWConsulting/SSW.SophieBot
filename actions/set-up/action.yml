@@ -7,6 +7,9 @@ inputs:
   luis-key:
     required: true
     description: "The app setting for Bot"
+  environment-value:
+    required: true
+    description: "The app setting for Bot"  
 
 
 runs:
@@ -34,7 +37,7 @@ runs:
 
     - name: Prepare working folders
       shell: pwsh
-      if: env.ENVIRONMENT_NAME == 'development'
+      if: inputs.environment-value == 'development'
       run: |
         $generatedDirectory = "${{ env.BOT_PROJECT_DIR }}/generated"
       
@@ -48,7 +51,7 @@ runs:
         New-Item -Path /. -name $outputDirectory -ItemType "directory" 
     - name: Cross train LU models
       shell: pwsh
-      if: env.ENVIRONMENT_NAME == 'development'
+      if: inputs.environment-value == 'development'
       run: |
         $sourceDirectory = "${{ env.BOT_PROJECT_DIR }}"
         $outputDirectory = "${{ env.BOT_PROJECT_DIR }}/generated/interruption"
@@ -61,7 +64,7 @@ runs:
         ls -R    
 
     - name: Upload LU models
-      if: env.ENVIRONMENT_NAME == 'development'
+      if: inputs.environment-value == 'development'
       uses: actions/upload-artifact@v2.3.1  
       with:
         name: "Bot_Models_${{ github.sha }}"
@@ -69,7 +72,7 @@ runs:
         if-no-files-found: error 
 
     - name: Download LU models
-      if: env.ENVIRONMENT_NAME == 'production'
+      if: inputs.environment-value == 'production'
       uses: actions/download-artifact@v2
       with:
         name: "Bot_Models_${{ github.sha }}"
@@ -98,7 +101,7 @@ runs:
       # sorry Jim, I know it is really bad, let me know if you are not happy ; ) hahahahahahahahaha
     - name: Create bot publishing package
       # TODO create a seperate action for the following 4 tasks :(
-      if: env.ENVIRONMENT_NAME == 'development'
+      if: inputs.environment-value == 'development'
       shell: pwsh
       run: |
         $publishingProfileName = (${{ env.BUILD_FLOW }} -eq 'composer') ? "${{ env.PUBLISHING_PROFILE_NAME }}" : ""
@@ -107,14 +110,14 @@ runs:
 
       # Create LUIS migrator publishing package
     - name: Create LUIS migrator publishing package
-      if: env.ENVIRONMENT_NAME == 'development'
+      if: inputs.environment-value == 'development'
       shell: pwsh
       run: dotnet publish -c Release -o "${{ env.OUTPUT_DIR }}/luis-migrator" --self-contained -r win-x64
       working-directory: ${{ env.LUIS_MIGRATOR_DIR }}
 
       # Upload webapp artifact
     - name: Upload webapp artifact
-      if: env.ENVIRONMENT_NAME == 'development'
+      if: inputs.environment-value == 'development'
       uses: actions/upload-artifact@v2.3.1
       with:
         name: "Bot_Webapp_${{ github.sha }}"
@@ -123,7 +126,7 @@ runs:
 
       # Upload LUIS migrator artifact
     - name: Upload LUIS migrator artifact
-      if: env.ENVIRONMENT_NAME == 'development'
+      if: inputs.environment-value == 'development'
       uses: actions/upload-artifact@v2.3.1
       with:
         name: "LUIS_Migrator_${{ github.sha }}"
