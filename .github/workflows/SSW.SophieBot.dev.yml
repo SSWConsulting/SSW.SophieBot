@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - 496-Unify-Workflow-Files
     paths:
       - 'bots/**'
       - 'libraries/**'
@@ -88,7 +87,7 @@ jobs:
       - uses: trstringer/manual-approval@v1
         with:
           secret: ${{ github.TOKEN }}
-          approvers: duanxinhuan
+          approvers: duanxinhuan,jimmidier
       - uses: actions/checkout@v2.3.4
       - id: setup 
         uses: duanxinhuan/SSW.SophieBot/actions/set-up@v3.2
