@@ -15,7 +15,7 @@ env:
   LUIS_MIGRATOR_DIR: ${{ github.workspace }}/bots/employee-finder/src/SSW.SophieBot.LUIS.EmployeeFinder.Migrator
   BOT_PROJECT_DIR: ${{ github.workspace }}/bots/employee-finder/src/SSW.SophieBot
   BOT_PROJECT_NAME: SSW.SophieBot.csproj
-  PUBLISHING_PROFILE_NAME: SSW.Bots
+  PUBLISHING_PROFILE_NAME: SSW.Bots.Test
   LUIS_AUTHORING_ENDPOINT: https://australiaeast.api.cognitive.microsoft.com/
   LUIS_AUTHORING_REGION: australiaeast
 
