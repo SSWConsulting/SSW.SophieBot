@@ -19,5 +19,5 @@ Merge-AppSettings -appSettings $settings.AppSettings -publishConfig $settings.Pu
 
 $settings.AppSettings | ConvertTo-Json -depth 100 | Out-File $settings.AppSettingsFile.FullName -Force -Encoding utf8
 
-$runtimeIdentifier = $publishConfiguration.runtimeIdentifier ?? "win-x64"
+$runtimeIdentifier = $settings.PublishConfig.runtimeIdentifier ?? "win-x64"
 dotnet publish $botProjectFilePath -c Release -o "$outputFolder" --self-contained true -r $runtimeIdentifier
