@@ -1,15 +1,17 @@
 name: Build and Deploy-Dev
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'bots/**'
-      - 'libraries/**'
-      - 'services/**'
-      - '.github/workflows/SSW.SophieBot.dev.yml'
-      - '.github/workflows/scripts/**'
+on: workflow_dispatch
+
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - 'bots/**'
+#       - 'libraries/**'
+#       - 'services/**'
+#       - '.github/workflows/SSW.SophieBot.dev.yml'
+#       - '.github/workflows/scripts/**'
 
 concurrency:
   group: SSWSophieBotDev-BuildAndDeploy
@@ -43,13 +45,13 @@ jobs:
       - name: Use Node 13.x
         uses: actions/setup-node@v2.4.0
         with:
-          node-version: '13'
+          node-version: "13"
       - name: Use BF CLI
         run: npm install -g @microsoft/botframework-cli
       - name: Use .Net sdk 6.0.x
         uses: actions/setup-dotnet@v1.9.0
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: "6.0.x"
 
       - name: Create appsettings file
         uses: jsdaniell/create-json@1.1.2
@@ -58,12 +60,12 @@ jobs:
           json: ${{ secrets.BOT_APP_APPSETTINGS }}
           dir: "bots/employee-finder/src/SSW.SophieBot/settings"
 
-      # Prepare working folders    
+      # Prepare working folders
       - name: Prepare working folders
         if: env.BUILD_FLOW == 'composer'
         run: |
           $generatedDirectory = "${{ env.BOT_PROJECT_DIR }}/generated"
-      
+
           # Clean and recreate the generated directory
           if (Test-Path $generatedDirectory)
           {
@@ -72,7 +74,7 @@ jobs:
 
           $outputDirectory = "$generatedDirectory/interruption"
           New-Item -Path /. -name $outputDirectory -ItemType "directory"
-        
+
       # Cross train LU models
       - name: Cross train LU models
         if: env.BUILD_FLOW == 'composer'
@@ -92,7 +94,7 @@ jobs:
         if: env.BUILD_FLOW == 'composer'
         run: ${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-LUIS.ps1 -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -authoringKey ${{ secrets.LUIS_AUTHORING_KEY }} -botName ${{ env.BOT_NAME }} -endpoint ${{ env.LUIS_AUTHORING_ENDPOINT }} -region ${{ env.LUIS_AUTHORING_REGION }}
         working-directory: ${{ env.BOT_PROJECT_DIR }}
-        
+
       # Publish Orchestrator models
       # - name: Publish orchestrator
       #   if: env.BUILD_FLOW == 'composer'
@@ -148,7 +150,7 @@ jobs:
       - name: Use .Net sdk 6.0.x
         uses: actions/setup-dotnet@v1.9.0
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: "6.0.x"
 
       - uses: actions/download-artifact@v2
         with:
@@ -182,7 +184,7 @@ jobs:
           name: "appsettings.json"
           json: ${{ secrets.LUIS_MIGRATOR_APPSETTINGS }}
           dir: "output/luis-migrator"
-          
+
       - name: Run LUIS migrator
         run: .\SSW.SophieBot.LUIS.EmployeeFinder.Migrator
         working-directory: ${{ env.OUTPUT_DIR }}/luis-migrator
