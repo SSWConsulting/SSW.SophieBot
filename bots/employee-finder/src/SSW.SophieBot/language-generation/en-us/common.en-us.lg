@@ -928,7 +928,7 @@ ${IntranetInfo()}
 - IF: ${turn.activity.channelId == "msteams"}
     - <br/>
 - ELSE:
-	- \n
+	- \n\n
 	
 # ContentTextSize()
 - IF: ${turn.activity.channelId == "msteams"}
