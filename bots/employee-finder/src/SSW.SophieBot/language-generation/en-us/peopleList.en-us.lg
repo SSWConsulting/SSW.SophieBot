@@ -79,7 +79,7 @@
     "type": "ColumnSet",
     "columns": [
         ${Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px')},
-        ${ClickableName(concat(employee.firstName, ' ', employee.lastName), employee.firstName, employee.lastName, 'stretch', 'Small', 'Default', 'GetExpertsByLocation')},
+        ${ClickableName(concat(employee.firstName, ' ', employee.lastName), employee.firstName, employee.lastName, 'stretch', ContentTextSize(), 'Default', 'GetExpertsByLocation')},
         {
             "type": "Column",
             "width": "stretch",
@@ -88,7 +88,7 @@
                     "type": "TextBlock",
                     "wrap": true,
                     "text": "${employee.skillLevel}",
-                    "size": "Small",
+                    "size": "${ContentTextSize()}",
                     "horizontalAlignment": "Center"
                 }
             ],
@@ -102,7 +102,7 @@
                     "type": "TextBlock",
                     "wrap": true,
                     "text": "${DaysText(first(where(turn.billableEmployees.employees, e, e.userId == employee.UserId)).billedDays, true)}",
-                    "size": "Small",
+                    "size": "${ContentTextSize()}",
                     "horizontalAlignment": "Center"
                 }
             ],
@@ -265,7 +265,7 @@
     "type": "ColumnSet",
     "columns": [
         ${Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px')},
-        ${ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', 'Small', 'Default', sourceIntent)},
+        ${ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', ContentTextSize(), 'Default', sourceIntent)},
         {
             "type": "Column",
             "width": "stretch",
@@ -274,7 +274,7 @@
                     "type": "TextBlock",
                     "wrap": true,
                     "text": "${DaysText(employee.billedDays, true)}",
-                    "size": "Small",
+                    "size": "${ContentTextSize()}",
                     "horizontalAlignment": "Center"
                 }
             ],
@@ -288,7 +288,7 @@
                     "type": "TextBlock",
                     "wrap": true,
                     "text": "${GetBookingStatusEmoji(employee)}",
-                    "size": "Small",
+                    "size": "${ContentTextSize()}",
                     "horizontalAlignment": "Center"
                 }
             ],
@@ -302,7 +302,7 @@
                     "type": "TextBlock",
                     "wrap": true,
                     "text": "${if(exists(employee.lastSeen) && length(employee.lastSeen) > 0, employee.lastSeen, '—')}",
-                    "size": "Small",
+                    "size": "${ContentTextSize()}",
                     "horizontalAlignment": "Center"
                 }
             ],
