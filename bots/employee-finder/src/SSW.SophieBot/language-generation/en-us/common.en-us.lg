@@ -423,9 +423,9 @@ ${IntranetInfo()}
             "verticalContentAlignment": "Center"
         },
 		${ClickableName(
-			replace(usageItem.userName, ' www.ssw.com.au', ''), 
-			GetFirstName(replace(usageItem.userName, ' www.ssw.com.au', '')), 
-			GetLastName(replace(usageItem.userName, ' www.ssw.com.au', '')), 
+			replace(usageItem.userName, ' [SSW]', ''), 
+			GetFirstName(replace(usageItem.userName, ' [SSW]', '')), 
+			GetLastName(replace(usageItem.userName, ' [SSW]', '')), 
 			15, 
 			'Default', 
 			'Default', 
@@ -436,7 +436,7 @@ ${IntranetInfo()}
                 {
                     "type": "ColumnSet",
                     "columns": [
-						${GetUsageBarColumn(round(130/maxCount*usageItem.usageCount))}
+						${GetUsageBarColumn(round(130.0/maxCount*usageItem.usageCount))}
                     ]
                 }
             ],
