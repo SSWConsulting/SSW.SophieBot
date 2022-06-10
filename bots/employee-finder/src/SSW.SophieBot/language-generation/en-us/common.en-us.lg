@@ -647,14 +647,14 @@ ${IntranetInfo()}
 			"items": [
 				{
 					"type": "TextBlock",
-					"text": "Show calender for Uly"
+					"text": "Show me calendar of Patrick"
 				}
 			],
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"title": "Show calender for Uly",
-				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Show calender for Uly"'), '"Show calender for Uly"')}
+				"title": "Show me calendar of Patrick",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Show me calendar of Patrick"'), '"Show me calendar of Patrick"')}
 			}
 		}
 	]
@@ -807,6 +807,26 @@ ${IntranetInfo()}
 			"items": [
 				{
 					"type": "TextBlock",
+					"text": "Who is Bob Northwind working for?"
+				}
+			],
+			"width": "stretch",
+			"selectAction": {
+				"type": "Action.Submit",
+				"title": "Who is Bob Northwind working for?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who is Bob Northwind working for?"'), '"Who is Bob Northwind working for?"')}
+			}
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
 					"text": "Who is free next Friday in Melbourne with Angular skills?"
 				}
 			],
@@ -847,14 +867,14 @@ ${IntranetInfo()}
 			"items": [
 				{
 					"type": "TextBlock",
-					"text": "What is Adam doing?"
+					"text": "What is Adam working on?"
 				}
 			],
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"title": "What is Adam doing?",
-				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"What is Adam doing?"'), '"What is Adam doing?"')}
+				"title": "What is Adam working on?",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"What is Adam working on?"'), '"What is Adam working on?"')}
 			}
 		}
 	]
@@ -867,14 +887,14 @@ ${IntranetInfo()}
 			"items": [
 				{
 					"type": "TextBlock",
-					"text": "Who has been using SophieBot?"
+					"text": "Show me SophieBot usage"
 				}
 			],
 			"width": "stretch",
 			"selectAction": {
 				"type": "Action.Submit",
-				"title": "Who has been using SophieBot?",
-				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who has been using SophieBot?"'), '"Who has been using SophieBot?"')}
+				"title": "Show me SophieBot usage",
+				"data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Show me SophieBot usage"'), '"Show me SophieBot usage"')}
 			}
 		}
 	]
