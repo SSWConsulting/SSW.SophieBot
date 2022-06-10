@@ -287,7 +287,7 @@
                     "type": "TextBlock",
                     "text": "${NextClient(employee.nextClient, employee.freeDays)}",
                     "wrap": true,
-                    "size": "Small",
+                    "size": "${ContentTextSize()}",
                     "isSubtle": true
                 }
             ],
@@ -307,19 +307,19 @@ Note: Free for ${DaysText(freeDays, false)} over the next 4 weeks.
 - IF: ${ IsNonEmptyString(dialog.skillEntity) }
     - ${join(createArray(
             Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
-            ClickableName(employee.displayName, employee.firstName, employee.lastName, '100px', 'Small', 'Default', 'GetPeopleOnClientWork'),
+            ClickableName(employee.displayName, employee.firstName, employee.lastName, '100px', ContentTextSize(), 'Default', 'GetPeopleOnClientWork'),
             SkillBodyColumn(FreeDays(employee.nextClient, employee.freeDays))
         ), ',')}
 - ELSEIF: ${ dialog.booked }
     - ${join(createArray(
             Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
-            ClickableName(employee.displayName, employee.firstName, employee.lastName, '150px', 'Small', 'Default', 'GetPeopleOnClientWork'),
+            ClickableName(employee.displayName, employee.firstName, employee.lastName, '150px', ContentTextSize(), 'Default', 'GetPeopleOnClientWork'),
             ClientColumn(select(employee.clients, client, client.name), 'stretch', 'Center', employee.userId, warningId)
         ), ',')}
 - ELSE:
     - ${join(createArray(
             Avatar(employee.avatarUrl, employee.firstName, employee.lastName, '50px', '35px'), 
-            ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', 'Small', 'Default', 'GetPeopleOnClientWork'),
+            ClickableName(employee.displayName, employee.firstName, employee.lastName, 'stretch', ContentTextSize(), 'Default', 'GetPeopleOnClientWork'),
             BodyColumn(DaysText(employee.BilledDays, true), 'stretch'), 
             ImageColumn(if(employee.InOffice, GreenCircle(), RedCircle())), 
             BodyColumn(employee.LastSeen, 'stretch')
@@ -335,7 +335,7 @@ Note: Free for ${DaysText(freeDays, false)} over the next 4 weeks.
             "type": "TextBlock",
             "text": "${text}",
             "wrap": true,
-            "size": "Small",
+            "size": "${ContentTextSize()}",
             "horizontalAlignment": "Center"
         }
     ],
@@ -371,7 +371,7 @@ ${if(text != null && text != '', text, '—')}
         "type": "TextBlock",
         "text": "\\\\*\\\\*\\\\*",
         "wrap": true,
-        "size": "Small",
+        "size": "${ContentTextSize()}",
         "horizontalAlignment": "Center"
     }
     ```
@@ -390,7 +390,7 @@ ${if(text != null && text != '', text, '—')}
             "type": "TextBlock",
             "text": "${if(text != null && text != '', text, '—')}",
             "wrap": true,
-            "size": "Small",
+            "size": "${ContentTextSize()}",
             "horizontalAlignment": "Center"
         }
     ],

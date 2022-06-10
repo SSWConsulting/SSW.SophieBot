@@ -240,7 +240,7 @@
         {
             "type": "TextBlock",
             "text": "(Last 90 days)",
-            "size": "Small",
+            "size": "${ContentTextSize()}",
             "wrap": true,
             "spacing": "None",
             "horizontalAlignment": "${alignment}"
@@ -929,6 +929,12 @@ ${IntranetInfo()}
     - <br/>
 - ELSE:
 	- \n
+	
+# ContentTextSize()
+- IF: ${turn.activity.channelId == "msteams"}
+    - Small
+- ELSE:
+	- Default
 
 # GetAuthenticationMaskedColumn(originalText, id, warningId)
 - IF: ${exists(user.TenantAuthenticated) && user.TenantAuthenticated == true}

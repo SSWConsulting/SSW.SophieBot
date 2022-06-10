@@ -123,7 +123,7 @@
                     "type": "TextBlock",
                     "text": "${appointment.start}",
                     "wrap": true,
-                    "size": "Small"
+                    "size": "${ContentTextSize()}"
                 }
             ],
             "verticalContentAlignment": "Center"
@@ -136,7 +136,7 @@
                     "type": "TextBlock",
                     "text": "${appointment.regarding}",
                     "wrap": true,
-                    "size": "Small"
+                    "size": "${ContentTextSize()}"
                 }
             ],
             "verticalContentAlignment": "Center"
@@ -149,7 +149,7 @@
                     "type": "TextBlock",
                     "text": "${appointment.subject}",
                     "wrap": true,
-                    "size": "Small"
+                    "size": "${ContentTextSize()}"
                 }
             ],
             "verticalContentAlignment": "Center"

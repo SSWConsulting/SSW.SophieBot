@@ -134,7 +134,7 @@
                         {
                             "type": "TextBlock",
                             "text": "(Last 90 days)",
-                            "size": "Small",
+                            "size": "${ContentTextSize()}",
                             "wrap": true,
                             "spacing": "None",
                             "horizontalAlignment": "Center"
@@ -226,7 +226,7 @@
                     "type": "TextBlock",
                     "wrap": true,
                     "text": "${project.billedDays}",
-                    "size": "Small",
+                    "size": "${ContentTextSize()}",
                     "horizontalAlignment": "Center"
                 }
             ],
