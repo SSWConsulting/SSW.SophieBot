@@ -39,21 +39,21 @@
 - IF: ${ IsNonEmptyString(turn.advancedSkills) && IsNonEmptyString(turn.intermediateSkills) }
     - ```
 **${turn.displayName}** knows: 
-<br/>
+${LineBreak()}
 **${turn.advancedSkills}** 
-<br/><br/>
+${LineBreak()}${LineBreak()}
 He also knows: 
-<br/>
+${LineBreak()}
 ${turn.intermediateSkills}
       ```
 - ELSEIF: ${ IsNonEmptyString(turn.advancedSkills) }
     - ```
-**${turn.displayName}** knows: <br/>
+**${turn.displayName}** knows: ${LineBreak()}
 **${turn.advancedSkills}**
      ```
 - ELSEIF: ${ IsNonEmptyString(turn.intermediateSkills) }
     - ```
-**${turn.displayName}** knows: <br/>
+**${turn.displayName}** knows: ${LineBreak()}
 ${turn.intermediateSkills}
      ```
 - ELSE:

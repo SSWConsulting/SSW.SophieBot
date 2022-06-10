@@ -13,7 +13,7 @@
 ]
 
 # SendActivity_CoOTZW_text()
-- **${dialog.displayName}**'s mobile number is:<br/>**${dialog.mobilePhone}**
+- **${dialog.displayName}**'s mobile number is:${LineBreak()}**${dialog.mobilePhone}**
 
 # SendActivity_erv9tP()
 [Activity

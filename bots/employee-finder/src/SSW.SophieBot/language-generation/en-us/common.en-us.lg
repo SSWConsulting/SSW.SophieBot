@@ -255,7 +255,7 @@
 ]
 
 # SendActivity_8fHHcb_text()
-- ```No worries, please send us an email with your feedback and screenshots to  [SSWSophieBotDevs@ssw.com.au](mailto:SSWSophieBotDevs@ssw.com.au)  <br/>  <br/>
+- ```No worries, please send us an email with your feedback and screenshots to  [SSWSophieBotDevs@ssw.com.au](mailto:SSWSophieBotDevs@ssw.com.au)  ${LineBreak()}  ${LineBreak()}
   
 We love squashing bugs 🥰```
 # SendActivity_Ql6zUr()
@@ -264,14 +264,14 @@ We love squashing bugs 🥰```
 ]
 
 # SendActivity_Ql6zUr_text()
-- ```Sorry, I could not answer that 😭 <br/>
-See sample questions ${settings.App.ProductUrl} <br/> <br/>
+- ```Sorry, I could not answer that 😭 ${LineBreak()}
+See sample questions ${settings.App.ProductUrl} ${LineBreak()} ${LineBreak()}
 ${IntranetInfo()}
 ```
 
 # IntranetInfo()
 - IF: ${exists(user.TenantAuthenticated) && user.TenantAuthenticated == true}
-    - You can also search the SSW Intranet [sswcom.sharepoint.com](${settings.App.SharePointUrl}) <br/>
+    - You can also search the SSW Intranet [sswcom.sharepoint.com](${settings.App.SharePointUrl}) ${LineBreak()}
 - ELSE:
     - 
 
@@ -923,6 +923,12 @@ ${IntranetInfo()}
 
 # ErrorMessage()
 -  Oops, something went wrong and SophieBot was unable to complete your request. Please try again in a few minutes. If you keep getting this error message, please send us an email with screenshots to [SSWSophieBotDevs@ssw.com.au](mailto:SSWSophieBotDevs@ssw.com.au).
+
+# LineBreak()
+- IF: ${turn.activity.channelId == "msteams"}
+    - <br/>
+- ELSE:
+	- \n
 
 # GetAuthenticationMaskedColumn(originalText, id, warningId)
 - IF: ${exists(user.TenantAuthenticated) && user.TenantAuthenticated == true}
