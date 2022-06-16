@@ -19,9 +19,6 @@
 - who is patrick working for?
 - who is bob working for?
 
-**Filters:**
-- dialogname = sswsophiebot
-
 ```markdown
 intent=DeferToRecognizer_LUIS_SSWSophieBot
 ```
@@ -31,9 +28,6 @@ intent=DeferToRecognizer_LUIS_SSWSophieBot
 <a id = "16"></a>
 
 # ? We are sorry, the page you requested cannot be found.
-
-**Filters:**
-- dialogname = sswsophiebot
 
 ```markdown
 The URL may be misspelled or the page you're looking for is no longer available.
@@ -441,9 +435,6 @@ The URL may be misspelled or the page you're looking for is no longer available.
 - what can i do
 - what can you
 - what can I ask
-
-**Filters:**
-- dialogname = sswsophiebot
 
 ```markdown
 intent=DeferToRecognizer_LUIS_SSWSophieBot
