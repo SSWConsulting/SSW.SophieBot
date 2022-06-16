@@ -94,12 +94,12 @@ jobs:
         working-directory: ${{ env.BOT_PROJECT_DIR }}
 
       # Publish QnA models
-      # - name: Publish QnA
-      #   if: env.BUILD_FLOW == 'composer'
-      #   run: |
-      #     $publishingProfileName = (${{ env.BUILD_FLOW }} -eq 'composer') ? "${{ env.PUBLISHING_PROFILE_NAME }}" : ""
-      #     ${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-QnA.ps1 -botProjectFolder ./ -crossTrainedLUDirectory ./generated/interruption -publishingProfile $publishingProfileName
-      #   working-directory: ${{ env.BOT_PROJECT_DIR }}
+      - name: Publish QnA
+        if: env.BUILD_FLOW == 'composer'
+        run: |
+          $publishingProfileName = (${{ env.BUILD_FLOW }} -eq 'composer') ? "${{ env.PUBLISHING_PROFILE_NAME }}" : ""
+          ${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-QnA.ps1 -botProjectFolder ./ -crossTrainedLUDirectory ./generated/interruption -publishingProfile $publishingProfileName
+        working-directory: ${{ env.BOT_PROJECT_DIR }}
 
       # Publish Orchestrator models
       # - name: Publish orchestrator
