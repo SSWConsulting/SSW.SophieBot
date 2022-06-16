@@ -1780,6 +1780,23 @@
           }
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "tRvuh3",
+        "name": "OnIntent (GetQR)"
+      },
+      "intent": "GetQR",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "KE9wxk"
+          },
+          "activity": "${SendActivity_KE9wxk()}"
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",

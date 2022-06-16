@@ -56,7 +56,8 @@
       ],
       "GetClients": [
         "GetClient.en-us"
-      ]
+      ],
+      "GetQR": ""
     }
   }
 }

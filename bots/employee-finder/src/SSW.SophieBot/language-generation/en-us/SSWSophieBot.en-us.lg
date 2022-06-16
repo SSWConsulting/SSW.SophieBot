@@ -146,3 +146,10 @@
 
 # SendActivity_JivS6k_text()
 - You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.
+# SendActivity_KE9wxk()
+[Activity
+    Text = ${SendActivity_KE9wxk_text()}
+]
+
+# SendActivity_KE9wxk_text()
+- Hi the SSW reward Team is wroking hard to give me a QR code
