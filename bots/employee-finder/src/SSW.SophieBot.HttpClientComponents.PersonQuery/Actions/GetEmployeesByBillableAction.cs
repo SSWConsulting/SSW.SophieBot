@@ -38,6 +38,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
+            
             var isProject = dc.GetValue(IsProject);
             var queriedProject = dc.GetValue(Project);
 
@@ -58,6 +59,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
             };
 
             dc.State.SetValue(dc.GetValue(WorkingEmployeesProperty), workingEmployees);
+          
 
             return await dc.EndDialogAsync(result: workingEmployees, cancellationToken: cancellationToken);
         }
