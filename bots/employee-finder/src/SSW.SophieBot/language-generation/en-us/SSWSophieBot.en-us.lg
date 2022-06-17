@@ -227,3 +227,16 @@
 
 # ChooseIntent_SendActivity_9H1xln()
 - Sure, no worries.
+
+# SendActivity_nRLwJM()
+[Activity
+    Attachments = ${SendActivity_nRLwJM_attachment_vHOMgA()}
+]
+
+# SendActivity_nRLwJM_attachment_vHOMgA()
+[HeroCard
+  text = Scan me please
+  images = ${QRCode()}
+  
+  
+]

@@ -1911,6 +1911,23 @@
           "knowledgeBaseId": "=settings.qna.knowledgebaseid"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "9Sq6Vv",
+        "name": "OnIntent(GetQRCode)"
+      },
+      "intent": "GetQRCode",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "nRLwJM"
+          },
+          "activity": "${SendActivity_nRLwJM()}"
+        }
+      ]
     }
   ],
   "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
