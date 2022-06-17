@@ -146,6 +146,7 @@
 
 # SendActivity_JivS6k_text()
 - You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.
+
 # SendActivity_0yN0og()
 [Activity
     Attachments = ${SendActivity_0yN0og_attachment_stXFp1()}
@@ -158,3 +159,86 @@
   image = ${QRCode()}
 
 ]
+
+# ChooseIntent_w1krPb()
+[Activity
+    Attachments = ${json(ChooseIntent_w1krPb_attachment_card(dialog.candidates))}
+    AttachmentLayout = list
+]
+
+# ChooseIntent_w1krPb_attachment_card(candidates)
+-```{
+      "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+      "version": "1.0",
+      "type": "AdaptiveCard",
+      "speak": "",
+      "body": [
+          {
+              "type": "TextBlock",
+              "text": "${ChooseIntent_w1krPb_attachment_whichOneDidYouMean()}",
+              "weight": "Bolder"
+          },
+          {
+              "type": "TextBlock",
+              "text": "${ChooseIntent_w1krPb_attachment_pickOne()}",
+              "separator": "true"
+          },
+          {
+              "type": "Input.ChoiceSet",
+              "placeholder": "Placeholder text",
+              "id": "userChosenIntent",
+              "choices": [
+                           ${ChooseIntent_w1krPb_attachment_generateChoices()},
+                           {
+                               "title": "None of the above",
+                               "value": "none"
+                           }
+             ],
+             "style": "expanded",
+             "value": "luis"
+         },
+         {
+             "type": "ActionSet",
+             "actions": [
+                {
+                     "type": "Action.Submit",
+                     "title": "Submit",
+                     "data": {
+                   "intent": "chooseIntentCardResponse"
+                }
+         }
+       ]
+     }
+    ]
+}
+```
+
+# ChooseIntent_w1krPb_attachment_whichOneDidYouMean()
+- I'm not sure which one you mean.
+- Hmmm, I find that to be ambiguous.
+
+# ChooseIntent_w1krPb_attachment_pickOne()
+- Can you pick one ?
+- Can you help clarify by choosing one ?
+
+# ChooseIntent_w1krPb_attachment_getAnswerReadBack()
+- See an answer from the Knowledge Base
+
+# ChooseIntent_w1krPb_attachment_getIntentReadBack(intent)
+- SWITCH : ${intent}
+- CASE: ${'QnAMatch'}
+    - ${ChooseIntent_w1krPb_attachment_getAnswerReadBack()}
+- CASE : ${'GetUserProfile'}
+  - Start filling in your profile(GetUserProfile intent)
+- DEFAULT :
+  - ${intent}
+
+# ChooseIntent_w1krPb_attachment_generateChoices(candidates)
+- ${join(foreach(indicesAndValues(candidates), c, ChooseIntent_w1krPb_attachment_choice(c.value.intent, c.index)), ',')}
+
+# ChooseIntent_w1krPb_attachment_choice(title, value)
+- { "title": "${ChooseIntent_w1krPb_attachment_getIntentReadBack(title)}", "value": "${value}" }
+
+# ChooseIntent_SendActivity_9H1xln()
+- Sure, no worries.
+

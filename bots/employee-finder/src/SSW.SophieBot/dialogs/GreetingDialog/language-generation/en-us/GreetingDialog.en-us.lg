@@ -30,38 +30,17 @@
                 {
                     "type": "Action.Submit",
                     "title": "Who is Adam Cogan?",
-                    "data": 
-                    {
-                        "msteams": {
-                            "type": "imBack",
-                            "title": "Who is Adam Cogan?",
-                            "value": "Who is Adam Cogan?"
-                        }
-                    }
+                    "data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who is Adam Cogan?"'), '"Who is Adam Cogan?"')}
                 },
-                {
+				{
                     "type": "Action.Submit",
-                    "title": "Who knows Azure?",
-                    "data": 
-                    {
-                        "msteams": {
-                            "type": "imBack",
-                            "title": "Who knows Azure?",
-                            "value": "Who knows Azure?"
-                        }
-                    }
+                    "title": "Who knows EF Core?",
+                    "data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who knows EF Core?"'), '"Who knows EF Core?"')}
                 },
-                {
+				{
                     "type": "Action.Submit",
                     "title": "Who is on client work?",
-                    "data": 
-                    {
-                        "msteams": {
-                            "type": "imBack",
-                            "title": "Who is on client work?",
-                            "value": "Who is on client work?"
-                        }
-                    }
+                    "data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who is on client work?"'), '"Who is on client work?"')}
                 },
 				{
 					"type": "Action.ShowCard",
@@ -75,14 +54,7 @@
 				}
             ]
         },
-        {
-            "type": "TextBlock",
-            "text": "💡Tip: Pin this chat, so you can always find me!",
-            "wrap": true,
-            "horizontalAlignment": "Right",
-            "size": "Small",
-            "spacing": "Large"
-        }
+		${if(turn.activity.channelId == "msteams", TipMessage(), '')}
     ],
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2"
@@ -103,7 +75,7 @@
 - ```
 {
     "type": "Image",
-    "url": "${settings.App.BaseUrl}/sophiebot-branding.png"
+    "url": "${settings.App.BaseUrl}/sophiebot-robot-branding.png"
 }
 ```
 
@@ -120,5 +92,17 @@
      "wrap": true,
      "weight": "Bolder",
      "size": "Large"
+ }
+ ```
+
+ # TipMessage()
+ - ```
+ {
+	"type": "TextBlock",
+	"text": "💡Tip: Pin this chat, so you can always find me!",
+	"wrap": true,
+	"horizontalAlignment": "Right",
+	"size": "Small",
+	"spacing": "Large" 
  }
  ```

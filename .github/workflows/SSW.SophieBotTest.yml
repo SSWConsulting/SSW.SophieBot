@@ -1,30 +1,21 @@
-name: Build and Deploy-Dev
+name: Build and Deploy-Test
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - "bots/**"
-      - "libraries/**"
-      - "services/**"
-      - ".github/workflows/SSW.SophieBot.dev.yml"
-      - ".github/workflows/scripts/**"
+on: workflow_dispatch
 
 concurrency:
-  group: SSWSophieBotDev-BuildAndDeploy
+  group: SSWSophieBotTest-BuildAndDeploy
   cancel-in-progress: true
 
 env:
   BUILD_FLOW: composer
-  BOT_NAME: SSWSophieBotDev
-  WEBAPP_NAME: SSWSophieBotDev-Linux
+  BOT_NAME: SSWSophieBotTest-AppService
+  WEBAPP_NAME: SSWSophieBotTest-AppService
   SOURCE_DIR: ${{ github.workspace }}
   OUTPUT_DIR: ${{ github.workspace }}/output
   LUIS_MIGRATOR_DIR: ${{ github.workspace }}/bots/employee-finder/src/SSW.SophieBot.LUIS.EmployeeFinder.Migrator
   BOT_PROJECT_DIR: ${{ github.workspace }}/bots/employee-finder/src/SSW.SophieBot
   BOT_PROJECT_NAME: SSW.SophieBot.csproj
-  PUBLISHING_PROFILE_NAME: SSW.Bots.Dev
+  PUBLISHING_PROFILE_NAME: SSW.Bots.Test
   LUIS_AUTHORING_ENDPOINT: https://australiaeast.api.cognitive.microsoft.com/
   LUIS_AUTHORING_REGION: australiaeast
 
@@ -36,7 +27,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    environment: dev
+    environment: test
     steps:
       - uses: actions/checkout@v2.3.4
 
@@ -64,36 +55,33 @@ jobs:
         run: |
           $generatedDirectory = "${{ env.BOT_PROJECT_DIR }}/generated"
 
-      # Clean and recreate the generated directory
+          # Clean and recreate the generated directory
           if (Test-Path $generatedDirectory)
           {
             Remove-Item -Path $generatedDirectory -Force -Recurse
           }
+
           $outputDirectory = "$generatedDirectory/interruption"
           New-Item -Path /. -name $outputDirectory -ItemType "directory"
+
       # Cross train LU models
       - name: Cross train LU models
         if: env.BUILD_FLOW == 'composer'
         run: |
           $sourceDirectory = "${{ env.BOT_PROJECT_DIR }}"
           $outputDirectory = "${{ env.BOT_PROJECT_DIR }}/generated/interruption"
+
           # Cross train models
           bf luis:cross-train --in $sourceDirectory --out $outputDirectory --config $sourceDirectory/settings/cross-train.config.json --force
+
           # List generated files
           cd $outputDirectory
           ls -R
+
       # Publish LUIS models
       - name: Publish LUIS
         if: env.BUILD_FLOW == 'composer'
         run: ${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-LUIS.ps1 -outputDirectory ./generated -sourceDirectory ./ -crossTrainedLUDirectory ./generated/interruption -authoringKey ${{ secrets.LUIS_AUTHORING_KEY }} -botName ${{ env.BOT_NAME }} -endpoint ${{ env.LUIS_AUTHORING_ENDPOINT }} -region ${{ env.LUIS_AUTHORING_REGION }}
-        working-directory: ${{ env.BOT_PROJECT_DIR }}
-
-      # Publish QnA models
-      - name: Publish QnA
-        if: env.BUILD_FLOW == 'composer'
-        run: |
-          $publishingProfileName = (${{ env.BUILD_FLOW }} -eq 'composer') ? "${{ env.PUBLISHING_PROFILE_NAME }}" : ""
-          ${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-QnA.ps1 -botProjectFolder ./ -crossTrainedLUDirectory ./generated/interruption -publishingProfile $publishingProfileName
         working-directory: ${{ env.BOT_PROJECT_DIR }}
 
       # Publish Orchestrator models
@@ -144,7 +132,7 @@ jobs:
     name: Deploy web app
     needs: build
     runs-on: ubuntu-latest
-    environment: dev
+    environment: test
     steps:
       - uses: actions/checkout@v2.3.4
 
@@ -170,7 +158,7 @@ jobs:
     name: Migrate LUIS model
     needs: build
     runs-on: windows-latest
-    environment: dev
+    environment: test
     steps:
       - uses: actions/checkout@v2.3.4
 

@@ -54,6 +54,7 @@ jobs:
         if: env.BUILD_FLOW == 'composer'
         run: |
           $generatedDirectory = "${{ env.BOT_PROJECT_DIR }}/generated"
+
           # Clean and recreate the generated directory
           if (Test-Path $generatedDirectory)
           {
@@ -61,6 +62,7 @@ jobs:
           }
           $outputDirectory = "$generatedDirectory/interruption"
           New-Item -Path /. -name $outputDirectory -ItemType "directory"
+
       # Cross train LU models
       - name: Cross train LU models
         if: env.BUILD_FLOW == 'composer'
