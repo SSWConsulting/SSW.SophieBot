@@ -1076,3 +1076,24 @@ ${IntranetInfo()}
 	    "horizontalAlignment": "Right"
 	}
 	```
+
+# QRCodeCard()
+- ```
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Scan me please",
+      "weight": "bolder"
+    },
+    {
+      "type": "Image",
+      "url": "${QRCode()}",
+      "altText": "Cat"
+    }
+  ]
+}
+```	
