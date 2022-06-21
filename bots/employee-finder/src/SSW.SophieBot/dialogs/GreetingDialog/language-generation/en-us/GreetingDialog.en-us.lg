@@ -42,6 +42,12 @@
                     "title": "Who is on client work?",
                     "data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"Who is on client work?"'), '"Who is on client work?"')}
                 },
+                {
+                    "type": "Action.Submit",
+                    "title": "show me your QR code",
+                    "data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"show me your QR code"'), '"show me your QR code"')}
+                },
+                
 				{
 					"type": "Action.ShowCard",
                     "title": "See all commands",

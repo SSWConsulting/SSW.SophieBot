@@ -1086,8 +1086,9 @@ ${IntranetInfo()}
   "body": [
     {
       "type": "TextBlock",
-      "text": "Scan me please",
-      "weight": "bolder"
+      "text": "Open the SSW Rewards mobile app... then scan me. You'll get points 💖",
+      "weight": "bolder",
+	  "wrap": true
     },
     {
       "type": "Image",
