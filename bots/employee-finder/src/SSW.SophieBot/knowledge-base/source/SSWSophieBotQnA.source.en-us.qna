@@ -1,5 +1,5 @@
-> !# @source.endpoint=https://sswsophiebotdev-qna.cognitiveservices.azure.com/
-> !# @source.kbId=65d63cac-4bb9-4695-85d6-8decf603839f
+> !# @source.endpoint=https://sswsophiebot-qna.cognitiveservices.azure.com/
+> !# @source.kbId=5058e835-9288-4b5c-9015-37591d71d6c1
 > # QnA pairs
 
 > !# @qna.pair.source = crosstrained
@@ -442,19 +442,42 @@ intent=DeferToRecognizer_LUIS_SSWSophieBot
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "139"></a>
+<a id = "1774"></a>
 
-# ? Public Website
+# ? ​​Public Website
 
 ```markdown
-*   ssw.com.au
+*   [ssw.com.au ](https://ssw.com.au "https://ssw.com.au")
 
-*   ssw.com.cn - SSW public gateway to the Chinese market
+*   [ssw.com.cn ](https://ssw.com.cn "https://ssw.com.cn")- SSW public gateway to the Chinese market
+
+*   TODO: Greg is migrating from Web Forms and MVC to a Static Site (Gatsby)
+
+*   Website Master: Check [Employee Responsibilities](https://prod-13.australiasoutheast.logic.azure.com/SitePages/Employee-Responsibilities.aspx "https://sswcom.sharepoint.com/SitePages/Employee-Responsibilities.aspx")
 ```
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "140"></a>
+<a id = "1775"></a>
+
+# ? Communication - Email & Teams
+
+```markdown
+*   Outlook - Desktop App
+
+*   Outlook - Web outlook.office.com
+    *   ​​​​​​​[Rules to better Email](https://www.ssw.com.au/rules/rules-to-better-email)
+
+*   Teams - Desktop App
+
+*   Teams - Web teams.microsoft.com
+    *   [Rules to Better Instant Messaging](https://www.ssw.com.au/rules/rules-to-better-im)
+    *   [Rules to Better Meetings](https://www.ssw.com.au/rules/rules-to-better-meetings)
+```
+
+> !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
+
+<a id = "1776"></a>
 
 # ? Intranet
 
@@ -468,19 +491,21 @@ intent=DeferToRecognizer_LUIS_SSWSophieBot
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "141"></a>
+<a id = "1777"></a>
 
 # ? Rules
 
 ```markdown
-https://ssw.com.au/rules  - Our best practices  TODO: Tiago - Note: Tiago updates the banner:  http://rules.ssw.com.au/SswSmartBannerLib/  ( Instructions ) 
+*   [https://ssw.com.au/rules](https://ssw.com.au/rules "https://ssw.com.au/rules") - Our best practices
 
-TODO: Tiago is migrating to a static site + Github
+*   TODO: Tiago - Note: Tiago updates the banner: [http://rules.ssw.com.au/SswSmartBannerLib/](http://rules.ssw.com.au/SswSmartBannerLib/) ([Instructions](https://projects.ssw.com.au/tfs/SSW.SharePoint/DeploymentDocument/UsingSSWSmartBannerForSharePoint2010_SSW.Rules.docx))
+
+*   TODO: Tiago is migrating to a static site + GitHub
 ```
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "142"></a>
+<a id = "1778"></a>
 
 # ? Search for Documents
 
@@ -492,81 +517,52 @@ TODO: Tiago is migrating to a static site + Github
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "143"></a>
-
-# ? CRM
-
-```markdown
-*   https://crm.ssw.com.au or https://ssw.crm6.dynamics.com - aka D365 SSW's CRM (aka Customer Relationship Management) system on Dynamics 365 Online
-
-*   CRM Master: Check [Employee Responsibilities](https://prod-13.australiasoutheast.logic.azure.com/SitePages/Employee-Responsibilities.aspx "https://sswcom.sharepoint.com/SitePages/Employee-Responsibilities.aspx")
-```
-
-> !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
-
-<a id = "144"></a>
+<a id = "1779"></a>
 
 # ? Reports
 
 ```markdown
 *   [Power​ BI​](https://app.powerbi.com/groups/456358f7-5b12-46f5-b952-2a37fa9bb5e8/dashboards/e64e5c45-227b-4245-add5-fe137ca7b133) - Our reports
 
-*   [http://reports.ssw.com.au/reports](http://reports.ssw.com.au/reports) - SQL Server Reporting Services (only for printed reports e.g. SSW Invoices)
+*   [http://reports.ssw.com.au/reports](http://reports.ssw.com.au/reports "http://reports.ssw.com.au/reports") - SQL Server Reporting Services (only for printed reports e.g., SSW Invoices)
 
 *   Power BI Master: Check [Employee Responsibilities](https://prod-13.australiasoutheast.logic.azure.com/SitePages/Employee-Responsibilities.aspx "https://sswcom.sharepoint.com/SitePages/Employee-Responsibilities.aspx")
 ```
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "145"></a>
+<a id = "1780"></a>
 
-# ? The Backlogs - Github, Azure DevOps & ZenDesk
+# ? The Backlogs - GitHub, Azure DevOps & Zendesk
 
 ```markdown
 Note: Was VSTS, and before that was TFS - Team Foundation Server
 
-*   [https://github.com/sswconsulting](https://github.com/sswconsulting) - SSW Open Source Projects
-
-*   [https://​ssw.visualstudio.com](https://ssw.visualstudio.com/) - For new projects
-
-*   [https://ssw2.visualstudio.com​​](https://ssw2.visualstudio.com/) - Old projects only
-
-*   The active ones are [https://sswcom.sharepoint.com/SitePages/Internal-Projects.aspx](https://prod-13.australiasoutheast.logic.azure.com/SitePages/Internal-Projects.aspx)
-
-*   [https://pdi-ssw.zendesk.com](https://pdi-ssw.zendesk.com "https://pdi-ssw.zendesk.com") - For internal non-source-code requests eg. SysAdmins, Social Media, Marketing, etc...
-
-*   Backlog Master: Check [Employee Responsibilities](https://prod-13.australiasoutheast.logic.azure.com/SitePages/Employee-Responsibilities.aspx "https://sswcom.sharepoint.com/SitePages/Employee-Responsibilities.aspx")
+*   [https://github.com/sswconsulting](https://github.com/sswconsulting) - SSW Open-Source Projects
+    *   [https://​ssw.visualstudio.com](https://ssw.visualstudio.com/) - For new projects
+    *   [https://ssw2.visualstudio.com​​](https://ssw2.visualstudio.com/) - Old projects only
+    *   The active ones are [https://sswcom.sharepoint.com/SitePages/Internal-Projects.aspx](https://prod-13.australiasoutheast.logic.azure.com/SitePages/Internal-Projects.aspx)
+    *   [https://pdi-ssw.zendesk.com](https://pdi-ssw.zendesk.com "https://pdi-ssw.zendesk.com") - For internal non-source-code requests eg. SysAdmins, social media, Marketing, etc...
+    *   Backlog Master: Check [Employee Responsibilities](https://prod-13.australiasoutheast.logic.azure.com/SitePages/Employee-Responsibilities.aspx "https://sswcom.sharepoint.com/SitePages/Employee-Responsibilities.aspx")
 ```
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "146"></a>
-
-# ? SSW Website
-
-```markdown
-*   https://www.ssw.com.au  - SSW external website TODO: Greg is migrating from Web Forms and MVC to a Static Site (Gatsby)
-
-*   Website Master: Check [Employee Responsibilities](https://prod-13.australiasoutheast.logic.azure.com/SitePages/Employee-Responsibilities.aspx "https://sswcom.sharepoint.com/SitePages/Employee-Responsibilities.aspx")
-```
-
-> !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
-
-<a id = "147"></a>
+<a id = "1781"></a>
 
 # ? Projects (Internal and Clients)
 
 ```markdown
-*   Microsoft Teams - Each client has their own Team in Microsoft Teams with all project resourcese.g. Teams | Teams | Client - [Client Name] Note: was http://projects.ssw.com.au ​ 
+*   Microsoft Teams - Each client has their own Team in Microsoft Teams with all project resourcese.g., Teams | Teams | Client - [Client Name] Note: was http://projects.ssw.com.au ​ 
 
-*   Archived Client Projects (pre-2018) are here: [https://sswcom.sharepoint.com/sites/Archive/Shared%20Documents/Forms/AllItems.aspx](https://prod-13.australiasoutheast.logic.azure.com/sites/Archive/Shared%20Documents/Forms/AllItems.aspx "https://sswcom.sharepoint.com/sites/Archive/Shared%20Documents/Forms/AllItems.aspx")​ ​
+*   Archived Client projects (pre-2018) are here: [https://sswcom.sharepoint.com/sites/Archive/Shared%20Documents/Forms/AllItems.aspx](https://prod-13.australiasoutheast.logic.azure.com/sites/Archive/Shared%20Documents/Forms/AllItems.aspx "https://sswcom.sharepoint.com/sites/Archive/Shared%20Documents/Forms/AllItems.aspx")​ ​
 
 *   TODO: Calum put a link to the Teams usage via PowerBI
 ```
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "148"></a>
+<a id = "1782"></a>
 
 # ? SSW TV
 
@@ -578,7 +574,7 @@ Note: Was VSTS, and before that was TFS - Team Foundation Server
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "149"></a>
+<a id = "1783"></a>
 
 # ? TimePro (Timesheets)
 
@@ -592,7 +588,7 @@ Note: Was VSTS, and before that was TFS - Team Foundation Server
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "150"></a>
+<a id = "1784"></a>
 
 # ? SSW.Marketing - Online Advertising
 
@@ -601,23 +597,53 @@ Note: Was VSTS, and before that was TFS - Team Foundation Server
 
 *   [http://adcenter.microsoft.com​](http://adcenter.microsoft.com/)
 
-*   [https://www.google.com/accounts/ManageAccount](https://www.google.com/accounts/ManageAccount) Note: google@ssw.com.au is the user account for administering SSW Google apps ( https://www.google.com/accounts/ManageAccount ), this account is used for Google+, google analytics etc.. 
+*   [https://www.google.com/accounts/ManageAccount](https://www.google.com/accounts/ManageAccount)
+
+*   Note: google@ssw.com.au is the user account for administering SSW Google apps ([https://www.google.com/accounts/ManageAccount](https://www.google.com/accounts/ManageAccount)), this account is used for Google+, google analytics etc.
+
 *   We are in the process of migrating the neil.adam.r@gmail.com account details to google@ssw.com.au so it is still in progress.Passwords in KeePass.
 ```
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "151"></a>
+<a id = "1785"></a>
 
-# ? SSW Google Accounts
+# ? Induction (SugarLearning)
 
 ```markdown
-​​We have three different accounts, these are used for: ​
+*   [https://sugarlearning.com/ ](https://sugarlearning.com/)
+
+*   See [Internal Projects](https://prod-13.australiasoutheast.logic.azure.com/SitePages/Internal-Projects.aspx "https://sswcom.sharepoint.com/SitePages/Internal-Projects.aspx")​​​​​​​
 ```
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "152"></a>
+<a id = "1786"></a>
+
+# ? SSW Google Accounts
+
+```markdown
+​​We have three different accounts; these are used for: ​
+
+*   U: Google@ssw.com.au P: [keypass]
+    *   Name is SSW Belle
+    *   Used for Google Places, Bing Places 
+    *   Used for Google Photos App | Finding your Images 
+    *   Email not in use, account used for the above only. 
+
+*   U: Neil.Adam.R@gmail.com P: [keypass]
+    *   Name is Sophie Belle 
+    *   Used to access SSW_TV YouTube via Gmail. 
+
+*   U; Info@ssw.com.au P: [keypass] 
+    *   Alias for @Neil.Adam.R@gmail.com 
+    *   Used for SSW Emails/YouTube, Google AdWords, Analytics, Screen Cloud 
+    *   Account managed by Penny, Adam and Uly
+```
+
+> !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
+
+<a id = "1787"></a>
 
 # ? SSW.Design (Typography)
 
@@ -627,29 +653,32 @@ Note: Was VSTS, and before that was TFS - Team Foundation Server
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "153"></a>
+<a id = "1788"></a>
 
 # ? ​​SSW.Design (Image Library)
 
 ```markdown
-*   Location of Icon Experience
+*   Location of Icon Experience​​​​​​:
+    *   \\fileserver\DataSSW\Design\0 - DESIGN ASSETS\1 - GRAPHIC ELEMENTS\Cursors_and_Icons
+
+*   [SSW Logos](https://www.ssw.com.au/SSW/Logo/ "https://www.ssw.com.au/SSW/Logo/") - SSW Products Logo​​​​​​​
 ```
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "154"></a>
+<a id = "1789"></a>
 
 # ? Setup Files
 
 ```markdown
-*   File Server - Setup Files[\\FileServer\SetupFiles](https://fileserver/SetupFiles)
+*   File Server - Setup Files - [\\FileServer\SetupFiles](https://fileserver/SetupFiles)
 
-*   File Server - Build Packages\\fileserver\SSWBuilds\
+*   File Server - Build Packages - \\fileserver\SSWBuilds\
 ```
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "155"></a>
+<a id = "1790"></a>
 
 # ? Office Renovations (Repairs and Maintenance)
 
@@ -659,7 +688,7 @@ Note: Was VSTS, and before that was TFS - Team Foundation Server
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "156"></a>
+<a id = "1791"></a>
 
 # ? Events Calendar (Training)
 
@@ -671,111 +700,105 @@ Note: Was VSTS, and before that was TFS - Team Foundation Server
 *   Power Sessions: [http://www.ssw.com.au/ssw/Events/Training/Power-Sessions.aspx](http://www.ssw.com.au/ssw/Events/Training/Power-Sessions.aspx)
 
 *   Event Master: Check Employee Responsibilities 
-    *   The SSW Usergroup Master schedules speakers
+    *   The SSW User group Master schedules speakers
     *   The SSW Event Master greets people
 ```
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "157"></a>
+<a id = "1792"></a>
 
 # ? FireBootCamp (Training Materials)
 
 ```markdown
-Marketing: [www.firebootcamp.​​com](http://www.firebootcamp.com/)
+*   Marketing: [www.firebootcamp.​​com](http://www.firebootcamp.com/)
 
 *   The Angular Superpowers
-
-*   Course Resources: [https://courses.firebootcamp.com](https://courses.firebootcamp.com)
-
-*   Jean Thirion + Brendan Richards
+    *   Course Resources: [https://courses.firebootcamp.com](https://courses.firebootcamp.com)
+    *   Jean Thirion + Brendan Richards
 
 *   The Azure Superpowers
+    *   Course Resources: TODO
+    *   William Liebenberg + Matt Wicks
 
-*   Course Resources: TODO
-
-*   William Liebenberg + Matt Wicks
-
-*   The .Net Core Superpowers
-
-*   Course Resources: TODO
-
-*   Jason Taylor + Matt Goldman
+*   The .NET Core Superpowers
+    *   Course Resources: TODO
+    *   Jason Taylor + Matt Goldman
 ```
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "158"></a>
+<a id = "1793"></a>
 
 # ? FireBootCamp (Admin Portal)
 
 ```markdown
-#1 The Site (for Marketing) 
+*   The Site (for Marketing) 
+    *   [www.firebootcamp.​​com](http://www.firebootcamp.com/)
 
-[www.firebootcamp.​​com](http://www.firebootcamp.com/)
+*   Training Material (for Instructors)
+    *   [https://sswcom.sharepoint.com/sites/SSWTraining/Shared%20Documents/Forms/AllItems.aspx](https://prod-13.australiasoutheast.logic.azure.com/sites/SSWTraining/Shared%20Documents/Forms/AllItems.aspx)
+    *   Note: See the 'Modules' folder for all the Slide Decks and Exercises.​
+    *   Check the SharePoint history for changes.
 
-#2 Training Material (for Instructors)
+*   The Intranet  
+    *   Course Schedule (for Students)
+    *   All lessons reference a module via hyperlink [https://sswcom.sharepoint.com/sites/firebootcamp](/sites/firebootcamp/_layouts/15/start.aspx#/SitePages/Home.aspx)
+    *   Mentor Resources OneNote (for Instructors) [https://sswcom.sharepoint.com/sites/firebootcamp/mentors](https://prod-13.australiasoutheast.logic.azure.com/sites/firebootcamp/mentors/_layouts/15/WopiFrame.aspx?sourcedoc=%7bdef71ce0-43b6-4469-8cb7-3dcbebf3a617%7d&action=editnew)
+    *   Note #1: Office365 – that is why the ugly URL!
+    *   Note #2: Ask Brendan or Jean for access – you need to send him your Microsoft Account (aka LiveID)
 
-*   [https://sswcom.sharepoint.com/sites/SSWTraining/Shared%20Documents/Forms/AllItems.aspx](https://prod-13.australiasoutheast.logic.azure.com/sites/SSWTraining/Shared%20Documents/Forms/AllItems.aspx)
-
-*   Note: See the 'Modules' folder for all the Slide Decks and Exercises.
-    *   Check the SharePoint history for changes
-
-#3 The Intranet  
-
-*   Course Schedule (for Students)
- All lessons reference a module via hyperlink https://sswcom.sharepoint.com/sites/firebootcamp 
-
-*   Mentor Resources OneNote (for Instructors)[https://sswcom.sharepoint.com/sites/firebootcamp/mentors](https://prod-13.australiasoutheast.logic.azure.com/sites/firebootcamp/mentors/_layouts/15/WopiFrame.aspx?sourcedoc=%7bdef71ce0-43b6-4469-8cb7-3dcbebf3a617%7d&action=editnew)
-
-*   Note #1: Office365 – that is why the ugly URL!
-
-*   Note #2: Ask Brendan or Jean for access – you need to send him your Microsoft Account (aka LiveID)
-
-  #4 The FireBootCamp Leaderboard (for Students)
-
-*   [https://sugarlearning.com/FBC-Syd-01/Leaderboard](https://sugarlearning.com/FBC-Syd-01/Leaderboard) (Didn't exist for #1 as being build)
-
-*   [https://sugarlearning.com/FBC-Syd-02/Leaderboard](https://sugarlearning.com/FBC-Syd-02/Leaderboard)  
-
-*   [https://sugarlearning.com/FBC-Syd-03/Leaderboard](https://sugarlearning.com/FBC-Syd-03/Leaderboard)
+*   The FireBootCamp Leaderboard (for Students)
+    *   [https://sugarlearning.com/FBC-Syd-01/Leaderboard](https://sugarlearning.com/FBC-Syd-01/Leaderboard) (Didn't exist for #1 as being build)
+    *   [https://sugarlearning.com/FBC-Syd-02/Leaderboard](https://sugarlearning.com/FBC-Syd-02/Leaderboard)  
+    *   [https://sugarlearning.com/FBC-Syd-03/Leaderboard](https://sugarlearning.com/FBC-Syd-03/Leaderboard)​​​​​​​
 ```
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "159"></a>
+<a id = "1794"></a>
 
 # ? CRM
 
 ```markdown
-*   [​Who do I ask for ​CRM tasks? ​](https://prod-13.australiasoutheast.logic.azure.com/Lists/ProductManagers/GroupByProductCategory.aspx?view=7&q=CRM)Microsoft Dynamics CRM is used at SSW for:
+*   [crm.ssw.com.au](https://crm.ssw.com.au/)
+    *   Dynamics Production (aka D365) ⭐
+    *   Note: crm.ssw.com.au redirects to ssw.crm6.dynamics.com
+
+*   [​Who do I ask for ​CRM tasks? ​](https://prod-13.australiasoutheast.logic.azure.com/Lists/ProductManagers/GroupByProductCategory.aspx?view=7&q=CRM)
+
+*   Microsoft Dynamics CRM is used at SSW for: Environments (aka clients) that you can use:​​​
     *   ​**Sales & Management (used for Customers, Contacts, Activities, Leads and Opportunities)**
     *   Marketing (used for Newsletter)
     *   Customer Service (not used yet)
     *   Service & Scheduling (not used yet)
     *   The Web
-    *   Microsoft Outlook "Dynamics 365"- The Ribbon (old COM Addin but faster and works everytime) or- The "Dynamics 365" right side bar (newer but currently is slow and "Set Regarding" does not work as per Penny)Environments (aka clients) that you can use:​​​
-
-*   [crm.ssw.com.au](https://crm.ssw.com.au/)Dynamics Production (aka D365) ⭐Note: crm.ssw.com.au redirects to ssw.crm6.dynamics.com
+    *   Microsoft Outlook "Dynamics 365":
+    *   The Ribbon (old COM Addin but faster and works every time) or
+    *   The "Dynamics 365" right side bar (newer but currently is slow and "Set Regarding" does not work as per Penny)
 
 *   [D365 Online (Development)​](https://ssw-dev.crm6.dynamics.com/)
 
 *   [Newsletter](https://app.sendgrid.com/)
-​Newsletter sending is using sendgrid (check KeePass for password)
+    *   [​​​​​​​](https://app.sendgrid.com/)​Newsletter sending is using SendGrid (check KeePass for password)
 
 *   Read Only Live SQL Access to Dynamics 365
-    *   CRM Development: ssw-dev.crm6.dynamics.com,5558Authentication: Active Directory - Password
-    *   CRM Production: ssw.crm6.dynamics.com,5558Authentication: Active Directory - Password
+    *   CRM Development: ssw-dev.crm6.dynamics.com,5558
+    *   Authentication: Active Directory - Password
+    *   CRM Production: ssw.crm6.dynamics.com,5558
+    *   Authentication: Active Directory - Password
+
+*   CRM Master: Check [Employee Responsibilities](https://prod-13.australiasoutheast.logic.azure.com/SitePages/Employee-Responsibilities.aspx "https://sswcom.sharepoint.com/SitePages/Employee-Responsibilities.aspx")
 ```
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "160"></a>
+<a id = "1795"></a>
 
 # ? SharePoint
 
 ```markdown
-#1 Production
+Production
 
 *   SYDSP2016P01
     *   Rules - [https://rules.ssw.com.au](https://rules.ssw.com.au/)
@@ -796,7 +819,7 @@ Marketing: [www.firebootcamp.​​com](http://www.firebootcamp.com/)
     *   OneDrive
     *   Microsoft Teams
 
-#2 Dev/Staging
+Dev/Staging
 
 *   SYDSP2016D01 (Dev SP2016)
     *   Rules Dev - [https://rules2016.dev.ssw.com.au](https://rules2016.dev.ssw.com.au/)
@@ -810,22 +833,21 @@ Marketing: [www.firebootcamp.​​com](http://www.firebootcamp.com/)
     *   SP Dev DB - SYDSQL2014D01\SP2016
     *   SP Staging DB - SYDSQL2014Q01 (TODO: move to SYDSQL2014Q01\SP2016)
 
-If your account doesn't have permission to access the above services, ask our SysAdmins for help.
+*   If your account doesn't have permission to access the above services, ask our SysAdmins for help.
 
-Facebook account for production and testing usage​​
+*   Facebook account for production and testing usage​​
+    *   Login: [SSWfacebook@ssw.com.au](mailto:SSWfacebook@ssw.com.au)
+    *   Password: See KeePass
+    *   If you want to link another app, please create another Facebook App to that with this we avoid breaking applications that are working in production isolating their settings
 
-We are using SSWfacebook@ssw.com.au as our production account to link the rules site and the events site to applications like Disqus and SSWEventReceiver publishing solution 
+*   We are using [SSWfacebook@ssw.com.au](mailto:SSWfacebook@ssw.com.au) as our production account to link the rules site and the events site to applications like Disqus and SSWEventReceiver publishing solution.
 
-*   Login: [SSWfacebook@ssw.com.au](mailto:SSWfacebook@ssw.com.au)
-    *   Password: See KeePassIf you want to link another app please create another Facebook App to that with this we avoid breaking applications that are working in production isolationg their settings
+*   For testing purposes, we have:
+    *   Login: [SSWdevelopers@ssw.com.au](mailto:SSWdevelopers@ssw.com.au)
+    *   Password: See KeePass
 
-*   For testing purposes we have:
-
-*   Login: SSWdevelopers@ssw.com.au Password: See KeePass
-
-SharePoint Checked out files report page
-
-*   [Rules](https://rules.ssw.com.au/_layouts/15/SSWAdminPages/CheckedOutReport.aspx)
+*   SharePoint Checked out files report page
+    *   [Rules](https://rules.ssw.com.au/_layouts/15/SSWAdminPages/CheckedOutReport.aspx)
     *   [SharePoint](https://sharepoint.ssw.com.au/_layouts/15/SSWAdminPages/CheckedOutReport.aspx)
     *   [Intranet](https://prod-13.australiasoutheast.logic.azure.com/_layouts/15/SSWAdminPages/CheckedOutReport.aspx)
     *   [Projects](https://projects.ssw.com.au/_layouts/15/SSWAdminPages/CheckedOutReport.aspx)
@@ -833,21 +855,61 @@ SharePoint Checked out files report page
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "161"></a>
+<a id = "1796"></a>
 
-# ? On-Premises Web Servers
+# ? On-Premises Databases
 
 ```markdown
-#1 Development/test/staging web server
+SQL SERVER 2016
 
-For development/test/staging purposes of ASP.NET and web services.
+*   Production Database Servers
+    *   SYDSQL2016P01
 
-SYDIIS2016Q01
+*   Staging Database Servers - For staging/UAT purposes
+    *   SYDSQL2016Q01​
+
+*   Development Database Servers - For development purposes
+    *   SYDSQL2016D01
+
+SQL SERVER 2014
+
+*   Production Database Servers
+    *   SYDSQL2014P01
+
+*   Staging Database Servers -  For staging/UAT  purposes 
+    *   SYDSQL2014Q01​
+
+*   Development Database Servers - For development purposes
+    *   SYDSQL2014D01
+
+SQL SERVER 2016
+
+*   Production Database Servers
+    *   SYDSQL2012P01
+
+*   Staging Database Servers -  For staging/UAT  purposes 
+    *   SYDSQL2012Q01​
+
+*   Development Database Servers - For development purposes
+    *   SYDSQL2012D01
 ```
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "162"></a>
+<a id = "1797"></a>
+
+# ? On-Premises Web Servers
+
+```markdown
+*   Development/test/staging web server
+
+*   For development/test/staging purposes of ASP.NET and web services.
+    *   SYDIIS2016Q01
+```
+
+> !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
+
+<a id = "1798"></a>
 
 # ? SysAdmin Monitoring
 
@@ -865,38 +927,58 @@ SYDIIS2016Q01
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "163"></a>
+<a id = "1799"></a>
 
-# ? APIs - Every SSW application should have a rock-solid API
+# ? APIs - Every SSW application should have a rock-solid API 
 
 ```markdown
-*   SSW SugarLearning API​[https://my.sugarlearning.com/swagger/ui/index](https://my.sugarlearning.com/swagger/ui/index)Swagger UI for SugarLearning API
+*   SSW SugarLearning API​
+    *   [https://my.sugarlearning.com/swagger/ui/index](https://my.sugarlearning.com/swagger/ui/index)
+    *   Swagger UI for SugarLearning API
 
-*   SSW TimePRO API   [https://ssw.sswtimepro.com/swagger/ui/index](https://ssw.sswtimepro.com/swagger/ui/index)Swagger UI for TimePRO API
+*   SSW TimePRO API   
+    *   [https://ssw.sswtimepro.com/swagger/ui/index](https://ssw.sswtimepro.com/swagger/ui/index)
+    *   Swagger UI for TimePRO API
 
-*   SSW People API(Internal only within Azure) [https://portal.azure.com/#@sswcom.onmicrosoft.com/resource/subscriptions/b8b18dcf-d83b-47e2-9886-00c2e983629e/resourceGroups/SSW.Bots/providers/Microsoft.ApiManagement/service/ssw-people-apim/overview](https://portal.azure.com/#%40sswcom.onmicrosoft.com/resource/subscriptions/b8b18dcf-d83b-47e2-9886-00c2e983629e/resourceGroups/SSW.Bots/providers/Microsoft.ApiManagement/service/ssw-people-apim/overview "https://portal.azure.com/#@sswcom.onmicrosoft.com/resource/subscriptions/b8b18dcf-d83b-47e2-9886-00c2e983629e/resourcegroups/ssw.bots/providers/microsoft.apimanagement/service/ssw-people-apim/overview") Used on: SSW Bots - https://ssw.visualstudio.com/SSW.Bots 
+*   SSW People API
+    *   (Internal only within Azure) [https://portal.azure.com/#@sswcom.onmicrosoft.com/resource/subscriptions/b8b18dcf-d83b-47e2-9886-00c2e983629e/resourceGroups/SSW.Bots/providers/Microsoft.ApiManagement/service/ssw-people-apim/overview](https://portal.azure.com/#%40sswcom.onmicrosoft.com/resource/subscriptions/b8b18dcf-d83b-47e2-9886-00c2e983629e/resourceGroups/SSW.Bots/providers/Microsoft.ApiManagement/service/ssw-people-apim/overview "https://portal.azure.com/#@sswcom.onmicrosoft.com/resource/subscriptions/b8b18dcf-d83b-47e2-9886-00c2e983629e/resourcegroups/ssw.bots/providers/microsoft.apimanagement/service/ssw-people-apim/overview")
+    *   Used on: SSW Bots - [https://ssw.visualstudio.com/SSW.Bots](https://ssw.visualstudio.com/SSW.Bots)
 
-*   Dynamics 365 Developer Guide​​​[https://docs.microsoft.com/en-us/dynamics365/customerengagement/on-premises/developer/overview](https://docs.microsoft.com/en-us/dynamics365/customerengagement/on-premises/developer/overview)Getting started with the Dynamics 365 SDK.The Dynamics 365 SDK was used with the SSW.Bots project to obtain User information such as Skills and Calendars. Used on: SSW Bots - https://ssw.visualstudio.com/SSW.Bots 
+*   Dynamics 365 Developer Guide​​​
+    *   [https://docs.microsoft.com/en-us/dynamics365/customerengagement/on-premises/developer/overview](https://docs.microsoft.com/en-us/dynamics365/customerengagement/on-premises/developer/overview)
+    *   Getting started with the Dynamics 365 SDK.
+    *   The Dynamics 365 SDK was used with the SSW.Bots project to obtain User information such as Skills and Calendars.
+    *   Used on: SSW Bots - [https://ssw.visualstudio.com/SSW.Bots](https://ssw.visualstudio.com/SSW.Bots)
 
-*   UniFi Controller API Client[https://github.com/schwoi/UnifiClient](https://github.com/schwoi/UnifiClient)A .NET Standard library that provides access to Ubiquiti's UniFi Controller API, versions 4.X.X and 5.X.X of the UniFi Controller software are supported - By Brent Howard Used on: SSW Bots - https://ssw.visualstudio.com/SSW.Bots 
+*   Unifi Controller API Client
+    *   [https://github.com/schwoi/UnifiClient](https://github.com/schwoi/UnifiClient)
+    *   A .NET Standard library that provides access to Ubiquiti's Unifi Controller API, versions 4.X.X and 5.X.X of the Unifi Controller software are supported - By Brent Howard
+    *   Used on: SSW Bots - [https://ssw.visualstudio.com/SSW.Bots](https://ssw.visualstudio.com/SSW.Bots)
 
-*   UniFi Controller API Client - Nuget Package​[https://www.nuget.org/packages/UnifiApi](https://www.nuget.org/packages/UnifiApi/)UniFi Controller API Client Nuget Package - By Brent Howard Used on: SSW Bots - https://ssw.visualstudio.com/SSW.Bots 
+*   Unifi Controller API Client - NuGet Package​
+    *   [https://www.nuget.org/packages/UnifiApi](https://www.nuget.org/packages/UnifiApi/)
+    *   Unifi Controller API Client NuGet Package - By Brent Howard
+    *   Used on: SSW Bots - [https://ssw.visualstudio.com/SSW.Bots](https://ssw.visualstudio.com/SSW.Bots)
 
-*   Language Understanding Intelligent Service (LUIS)​[https://www.luis.ai/home](https://www.luis.ai/home)Used in the SSW.Bots project​ to train a bot with specific intents and utterances. Used on: SSW Bots - https://ssw.visualstudio.com/SSW.Bots 
+*   Language Understanding Intelligent Service (LUIS)​
+    *   [https://www.luis.ai/home](https://www.luis.ai/home)
+    *   Used in the SSW.Bots project​ to train a bot with specific intents and utterances.
+    *   Used on: SSW Bots - [https://ssw.visualstudio.com/SSW.Bots](https://ssw.visualstudio.com/SSW.Bots)
 
-*   Microsoft Bot Framework​[https://dev.botframework.com/](https://dev.botframework.com/)Used in the SSW.Bots project​ to create a Bot Service in Azure, and then interact with LUIS Used on: SSW Bots - https://ssw.visualstudio.com/SSW.Bots 
+*   Microsoft Bot Framework​
+    *   [https://dev.botframework.com/](https://dev.botframework.com/)
+    *   Used in the SSW.Bots project​ to create a Bot Service in Azure, and then interact with LUIS
+    *   Used on: SSW Bots - [https://ssw.visualstudio.com/SSW.Bots](https://ssw.visualstudio.com/SSW.Bots)
 
-Connect a bot to channels​
-[https://docs.microsoft.com/en-us/azure/bot-service/bot-service-manage-channels?view=azure-bot-service-3.0](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-manage-channels?view=azure-bot-service-3.0)
-
-Used in the SSW.Bots project​ to connect our bot to Slack. There are many other channels available too.
-
-TODO: Move to Bots project with Patrick
+*   Connect a bot to channels​
+    *   [https://docs.microsoft.com/en-us/azure/bot-service/bot-service-manage-channels?view=azure-bot-service-3.0](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-manage-channels?view=azure-bot-service-3.0)
+    *   Used in the SSW.Bots project​ to connect our bot to Slack. There are many other channels available too.
+    *   TODO: Move to Bots project with Patrick
 ```
 
 > !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
 
-<a id = "164"></a>
+<a id = "1800"></a>
 
 # ? Misc Links
 
@@ -907,7 +989,7 @@ TODO: Move to Bots project with Patrick
 
 *   [Presentation Files](https://sydiis2016q01/ssw/events/2008UTSSQL/)
 
-*   [Bing Webmaster Tools](https://www.bing.com/toolbox/webmaster/)See KeePass for credentials
+*   [Bing Webmaster Tools](https://www.bing.com/toolbox/webmaster/) - See KeePass for credentials
 
 *   [Bitly URL Shortener](https://bitly.com/)[See KeePass for credentials](https://bitly.com/)
 
@@ -919,118 +1001,11 @@ TODO: Move to Bots project with Patrick
 
 *   [Microsoft Partner Dashboard](https://partner.microsoft.com/en-us/pcv/dashboard/overview "https://partner.microsoft.com/en-us/pcv/dashboard/overview")
 
-*   SSW Nuget​This is the SSW NuGet Source. Add it via Visual Studio | Tools | NuGet Package Manager | Package Manager Settings | Package Sources
+*   SSW NuGet - This is the SSW NuGet Source. Add it via Visual Studio | Tools | NuGet Package Manager | Package Manager Settings | Package Sources
 
 *   [SSW Internal Octopus](https://octopus.ssw.com.au/app#/%E2%80%8B)
 
 *   [Azure DevOps Documentation](https://docs.microsoft.com/en-us/azure/devops/ "https://docs.microsoft.com/en-us/azure/devops/")​​​​​​​
-```
-
-> !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
-
-<a id = "165"></a>
-
-# ? U: Google@ssw.com.au P: [keypass]
-
-```markdown
-*   Name is SSW Belle
-
-*   Used for Google Places, Bing Places 
-
-*   Used for Google Photos App | Finding your Images 
-
-*   Email not in use, account used for the above only.
-```
-
-> !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
-
-<a id = "166"></a>
-
-# ? U: Neil.Adam.R@gmail.com P: [keypass]
-
-```markdown
-*   Name is Sophie Belle 
-
-*   Used to access SSW_TV Youtube via Gmail.
-```
-
-> !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
-
-<a id = "167"></a>
-
-# ? U; Info@ssw.com.au P: [keypass]
-
-```markdown
-*   Alias for @Neil.Adam.R@gmail.com 
-
-*   Used for SSW Emails/Youtube, Google Adwords, Analytics, Screen Cloud 
-
-*   Account managed by Penny, Adam and Uly
-
-### ​
-```
-
-> !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
-
-<a id = "168"></a>
-
-# ? SQL SERVER 2016 - On-Premises Databases
-
-```markdown
-Production Database Servers
-
-SYDSQL2016P01
-
-*   Staging Database Servers
-For staging/UAT purposes 
-    *   SYDSQL2016Q01​
-    *   Development Database Servers
-For development purposes 
-    *   SYDSQL2016D01
-```
-
-> !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
-
-<a id = "169"></a>
-
-# ? SQL SERVER 2014
-
-```markdown
-Production Database Servers
-
-SYDSQL2014P01
-Staging Database Servers
-
-For staging/UAT purposes 
-
-SYDSQL2014Q01​
-Development Database Servers
-
-For development purposes 
-
-SYDSQL2014D01
-```
-
-> !# @qna.pair.source = https://prod-13.australiasoutheast.logic.azure.com:443/workflows/46894ad323cd41589258703133391d1a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U78_a2QsQhC0f9J0pcPpAN4MQq8D89BlgEF9DhNTKQc
-
-<a id = "170"></a>
-
-# ? SQL SERVER 2016 - On-Premises Databases
-
-```markdown
-Production Database Servers
-
-SYDSQL2012P01
-Staging Database Servers
-
-For staging/UAT purposes 
-
-SYDSQL2012Q01​
-Development Database Servers
-
-For development purposes
-
-SYDSQL2012D01
 ```
 
 
