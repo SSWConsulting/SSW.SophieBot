@@ -198,25 +198,15 @@
             "width": "stretch",
             "items": [
                 {
-                    "type": "RichTextBlock",
-                    "inlines": 
-                    [
-                        {
-                            "type": "TextRun",
-                            "text": "${project.projectname}",
-                            "underline": true,
-                            "wrap": true,
-                            "size": "Default",
-                            "horizontalAlignment": "Left"
-                        }
-                    ]
+                    "type": "TextBlock",
+					"text": "[${project.projectname}](${settings.App.CRMProjectUrl}&id=${project.crmProjectId})",
+					"wrap": true,
+					"size": "Default",
+					"horizontalAlignment": "Left",
+					"verticalContentAlignment": "Center",
                 }
             ],
-            "verticalContentAlignment": "Center",
-            "selectAction": {
-                "type": "Action.OpenUrl",
-                "url": "${settings.App.CRMProjectUrl}&id=${project.crmProjectId}"
-            }
+            "verticalContentAlignment": "Center"
         },
         {
             "type": "Column",
@@ -244,11 +234,3 @@
 [Activity
     Text = ${SendActivity_SB0mZY_text()}
 ]
-
-# SendActivity_1R8imB()
-[Activity
-    Text = ${SendActivity_1R8imB_text()}
-]
-
-# SendActivity_1R8imB_text()
-- You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.
