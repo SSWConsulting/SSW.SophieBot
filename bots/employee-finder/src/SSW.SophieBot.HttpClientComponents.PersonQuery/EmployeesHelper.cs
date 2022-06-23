@@ -317,25 +317,35 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 
         public static List<ClientsInfoModel> GetClientInfo(DateTime date, List<GetAppointmentModel> appointments)
         {
-
             var appointment = GetEnumerableAppointmentsByDate(appointments, date);
+
             var clientsInfo = appointment
-            .Where(a => !_internalCompanyNames.Contains(a.Regarding?.ToLower()) && !string.IsNullOrWhiteSpace(a.Regarding) && a.End.UtcTicks >= date.Ticks)
-            .Select(a => new ClientsInfoModel
-            {
-                AccountId = a.Client[0].AccountId,
-                ClientName = a.Client[0].ClientName,
-                ClientNumber = a.Client[0].ClientNumber,
-                PrimaryContactId = a.Client[0].PrimaryContactId,
-                PrimaryContactName = a.Client[0].PrimaryContactName,
-                PrimaryContactEmail = a.Client[0].PrimaryContactEmail,
-                PrimaryContactPhone = a.Client[0].PrimaryContactPhone,
-                AccountManagerId = a.Client[0].AccountManagerId,
-                AccountManagerName = a.Client[0].AccountManagerName,
-                Address = a.Client[0].Address,
-                Industry = a.Client[0].Industry,
-                IndustryCode = a.Client[0].IndustryCode
-            })
+			.Where(a => !_internalCompanyNames.Contains(a.Regarding?.ToLower()) && !string.IsNullOrWhiteSpace(a.Regarding) && a.End.UtcTicks >= date.Ticks)
+            .Select(a => { 
+				if(a.Client != null && a.Client.Any())
+				{
+					return new ClientsInfoModel
+					{
+						AccountId = a.Client[0].AccountId,
+						ClientName = a.Client[0].ClientName,
+						ClientNumber = a.Client[0].ClientNumber,
+						PrimaryContactId = a.Client[0].PrimaryContactId,
+						PrimaryContactName = a.Client[0].PrimaryContactName,
+						PrimaryContactEmail = a.Client[0].PrimaryContactEmail,
+						PrimaryContactPhone = a.Client[0].PrimaryContactPhone,
+						AccountManagerId = a.Client[0].AccountManagerId,
+						AccountManagerName = a.Client[0].AccountManagerName,
+						Address = a.Client[0].Address,
+						Industry = a.Client[0].Industry,
+						IndustryCode = a.Client[0].IndustryCode
+					};
+				}
+				else
+				{
+					return null;
+				}
+			})
+			.Where(a => a != null)
             .Distinct()
             .ToList();
 
