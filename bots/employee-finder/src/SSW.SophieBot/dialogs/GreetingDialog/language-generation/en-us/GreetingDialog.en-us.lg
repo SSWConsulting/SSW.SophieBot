@@ -44,7 +44,7 @@
                 },
                 {
                     "type": "Action.Submit",
-                    "title": "show me your QR code",
+                    "title": "Show me your QR code",
                     "data": ${if(turn.activity.channelId == "msteams", SendMessageToTeams('"show me your QR code"'), '"show me your QR code"')}
                 },
                 
