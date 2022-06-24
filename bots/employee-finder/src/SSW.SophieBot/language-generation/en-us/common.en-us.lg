@@ -14,8 +14,9 @@
 -```
 {
     "type": "Action.OpenUrl",
-    "title": "📈 More Booking Info",
-    "url": "${settings.App.CRMBookingEndpoint}"
+    "title": "View in PowerBI",
+    "url": "${settings.App.CRMBookingEndpoint}",
+	"iconUrl": "${PowerBI()}"
 }
 ```
 
@@ -23,8 +24,9 @@
 -```
 {
     "type": "Action.OpenUrl",
-    "title": "💬 Chat in Teams",
-    "url": "sip:${emailAddress}"
+    "title": "Chat in Teams",
+    "url": "sip:${emailAddress}",
+	"iconUrl": "${MSTeamsLogo()}"
 }
 ```
 
@@ -32,7 +34,7 @@
 - ```
 {
     "type": "Action.Submit",
-    "title": "📅 View Bookings (${if(bookedDays == 0, "none", bookedDays)})",
+    "title": "📅 Show Bookings (${if(bookedDays == 0, "none", bookedDays)})",
     "data": 
     {
         "intent": "GetCalendar",
@@ -491,8 +493,8 @@ ${IntranetInfo()}
 - ```
 {
     "type": "Action.Submit",
-    "title": "View Projects (${if(count(projects.billedProjects) == 0, "none", count(projects.billedProjects))})",
-    "iconUrl": "${Dynamics365Icon()}",
+    "title": "Show Projects (${if(count(projects.billedProjects) == 0, "none", count(projects.billedProjects))})",
+    "iconUrl": "${ShowProjects()}",
     "data": 
     {
         "intent": "GetEmployeeProjects",
