@@ -41,6 +41,7 @@ namespace SSW.SophieBot.Middlewares
 			{
 				foreach (var item in activities)
 				{
+					//Note: This logic excludes QnA Maker responses as they are only visible to authorised users
 					if (item.Type != ActivityTypes.Typing && item.Type == ActivityTypes.Message && item.Attachments != null)
 					{
 						foreach (var i in item.Attachments)
