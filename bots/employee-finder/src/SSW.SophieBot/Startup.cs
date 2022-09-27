@@ -43,6 +43,7 @@ namespace SSW.SophieBot
 
 			services.AddSingleton<ITelemetryInitializer, SophieBotTelemetryInitializer>();
 			services.AddSingleton<IMiddleware, TeamsAuthenticationMiddleware>();
+			services.AddSingleton<IMiddleware, ChatHistoryMiddleware>();
 
 			services.Configure<ApplicationSettings>(Configuration.GetSection(ConfigurationConstants.AppSettingsKey));
 			services.Configure<AppInsightsSettings>(Configuration.GetSection(ConfigurationConstants.AppInsightsSettingsKey));
