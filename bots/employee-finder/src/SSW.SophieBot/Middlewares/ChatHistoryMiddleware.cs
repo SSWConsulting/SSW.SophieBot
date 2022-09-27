@@ -41,7 +41,7 @@ namespace SSW.SophieBot.Middlewares
 			{
 				foreach (var item in activities)
 				{
-					if (item.Type != ActivityTypes.Typing && item.Type == ActivityTypes.Message)
+					if (item.Type != ActivityTypes.Typing && item.Type == ActivityTypes.Message && item.Attachments != null)
 					{
 						foreach (var i in item.Attachments)
 						{
