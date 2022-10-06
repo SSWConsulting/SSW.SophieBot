@@ -17,14 +17,8 @@ on:
 
 jobs:
   call-work-flow:
-    runs-on: ubuntu-latest
-    environment: Deploy-Dev
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/workflows/workflow-deploy.yml  
-        with:
-          BOT_APP_APPSETTINGS: ${{ secrets.BOT_APP_APPSETTINGS }}
-          LUIS_AUTHORING_KEY: ${{ secrets.LUIS_AUTHORING_KEY }}
-          BOT_WEBAPP_PUBLISH_PROFILE: ${{ secrets.BOT_WEBAPP_PUBLISH_PROFILE }}
-          LUIS_MIGRATOR_APPSETTINGS : ${{ secrets.LUIS_MIGRATOR_APPSETTINGS }}
+    uses: ./.github/workflows/workflow-deploy.yml  
+    with: 
+      environment: dev
+        
       

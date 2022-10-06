@@ -2,15 +2,10 @@ name: Reusable workflow example
 
 on:
   workflow_call:
-    secrets:
-      BOT_APP_APPSETTINGS:
+    inputs:
+      environment:
+        type: string
         required: true
-      LUIS_AUTHORING_KEY:
-        required: true  
-      BOT_WEBAPP_PUBLISH_PROFILE:
-        required: true  
-      LUIS_MIGRATOR_APPSETTINGS :  
-        required: true 
 
 
 concurrency:
@@ -35,10 +30,10 @@ defaults:
     shell: pwsh
 
 jobs:
-  
   build:
     name: Build
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
       - uses: actions/checkout@v2.3.4
 
@@ -150,6 +145,7 @@ jobs:
   deploy-web-app:
     name: Deploy web app
     needs: build
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4
@@ -172,25 +168,26 @@ jobs:
           publish-profile: ${{ secrets.BOT_WEBAPP_PUBLISH_PROFILE }}
           package: "${{ env.OUTPUT_DIR }}/deploy"
 
-  # migrate-luis-model:
-  #   name: Migrate LUIS model
-  #   needs: build
-  #   runs-on: windows-latest
-  #   steps:
-  #     - uses: actions/checkout@v2.3.4
+  migrate-luis-model:
+    name: Migrate LUIS model
+    needs: build
+    runs-on: windows-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v2.3.4
 
-  #     - uses: actions/download-artifact@v2
-  #       with:
-  #         name: "LUIS_Migrator_${{ github.run_id }}"
-  #         path: ${{ env.OUTPUT_DIR }}/luis-migrator
+      - uses: actions/download-artifact@v2
+        with:
+          name: "LUIS_Migrator_${{ github.run_id }}"
+          path: ${{ env.OUTPUT_DIR }}/luis-migrator
 
-  #     - name: Create appsettings file
-  #       uses: jsdaniell/create-json@1.1.2
-  #       with:
-  #         name: "appsettings.json"
-  #         json: ${{ secrets.LUIS_MIGRATOR_APPSETTINGS }}
-  #         dir: "output/luis-migrator"
+      - name: Create appsettings file
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "appsettings.json"
+          json: ${{ secrets.LUIS_MIGRATOR_APPSETTINGS }}
+          dir: "output/luis-migrator"
 
-  #     - name: Run LUIS migrator
-  #       run: .\SSW.SophieBot.LUIS.EmployeeFinder.Migrator
-  #       working-directory: ${{ env.OUTPUT_DIR }}/luis-migrator
+      - name: Run LUIS migrator
+        run: .\SSW.SophieBot.LUIS.EmployeeFinder.Migrator
+        working-directory: ${{ env.OUTPUT_DIR }}/luis-migrator
