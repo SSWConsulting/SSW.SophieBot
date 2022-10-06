@@ -7,6 +7,8 @@ on:
         type: string
         required: true
 
+    secrets:
+
 
 concurrency:
   group: SSWSophieBotDev-BuildAndDeploy
