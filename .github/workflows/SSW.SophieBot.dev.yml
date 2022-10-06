@@ -37,6 +37,7 @@ defaults:
     shell: pwsh
 
 jobs:
+  environment: 
   test-flow:
     name: Test flow
     runs-on: ubuntu-latest
@@ -46,7 +47,8 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    environment: "${{ env.BUILD_ENVIRONMENT }}"
+    environment: 
+      name: "${{ env.BUILD_ENVIRONMENT }}"
     steps:
       - uses: actions/checkout@v2.3.4
 
@@ -159,7 +161,8 @@ jobs:
     name: Deploy web app
     needs: build
     runs-on: ubuntu-latest
-    environment: "${{ env.BUILD_ENVIRONMENT }}"
+    environment: 
+      name: "${{ env.BUILD_ENVIRONMENT }}"
     steps:
       - uses: actions/checkout@v2.3.4
 
@@ -185,7 +188,8 @@ jobs:
     name: Migrate LUIS model
     needs: build
     runs-on: windows-latest
-    environment: "${{ env.BUILD_ENVIRONMENT }}"
+    environment: 
+      name: "${{ env.BUILD_ENVIRONMENT }}"
     steps:
       - uses: actions/checkout@v2.3.4
 
