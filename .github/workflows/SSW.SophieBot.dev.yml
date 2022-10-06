@@ -44,6 +44,7 @@ jobs:
      - name: Test the build environment
        run: echo "environment is = " $BUILD_ENVIRONMENT
      - run: echo "event is" ${{ github.event_name }}
+     - run: echo "environment2 is = " $LUIS_AUTHORING_REGION
   # build:
   #   name: Build
   #   runs-on: ubuntu-latest
