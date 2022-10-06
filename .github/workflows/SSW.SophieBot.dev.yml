@@ -47,7 +47,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    environment: ${{env.BUILD_ENVIRONMENT}}
+    environment: $BUILD_ENVIRONMENT
     steps:
       - uses: actions/checkout@v2.3.4
 
@@ -160,7 +160,7 @@ jobs:
     name: Deploy web app
     needs: build
     runs-on: ubuntu-latest
-    environment: ${{env.BUILD_ENVIRONMENT}}
+    environment: $BUILD_ENVIRONMENT
     steps:
       - uses: actions/checkout@v2.3.4
 
@@ -186,7 +186,7 @@ jobs:
     name: Migrate LUIS model
     needs: build
     runs-on: windows-latest
-    environment: ${{env.BUILD_ENVIRONMENT}}
+    environment: $BUILD_ENVIRONMENT
     steps:
       - uses: actions/checkout@v2.3.4
 
