@@ -20,5 +20,6 @@ jobs:
     uses: ./.github/workflows/workflow-deploy.yml  
     with: 
       environment: dev
+      secrets: inherit
         
       
