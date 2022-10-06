@@ -1,6 +1,7 @@
 name: Build and Deploy-Dev
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -27,6 +28,7 @@ env:
   PUBLISHING_PROFILE_NAME: SSW.Bots.Dev
   LUIS_AUTHORING_ENDPOINT: https://australiaeast.api.cognitive.microsoft.com/
   LUIS_AUTHORING_REGION: australiaeast
+  BUILD_ENVIRONMENT: "${{env.GITHUB_EVENT_NAME == 'workflow_dispatch' && 'prod' || 'dev' }}"
 
 defaults:
   run:
@@ -36,7 +38,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ${{env.BUILD_ENVIRONMENT}}
     steps:
       - uses: actions/checkout@v2.3.4
 
@@ -149,7 +151,7 @@ jobs:
     name: Deploy web app
     needs: build
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ${{env.BUILD_ENVIRONMENT}}
     steps:
       - uses: actions/checkout@v2.3.4
 
@@ -175,7 +177,7 @@ jobs:
     name: Migrate LUIS model
     needs: build
     runs-on: windows-latest
-    environment: dev
+    environment: ${{env.BUILD_ENVIRONMENT}}
     steps:
       - uses: actions/checkout@v2.3.4
 
