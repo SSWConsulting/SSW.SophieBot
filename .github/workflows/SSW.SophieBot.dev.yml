@@ -16,10 +16,18 @@ on:
 
 
 jobs:
-  call-work-flow:
+  run-dev-flow:
+    if: github.event_name == 'workflow_dispatch'
+    uses: ./.github/workflows/workflow-deploy.yml  
+    with: 
+      environment: prod
+    secrets: inherit
+
+  run-prod-flow:
+    if: github.event_name == 'push'
     uses: ./.github/workflows/workflow-deploy.yml  
     with: 
       environment: dev
-    secrets: inherit
+    secrets: inherit  
         
       
