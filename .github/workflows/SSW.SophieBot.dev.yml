@@ -1,10 +1,12 @@
 name: Build and Deploy-Dev
 
 on:
+  
   workflow_dispatch:
   push:
     branches:
       - main
+      - 496-unify-workflow-v2
     paths:
       - "bots/**"
       - "libraries/**"
@@ -35,6 +37,12 @@ defaults:
     shell: pwsh
 
 jobs:
+  test-flow:
+    name: Test flow
+    runs-on: ubuntu-latest
+    steps:
+     - name: Test the build environment
+       run: echo "environment is $BUILD_ENVIRONMENT"
   build:
     name: Build
     runs-on: ubuntu-latest
