@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using AzureGems.CosmosDB;
+using AzureGems.Repository.CosmosDB;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using SSW.SophieBot.Components;
+using SSW.SophieBot.CosmosClient;
 using SSW.SophieBot.Components.Services;
 using SSW.SophieBot.HttpClientComponents.Abstractions;
 using SSW.SophieBot.HttpClientComponents.PersonQuery;
@@ -44,12 +47,28 @@ namespace SSW.SophieBot
 			services.AddSingleton<ITelemetryInitializer, SophieBotTelemetryInitializer>();
 			services.AddSingleton<IMiddleware, TeamsAuthenticationMiddleware>();
 			services.AddSingleton<IMiddleware, ChatHistoryMiddleware>();
+			services.AddSingleton<IChatHistoryService, ChatHistoryService>();
 
 			services.Configure<ApplicationSettings>(Configuration.GetSection(ConfigurationConstants.AppSettingsKey));
 			services.Configure<AppInsightsSettings>(Configuration.GetSection(ConfigurationConstants.AppInsightsSettingsKey));
+			services.Configure<AppInsightsSettings>(Configuration.GetSection(ConfigurationConstants.CosmosDbConnection));
 
 			services.ConfigureSophieBotHttpClient()
 				.AddPersonQueryClient();
+
+			services.AddCosmosDb(builder =>
+			{
+				builder
+					.Connect(endPoint: Configuration.GetSection("CosmosDbConnection:Endpoint").Value,
+									authKey: Configuration.GetSection("CosmosDbConnection:Authkey").Value)
+					.UseDatabase(databaseId: Configuration.GetSection("CosmosDbConnection:DatabaseId").Value)
+					.WithSharedThroughput(400)
+					.WithContainerConfig(c =>
+					{
+						c.AddContainer<ChatHistoryModel>(containerId: "ChatHistoryContainer", partitionKeyPath: "/id", queryByDiscriminator: false, throughput: 20000);
+					});
+			});
+			services.AddCosmosContext<ChatHistoryCosmosContext>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
