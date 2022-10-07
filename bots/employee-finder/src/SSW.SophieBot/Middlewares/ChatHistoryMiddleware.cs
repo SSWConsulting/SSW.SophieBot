@@ -2,29 +2,40 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AzureGems.CosmosDB;
+using AzureGems.Repository.Abstractions;
 using Microsoft.Bot.Builder;
-using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
+using Newtonsoft.Json;
+using SSW.SophieBot.CosmosClient;
 
-public class ChatHistoryModel
+public class ChatHistoryModel : BaseEntity
 {
 	public string UserCommand { get; set; } = null;
 	public string UserName { get; set; } = null;
 	public List<object> BotResponse { get; set; } = new List<object>();
 	public DateTime Time { get; set; }
+	public override string ToString()
+	{
+		return JsonConvert.SerializeObject(this);
+	}
 }
 
 namespace SSW.SophieBot.Middlewares
 {
 	public class ChatHistoryMiddleware : IMiddleware
 	{
-		public ChatHistoryMiddleware() { }
+		private readonly IChatHistoryService _chatHistoryService;
+
+		public ChatHistoryMiddleware(IChatHistoryService chatHistoryService) {
+			_chatHistoryService = chatHistoryService;
+		}
 
 		public async Task OnTurnAsync(ITurnContext turnContext, NextDelegate next, CancellationToken cancellationToken = default)
 		{
 			ChatHistoryModel history = new ChatHistoryModel();
 
-			// Only capture Teams history
+			// TODO: Only capture Teams history
 			// if (string.Equals(Channels.Msteams, turnContext.Activity.ChannelId, StringComparison.OrdinalIgnoreCase))
 			// {
 
@@ -32,6 +43,7 @@ namespace SSW.SophieBot.Middlewares
 			&& turnContext?.Activity?.Text != string.Empty
 			&& turnContext?.Activity?.Text != "")
 			{
+				history.Id = Guid.NewGuid().ToString();
 				history.UserCommand = turnContext?.Activity?.Text;
 				history.UserName = turnContext.Activity.From.Name;
 				history.Time = DateTime.Now;
@@ -41,7 +53,6 @@ namespace SSW.SophieBot.Middlewares
 			{
 				foreach (var item in activities)
 				{
-					//Note: This logic excludes QnA Maker responses as they are only visible to authorised users
 					if (item.Type != ActivityTypes.Typing && item.Type == ActivityTypes.Message && item.Attachments != null)
 					{
 						foreach (var i in item.Attachments)
@@ -50,17 +61,9 @@ namespace SSW.SophieBot.Middlewares
 						}
 						if (history.UserCommand != null)
 						{
-							//TODO: Save history to database
-							Console.WriteLine("------------------------");
-							Console.WriteLine("User Message: " + history.UserCommand);
-							Console.WriteLine("User Name: " + history.UserName);
-							Console.WriteLine("Time: " + history.Time);
-							Console.WriteLine("Bot Message: ");
-							foreach (var j in history.BotResponse)
-							{
-								Console.WriteLine(j);
-							}
-							Console.WriteLine("------------------------");
+							//Save history to the database
+							//Todo: this is only storing 0 index of list from BotResponse var, need to store whole list
+							await _chatHistoryService.SaveHistory(history);
 						}
 					}
 				}
