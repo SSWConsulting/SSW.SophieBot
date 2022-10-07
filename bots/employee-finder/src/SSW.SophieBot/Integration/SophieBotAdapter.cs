@@ -46,14 +46,14 @@ namespace SSW.SophieBot.Integration
 			// to add telemetry capture to your bot.
 			//Logger.LogError(exception, $"[OnTurnError] unhandled error : {exception.Message}");
 
-			var errorMessageText = "The SophieBot encountered an error or bug. Please send us an email with screenshots to SSWSophieBotDevs@ssw.com.au";
+			var errorMessageText = "The SophieBot encountered an error or bug. Please create a Github issue in the [repo](https://github.com/SSWConsulting/SSW.SophieBot) and send us an email with link to that GitHub issue to SSWSophieBotDevs@ssw.com.au";
 			var errorMessage = MessageFactory.Text(errorMessageText, errorMessageText, InputHints.IgnoringInput);
 			await turnContext.SendActivityAsync(errorMessage);
 
 #if DEBUG
-				errorMessageText = exception.Message;
-				errorMessage = MessageFactory.Text(errorMessageText, errorMessageText, InputHints.IgnoringInput);
-				await turnContext.SendActivityAsync(errorMessage);
+			errorMessageText = exception.Message;
+			errorMessage = MessageFactory.Text(errorMessageText, errorMessageText, InputHints.IgnoringInput);
+			await turnContext.SendActivityAsync(errorMessage);
 #endif
 
 			var conversationState = turnContext.TurnState.Get<ConversationState>();
