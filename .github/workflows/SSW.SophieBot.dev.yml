@@ -1,4 +1,6 @@
-name: Build and Deploy-Dev
+# this is the new workflow
+# if the flow is manully triggered, it will deploy to the production, if the flow is triggered by a push, it will deploy to the development
+name: Build and Deploy
 
 on:
   
