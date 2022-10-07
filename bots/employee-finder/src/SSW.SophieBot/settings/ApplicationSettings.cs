@@ -18,6 +18,12 @@
 
 		public string EmployeeResponsibilitiesUrl { get; set; }
 
-		public string BaseUrl { get; set; }
+		public string Endpoint { get; set; }
+
+		public string Authkey { get; set; }
+
+		public string DatabaseId { get; set; }
+
+		public int SharedThroughput { get; set; }
 	}
 }
