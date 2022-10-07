@@ -5,6 +5,7 @@
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
     <UserSecretsId>1b8d556d-2c2f-491b-b964-cbe15dc48231</UserSecretsId>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'BotProject' " />
   <ItemGroup>
     <Content Include="**/*.blu;**/*.dialog;**/*.lg;**/*.lu;**/*.onnx;**/*.qna;**/*.txt" Exclude="$(BaseOutputPath)/**;$(BaseIntermediateOutputPath)/**;wwwroot/**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -15,8 +16,16 @@
     <PackageReference Include="Microsoft.Bot.Builder.AI.Luis" Version="4.13.2" />
     <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.13.2" />
     <PackageReference Include="Microsoft.Bot.Components.Graph" Version="1.0.0" />
+    <PackageReference Include="AzureGems.CosmosDB" Version="2.1.0" />
+    <PackageReference Include="AzureGems.Repository.CosmosDB" Version="2.1.0" />
+    <PackageReference Include="AzureGems.Repository.Abstractions" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SSW.SophieBot.HttpClientComponents.PersonQuery\SSW.SophieBot.HttpClientComponents.PersonQuery.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="AzureGems.CosmosDB" />
+    <None Remove="AzureGems.Repository.CosmosDB" />
+    <None Remove="AzureGems.Repository.Abstractions" />
   </ItemGroup>
 </Project>
