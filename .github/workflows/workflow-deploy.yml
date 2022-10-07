@@ -150,7 +150,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
 
-      - name: Use .Net sdk 6.0.x
+      - name: Use .Net sdk
         uses: actions/setup-dotnet@v3
         with:
           global-json-file: global.json
