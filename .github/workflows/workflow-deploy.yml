@@ -55,7 +55,6 @@ jobs:
           json: ${{ secrets.BOT_APP_APPSETTINGS }}
           dir: "bots/employee-finder/src/SSW.SophieBot/settings"
 
-      # Prepare working folders
       - name: Prepare working folders
         if: env.BUILD_FLOW == 'composer'
         run: |
