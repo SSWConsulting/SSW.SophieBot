@@ -12,9 +12,10 @@ In order to get set up to work with SSW.SophieBot, you will need the following:
 ## Initial Setup
 
 1. [Clone the repo](#step-1-clone-the-repo)
-2. [Open the repo with Composer](#step-2-open-the-repo-with-composer)
-3. [Configure your bot](#step-3-configure-your-bot)
-4. [Test run](#step-4-test-run)
+2. [Create App Settings](#step-2-create-appsettingsjson)
+3. [Open the repo with Composer](#step-2-open-the-repo-with-composer)
+4. [Configure your bot](#step-3-configure-your-bot)
+5. [Test run](#step-4-test-run)
 
 ### Step 1. Clone the repo
 
