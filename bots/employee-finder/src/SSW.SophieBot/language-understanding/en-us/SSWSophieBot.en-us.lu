@@ -68,6 +68,7 @@
 	- china:
 		- china
 
+@ list projects
 @ list personNames
 
 @ prebuilt email
@@ -284,16 +285,16 @@
 - Who {@presentBe} {@prep} {@project} project[?]
 - Who {@presentBe} {@prep} project {@project}[?]
 - Who {@presentBe} {@prep} ({@project} | {@ssw})[?]
-- who works on {@project=ssw timepro}
-- Who is working on {@project = sophiebot}?
-- Who are working for {@project = baidu}?
-- Who is working for {@project = sophie}?
-- Who is currently working for {@project = Contoso Ltd}?
-- Who is booked for {@project = National Insurance Company}?
-- Who's working on {@project = Microsoft} projects?
-- Who are working on {@project = SugarLearning Development}?
-- Show me the people working on {@project = Sophie Hub}
-- Show me who are working on {@project = NorthWind}
+- who works on ssw timepro
+- Who is working on sophiebot?
+- Who are working for baidu?
+- Who is working for sophie?
+- Who is currently working for Contoso Ltd?
+- Who is booked for National Insurance Company?
+- Who's working on Microsoft projects?
+- Who are working on SugarLearning Development?
+- Show me the people working on Sophie Hub
+- Show me who are working on NorthWind
 
 @ phraselist WorkingPhraseList(interchangeable) disabledForAllModels =
 	- working,involved,involved in,booked for,busy on,doing
