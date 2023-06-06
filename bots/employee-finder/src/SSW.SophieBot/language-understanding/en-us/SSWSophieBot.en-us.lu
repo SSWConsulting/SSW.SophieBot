@@ -297,10 +297,10 @@
 - Show me who are working on NorthWind
 
 @ phraselist WorkingPhraseList(interchangeable) disabledForAllModels =
-	- working,involved,involved in,booked for,busy on,doing
+	- working,involved,involved in,booked for,busy on,doing,on,working for
 @ phraselist SSWProjects(interchangeable) disabledForAllModels =
 	- ssw timepro, ssw.timepro, ssw people, ssw.people, ssw rules, ssw.rules, ssw sophiehub, ssw.sophiehub, ssw rewards, ssw.rewards, ssw sophiebot, ssw.sophiebot, ssw website, ssw.website
-@ intent GetEmployeesOnProject usesFeature WorkingPhraseList,SSWProjects,project,ssw
+@ intent GetEmployeesOnProject usesFeature WorkingPhraseList,SSWProjects,projects,ssw,prep
 @ ml project usesFeature SSWProjects
 
 # GetPeopleBasedOnLocation
