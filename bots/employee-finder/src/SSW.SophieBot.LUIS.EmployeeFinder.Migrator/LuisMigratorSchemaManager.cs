@@ -24,7 +24,8 @@ namespace SSW.SophieBot.LUIS.EmployeeFinder.Migrator
                 typeof(Contact),
                 typeof(FirstName),
                 typeof(LastName),
-                typeof(PersonName)
+                typeof(PersonName),
+                typeof(Entities.Projects)
             };
 
             return SchemaOptions.ModelTypes
