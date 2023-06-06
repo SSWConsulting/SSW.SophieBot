@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using SSW.SophieBot.Employees;
+using SSW.SophieBot.Projects;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -42,6 +43,20 @@ namespace SSW.SophieBot
                 cancellationToken);
 
             yield return employees;
+        }
+
+        public async IAsyncEnumerable<IEnumerable<Project>> GetPagedCrmProjectsAsync(
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            // TODO: this is temporary. People API currently doesn't support paging query, so we're just getting all active employees for now
+            var apiUri = new Uri(new Uri(_options.BaseUri.EnsureEndsWith("/")), "crmprojects");
+
+            var crmProjects = await _httpClient.GetFromJsonAsync<IEnumerable<Project>>(
+                apiUri,
+                HttpClientHelper.SystemTextJsonSerializerOptions,
+                cancellationToken);
+
+            yield return crmProjects;
         }
     }
 }
