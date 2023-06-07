@@ -26,9 +26,7 @@ Go to [SSW.SophieBot](https://github.com/SSWConsulting/SSW.SophieBot) and clone 
 ### Step 2. Create appsettings.json
 
 1. From the cloned repo, go to "{your cloned repo}/bots/employee-finder/src/SSW.SophieBot/settings" folder
-2. Make a copy of the file `appsettings.example.json` and rename it to `appsettings.json`.
-3. Add necessary configurations to `appsettings.json`.
-   > Note: For `adapters` and `components` sections in `runtimeSettings`, do not modify the initial settings from `appsettings.example.json` as they are needed for the test run.
+2. Make a copy of the file `appsettings.json` in "Teams | SSW SophieBot | General | Files | appsettings.json"
 
 ### Step 3. Open the repo with Composer
 
