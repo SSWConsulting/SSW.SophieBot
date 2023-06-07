@@ -365,7 +365,6 @@
 @ intent GetPeopleBySkills usesFeature SkilledPhraseList,skill,geographyV2
 
 # GetPeopleOnClientWork
-- Who {@presentBe} ({@available} | {@unavailable})[?]
 - Who {@presentBe} ({@available} | {@unavailable}) {@datetimeV2}[?]
 - who {@presentBe} ({@available} | {@unavailable}) [in] {@geographyV2}[?]
 - Who is {@unavailable = on client work} tomorrow
