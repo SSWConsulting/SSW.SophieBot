@@ -225,7 +225,9 @@
 
 @ phraselist CurrentPhraseList(interchangeable) disabledForAllModels =
 	- now,right now,currently,today,at the moment
-@ intent GetCurrentEmployeesOnLocation usesFeature CurrentPhraseList,geographyV2,datetimeV2,site
+@ phraselist OfficePhraseList(interchangeable) disabledForAllModels =
+	- in,in the,office
+@ intent GetCurrentEmployeesOnLocation usesFeature CurrentPhraseList,OfficePhraseList,geographyV2,site
 
 # GetEmailAddress
 - {@contact={@firstName=antonio}}'s {@profileProperty={@emailAddressProperty=email}} please
@@ -285,23 +287,24 @@
 - Who {@presentBe} {@prep} {@project} project[?]
 - Who {@presentBe} {@prep} project {@project}[?]
 - Who {@presentBe} {@prep} ({@project} | {@ssw})[?]
-- who works on ssw timepro
-- Who is working on sophiebot?
-- Who are working for baidu?
-- Who is working for sophie?
-- Who is currently working for Contoso Ltd?
-- Who is booked for National Insurance Company?
-- Who's working on Microsoft projects?
-- Who are working on SugarLearning Development?
-- Show me the people working on Sophie Hub
-- Show me who are working on NorthWind
+- who works on {@project = ssw timepro}
+- Who is working on {@project = sophiebot}?
+- Who are working for {@project = baidu}?
+- Who is working for {@project = sophie}?
+- Who is currently working for {@project = Contoso Ltd}?
+- Who is booked for {@project = National Insurance Company}?
+- Who's working on {@project = Microsoft projects}?
+- Who are working on {@project = SugarLearning Development}?
+- Show me the people working on {@project = Sophie Hub}
+- Show me who are working on {@project = NorthWind}
+- who's on {@project = ssw firebootcamp} today
+- how many devs are working on {@project = ssw rules} now
+- who's on {@project = sharepoint} this week
 
 @ phraselist WorkingPhraseList(interchangeable) disabledForAllModels =
 	- working,involved,involved in,booked for,busy on,doing,on,working for
-@ phraselist SSWProjects(interchangeable) disabledForAllModels =
-	- ssw timepro, ssw.timepro, ssw people, ssw.people, ssw rules, ssw.rules, ssw sophiehub, ssw.sophiehub, ssw rewards, ssw.rewards, ssw sophiebot, ssw.sophiebot, ssw website, ssw.website
-@ intent GetEmployeesOnProject usesFeature WorkingPhraseList,SSWProjects,projects,ssw,prep
-@ ml project usesFeature SSWProjects
+@ intent GetEmployeesOnProject usesFeature WorkingPhraseList,projects,prep
+@ ml project usesFeature projects
 
 # GetPeopleBasedOnLocation
 - melbourne staff
