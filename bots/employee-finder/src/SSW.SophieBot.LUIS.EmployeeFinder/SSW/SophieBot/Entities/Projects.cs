@@ -64,10 +64,20 @@ namespace SSW.SophieBot.Entities
 
         private IList<string> GetSubList(Project crmProject)
         {
+            var projectName = string.IsNullOrWhiteSpace(crmProject.ProjectName) ? string.Empty : crmProject.ProjectName;
+            var projectNameSynonyms = crmProject.ProjectName.ToLower()
+                .Replace("zz", string.Empty)
+                .Replace("ssw", string.Empty)
+                .Trim()
+                .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                .Where(s => !s.StartsWith("(") && !s.EndsWith(")"));
+
             var nameList = new List<string>
             {
-                crmProject.ProjectName,
+                projectName
             };
+            nameList.AddRange(projectNameSynonyms);
+            nameList = nameList.Distinct().ToList();
 
             return nameList;
         }
