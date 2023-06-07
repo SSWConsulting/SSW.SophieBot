@@ -300,6 +300,8 @@
 - who's on {@project = ssw firebootcamp} today
 - how many devs are working on {@project = ssw rules} now
 - who's on {@project = sharepoint} this week
+- who's booked on {@project = ssw people}
+- who's working for {@project = crm}
 
 @ phraselist WorkingPhraseList(interchangeable) disabledForAllModels =
 	- working,involved,involved in,booked for,busy on,doing,on,working for
