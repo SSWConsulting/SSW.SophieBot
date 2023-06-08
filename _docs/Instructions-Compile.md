@@ -1,5 +1,15 @@
 # Run with Bot Framework Composer
 
+## Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Prerequisites](#prerequisites)
+- [Initial Setup](#initial-setup)
+  - [Step 1. Clone the repo](#step-1-clone-the-repo)
+  - [Step 2. Create appsettings.json](#step-2-create-appsettingsjson)
+  - [Step 3. Open the repo with Composer](#step-3-open-the-repo-with-composer)
+  - [Step 4. Configure your bot](#step-4-configure-your-bot)
+  - [Step 5. Test run](#step-5-test-run)
+
 ## Prerequisites
 
 In order to get set up to work with SSW.SophieBot, you will need the following:
@@ -10,15 +20,6 @@ In order to get set up to work with SSW.SophieBot, you will need the following:
 4. [Azure Resources](https://github.com/SSWConsulting/SSW.SophieBot.Private/blob/main/Instruction-Azure-Resources.md#azure-resources)
 
 ## Initial Setup
-
-- [Run with Bot Framework Composer](#run-with-bot-framework-composer)
-  - [Prerequisites](#prerequisites)
-  - [Initial Setup](#initial-setup)
-    - [Step 1. Clone the repo](#step-1-clone-the-repo)
-    - [Step 2. Create appsettings.json](#step-2-create-appsettingsjson)
-    - [Step 3. Open the repo with Composer](#step-3-open-the-repo-with-composer)
-    - [Step 4. Configure your bot](#step-4-configure-your-bot)
-    - [Step 5. Test run](#step-5-test-run)
 
 ### Step 1. Clone the repo
 
