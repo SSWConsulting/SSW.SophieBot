@@ -1,5 +1,15 @@
 # Run with Bot Framework Composer
 
+## Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Prerequisites](#prerequisites)
+- [Initial Setup](#initial-setup)
+  - [Step 1. Clone the repo](#step-1-clone-the-repo)
+  - [Step 2. Create appsettings.json](#step-2-create-appsettingsjson)
+  - [Step 3. Open the repo with Composer](#step-3-open-the-repo-with-composer)
+  - [Step 4. Configure your bot](#step-4-configure-your-bot)
+  - [Step 5. Test run](#step-5-test-run)
+
 ## Prerequisites
 
 In order to get set up to work with SSW.SophieBot, you will need the following:
@@ -11,12 +21,6 @@ In order to get set up to work with SSW.SophieBot, you will need the following:
 
 ## Initial Setup
 
-1. [Clone the repo](#step-1-clone-the-repo)
-2. [Create App Settings](#step-2-create-appsettingsjson)
-3. [Open the repo with Composer](#step-3-open-the-repo-with-composer)
-4. [Configure your bot](#step-4-configure-your-bot)
-5. [Test run](#step-5-test-run)
-
 ### Step 1. Clone the repo
 
 Go to [SSW.SophieBot](https://github.com/SSWConsulting/SSW.SophieBot) and clone the repo.
@@ -27,8 +31,10 @@ Go to [SSW.SophieBot](https://github.com/SSWConsulting/SSW.SophieBot) and clone 
 
 1. From the cloned repo, go to "{your cloned repo}/bots/employee-finder/src/SSW.SophieBot/settings" folder
 2. Make a copy of the file `appsettings.example.json` and rename it to `appsettings.json`.
-3. Add necessary configurations to `appsettings.json`.
+3. Add necessary configurations to `appsettings.json`. See schema reference [here](Schema-Reference.md).
    > Note: For `adapters` and `components` sections in `runtimeSettings`, do not modify the initial settings from `appsettings.example.json` as they are needed for the test run.
+
+   > Note: If you're working in SSW, you can fetch a ready-to-use copy of `appsettings.json` in **Teams | SSW SophieBot | General | Files |appsettings.json**, or contact SophieBot team directly.
 
 ### Step 3. Open the repo with Composer
 
