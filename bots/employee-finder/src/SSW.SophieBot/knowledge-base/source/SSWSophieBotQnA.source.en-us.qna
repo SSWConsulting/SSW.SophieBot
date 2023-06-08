@@ -534,10 +534,10 @@ intent=DeferToRecognizer_LUIS_SSWSophieBot
 <a id = "1780"></a>
 
 # ? The Backlogs - GitHub, Azure DevOps & Zendesk
-# ? SSW DevOps
-# ? Backlogs
-# ? GitHub
-# ? Zendesk
+- SSW DevOps
+- Backlogs
+- GitHub
+- Zendesk
 
 ```markdown
 Note: Was VSTS, and before that was TFS - Team Foundation Server
