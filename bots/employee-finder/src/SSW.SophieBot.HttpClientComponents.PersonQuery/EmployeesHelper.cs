@@ -133,7 +133,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 {
                     var checkDate = date.Date.AddDays(i);
 
-                    var appointmentsWithinDate = GetEnumerableAppointmentsByDate(futureAppointments, checkDate);
+                    var appointmentsWithinDate = GetEnumerableAppointmentsByDate(futureAppointments, checkDate, false);
                     var mainAppointment = GetMainAppointmentWithinDate(appointmentsWithinDate, checkDate);
 
                     if (mainAppointment != null
@@ -309,7 +309,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
         public static IEnumerable<GetAppointmentModel> GetAppointments(IEnumerable<GetAppointmentModel> appointments, DateTime startTime, int maxCount = int.MaxValue)
         {
             return appointments
-                .Where(a => !string.IsNullOrWhiteSpace(a.Regarding) && a.End.UtcTicks >= startTime.Ticks)
+                .Where(a => a.End.UtcTicks >= startTime.Ticks)
                 .OrderBy(a => a.Start)
                 .Take(maxCount);
         }
@@ -463,7 +463,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 .ToList();
         }
 
-        public static IEnumerable<GetAppointmentModel> GetEnumerableAppointmentsByDate(IEnumerable<GetAppointmentModel> appointments, DateTime date)
+        public static IEnumerable<GetAppointmentModel> GetEnumerableAppointmentsByDate(IEnumerable<GetAppointmentModel> appointments, DateTime date, bool requieDynamicsTracked = true)
         {
             if (appointments == null || !appointments.Any())
             {
@@ -472,7 +472,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 
             return appointments
                 .Where(appointment =>
-                    !string.IsNullOrWhiteSpace(appointment.Regarding)
+                    (requieDynamicsTracked
+                    && !string.IsNullOrWhiteSpace(appointment.Regarding)
+                    || !requieDynamicsTracked)
                     && date.Date <= appointment.End.Date
                     && date.Date.AddDays(1) > appointment.Start.Date);
         }
