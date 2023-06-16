@@ -124,6 +124,25 @@
               "format": "yyyy-MM-dd",
               "resultProperty": "turn.startTime"
             }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "k4qDYi"
+              },
+              "condition": "=turn.isNowQuery",
+              "actions": [
+                {
+                  "$kind": "ClientNowAction",
+                  "$designer": {
+                    "id": "pUv04V"
+                  },
+                  "format": "yyyy-MM-dd  HH:mm:ss",
+                  "resultProperty": "turn.startTime"
+                }
+              ]
+            }
           ]
         },
         {
