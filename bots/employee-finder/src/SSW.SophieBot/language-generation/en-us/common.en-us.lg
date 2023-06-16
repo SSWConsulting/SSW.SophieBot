@@ -25,7 +25,7 @@
 {
     "type": "Action.OpenUrl",
     "title": "Chat in Teams",
-    "url": "sip:${emailAddress}",
+    "url": "https://teams.microsoft.com/l/chat/0/0?users=${emailAddress}",
 	"iconUrl": "${MSTeamsLogo()}"
 }
 ```
