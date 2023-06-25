@@ -176,6 +176,10 @@
               "value": "=true"
             },
             {
+              "key": "inOfficeToleranceMinutes",
+              "value": "=420"
+            },
+            {
               "key": "fromDate",
               "value": "=if(turn.isNowQuery, null, turn.utcStartTime)"
             },
