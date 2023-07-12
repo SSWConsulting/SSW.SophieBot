@@ -6,7 +6,7 @@ Architecture Overview:
 ## **LUIS**
 [Language Understanding Services(LUIS)](https://learn.microsoft.com/en-us/azure/cognitive-services/luis/) is used as the NLP service for SophieBot.
 
-> Note: LUIS is being deprecated and replaced by [Azure Cognitive Service for Language documentation](https://learn.microsoft.com/en-us/azure/cognitive-services/language-service/concepts/migrate)
+> ⚠️Note: LUIS is being deprecated and replaced by [Azure Cognitive Service for Language documentation](https://learn.microsoft.com/en-us/azure/cognitive-services/language-service/concepts/migrate)
 
 ## **Channels**
 SophieBot is currently only connected to MS Teams through [Azure Bot Service](https://learn.microsoft.com/en-us/azure/bot-service/channel-connect-teams?view=azure-bot-service-4.0). More channels can be configured in the same way without much efforts, but there's no plan of doing so for now.
