@@ -1,0 +1,84 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "jghbnl",
+    "name": "GetCooperators",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "pJt1Mk"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "KiELfM"
+          }
+        },
+        {
+          "$kind": "Microsoft.LogAction",
+          "$designer": {
+            "id": "1SMBcU"
+          },
+          "text": "${LogAction_Text_1SMBcU()}",
+          "traceActivity": true,
+          "label": "Test"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "q52I2E"
+          },
+          "condition": "=exists(user.Identity) && exists(user.TenantAuthenticated) && user.TenantAuthenticated == true",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "TUCBMT"
+              },
+              "activity": "${SendActivity_TUCBMT()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "GetProfileAction",
+              "$designer": {
+                "id": "uFcHlj"
+              },
+              "queryString": [
+                {
+                  "key": "firstName",
+                  "value": "=user.Identity.GivenName"
+                },
+                {
+                  "key": "lastName",
+                  "value": "=user.Identity.Surname"
+                },
+                {
+                  "key": "includeCooperators",
+                  "value": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "fQiBOs"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "GetCooperators.lg",
+  "recognizer": "GetCooperators.lu.qna",
+  "id": "GetCooperators"
+}

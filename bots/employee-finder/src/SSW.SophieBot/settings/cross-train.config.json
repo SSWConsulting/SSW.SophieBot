@@ -57,7 +57,10 @@
       "GetClients": [
         "GetClient.en-us"
       ],
-      "GetQRCode": ""
+      "GetQRCode": "",
+      "GetCooperators": [
+        "GetCooperators.en-us"
+      ]
     }
   }
 }

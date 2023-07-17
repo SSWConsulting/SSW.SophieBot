@@ -1,0 +1,16 @@
+[import](common.lg)
+
+# LogAction_Text_1SMBcU()
+[Activity
+    Text = ${LogAction_Text_1SMBcU_text()}
+]
+
+# LogAction_Text_1SMBcU_text()
+- ${user.Identity}
+# SendActivity_TUCBMT()
+[Activity
+    Text = ${SendActivity_TUCBMT_text()}
+]
+
+# SendActivity_TUCBMT_text()
+- You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.
