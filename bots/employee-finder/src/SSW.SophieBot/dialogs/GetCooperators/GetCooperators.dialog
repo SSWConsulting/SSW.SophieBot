@@ -23,20 +23,11 @@
           }
         },
         {
-          "$kind": "Microsoft.LogAction",
-          "$designer": {
-            "id": "1SMBcU"
-          },
-          "text": "${LogAction_Text_1SMBcU()}",
-          "traceActivity": true,
-          "label": "Test"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "q52I2E"
+            "id": "q52I2E",
+            "comment": ""
           },
-          "condition": "=exists(user.Identity) && exists(user.TenantAuthenticated) && user.TenantAuthenticated == true",
           "elseActions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -50,7 +41,8 @@
             {
               "$kind": "GetProfileAction",
               "$designer": {
-                "id": "uFcHlj"
+                "id": "uFcHlj",
+                "comment": ""
               },
               "queryString": [
                 {
@@ -65,9 +57,80 @@
                   "key": "includeCooperators",
                   "value": true
                 }
+              ],
+              "employeesProperty": "turn.employees",
+              "reasonPhraseProperty": "turn.reasonPhrase",
+              "statusCodeProperty": "turn.statusCode"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "d1al8k"
+              },
+              "condition": "=count(turn.employees) > 0",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "cXxBHt"
+                  },
+                  "activity": "${SendActivity_cXxBHt()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "PdlyQF",
+                    "comment": ""
+                  },
+                  "property": "turn.currentProjectNames",
+                  "value": "=select(first(where(turn.employees, e, e.FirstName == user.Identity.GivenName && e.LastName == user.Identity.Surname)).currentProjects, p, p.projectName)"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "6n3v6e"
+                  },
+                  "activity": "${SendActivity_6n3v6e()}"
+                },
+                {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "nY7xBW"
+                  },
+                  "condition": "=count(turn.employees) > 1",
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "1Da9kz"
+                      },
+                      "activity": "${SendActivity_1Da9kz()}"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SetProperty",
+                      "$designer": {
+                        "id": "bWDWpf"
+                      },
+                      "property": "turn.cooperators",
+                      "value": "=where(turn.employees, e, e.firstName != user.Identity.GivenName || e.firstName != user.Identity.Surname)"
+                    },
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "yD3QIs"
+                      },
+                      "activity": "${SendActivity_yD3QIs()}"
+                    }
+                  ]
+                }
               ]
             }
-          ]
+          ],
+          "condition": "=exists(user.Identity) && exists(user.TenantAuthenticated) && user.TenantAuthenticated == true"
         },
         {
           "$kind": "Microsoft.EndDialog",
