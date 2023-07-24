@@ -65,7 +65,20 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "Date",
+                            "text": "Start",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        }
+                    ],
+                    "verticalContentAlignment": "Center"
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "End",
                             "wrap": true,
                             "weight": "Bolder"
                         }
@@ -122,6 +135,19 @@
                 {
                     "type": "TextBlock",
                     "text": "${appointment.start}",
+                    "wrap": true,
+                    "size": "${ContentTextSize()}"
+                }
+            ],
+            "verticalContentAlignment": "Center"
+        },
+        {
+            "type": "Column",
+            "width": "stretch",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${appointment.end}",
                     "wrap": true,
                     "size": "${ContentTextSize()}"
                 }

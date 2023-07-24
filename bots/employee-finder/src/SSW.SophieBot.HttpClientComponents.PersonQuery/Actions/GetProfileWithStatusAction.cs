@@ -72,6 +72,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
                     .Select(a => new EmployeeProfileAppointment
                     {
                         Start = a.Start.DateTime.ToUserFriendlyDate(date),
+                        End = a.End.DateTime.ToUserFriendlyDate(date),
                         Duration = (a.End - a.Start).ToUserFriendlyDuration(),
                         BookingStatus = EmployeesHelper.GetBookingStatus(a),
                         Subject = a.Subject.Trim(),
