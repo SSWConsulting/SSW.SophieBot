@@ -25,6 +25,7 @@ namespace SSW.SophieBot.HttpClientAction.Models
         public List<GetAppointmentModel> Appointments { get; set; }
         public List<GetAppointmentModel> NormalizedAppointments { get; set; }
         public List<GetEmployeeProjectModel> Projects { get; set; }
+        public List<GetEmployeeProjectModel> CurrentProjects { get; set; }
         public GetLastSeenAtSiteModel LastSeenAt { get; set; }
         public List<GetSkillModel> Skills { get; set; }
         public double YtdBillableHours { get; set; }

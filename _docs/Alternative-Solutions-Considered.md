@@ -8,4 +8,6 @@
 - [DeepPavlov](https://github.com/deepmipt/DeepPavlov): An open source conversational AI framework for building chatbots, voice assistants, and other conversational applications. It includes pre-built models for common use cases and can be trained on custom datasets.
 
 ## Commercial products
+- [Azure Cognitive Service for language](https://learn.microsoft.com/en-us/azure/cognitive-services/language-service/overview): Azure Cognitive Service for Language is a cloud-based service that provides Natural Language Processing (NLP) features for understanding and analyzing text.
+
 - [Power Virtual Agents](https://learn.microsoft.com/en-us/power-virtual-agents/fundamentals-what-is-power-virtual-agents): Create chatbots with an easy to use graphical interface. No coding or AI expertise required. Works with Power Apps, and extendable with code.

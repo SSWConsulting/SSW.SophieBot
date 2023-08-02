@@ -1,0 +1,44 @@
+[import](common.lg)
+
+# LogAction_Text_1SMBcU()
+[Activity
+    Text = ${LogAction_Text_1SMBcU_text()}
+]
+
+# LogAction_Text_1SMBcU_text()
+- ${user.Identity}
+# SendActivity_TUCBMT()
+[Activity
+    Text = ${SendActivity_TUCBMT_text()}
+]
+
+# SendActivity_TUCBMT_text()
+- You have limited access to this information because your account belongs to another organization. Please contact <SSWSophieBotDevs@ssw.com.au> for support.
+# SendActivity_6n3v6e()
+[Activity
+    Text = ${SendActivity_6n3v6e_text()}
+]
+
+# SendActivity_6n3v6e_text()
+- Your current projects: **${join(turn.currentProjectNames, ',')}**
+# SendActivity_1Da9kz()
+[Activity
+    Text = ${SendActivity_1Da9kz_text()}
+]
+
+# SendActivity_1Da9kz_text()
+- I couldn't find anyone working on the same projects.
+# SendActivity_yD3QIs()
+[Activity
+    Text = ${SendActivity_yD3QIs_text()}
+]
+
+# SendActivity_yD3QIs_text()
+- You have **${join(select(turn.cooperators, o, o.FirstName), ',')}** working on the same projects.
+# SendActivity_cXxBHt()
+[Activity
+    Text = ${SendActivity_cXxBHt_text()}
+]
+
+# SendActivity_cXxBHt_text()
+- Sorry I couldn't recognize your current projects. Try ask again after some time.

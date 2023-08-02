@@ -1916,7 +1916,7 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "9Sq6Vv",
-        "name": "OnIntent(GetQRCode)"
+        "name": "OnIntent (GetQRCode)"
       },
       "intent": "GetQRCode",
       "actions": [
@@ -1926,6 +1926,60 @@
             "id": "R7gynx"
           },
           "activity": "${SendActivity_R7gynx()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "drdkvn",
+        "name": "OnIntent (GetCooperators)"
+      },
+      "intent": "GetCooperators",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "h1ymNG"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ExF9PA"
+          },
+          "condition": "=exists(@redirect) && length(@redirect.actionType) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "VZ3VRm"
+              },
+              "eventName": "IntentRedirect",
+              "properties": {
+                "SourceIntent": "=@redirect.sourceIntent",
+                "TargetIntent": "GetCooperators",
+                "Action": "=@redirect.action",
+                "ActionType": "=@redirect.actionType"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "FnoN7L"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "DtM1o0"
+          },
+          "activityProcessed": true,
+          "dialog": "GetCooperators",
+          "options": {}
         }
       ]
     }
