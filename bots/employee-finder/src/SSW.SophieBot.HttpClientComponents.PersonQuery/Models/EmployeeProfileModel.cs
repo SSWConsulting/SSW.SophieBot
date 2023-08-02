@@ -65,6 +65,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Models
     {
         [JsonProperty("start")]
         public string Start { get; set; }
+        
+        [JsonProperty("end")]
+        public string End { get; set; }
 
         [JsonProperty("duration")]
         public string Duration { get; set; }
