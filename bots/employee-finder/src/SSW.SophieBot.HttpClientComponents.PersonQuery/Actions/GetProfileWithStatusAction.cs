@@ -111,8 +111,8 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
                         End = sourceAppointment.End.DateTime.ToUserFriendlyDate(date),
                         Duration = (sourceAppointment.End - sourceAppointment.Start).ToUserFriendlyDuration(),
                         BookingStatus = EmployeesHelper.GetBookingStatus(sourceAppointment),
-                        Subject = sourceAppointment.Subject.Trim(),
-                        Regarding = sourceAppointment.Regarding.Trim()
+                        Subject = sourceAppointment.Subject?.Trim() ?? string.Empty,
+                        Regarding = sourceAppointment.Regarding?.Trim() ?? string.Empty
                     };
 
                     result.Add(appointment);
