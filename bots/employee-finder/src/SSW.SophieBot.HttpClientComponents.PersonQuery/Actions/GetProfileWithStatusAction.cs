@@ -7,6 +7,7 @@ using SSW.SophieBot.HttpClientAction.Models;
 using SSW.SophieBot.HttpClientComponents.PersonQuery.Models;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -68,17 +69,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
                 LastName = employee.LastName,
                 BillableRate = employee.BillableRate,
                 BookedDays = EmployeesHelper.GetBookedDays(employee, date),
-                Appointments = EmployeesHelper.GetAppointments(employee.NormalizedAppointments, date, 10)
-                    .Select(a => new EmployeeProfileAppointment
-                    {
-                        Start = a.Start.DateTime.ToUserFriendlyDate(date),
-                        End = a.End.DateTime.ToUserFriendlyDate(date),
-                        Duration = (a.End - a.Start).ToUserFriendlyDuration(),
-                        BookingStatus = EmployeesHelper.GetBookingStatus(a),
-                        Subject = a.Subject.Trim(),
-                        Regarding = a.Regarding.Trim()
-                    })
-                    .ToList()
+                Appointments = GetDisplayAppointments(EmployeesHelper.GetAppointments(employee.NormalizedAppointments, date, 10), date)
             };
 
             if (profile.BookingStatus == BookingStatus.Leave)
@@ -99,6 +90,41 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
             }
 
             return profile;
+        }
+
+        private List<EmployeeProfileAppointment> GetDisplayAppointments(IEnumerable<GetAppointmentModel> sourceAppointments, DateTime date)
+        {
+            var result = new List<EmployeeProfileAppointment>();
+            var appointment = new EmployeeProfileAppointment();
+            if (!sourceAppointments.Any())
+            {
+                return result;
+            }
+
+            foreach (var sourceAppointment in sourceAppointments.OrderBy(sa => sa.Start.DateTime))
+            {
+                if (appointment.Subject != sourceAppointment.Subject)
+                {
+                    appointment = new EmployeeProfileAppointment
+                    {
+                        Start = sourceAppointment.Start.DateTime.ToUserFriendlyDate(date),
+                        End = sourceAppointment.End.DateTime.ToUserFriendlyDate(date),
+                        Duration = (sourceAppointment.End - sourceAppointment.Start).ToUserFriendlyDuration(),
+                        BookingStatus = EmployeesHelper.GetBookingStatus(sourceAppointment),
+                        Subject = sourceAppointment.Subject.Trim(),
+                        Regarding = sourceAppointment.Regarding.Trim()
+                    };
+
+                    result.Add(appointment);
+                }
+                else
+                {
+                    appointment.End = sourceAppointment.End.DateTime.ToUserFriendlyDate(date);
+                    appointment.Duration = (sourceAppointment.End - sourceAppointment.Start).ToUserFriendlyDuration();
+                }
+            }
+
+            return result;
         }
     }
 }
