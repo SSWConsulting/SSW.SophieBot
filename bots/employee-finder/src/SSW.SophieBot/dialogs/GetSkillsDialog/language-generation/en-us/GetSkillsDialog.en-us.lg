@@ -42,7 +42,7 @@
 ${LineBreak()}
 **${turn.advancedSkills}** 
 ${LineBreak()}${LineBreak()}
-He also knows: 
+${turn.employee.firstName} also knows: 
 ${LineBreak()}
 ${turn.intermediateSkills}
       ```
