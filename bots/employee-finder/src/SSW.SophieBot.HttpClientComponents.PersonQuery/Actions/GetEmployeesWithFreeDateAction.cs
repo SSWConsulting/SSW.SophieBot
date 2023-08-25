@@ -48,9 +48,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
             var result = employees.Select(e =>
             {
                 e.NormalizeAppointments(dc);
-                var rawFreeDate = isFree
+                DateTime? rawFreeDate = isFree
                     ? EmployeesHelper.GetFreeDate(e.Appointments, date)
-                    : EmployeesHelper.GetNextUnavailability(e, date, out var _, false).Date;
+                    : EmployeesHelper.GetNextUnavailability(e, date, out var _, false)?.Date;
 
                 if (isFreeForXDays > 0)
                 {
@@ -83,16 +83,22 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
                     date = DateTime.Now.ToUserLocalTime(dc);
                 }
 
-                return new EmployeeWithFreeDateModel
+                var resultModel = new EmployeeWithFreeDateModel
                 {
                     DisplayName = $"{e.FirstName} {e.LastName}",
                     FirstName = e.FirstName,
                     LastName = e.LastName,
-                    FreeDate = rawFreeDate.ToUserFriendlyDate(date),
                     IsFreeForXDaysFlag = isFreeForXDaysFlag,
                     BookedDays = EmployeesHelper.GetBookedDays(e, date),
-                    TimeDuration = EmployeesHelper.GetFormatedTimeDuration(date.Date, rawFreeDate),
                 };
+
+                if (rawFreeDate.HasValue)
+                {
+                    resultModel.FreeDate = rawFreeDate.Value.ToUserFriendlyDate(date);
+                    resultModel.TimeDuration = EmployeesHelper.GetFormatedTimeDuration(date.Date, rawFreeDate.Value);
+                }
+
+                return resultModel;
             })
             .ToList();
 
