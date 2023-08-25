@@ -146,22 +146,6 @@
           ]
         },
         {
-          "$kind": "UtcConvertAction",
-          "$designer": {
-            "id": "Qh7zdF"
-          },
-          "datetime": "=turn.startTime",
-          "resultProperty": "turn.utcStartTime"
-        },
-        {
-          "$kind": "UtcConvertAction",
-          "$designer": {
-            "id": "BKSfIx"
-          },
-          "datetime": "=turn.endTime",
-          "resultProperty": "turn.utcEndTime"
-        },
-        {
           "$kind": "GetProfileAction",
           "$designer": {
             "id": "H3FuOa"
@@ -174,18 +158,6 @@
             {
               "key": "inoffice",
               "value": "=true"
-            },
-            {
-              "key": "inOfficeToleranceMinutes",
-              "value": "=420"
-            },
-            {
-              "key": "fromDate",
-              "value": "=if(turn.isNowQuery, null, turn.utcStartTime)"
-            },
-            {
-              "key": "endDate",
-              "value": "=if(turn.isNowQuery, null, turn.utcEndTime)"
             }
           ],
           "statusCodeProperty": "turn.statusCode",
