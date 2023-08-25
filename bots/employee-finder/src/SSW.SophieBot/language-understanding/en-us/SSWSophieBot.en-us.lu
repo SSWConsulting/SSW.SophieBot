@@ -587,6 +587,7 @@
 - you're right
 - that's it
 - let me know when Adam's booked
+- initial meetings
 
 # GetCalendar
 - show {@contact={@firstName=adam}}'s {@profileProperty={@calendarProperty=calendar}}
