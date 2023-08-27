@@ -454,11 +454,11 @@
             "actions": [
                 {
                     "type": "Action.ToggleVisibility",
-                    "title": "📅 View Bookings (32)"
+                    "title": "📅 Bookings (32)"
                 },
                 {
                     "type": "Action.ToggleVisibility",
-                    "title": "View in CRM",
+                    "title": "CRM",
                     "iconUrl": "${Dynamics365Icon()}"
                 },
                 {

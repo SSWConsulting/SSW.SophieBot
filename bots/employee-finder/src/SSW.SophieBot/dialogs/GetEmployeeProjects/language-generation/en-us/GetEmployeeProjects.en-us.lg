@@ -161,7 +161,7 @@
             "actions": [
                     {
                         "type": "Action.OpenUrl",
-                        "title": "View in CRM (All Projects)",
+                        "title": "CRM (All Projects)",
                         "url": "${settings.App.CRMActiveProjectUrl}",
                         "iconUrl": "${Dynamics365Icon()}"
                     }

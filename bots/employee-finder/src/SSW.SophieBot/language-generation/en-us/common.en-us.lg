@@ -34,7 +34,7 @@
 - ```
 {
     "type": "Action.Submit",
-    "title": "📅 Show Bookings (${if(bookedDays == 0, "none", bookedDays)})",
+    "title": "📅 Bookings (${if(bookedDays == 0, "none", bookedDays)})",
     "data": 
     {
         "intent": "GetCalendar",
@@ -493,7 +493,7 @@ ${IntranetInfo()}
 - ```
 {
     "type": "Action.Submit",
-    "title": "Show Projects (${if(count(projects.billedProjects) == 0, "none", count(projects.billedProjects))})",
+    "title": "Projects (${if(count(projects.billedProjects) == 0, "none", count(projects.billedProjects))})",
     "iconUrl": "${ShowProjects()}",
     "data": 
     {
