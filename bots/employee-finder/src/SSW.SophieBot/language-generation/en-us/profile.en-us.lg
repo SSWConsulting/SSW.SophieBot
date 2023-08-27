@@ -378,7 +378,7 @@
     - ```
     {
         "type": "Action.OpenUrl",
-        "title": "View in People",
+        "title": "SSW People",
         "url": "${settings.App.PeopleSiteUrl}/${toLower(profile.firstName)}-${toLower(profile.lastName)}",
         "iconUrl": "${SSWPeopleIcon()}"
     }
@@ -391,7 +391,7 @@
     - ```
     {
         "type": "Action.OpenUrl",
-        "title": "View in CRM",
+        "title": "CRM",
         "url": "${settings.App.CRMUserUrl}&id=${profile.userId}",
         "iconUrl": "${Dynamics365Icon()}"
     }
