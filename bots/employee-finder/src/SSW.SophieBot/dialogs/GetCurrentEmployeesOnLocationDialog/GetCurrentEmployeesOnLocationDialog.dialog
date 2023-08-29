@@ -26,29 +26,6 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "iRae1n"
-          },
-          "condition": "=exists(dialog.locationEntity) && length(dialog.locationEntity) > 0",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "0iZBft"
-              },
-              "activity": "${SendActivity_0iZBft()}"
-            },
-            {
-              "$kind": "Microsoft.EndDialog",
-              "$designer": {
-                "id": "Cg630n"
-              }
-            }
-          ],
-          "actions": []
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
             "id": "dpA1hy"
           },
           "condition": "=exists(dialog.rawDateEntity)",
@@ -162,31 +139,65 @@
           "resultProperty": "turn.utcEndTime"
         },
         {
-          "$kind": "GetProfileAction",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "H3FuOa"
+            "id": "4yPDKi"
           },
-          "queryString": [
+          "actions": [
             {
-              "key": "location",
-              "value": "=dialog.locationEntity"
-            },
-            {
-              "key": "inoffice",
-              "value": "=true"
-            },
-            {
-              "key": "fromDate",
-              "value": "=if(turn.isNowQuery, null, turn.utcStartTime)"
-            },
-            {
-              "key": "endDate",
-              "value": "=if(turn.isNowQuery, null, turn.utcEndTime)"
+              "$kind": "GetProfileAction",
+              "$designer": {
+                "id": "uOGxSF"
+              },
+              "queryString": [
+                {
+                  "key": "location",
+                  "value": "=dialog.locationEntity"
+                },
+                {
+                  "key": "inoffice",
+                  "value": "=true"
+                },
+                {
+                  "key": "fromDate",
+                  "value": "=if(turn.isNowQuery, null, turn.utcStartTime)"
+                },
+                {
+                  "key": "endDate",
+                  "value": "=if(turn.isNowQuery, null, turn.utcEndTime)"
+                }
+              ],
+              "statusCodeProperty": "turn.statusCode",
+              "reasonPhraseProperty": "turn.reasonPhrase",
+              "employeesProperty": "turn.employees"
             }
           ],
-          "statusCodeProperty": "turn.statusCode",
-          "reasonPhraseProperty": "turn.reasonPhrase",
-          "employeesProperty": "turn.employees"
+          "elseActions": [
+            {
+              "$kind": "GetProfileAction",
+              "$designer": {
+                "id": "YLDQp1"
+              },
+              "queryString": [
+                {
+                  "key": "inoffice",
+                  "value": "=true"
+                },
+                {
+                  "key": "fromDate",
+                  "value": "=if(turn.isNowQuery, null, turn.utcStartTime)"
+                },
+                {
+                  "key": "endDate",
+                  "value": "=if(turn.isNowQuery, null, turn.utcEndTime)"
+                }
+              ],
+              "statusCodeProperty": "turn.statusCode",
+              "reasonPhraseProperty": "turn.reasonPhrase",
+              "employeesProperty": "turn.employees"
+            }
+          ],
+          "condition": "=exists(dialog.locationEntity) && length(dialog.locationEntity) > 0"
         },
         {
           "$kind": "Microsoft.IfCondition",
