@@ -16,14 +16,6 @@
 
 # SendActivity_MfjfA1_text()
 - I couldn't find anyone in the **${dialog.locationEntity}** office at this time.
-# SendActivity_0iZBft()
-[Activity
-    Text = ${SendActivity_0iZBft_text()}
-]
-
-# SendActivity_0iZBft_text()
-- Please specify a valid location to query.
-
 # SendActivity_WXpguy()
 [Activity
     Attachments = ${json(PeopleListByBilled(
@@ -47,3 +39,11 @@
 
 # SendActivity_jhwmNx_text()
 - Please specify a valid date to query.
+
+# LogAction_Text_X1smd9()
+[Activity
+    Text = ${LogAction_Text_X1smd9_text()}
+]
+
+# LogAction_Text_X1smd9_text()
+- [Debug] - dialog.locationEntity = ${dialog.locationEntity}
