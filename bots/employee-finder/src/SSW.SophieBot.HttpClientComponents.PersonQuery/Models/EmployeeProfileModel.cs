@@ -30,6 +30,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Models
         [JsonProperty("lastSeenTime")]
         public string LastSeenTime { get; set; }
 
+        [JsonProperty("lastSeenPhoneDevice")]
+        public string LastSeenPhoneDevice { get; set; }
+
         [JsonProperty("skills")]
         public List<GetSkillModel> Skills { get; set; }
 

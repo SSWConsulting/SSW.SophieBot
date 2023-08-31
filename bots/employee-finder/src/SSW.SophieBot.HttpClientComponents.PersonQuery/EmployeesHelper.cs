@@ -259,6 +259,19 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             }
         }
 
+        public static string GetLastSeenPhoneDevice(GetEmployeeModel employee)
+        {
+            if (employee.LastSeenAt == null || employee.LastSeenAt.MacAddress == null || employee.Devices == null)
+            {
+                return null;
+            }
+
+            List<GetDeviceModel> phoneDevices = employee.Devices.Where(device => device.DeviceType == "Phone").ToList();
+            GetDeviceModel device = phoneDevices.FirstOrDefault(device => device.MacAddress.Equals(employee.LastSeenAt.MacAddress, StringComparison.OrdinalIgnoreCase));
+
+            return device?.DeviceName;
+        }
+
         public static NextClientModel GetNextUnavailability(GetEmployeeModel employee, DateTime date, out int freeDays, bool startFromNextWeek = true)
         {
             freeDays = 0;

@@ -98,7 +98,7 @@
                         {
                             "type": "TextBlock",
                             "wrap": true,
-                            "text": "${if(profile.lastSeenAt != null, LastSeen(profile.lastSeenAt.siteId, profile.defaultSite.name, profile.lastSeenTime), '—')}"
+                            "text": "${if(profile.lastSeenAt != null, LastSeen(profile.lastSeenAt.siteId, profile.defaultSite.name, profile.lastSeenTime, profile.lastSeenPhoneDevice), '—')}"
                         }
                     ],
                     "spacing": "None"
@@ -432,11 +432,11 @@
 # GetAccountManager(client)
 - ${if(length(client.accountManager) > 0, concat(' (Account Manager: ', client.accountManager, ')'), '')}
 
-# LastSeen(location, defaultLocation, time)
+# LastSeen(location, defaultLocation, time, device)
 - IF: ${ location != null && time != null }
-    - ```${location}${IsTravelling(location, defaultLocation)} ${time}```
+    - ```${location}${IsTravelling(location, defaultLocation)} ${time} ${DeviceInfo(device)}```
 - ELSEIF: ${ location == null }
-    - ```${time}```
+    - ```${time} ${DeviceInfo(device)}```
 - ELSEIF: ${ time == null }:
     - ```${location}${IsTravelling(location, defaultLocation)}```
 - ELSE:
@@ -445,6 +445,12 @@
 # IsTravelling(currentLocation, defaultLocation)
 - IF: ${ currentLocation != defaultLocation }
     - ``` (Travelling)```
+- ELSE:
+    -
+
+# DeviceInfo(device)
+- IF: ${ device != null }
+    - ```(Device: ${device})```
 - ELSE:
     -
 
