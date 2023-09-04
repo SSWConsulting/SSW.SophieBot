@@ -144,6 +144,14 @@
                           },
                           "property": "dialog.skillEntity",
                           "value": "=turn.exactMatchedSkills[0]"
+                        },
+                        {
+                          "$kind": "Microsoft.SetProperty",
+                          "$designer": {
+                            "id": "CgY3fn"
+                          },
+                          "property": "turn.employees",
+                          "value": "=where(turn.employees, e => count(where(unique(flatten(select(e.skills, skill => skill.technology))), skill => equals(toLower(skill), toLower(dialog.skillEntity)))) == 1)"
                         }
                       ],
                       "elseActions": [
