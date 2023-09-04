@@ -78,7 +78,7 @@
                 "data": {
                     "intent": "GetCurrentEmployeesOnLocation",
                     "location": "${dialog.location}",
-					"rawDateTime": {
+                    "rawDateTime": {
                         "type": "datetime", 
                         "values": [ 
                             { 
