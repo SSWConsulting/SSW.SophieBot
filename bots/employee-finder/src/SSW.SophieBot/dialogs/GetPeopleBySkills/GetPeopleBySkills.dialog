@@ -60,7 +60,7 @@
               "key": "skills"
             },
             {
-              "key": "location",
+              "key": "site",
               "value": "=if(dialog.locationEntity == 'All', '', dialog.locationEntity)"
             }
           ]
