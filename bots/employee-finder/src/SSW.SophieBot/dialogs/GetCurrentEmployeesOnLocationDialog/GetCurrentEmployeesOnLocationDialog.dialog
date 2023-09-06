@@ -223,8 +223,8 @@
           "eventName": "EmployeeQuery",
           "properties": {
             "Intent": "GetCurrentEmployeesOnLocation",
-            "FromDate": "=turn.fromDate",
-            "EndDate": "=turn.EndDate",
+            "FromDate": "=formatDateTime(turn.fromDate)",
+            "EndDate": "=formatDateTime(turn.endDate)",
             "Location": "=dialog.locationEntity",
             "Employees": "=join(select(turn.employees, e, e.emailAddress), ',')"
           }
