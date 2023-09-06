@@ -82,7 +82,7 @@
             },
             {
               "property": "turn.endTime",
-              "value": "=dialog.rawDateEntity.values[0].resolution[0].end"
+              "value": "=coalesce(dialog.rawDateEntity.values[0].resolution[0].end, addDays(formatDateTime(dialog.rawDateEntity.values[0].resolution[0].value), 1))"
             }
           ]
         },
@@ -223,8 +223,8 @@
           "eventName": "EmployeeQuery",
           "properties": {
             "Intent": "GetCurrentEmployeesOnLocation",
-            "FromDate": "=formatDateTime(turn.fromDate)",
-            "EndDate": "=formatDateTime(turn.endDate)",
+            "FromDate": "==if(exists(turn.fromDate), formatDateTime(turn.fromDate), 'null')",
+            "EndDate": "=if(exists(turn.endDate), formatDateTime(turn.endDate), 'null')",
             "Location": "=dialog.locationEntity",
             "Employees": "=join(select(turn.employees, e, e.emailAddress), ',')"
           }
