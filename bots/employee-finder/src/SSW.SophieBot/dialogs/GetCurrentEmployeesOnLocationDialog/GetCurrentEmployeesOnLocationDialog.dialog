@@ -82,7 +82,7 @@
             },
             {
               "property": "turn.endTime",
-              "value": "=dialog.rawDateEntity.values[0].resolution[0].end"
+              "value": "=coalesce(dialog.rawDateEntity.values[0].resolution[0].end, addDays(formatDateTime(dialog.rawDateEntity.values[0].resolution[0].value), 1))"
             }
           ]
         },
@@ -139,6 +139,22 @@
           "resultProperty": "turn.utcEndTime"
         },
         {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "w1WZQu"
+          },
+          "assignments": [
+            {
+              "property": "turn.fromDate",
+              "value": "=if(turn.isNowQuery, null, turn.utcStartTime)"
+            },
+            {
+              "property": "turn.endDate",
+              "value": "=if(turn.isNowQuery, null, turn.utcEndTime)"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "4yPDKi"
@@ -160,11 +176,11 @@
                 },
                 {
                   "key": "fromDate",
-                  "value": "=if(turn.isNowQuery, null, turn.utcStartTime)"
+                  "value": "=turn.fromDate"
                 },
                 {
                   "key": "endDate",
-                  "value": "=if(turn.isNowQuery, null, turn.utcEndTime)"
+                  "value": "=turn.endDate"
                 }
               ],
               "statusCodeProperty": "turn.statusCode",
@@ -198,6 +214,20 @@
             }
           ],
           "condition": "=exists(dialog.locationEntity) && length(dialog.locationEntity) > 0"
+        },
+        {
+          "$kind": "Microsoft.TelemetryTrackEventAction",
+          "$designer": {
+            "id": "DMlpQH"
+          },
+          "eventName": "EmployeeQuery",
+          "properties": {
+            "Intent": "GetCurrentEmployeesOnLocation",
+            "FromDate": "==if(exists(turn.fromDate), formatDateTime(turn.fromDate), 'null')",
+            "EndDate": "=if(exists(turn.endDate), formatDateTime(turn.endDate), 'null')",
+            "Location": "=dialog.locationEntity",
+            "Employees": "=if(count(turn.employees) > 0, join(select(turn.employees, e, e.emailAddress), ','), 'null')"
+          }
         },
         {
           "$kind": "Microsoft.IfCondition",
