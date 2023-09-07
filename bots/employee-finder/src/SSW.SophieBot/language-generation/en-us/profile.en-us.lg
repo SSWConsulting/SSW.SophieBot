@@ -35,8 +35,8 @@
 					"type": "Image",
 					"style": "Person",
 					"size": "Small",
-					"width": "70px",
-					"height": "70px",
+					"width": "75px",
+					"height": "75px",
 					"url": "${if(profile.avatarUrl != null, profile.avatarUrl, BlankAvatar())}",
 					"altText": "avatar"
 				}
@@ -75,7 +75,7 @@
 	"columns": [
 		{
 			"type": "Column",
-			"width": "80px",
+			"width": "85px",
 			"items": [
 				{
 					"type": "TextBlock",
@@ -109,7 +109,7 @@
 		"columns": [
 			{
 				"type": "Column",
-				"width": "80px",
+				"width": "85px",
 				"items": [
 					{
 						"type": "TextBlock",
@@ -145,7 +145,7 @@
 		"columns": [
 			{
 				"type": "Column",
-				"width": "80px",
+				"width": "85px",
 				"items": [
 					{
 						"type": "TextBlock",
