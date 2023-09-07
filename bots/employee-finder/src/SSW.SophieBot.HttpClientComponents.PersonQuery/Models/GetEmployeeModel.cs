@@ -46,6 +46,7 @@ namespace SSW.SophieBot.HttpClientAction.Models
         public string AboutMeAudioUrl { get; set; }
         public string PublicPhotoAlbumUrl { get; set; }
         public int? EmployeeCategory { get; set; }
+        public string WorkHours { get; set; }
         public string Title { get; set; }
         public ProfileCategory? ProfileCategory { get; set; }
 
