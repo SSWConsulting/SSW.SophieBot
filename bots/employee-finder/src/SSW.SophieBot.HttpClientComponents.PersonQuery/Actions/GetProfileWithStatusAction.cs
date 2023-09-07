@@ -62,6 +62,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
                 LastSeenAt = employee.LastSeenAt,
                 LastSeenTime = EmployeesHelper.GetLastSeen(employee),
                 LastSeenPhoneDevice = EmployeesHelper.GetLastSeenPhoneDevice(employee),
+                WorkHours = employee.WorkHours,
                 Skills = employee.Skills,
                 EmailAddress = employee.EmailAddress,
                 MobilePhone = employee.MobilePhone,

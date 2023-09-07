@@ -42,6 +42,7 @@ namespace SSW.SophieBot.Employees
         public int? EmployeeCategory { get; set; }
         public string Title { get; set; }
         public int? ProfileCategory { get; set; }
+        public string WorkHours { get; set; }
 
         public Employee()
         {

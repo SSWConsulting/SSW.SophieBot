@@ -6,372 +6,446 @@
 {
     "type": "AdaptiveCard",
     "body": [
-        {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "items": [
-                        {
-                            "type": "Image",
-                            "style": "Person",
-                            "size": "Small",
-                            "width": "60px",
-                            "height": "60px",
-                            "url": "${if(profile.avatarUrl != null, profile.avatarUrl, BlankAvatar())}",
-                            "altText": "avatar"
-                        }
-                    ],
-                    "width": "auto"
-                },
-                {
-                    "type": "Column",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "weight": "Bolder",
-                            "text": "${profile.displayName}",
-                            "size": "Large",
-                            "wrap": true
-                        },
-                        {
-                            "type": "TextBlock",
-                            "spacing": "None",
-                            "isSubtle": true,
-                            "wrap": true,
-                            "text": "${profile.title}　|　$${round(profile.billableRate)} + GST"
-                        }
-                    ],
-                    "width": "stretch",
-                    "verticalContentAlignment": "Center"
-                }
-            ]
-        },
-        {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "width": "70px",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "Today:",
-                            "color": "Accent",
-                            "wrap": true
-                        }
-                    ]
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "wrap": true,
-                            "text": "${Status(profile)}",
-                        }
-                    ],
-                    "spacing": "None"
-                }
-            ]
-        },
-        {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "width": "70px",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "Last Seen:",
-                            "color": "Accent",
-                            "wrap": true
-                        }
-                    ]
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "wrap": true,
-                            "text": "${if(profile.lastSeenAt != null, LastSeen(profile.lastSeenAt.siteId, profile.defaultSite.name, profile.lastSeenTime, profile.lastSeenPhoneDevice), '—')}"
-                        }
-                    ],
-                    "spacing": "None"
-                }
-            ]
-        },
-        {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "Skills:",
-                            "color": "Accent",
-                            "wrap": true
-                        }
-                    ]
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "ColumnSet",
-                            "columns": [
-                                {
-                                    "type": "Column",
-                                    "width": "stretch",
-									"selectAction": {
-										"type": "Action.ToggleVisibility",
-										"targetElements": [
-											"showMore",
-											"showLess",
-											"omittedSkills",
-											"allSkills"
-										]
-									},
-                                    "items": [
-                                        {
-                                            "id": "showMore",
-                                            "type": "ColumnSet",
-                                            "columns": [
-                                                {
-                                                    "type": "Column",
-                                                    "width": "stretch",
-                                                    "items": [
-                                                        {
-                                                            "type": "TextBlock",
-                                                            "text": "More",
-                                                            "wrap": true,
-                                                            "color": "Accent",
-                                                            "horizontalAlignment": "Right"
-                                                        }
-                                                    ],
-                                                    "verticalContentAlignment": "Center"
-                                                },
-                                                {
-                                                    "type": "Column",
-                                                    "width": "auto",
-                                                    "items": [
-                                                        {
-                                                            "type": "Image",
-                                                            "url": "${ExpandArrowIcon()}",
-                                                            "width": "20px",
-                                                            "height": "20px"
-                                                        }
-                                                    ],
-                                                    "spacing": "None",
-                                                    "minHeight": "12px"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "showLess",
-                                            "isVisible": false,
-                                            "type": "ColumnSet",
-                                            "columns": [
-                                                {
-                                                    "type": "Column",
-                                                    "width": "stretch",
-                                                    "items": [
-                                                        {
-                                                            "type": "TextBlock",
-                                                            "text": "Less",
-                                                            "wrap": true,
-                                                            "color": "Accent",
-                                                            "horizontalAlignment": "Right"
-                                                        }
-                                                    ],
-                                                    "verticalContentAlignment": "Center"
-                                                },
-                                                {
-                                                    "type": "Column",
-                                                    "width": "auto",
-                                                    "items": [
-                                                        {
-                                                            "type": "Image",
-                                                            "url": "${CollapseArrowIcon()}",
-                                                            "width": "20px",
-                                                            "height": "20px"
-                                                        }
-                                                    ],
-                                                    "spacing": "None"
-                                                }
-                                            ],
-                                            "spacing": "None"
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ],
-            "separator": true
-        },
-        {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "width": "auto",
-                    "items": [
-                        {
-                            "type": "Image",
-                            "url": "${SkillIcon()}",
-                            "width": "20px",
-                            "height": "20px"
-                        }
-                    ]
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "${SkillsInfo()}",
-                            "id": "omittedSkills",
-                            "height": "stretch"
-                        },
-                        {
-                            "type": "TextBlock",
-                            "text": "${SkillsInfo()}",
-                            "wrap": true,
-                            "id": "allSkills",
-                            "isVisible": false
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "TextBlock",
-            "text": "Contact:",
-            "color": "Accent",
-            "wrap": true,
-            "separator": true,
-            "height": "stretch"
-        },
-        {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "width": "auto",
-                    "items": [
-                        {
-                            "type": "Image",
-                            "altText": "email",
-                            "width": "20px",
-                            "height": "20px",
-                            "url": "${EmailIcon()}"
-                        }
-                    ]
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "${profile.emailAddress}",
-                            "wrap": true
-                        }
-                    ],
-                    "verticalContentAlignment": "Center"
-                }
-            ],
-            "height": "stretch"
-        },
-        {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "width": "auto",
-                    "items": [
-                        {
-                            "type": "Image",
-                            "altText": "phone number",
-                            "url": "${PhoneIcon()}",
-                            "width": "20px",
-                            "height": "20px"
-                        }
-                    ]
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "wrap": true,
-                            "text": "${profile.mobilePhone}"
-                        }
-                    ],
-                    "verticalContentAlignment": "Center"
-                }
-            ]
-        },
-        {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "width": "auto",
-                    "items": [
-                        {
-                            "type": "Image",
-                            "altText": "location",
-                            "url": "${LocationIcon()}",
-                            "width": "20px",
-                            "height": "20px"
-                        }
-                    ]
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "wrap": true,
-                            "text": "${profile.defaultSite.name}"
-                        }
-                    ],
-                    "verticalContentAlignment": "Center"
-                }
-            ]
-        },
-        {
-            "type": "ActionSet",
-            "actions": [
-                ${join(where([
-                    ChatInTeamsAction(profile.emailAddress),
-                    ViewEmployeeProjectsAction(turn.displayName, turn.billableEmployees.employees[0], 'GetProfile'),
-                    ViewBookingsAction(turn.displayName, turn.employees[0].bookedDays, 'GetProfile'),
-                    ViewInPeopleAction(profile), 
-                    ViewInCRMAction(profile),
-					ViewInEmployeeResponsibilities(profile)
-                    ], action => exists(action) && length(action) > 0), ',')},
-            ]
-        }
+		${join(where([
+			BasicInfoColumn(profile),
+			StatusColumn(profile),
+			LastSeenColumn(profile),
+			WorkHoursColumn(profile),
+			SkillsColumn(profile),
+			ContactColumn(profile),
+			ButtonsColumn(profile)
+			], action => exists(action) && length(action) > 0), ',')
+		}
     ],
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "version": "1.2",
     "minHeight": "100px"
 }
 ```
+
+# BasicInfoColumn(profile)
+- ```
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "Image",
+					"style": "Person",
+					"size": "Small",
+					"width": "70px",
+					"height": "70px",
+					"url": "${if(profile.avatarUrl != null, profile.avatarUrl, BlankAvatar())}",
+					"altText": "avatar"
+				}
+			],
+			"width": "auto"
+		},
+		{
+			"type": "Column",
+			"items": [
+				{
+					"type": "TextBlock",
+					"weight": "Bolder",
+					"text": "${profile.displayName}",
+					"size": "Large",
+					"wrap": true
+				},
+				{
+					"type": "TextBlock",
+					"spacing": "None",
+					"isSubtle": true,
+					"wrap": true,
+					"text": "${profile.title}　|　$${round(profile.billableRate)} + GST"
+				}
+			],
+			"width": "stretch",
+			"verticalContentAlignment": "Center"
+		}
+	]
+}
+```
+
+# StatusColumn(profile)
+- ```
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"width": "80px",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Today:",
+					"color": "Accent",
+					"wrap": true
+				}
+			]
+		},
+		{
+			"type": "Column",
+			"width": "stretch",
+			"items": [
+				{
+					"type": "TextBlock",
+					"wrap": true,
+					"text": "${Status(profile)}",
+				}
+			],
+			"spacing": "None"
+		}
+	]
+}
+```
+
+# LastSeenColumn(profile)
+- IF: ${ profile.lastSeenAt != null }
+	- ```
+	{
+		"type": "ColumnSet",
+		"columns": [
+			{
+				"type": "Column",
+				"width": "80px",
+				"items": [
+					{
+						"type": "TextBlock",
+						"text": "Last Seen:",
+						"color": "Accent",
+						"wrap": true
+					}
+				]
+			},
+			{
+				"type": "Column",
+				"width": "stretch",
+				"items": [
+					{
+						"type": "TextBlock",
+						"wrap": true,
+						"text": "${LastSeen(profile.lastSeenAt.siteId, profile.defaultSite.name, profile.lastSeenTime, profile.lastSeenPhoneDevice)}"
+					}
+				],
+				"spacing": "None"
+			}
+		]
+	}
+	```
+- ELSE:
+	-
+
+# WorkHoursColumn(profile)
+- IF: ${ profile.workHours != null }
+	- ```
+	{
+		"type": "ColumnSet",
+		"columns": [
+			{
+				"type": "Column",
+				"width": "80px",
+				"items": [
+					{
+						"type": "TextBlock",
+						"text": "Work Hours:",
+						"color": "Accent",
+						"wrap": true
+					}
+				]
+			},
+			{
+				"type": "Column",
+				"width": "stretch",
+				"items": [
+					{
+						"type": "TextBlock",
+						"wrap": true,
+						"text": "${replace(profile.workHours, '\n', ' | ')}"
+					}
+				],
+				"spacing": "None"
+			}
+		]
+	}
+	```
+- ELSE:
+	-
+
+# SkillsColumn(profile)
+- ```
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"width": "stretch",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "Skills:",
+					"color": "Accent",
+					"wrap": true
+				}
+			]
+		},
+		{
+			"type": "Column",
+			"width": "stretch",
+			"items": [
+				{
+					"type": "ColumnSet",
+					"columns": [
+						{
+							"type": "Column",
+							"width": "stretch",
+							"selectAction": {
+								"type": "Action.ToggleVisibility",
+								"targetElements": [
+									"showMore",
+									"showLess",
+									"omittedSkills",
+									"allSkills"
+								]
+							},
+							"items": [
+								{
+									"id": "showMore",
+									"type": "ColumnSet",
+									"columns": [
+										{
+											"type": "Column",
+											"width": "stretch",
+											"items": [
+												{
+													"type": "TextBlock",
+													"text": "More",
+													"wrap": true,
+													"color": "Accent",
+													"horizontalAlignment": "Right"
+												}
+											],
+											"verticalContentAlignment": "Center"
+										},
+										{
+											"type": "Column",
+											"width": "auto",
+											"items": [
+												{
+													"type": "Image",
+													"url": "${ExpandArrowIcon()}",
+													"width": "20px",
+													"height": "20px"
+												}
+											],
+											"spacing": "None",
+											"minHeight": "12px"
+										}
+									]
+								},
+								{
+									"id": "showLess",
+									"isVisible": false,
+									"type": "ColumnSet",
+									"columns": [
+										{
+											"type": "Column",
+											"width": "stretch",
+											"items": [
+												{
+													"type": "TextBlock",
+													"text": "Less",
+													"wrap": true,
+													"color": "Accent",
+													"horizontalAlignment": "Right"
+												}
+											],
+											"verticalContentAlignment": "Center"
+										},
+										{
+											"type": "Column",
+											"width": "auto",
+											"items": [
+												{
+													"type": "Image",
+													"url": "${CollapseArrowIcon()}",
+													"width": "20px",
+													"height": "20px"
+												}
+											],
+											"spacing": "None"
+										}
+									],
+									"spacing": "None"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"separator": true
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"width": "auto",
+			"items": [
+				{
+					"type": "Image",
+					"url": "${SkillIcon()}",
+					"width": "20px",
+					"height": "20px"
+				}
+			]
+		},
+		{
+			"type": "Column",
+			"width": "stretch",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "${SkillsInfo()}",
+					"id": "omittedSkills",
+					"height": "stretch"
+				},
+				{
+					"type": "TextBlock",
+					"text": "${SkillsInfo()}",
+					"wrap": true,
+					"id": "allSkills",
+					"isVisible": false
+				}
+			]
+		}
+	]
+}
+```
+
+# ContactColumn(profile)
+- ```
+{
+	"type": "TextBlock",
+	"text": "Contact:",
+	"color": "Accent",
+	"wrap": true,
+	"separator": true,
+	"height": "stretch"
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"width": "auto",
+			"items": [
+				{
+					"type": "Image",
+					"altText": "email",
+					"width": "20px",
+					"height": "20px",
+					"url": "${EmailIcon()}"
+				}
+			]
+		},
+		{
+			"type": "Column",
+			"width": "stretch",
+			"items": [
+				{
+					"type": "TextBlock",
+					"text": "${profile.emailAddress}",
+					"wrap": true
+				}
+			],
+			"verticalContentAlignment": "Center"
+		}
+	],
+	"height": "stretch"
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"width": "auto",
+			"items": [
+				{
+					"type": "Image",
+					"altText": "phone number",
+					"url": "${PhoneIcon()}",
+					"width": "20px",
+					"height": "20px"
+				}
+			]
+		},
+		{
+			"type": "Column",
+			"width": "stretch",
+			"items": [
+				{
+					"type": "TextBlock",
+					"wrap": true,
+					"text": "${profile.mobilePhone}"
+				}
+			],
+			"verticalContentAlignment": "Center"
+		}
+	]
+},
+{
+	"type": "ColumnSet",
+	"columns": [
+		{
+			"type": "Column",
+			"width": "auto",
+			"items": [
+				{
+					"type": "Image",
+					"altText": "location",
+					"url": "${LocationIcon()}",
+					"width": "20px",
+					"height": "20px"
+				}
+			]
+		},
+		{
+			"type": "Column",
+			"width": "stretch",
+			"items": [
+				{
+					"type": "TextBlock",
+					"wrap": true,
+					"text": "${profile.defaultSite.name}"
+				}
+			],
+			"verticalContentAlignment": "Center"
+		}
+	]
+}
+```
+
+# ButtonsColumn(profile)
+-```
+{
+	"type": "ActionSet",
+	"actions": [
+		${join(where([
+			ChatInTeamsAction(profile.emailAddress),
+			ViewEmployeeProjectsAction(turn.displayName, turn.billableEmployees.employees[0], 'GetProfile'),
+			ViewBookingsAction(turn.displayName, turn.employees[0].bookedDays, 'GetProfile'),
+			ViewInPeopleAction(profile), 
+			ViewInCRMAction(profile),
+			ViewInEmployeeResponsibilities(profile)
+			], action => exists(action) && length(action) > 0), ',')},
+	]
+}
+```
+
 
 # ViewInPeopleAction(profile)
 - IF: ${exists(settings.App.PeopleSiteUrl) && length(settings.App.PeopleSiteUrl) > 0}
