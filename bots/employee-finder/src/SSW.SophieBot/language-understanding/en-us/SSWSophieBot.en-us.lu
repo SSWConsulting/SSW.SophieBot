@@ -3,8 +3,6 @@
 		- on
 	- for:
 		- for
-	- in:
-		- in
 
 @ list goodbye = 
 	- goodbye:

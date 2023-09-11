@@ -253,11 +253,29 @@
               "condition": "=exists(turn.employees) && count(turn.employees) > 0",
               "elseActions": [
                 {
-                  "$kind": "Microsoft.SendActivity",
+                  "$kind": "Microsoft.IfCondition",
                   "$designer": {
-                    "id": "MfjfA1"
+                    "id": "s2MaxH"
                   },
-                  "activity": "${SendActivity_MfjfA1()}"
+                  "condition": "=exists(dialog.locationEntitty)",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "xUKqy3"
+                      },
+                      "activity": "${SendActivity_xUKqy3()}"
+                    }
+                  ],
+                  "elseActions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "1H6iXy"
+                      },
+                      "activity": "${SendActivity_1H6iXy()}"
+                    }
+                  ]
                 }
               ],
               "actions": [
