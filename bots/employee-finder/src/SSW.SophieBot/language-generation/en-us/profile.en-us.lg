@@ -160,9 +160,13 @@
 				"width": "stretch",
 				"items": [
 					{
-						"type": "TextBlock",
-						"wrap": true,
-						"text": "${replace(profile.workHours, '\n', '\n\n')}"
+						"type": "RichTextBlock",
+						"inlines": [
+							{							
+								"type": "TextRun",
+								"text": "${profile.workHours}"
+							}
+						]
 					}
 				],
 				"spacing": "None"
