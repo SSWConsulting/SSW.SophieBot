@@ -9,13 +9,6 @@
 # SendActivity_5SdoY2_text()
 - ${ErrorMessage()}
 
-# SendActivity_MfjfA1()
-[Activity
-    Text = ${SendActivity_MfjfA1_text()}
-]
-
-# SendActivity_MfjfA1_text()
-- I couldn't find anyone in the **${dialog.locationEntity}** office at this time.
 # SendActivity_WXpguy()
 [Activity
     Attachments = ${json(PeopleListByBilled(
@@ -47,3 +40,17 @@
 
 # LogAction_Text_X1smd9_text()
 - [Debug] - dialog.locationEntity = ${dialog.locationEntity}
+
+# SendActivity_xUKqy3_text()
+- I couldn't find anyone in the **${dialog.locationEntity}** office at this time.
+# SendActivity_xUKqy3()
+[Activity
+    Text = ${SendActivity_xUKqy3_text()}
+]
+
+# SendActivity_1H6iXy_text()
+- I couldn't find anyone in any of the offices at this time.
+# SendActivity_1H6iXy()
+[Activity
+    Text = ${SendActivity_1H6iXy_text()}
+]
