@@ -162,7 +162,7 @@
 					{
 						"type": "TextBlock",
 						"wrap": true,
-						"text": "${replace(profile.workHours, '\n', ' | ')}"
+						"text": "${replace(profile.workHours, '\n', '\n\n')}"
 					}
 				],
 				"spacing": "None"
