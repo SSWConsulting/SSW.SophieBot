@@ -71,18 +71,45 @@
           ]
         },
         {
-          "$kind": "Microsoft.SetProperties",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "MfMu9M"
+            "id": "8ENn96"
           },
-          "assignments": [
+          "condition": "=turn.isRangeQuery",
+          "actions": [
             {
-              "property": "turn.startTime",
-              "value": "=coalesce(dialog.rawDateEntity.values[0].resolution[0].value, dialog.rawDateEntity.values[0].resolution[0].start) "
-            },
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "yXb8dn"
+              },
+              "assignments": [
+                {
+                  "property": "turn.startTime",
+                  "value": "=dialog.rawDateEntity.values[0].resolution[0].start"
+                },
+                {
+                  "property": "turn.endTime",
+                  "value": "=dialog.rawDateEntity.values[0].resolution[0].end"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
             {
-              "property": "turn.endTime",
-              "value": "=coalesce(dialog.rawDateEntity.values[0].resolution[0].end, addDays(formatDateTime(dialog.rawDateEntity.values[0].resolution[0].value), 1))"
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "ItUksJ"
+              },
+              "assignments": [
+                {
+                  "property": "turn.startTime",
+                  "value": "=dialog.rawDateEntity.values[0].resolution[0].value"
+                },
+                {
+                  "property": "turn.endTime",
+                  "value": "=addDays(formatDateTime(dialog.rawDateEntity.values[0].resolution[0].value), 1)"
+                }
+              ]
             }
           ]
         },
