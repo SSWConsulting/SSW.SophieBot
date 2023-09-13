@@ -1,7 +1,7 @@
 ---
-name: "\U0001F477 DevOps"
-about: Updating the CI/CD piplines
-title: "\U0001F477"
+name: "👷 DevOps"
+about: CI/CD and other DevOps concerns e.g. Updating the build, code analysis, test, deploy, application monitoring etc.
+title: "👷"
 labels: 'Type: DevOps'
 assignees: ''
 
@@ -25,24 +25,15 @@ Hi
 - [ ] ...
 - [ ] ...
 
+### Acceptance Criteria
+<!-- Acceptance Criteria helps to answer the question "How will I know when I'm done with this story?". It defines the requirements that must be met for the story to be completed. See https://www.ssw.com.au/rules/acceptance-criteria -->
+- [ ] Meets [Definition of Done](../../_docs//Definition-of-Done.md)
+- [ ] ...
+
 ### More Information
 <!-- Add any other context here. -->
 
 ### Screenshots
 <!-- If applicable, add screenshots to help explain your problem. -->
-
-### Definition of Done
-- [ ] All tasks are updated and closed
-- [ ] No high priority defects/bugs are on that user story
-- [ ] Code reviewed by one other team member (e.g. Checked by Bill)
-- [ ] All acceptance criteria have been met
-- [ ] Deployed to Dev
-- [ ] (If implemented) Pass automated UI testing
-- [ ] (If not implemented above) Do a manual test on all supported commands (at least one for each LUIS intent) against Dev
-- [ ] Complex code is documented (removing technical debt)
-- [ ] Deployed to Production
-- [ ] Add description about the changes for the PBI
-- [ ] Tick off the definition of done tasks in the PBI
-- [ ] (Optional) A Done Video, particularly for PBI with multiple stages
 
 Thanks!
