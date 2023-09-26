@@ -164,7 +164,7 @@
 						"inlines": [
 							{							
 								"type": "TextRun",
-								"text": "${profile.workHours}"
+								"text": "${replace(profile.workHours, '\n\n', '\n')}"
 							}
 						]
 					}
