@@ -52,7 +52,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                     foreach (var employeeProject in employeeProjects)
                     {
                         double billableHours = employeeProject.BillableHours;
-                        var billedDays = GetBilledDays(e, employeeProject, out billableHours);
+                        int billedDays = GetBilledDays(billableHours);
                         billedProjects.Add(new BilledProject
                         {
                             BilledDays = billedDays,
@@ -174,23 +174,28 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             return BookingStatus.Unknown;
         }
 
-        //This function is to
-        // 1. decide if the the working hours are billable hours or internal hours(Client work or internal project)
-        // 2. calculate the billable days according to the billable hours
-        public static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project, out double billableHours)
+        public static int GetBilledDays(double billableHours)
         {
+            const int HOURS_PER_DAY = 8;
 
+            return (int)Math.Ceiling(billableHours / HOURS_PER_DAY);
+        }
 
-            if (project != null && project.CustomerName != "SSW")
+        public static int GetTotalBilledDays(List<GetEmployeeProjectModel> Projects, out double billableHours)
+        {
+            billableHours = 0;
+
+            if (Projects == null || !Projects.Any())
             {
-                billableHours = project?.BillableHours ?? 0;
+                return 0;
             }
-            else {
-                billableHours = 0;
-            }
-         
 
-            return billableHours == 0 ? 0 : (int)Math.Ceiling(billableHours / 8);
+            foreach (var project in Projects)
+            {
+                billableHours += project.BillableHours;
+            }
+
+            return GetBilledDays(billableHours);
         }
 
         public static int GetBookedDays(GetEmployeeModel employee, DateTime startDate)
