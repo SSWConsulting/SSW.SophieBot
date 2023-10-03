@@ -174,21 +174,9 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             return BookingStatus.Unknown;
         }
 
-        //This function is to
-        // 1. decide if the the working hours are billable hours or internal hours(Client work or internal project)
-        // 2. calculate the billable days according to the billable hours
         public static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project, out double billableHours)
         {
-
-
-            if (project != null && project.CustomerName != "SSW")
-            {
-                billableHours = project?.BillableHours ?? 0;
-            }
-            else {
-                billableHours = 0;
-            }
-         
+            billableHours = project?.BillableHours ?? 0;
 
             return billableHours == 0 ? 0 : (int)Math.Ceiling(billableHours / 8);
         }

@@ -126,7 +126,7 @@
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "Worked ",
+                            "text": "Billed ",
                             "wrap": true,
                             "weight": "Bolder",
                             "horizontalAlignment": "Center"
