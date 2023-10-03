@@ -52,7 +52,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                     foreach (var employeeProject in employeeProjects)
                     {
                         double billableHours = employeeProject.BillableHours;
-                        var billedDays = GetBilledDays(e, employeeProject, out billableHours);
+                        int billedDays = GetBilledDays(billableHours);
                         billedProjects.Add(new BilledProject
                         {
                             BilledDays = billedDays,
@@ -174,11 +174,28 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             return BookingStatus.Unknown;
         }
 
-        public static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project, out double billableHours)
+        public static int GetBilledDays(double billableHours)
         {
-            billableHours = project?.BillableHours ?? 0;
+            const int HOURS_PER_DAY = 8;
 
-            return billableHours == 0 ? 0 : (int)Math.Ceiling(billableHours / 8);
+            return (int)Math.Ceiling(billableHours / HOURS_PER_DAY);
+        }
+
+        public static int GetTotalBilledDays(List<GetEmployeeProjectModel> Projects, out double billableHours)
+        {
+            billableHours = 0;
+
+            if (Projects == null || !Projects.Any())
+            {
+                return 0;
+            }
+
+            foreach (var project in Projects)
+            {
+                billableHours += project.BillableHours;
+            }
+
+            return GetBilledDays(billableHours);
         }
 
         public static int GetBookedDays(GetEmployeeModel employee, DateTime startDate)
