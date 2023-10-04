@@ -286,6 +286,8 @@
 - Who {@presentBe} {@prep} project {@project}[?]
 - Who {@presentBe} {@prep} ({@project} | {@ssw})[?]
 - who works on {@project = ssw timepro}
+- Who is working on {@project = sophiebot} project?
+- Who is working on project {@project = sophiebot}?
 - Who is working on {@project = sophiebot}?
 - Who are working for {@project = baidu}?
 - Who is working for {@project = sophie}?
@@ -295,6 +297,11 @@
 - Who are working on {@project = SugarLearning Development}?
 - Show me the people working on {@project = Sophie Hub}
 - Show me who are working on {@project = NorthWind}
+- who is on {@project = firebootcamp} project?
+- who is on project {@project = firebootcamp}?
+- who is on {@project = firebootcamp}?
+- who is on {@project = ssw firebootcamp} project?
+- who is on project {@project = ssw firebootcamp}?
 - who is on {@project = ssw firebootcamp}?
 - who's on {@project = ssw firebootcamp} today
 - how many devs are working on {@project = ssw rules} now
