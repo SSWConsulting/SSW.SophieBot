@@ -284,7 +284,7 @@
                   "$designer": {
                     "id": "s2MaxH"
                   },
-                  "condition": "=exists(dialog.locationEntitty)",
+                  "condition": "=exists(dialog.locationEntity) && length(dialog.locationEntity) > 0",
                   "actions": [
                     {
                       "$kind": "Microsoft.SendActivity",

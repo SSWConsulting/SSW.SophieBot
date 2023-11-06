@@ -112,7 +112,7 @@
                 "id": "s1P4OK"
               },
               "property": "turn.sortedEmployees",
-              "value": "=sortBy(turn.employees, 'skillLevel')"
+              "value": "=sortBy(where(turn.employees, x => exists(x.skillLevel) && toLower(x.skillLevel) != 'keen to learn'), 'skillLevel')"
             },
             {
               "$kind": "Microsoft.IfCondition",
