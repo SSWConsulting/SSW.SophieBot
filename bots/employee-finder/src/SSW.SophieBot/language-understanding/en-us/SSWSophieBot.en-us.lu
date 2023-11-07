@@ -315,6 +315,7 @@
 @ ml project usesFeature projects
 
 # GetPeopleBasedOnLocation
+- who work[s] {@prep} [the] ({@geographyV2}|{@site}) [office][?]^
 - melbourne staff
 - melbourne employees
 - who works in China?
