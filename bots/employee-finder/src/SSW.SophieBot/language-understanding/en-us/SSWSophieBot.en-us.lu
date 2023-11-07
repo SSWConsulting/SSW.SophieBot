@@ -315,6 +315,7 @@
 @ ml project usesFeature projects
 
 # GetPeopleBasedOnLocation
+- who work[s] {@prep} [the] ({@geographyV2}|{@site}) [office][?]^
 - melbourne staff
 - melbourne employees
 - who works in China?
@@ -326,7 +327,6 @@
 - newcastle list
 - show people based on sydney
 - who is remote
-- who works in the Sydney office?
 
 # GetPeopleBySkills
 - who know[s] {@skill}[?]
