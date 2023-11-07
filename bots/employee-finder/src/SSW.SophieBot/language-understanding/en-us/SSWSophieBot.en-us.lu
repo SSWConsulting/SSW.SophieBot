@@ -315,19 +315,20 @@
 @ ml project usesFeature projects
 
 # GetPeopleBasedOnLocation
-- who work[s] {@prep} [the] ({@geographyV2}|{@site}) [office][?]^
-- melbourne staff
-- melbourne employees
+- who work[s] in [the] ({@geographyV2}|{@site}) [office][?]^
+- who works in the China office?
+- who works in China office?
 - who works in China?
 - who works in Hangzhou?
 - who works on remote?
 - whoes base location is Brisbane?
 - who is from Melbourne?
 - who is in Sydney
-- newcastle list
-- show people based on sydney
 - who is remote
-
+- show people based on sydney
+- newcastle list
+- melbourne staff
+- melbourne employees
 # GetPeopleBySkills
 - who know[s] {@skill}[?]
 - who (has|have) {@skill} skill[s][?]
