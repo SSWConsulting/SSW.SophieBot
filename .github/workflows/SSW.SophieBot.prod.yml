@@ -102,7 +102,7 @@ jobs:
       # Upload bot models artifact
       - name: Upload bot models artifact
         if: env.BUILD_FLOW == 'composer'
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v4.3.2
         with:
           name: "Bot_Models_${{ github.run_id }}"
           path: ${{ env.BOT_PROJECT_DIR }}/generated
@@ -122,7 +122,7 @@ jobs:
 
       # Upload webapp artifact
       - name: Upload webapp artifact
-        uses: actions/upload-artifact@v2.3.1
+        uses: actions/upload-artifact@v4.3.2
         with:
           name: "Bot_Webapp_${{ github.run_id }}"
           path: ${{ env.OUTPUT_DIR }}/deploy
@@ -130,7 +130,7 @@ jobs:
 
       # Upload LUIS migrator artifact
       - name: Upload LUIS migrator artifact
-        uses: actions/upload-artifact@v2.3.1
+        uses: actions/upload-artifact@v4.3.2
         with:
           name: "LUIS_Migrator_${{ github.run_id }}"
           path: ${{ env.OUTPUT_DIR }}/luis-migrator
