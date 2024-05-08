@@ -19,10 +19,11 @@ Hi
 ### What code could be improved?
 <!-- Add a link to the area/file that needs refactoring -->
 
+```[tasklist]
 ### Tasks
-<!--Add GitHub tasks-->
 - [ ] ...
 - [ ] ...
+```
 
 ### Acceptance Criteria
 <!-- Acceptance Criteria helps to answer the question "How will I know when I'm done with this story?". It defines the requirements that must be met for the story to be completed. See https://www.ssw.com.au/rules/acceptance-criteria -->

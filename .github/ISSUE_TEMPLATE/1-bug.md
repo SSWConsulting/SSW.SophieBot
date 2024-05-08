@@ -26,9 +26,11 @@ Steps to reproduce the behavior:
 ### Expected Behavior
 <!-- A clear and concise description of what you expected to happen. -->
 
+```[tasklist]
 ### Tasks
 - [ ] Investigate
 - [ ] Fix
+```
 
 ### Acceptance Criteria
 <!-- Acceptance Criteria helps to answer the question "How will I know when I'm done with this story?". It defines the  requirements that must be met for the story to be completed. See https://www.ssw.com.au/rules/acceptance-criteria -->
