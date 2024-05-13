@@ -7,7 +7,7 @@ assignees: ""
 
 ---
 
-Cc: {{ PRODUCT_OWNER }}
+Cc: @william-liebenberg @adamcogan
 
 Video Title
 ```
@@ -21,13 +21,11 @@ Join us for Sprint {{ SPRINT_NUM }} - {{ PROJECT }} - Review & Planning Meeting
 {{ TIMESTAMP_SUMMARY_FROM_AI }}
 
 🔗  Links:
-{{ PUBLIC_LINKS }}
-<!-- product page or social media page, if applicable -->
-
+https://sswsophie.com/sophiebot
 ```
 
 Video Thumbnail Template:
-{{ PATH_TO_POWERPOINT_FILE }}
+https://sswcom-my.sharepoint.com/:p:/g/personal/lukemao_ssw_com_au/EaxtsjNw20NPmh3hJ98sQUQB_L2nyFnhwjhk4hhnqVw7Tg
 <!--
 Thumbnail Generation - take a screenshot in PowerPoint fullscreen mode (1920x1080)
  -->
@@ -41,6 +39,5 @@ Thumbnail Generation - take a screenshot in PowerPoint fullscreen mode (1920x108
 - [ ] Add the video to the Playlist
 
 ### Information
-- YouTube Channel {{ YOUTUBE_CHANNEL_LINK }}
-- Playlist {{ PLAYLIST_LINK }}
-
+- YouTube Channel: https://www.youtube.com/channel/UCHZ1tNIIldeIZChB8DTqBKw
+- Playlist: https://www.youtube.com/playlist?list=PLnkcTBhDzoQ2IZkSJwqDYj4CXAIaeAuxh

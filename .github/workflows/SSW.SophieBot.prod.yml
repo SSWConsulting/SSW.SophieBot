@@ -9,7 +9,7 @@ concurrency:
 env:
   BUILD_FLOW: composer
   BOT_NAME: SSWSophieBot
-  WEBAPP_NAME: SSWSophieBot-Linux
+  WEBAPP_NAME: SSWSophieBot
   SOURCE_DIR: ${{ github.workspace }}
   OUTPUT_DIR: ${{ github.workspace }}/output
   LUIS_MIGRATOR_DIR: ${{ github.workspace }}/bots/employee-finder/src/SSW.SophieBot.LUIS.EmployeeFinder.Migrator
