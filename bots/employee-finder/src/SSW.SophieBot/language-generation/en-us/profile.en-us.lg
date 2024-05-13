@@ -530,7 +530,7 @@
 - IF: ${ device != null }
     - ```(Device: ${device})```
 - ELSE:
-    -
+    - ```(Device: [Unknown](https://github.com/SSWConsulting/SSW.SophieBot/wiki/Frequently-Asked-Questions#1-why-my-device-name-in-the-profile-card-is-unknown))```
 
 # SkillsInfo()
 - IF: ${length(turn.intermediateSkills) == 0 && length(turn.advancedSkills) == 0}
