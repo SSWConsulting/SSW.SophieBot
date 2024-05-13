@@ -316,6 +316,7 @@
 
 # GetPeopleBasedOnLocation
 - who work[s] in [the] ({@geographyV2}|{@site}) [office][?]^
+- who is in the ({@geographyV2}|{@site}) office?
 - who works in the China office?
 - who works in China office?
 - who works in China?

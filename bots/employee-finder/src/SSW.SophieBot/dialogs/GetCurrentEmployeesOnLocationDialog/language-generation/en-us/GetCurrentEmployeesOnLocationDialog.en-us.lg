@@ -42,15 +42,16 @@
 - [Debug] - dialog.locationEntity = ${dialog.locationEntity}
 
 # SendActivity_xUKqy3_text()
-- I couldn't find anyone in the **${dialog.locationEntity}** office at this time.
+- I couldn't find anyone in the **${dialog.locationEntity}** office.
 # SendActivity_xUKqy3()
 [Activity
     Text = ${SendActivity_xUKqy3_text()}
 ]
 
 # SendActivity_1H6iXy_text()
-- I couldn't find anyone in any of the offices at this time.
+- I couldn't find anyone in any of the offices.
 # SendActivity_1H6iXy()
 [Activity
     Text = ${SendActivity_1H6iXy_text()}
 ]
+
