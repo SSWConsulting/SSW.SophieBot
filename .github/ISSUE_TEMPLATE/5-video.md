@@ -22,8 +22,6 @@ Join us for Sprint {{ SPRINT_NUM }} - {{ PROJECT }} - Review & Planning Meeting
 
 🔗  Links:
 https://sswsophie.com/sophiebot
-<!-- product page or social media page, if applicable -->
-
 ```
 
 Video Thumbnail Template:
