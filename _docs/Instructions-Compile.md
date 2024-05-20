@@ -34,7 +34,7 @@ Go to [SSW.SophieBot](https://github.com/SSWConsulting/SSW.SophieBot) and clone 
 3. Add necessary configurations to `appsettings.json`. See schema reference [here](Schema-Reference.md).
    > Note: For `adapters` and `components` sections in `runtimeSettings`, do not modify the initial settings from `appsettings.example.json` as they are needed for the test run.
 
-   > Note: If you're working in SSW, you can fetch a ready-to-use copy of `appsettings.json` in **Teams | SSW SophieBot | General | Files |appsettings.json**, or contact SophieBot team directly.
+   > Note: If you're working in SSW, you can fetch a ready-to-use copy of `appsettings.json` in **Keeper | SSW | SSW.SophieBot**, or contact SophieBot team directly.
 
 ### Step 3. Open the repo with Composer
 
