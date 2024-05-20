@@ -36,7 +36,10 @@ namespace SSW.SophieBot.Integration
 		protected virtual async Task OnTurnErrorAsync(ITurnContext turnContext, Exception exception)
 		{
 			var properties = new Dictionary<string, string>
-				{{"Bot exception caught in", $"{nameof(SophieBotAdapter)} - {nameof(OnTurnError)}"}};
+			{
+				{ "Bot exception caught in", $"{nameof(SophieBotAdapter)} - {nameof(OnTurnError)}" },
+				{ "Question", turnContext.Activity.Text },
+			};
 
 			AdapterBotTelemetryClient.TrackException(exception, properties);
 
@@ -46,7 +49,8 @@ namespace SSW.SophieBot.Integration
 			// to add telemetry capture to your bot.
 			//Logger.LogError(exception, $"[OnTurnError] unhandled error : {exception.Message}");
 
-			var errorMessageText = "The SophieBot encountered an error or bug. Please create a Github issue in the [repo](https://github.com/SSWConsulting/SSW.SophieBot) and send us an email with link to that GitHub issue to SSWSophieBotDevs@ssw.com.au";
+			var errorMessageText =
+				"The SophieBot encountered an error or bug. Please create a Github issue in the [repo](https://github.com/SSWConsulting/SSW.SophieBot) and send us an email with link to that GitHub issue to SSWSophieBotDevs@ssw.com.au";
 			var errorMessage = MessageFactory.Text(errorMessageText, errorMessageText, InputHints.IgnoringInput);
 			await turnContext.SendActivityAsync(errorMessage);
 
@@ -69,7 +73,8 @@ namespace SSW.SophieBot.Integration
 				}
 			}
 
-			await turnContext.TraceActivityAsync("OnTurnError Trace", exception.Message, "https://www.botframework.com/schemas/error", "TurnError");
+			await turnContext.TraceActivityAsync("OnTurnError Trace", exception.Message,
+				"https://www.botframework.com/schemas/error", "TurnError");
 		}
 	}
 }
