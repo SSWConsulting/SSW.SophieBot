@@ -11,12 +11,12 @@ Cc: @william-liebenberg @adamcogan
 
 Video Title
 ```
-Sprint {{ SPRINT_NUM }} - {{ PROJECT }} - Review & Planning Meeting {{ YYYY-MM-DD }}
+Sprint {{ SPRINT_NUM }} - SSW.SophieBot - Review & Planning Meeting {{ YYYY-MM-DD }}
 ```
 
 Video Description:
 ```
-Join us for Sprint {{ SPRINT_NUM }} - {{ PROJECT }} - Review & Planning Meeting
+Join us for Sprint {{ SPRINT_NUM }} - SSW.SophieBot - Review & Planning Meeting
 
 {{ TIMESTAMP_SUMMARY_FROM_AI }}
 
