@@ -33,10 +33,12 @@ Thumbnail Generation - take a screenshot in PowerPoint fullscreen mode (1920x108
 ### Acceptance Criteria
 1. Public can see this week's video on YouTube channel
 
+```[tasklist]
 ### Tasks
 - [ ] Upload this week's Sprint video with Title and Description to YouTube channel
 - [ ] Generate thumbnail from the template and add it to the video
 - [ ] Add the video to the Playlist
+```
 
 ### Information
 - YouTube Channel: https://www.youtube.com/channel/UCHZ1tNIIldeIZChB8DTqBKw
