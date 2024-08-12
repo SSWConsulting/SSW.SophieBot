@@ -229,39 +229,40 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 return string.Empty;
             }
 
-            static int GetInteger(double value)
-            {
-                return Math.Max(1, (int)Math.Floor(value));
-            }
-
             var now = DateTimeOffset.UtcNow;
             var timeOffset = now - lastSeenDateTime.Value;
 
             if (timeOffset.TotalMinutes < 1)
             {
                 var seconds = GetInteger(timeOffset.TotalSeconds);
-                return $"{seconds}{(seconds == 1 ? "s" : "s")} ago";
+                return $"{seconds}{("s")} ago";
             }
-            else if (timeOffset.TotalHours < 1)
+
+            if (timeOffset.TotalHours < 1)
             {
                 var minutes = GetInteger(timeOffset.TotalMinutes);
-                return $"{minutes}{(minutes == 1 ? "m" : "m")} ago";
+                return $"{minutes}{("m")} ago";
             }
-            else if (timeOffset.TotalDays < 1)
+
+            if (timeOffset.TotalDays < 1)
             {
-                var hours = GetInteger(timeOffset.TotalHours);
-                return $"{hours}{(hours == 1 ? "h" : "h")} ago";
+                var hours = Math.Round(timeOffset.TotalHours, 1);
+                return $"{hours}{("h")} ago";
             }
-            else if (timeOffset.TotalDays < 30)
+
+            if (timeOffset.TotalDays < 30)
             {
                 var days = GetInteger(timeOffset.TotalDays);
-                return $"{days}{(days == 1 ? "d" : "d")} ago";
+                return $"{days}{("d")} ago";
             }
-            else
-            {
-                var months = GetInteger(timeOffset.TotalDays / 30);
-                return $"{months} {(months == 1 ? "month" : "months")} ago";
-            }
+
+            var months = GetInteger(timeOffset.TotalDays / 30);
+            return $"{months} {(months == 1 ? "month" : "months")} ago";
+        }
+
+        private static int GetInteger(double value)
+        {
+            return Math.Max(1, (int)Math.Floor(value));
         }
 
         public static string GetLastSeenPhoneDevice(GetEmployeeModel employee)
