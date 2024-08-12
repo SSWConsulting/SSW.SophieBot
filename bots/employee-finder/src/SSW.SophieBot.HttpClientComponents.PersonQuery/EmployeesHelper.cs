@@ -10,12 +10,11 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 {
     public static class EmployeesHelper
     {
-        private static readonly string[] InternalCompanyNames = new[]
+        private static readonly string[] _internalCompanyNames = new[]
         {
             "ssw",
             "ssw test"
         };
-        private const double Tolerance = 0.0001;
 
         public static List<EmployeeBillableItemModel> GetBillableEmployees(
             IEnumerable<GetEmployeeModel> employees,
@@ -230,40 +229,39 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                 return string.Empty;
             }
 
+            static int GetInteger(double value)
+            {
+                return Math.Max(1, (int)Math.Floor(value));
+            }
+
             var now = DateTimeOffset.UtcNow;
             var timeOffset = now - lastSeenDateTime.Value;
 
             if (timeOffset.TotalMinutes < 1)
             {
-                var seconds = GetTime(timeOffset.TotalSeconds);
-                return $"{seconds}{("s")} ago";
+                var seconds = GetInteger(timeOffset.TotalSeconds);
+                return $"{seconds}{(seconds == 1 ? "s" : "s")} ago";
             }
-
-            if (timeOffset.TotalHours < 1)
+            else if (timeOffset.TotalHours < 1)
             {
-                var minutes = GetTime(timeOffset.TotalMinutes);
-                return $"{minutes}{("m")} ago";
+                var minutes = GetInteger(timeOffset.TotalMinutes);
+                return $"{minutes}{(minutes == 1 ? "m" : "m")} ago";
             }
-
-            if (timeOffset.TotalDays < 1)
+            else if (timeOffset.TotalDays < 1)
             {
-                var hours = GetTime(timeOffset.TotalHours);
-                return $"{hours}{("h")} ago";
+                var hours = GetInteger(timeOffset.TotalHours);
+                return $"{hours}{(hours == 1 ? "h" : "h")} ago";
             }
-
-            if (timeOffset.TotalDays < 30)
+            else if (timeOffset.TotalDays < 30)
             {
-                var days = GetTime(timeOffset.TotalDays);
-                return $"{days}{("d")} ago";
+                var days = GetInteger(timeOffset.TotalDays);
+                return $"{days}{(days == 1 ? "d" : "d")} ago";
             }
-
-            var months = GetTime(timeOffset.TotalDays / 30);
-            return $"{months} {(Math.Abs(months - 1) < Tolerance ? "month" : "months")} ago";
-        }
-
-        private static double GetTime(double value)
-        {
-            return Math.Round(value, 1);
+            else
+            {
+                var months = GetInteger(timeOffset.TotalDays / 30);
+                return $"{months} {(months == 1 ? "month" : "months")} ago";
+            }
         }
 
         public static string GetLastSeenPhoneDevice(GetEmployeeModel employee)
@@ -340,7 +338,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             var appointment = GetEnumerableAppointmentsByDate(appointments, date);
 
             var clientsInfo = appointment
-			.Where(a => !InternalCompanyNames.Contains(a.Regarding?.ToLower()) && !string.IsNullOrWhiteSpace(a.Regarding) && a.End.UtcTicks >= date.Ticks)
+			.Where(a => !_internalCompanyNames.Contains(a.Regarding?.ToLower()) && !string.IsNullOrWhiteSpace(a.Regarding) && a.End.UtcTicks >= date.Ticks)
             .Select(a => { 
 				if(a.Client != null && a.Client.Any())
 				{
@@ -375,7 +373,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
         public static List<EmployeeProfileClient> GetClientsByDate(DateTime date, List<GetAppointmentModel> appointments)
         {
             return GetEnumerableAppointmentsByDate(appointments, date)
-                .Where(appointment => !InternalCompanyNames.Contains(appointment.Regarding?.ToLower()))
+                .Where(appointment => !_internalCompanyNames.Contains(appointment.Regarding?.ToLower()))
                 .Select(appointment => new EmployeeProfileClient
                 {
                     Name = appointment.Regarding,
@@ -591,12 +589,12 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
 
         private static bool IsOnClientWorkFunc(GetAppointmentModel appointment)
         {
-            return !InternalCompanyNames.Contains(appointment.Regarding?.ToLower());
+            return !_internalCompanyNames.Contains(appointment.Regarding?.ToLower());
         }
 
         private static bool IsOnInternalWorkFunc(GetAppointmentModel appointment)
         {
-            return InternalCompanyNames.Contains(appointment.Regarding?.ToLower())
+            return _internalCompanyNames.Contains(appointment.Regarding?.ToLower())
                 && !IsOnLeaveFunc(appointment);
         }
 
