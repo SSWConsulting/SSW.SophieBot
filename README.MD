@@ -15,6 +15,19 @@ The most advanced AI for work and home.
 
 SSW.SophieBot is an Enterprise People Bot build with Bot Framework Composer.
 
+# Vision
+The best open-source office bot to ask questions about your company.
+
+# Tech Stack
+- Microsoft Copilot Studio
+- Azure Functions
+
+# Features
+- An awesome Conversational UI solution
+- Microsoft Teams, DirectLine (for customers own Chat UI)
+- Dynamics 365 integration
+- SharePoint integration
+
 # Getting Started
 
 1. [Run bot with Bot Framework Composer](_docs/Instructions-Compile.md)
