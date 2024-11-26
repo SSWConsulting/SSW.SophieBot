@@ -28,7 +28,7 @@ jobs:
         working-directory: apps/SSW.SophieBot.Web
 
       - name: upload to storage account
-        uses: bacongobbler/azure-blob-storage-upload@v1.2.0
+        uses: bacongobbler/azure-blob-storage-upload@v3.0.0
         with:
           source_dir: apps/SSW.SophieBot.Web/dist
           container_name: "$web"
