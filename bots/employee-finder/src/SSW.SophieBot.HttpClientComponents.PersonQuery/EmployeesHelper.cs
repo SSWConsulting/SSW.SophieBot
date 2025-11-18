@@ -52,7 +52,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
                     foreach (var employeeProject in employeeProjects)
                     {
                         double billableHours = employeeProject.BillableHours;
-                        int billedDays = GetBilledDays(billableHours);
+                        int billedDays = GetBilledDays(e, employeeProject, out billableHours);
                         billedProjects.Add(new BilledProject
                         {
                             BilledDays = billedDays,
@@ -174,28 +174,44 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery
             return BookingStatus.Unknown;
         }
 
-        public static int GetBilledDays(double billableHours)
+        // public static int GetBilledDays(double billableHours)
+        // {
+        //     const int HOURS_PER_DAY = 8;
+        //
+        //     return (int)Math.Ceiling(billableHours / HOURS_PER_DAY);
+        // }
+        //
+        // public static int GetTotalBilledDays(List<GetEmployeeProjectModel> Projects, out double billableHours)
+        // {
+        //     billableHours = 0;
+        //
+        //     if (Projects == null || !Projects.Any())
+        //     {
+        //         return 0;
+        //     }
+        //
+        //     foreach (var project in Projects)
+        //     {
+        //         billableHours += project.BillableHours;
+        //     }
+        //
+        //     return GetBilledDays(billableHours);
+        // }
+        
+        public static int GetBilledDays(GetEmployeeModel employee, GetEmployeeProjectModel project, out double billableHours)
         {
-            const int HOURS_PER_DAY = 8;
 
-            return (int)Math.Ceiling(billableHours / HOURS_PER_DAY);
-        }
 
-        public static int GetTotalBilledDays(List<GetEmployeeProjectModel> Projects, out double billableHours)
-        {
-            billableHours = 0;
-
-            if (Projects == null || !Projects.Any())
+            if (project != null && project.CustomerName != "SSW")
             {
-                return 0;
+                billableHours = project?.BillableHours ?? 0;
             }
-
-            foreach (var project in Projects)
-            {
-                billableHours += project.BillableHours;
+            else {
+                billableHours = 0;
             }
+         
 
-            return GetBilledDays(billableHours);
+            return billableHours == 0 ? 0 : (int)Math.Ceiling(billableHours / 8);
         }
 
         public static int GetBookedDays(GetEmployeeModel employee, DateTime startDate)
