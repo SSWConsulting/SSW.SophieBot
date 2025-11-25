@@ -51,7 +51,7 @@ namespace SSW.SophieBot.HttpClientComponents.PersonQuery.Actions
             {
                 employee.NormalizeAppointments(dc);
                 var nextUnavailability = EmployeesHelper.GetNextUnavailability(employee, date, out var freeDays);
-                int billableDays = EmployeesHelper.GetTotalBilledDays(employee.Projects, out var billableHours);
+                int billableDays = EmployeesHelper.GetBilledDays(employee, employee.Projects.FirstOrDefault(), out var billableHours);
                 return new FreeEmployeeModel
                 {
                     FirstName = employee.FirstName,
