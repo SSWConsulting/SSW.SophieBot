@@ -166,7 +166,7 @@ jobs:
 
       # Deploy the web app to azure
       - name: "Deploy Azure Web App"
-        uses: Azure/webapps-deploy@v2
+        uses: Azure/webapps-deploy@v3
         with:
           app-Name: ${{ env.WEBAPP_NAME }}
           publish-profile: ${{ secrets.BOT_WEBAPP_PUBLISH_PROFILE }}
