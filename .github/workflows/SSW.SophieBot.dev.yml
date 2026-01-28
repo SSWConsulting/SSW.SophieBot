@@ -98,7 +98,7 @@ jobs:
       - name: Publish QnA
         if: env.BUILD_FLOW == 'composer'
         run: |
-          $publishingProfileName = (${{ env.BUILD_FLOW }} -eq 'composer') ? "${{ env.PUBLISHING_PROFILE_NAME }}" : ""
+          $publishingProfileName = '${{ env.PUBLISHING_PROFILE_NAME }}'
           ${{ env.SOURCE_DIR }}/.github/workflows/scripts/Build-QnA.ps1 -botProjectFolder ./ -crossTrainedLUDirectory ./generated/interruption -publishingProfile $publishingProfileName
         working-directory: ${{ env.BOT_PROJECT_DIR }}
 
@@ -121,7 +121,7 @@ jobs:
       # Create bot app publishing package
       - name: Create bot publishing package
         run: |
-          $publishingProfileName = (${{ env.BUILD_FLOW }} -eq 'composer') ? "${{ env.PUBLISHING_PROFILE_NAME }}" : ""
+          $publishingProfileName = if ('${{ env.BUILD_FLOW }}' -eq 'composer') { '${{ env.PUBLISHING_PROFILE_NAME }}' } else { '' }
           & "${{ env.SOURCE_DIR }}/.github/workflows/scripts/Publish-WebApp.ps1" -botProjectFolder ${{ env.BOT_PROJECT_DIR }} -botProjectName ${{ env.BOT_PROJECT_NAME }} -outputFolder "${{ env.OUTPUT_DIR }}/deploy" -publishingProfile $publishingProfileName
         working-directory: ${{ env.BOT_PROJECT_DIR }}
 
