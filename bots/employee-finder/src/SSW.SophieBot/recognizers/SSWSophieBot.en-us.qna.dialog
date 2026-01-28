@@ -1,8 +1,8 @@
 {
 	"$kind": "Microsoft.QnAMakerRecognizer",
 	"id": "QnA_SSWSophieBot",
-	"knowledgeBaseId": "=settings.qna.SSWSophieBot_en_us_qna",
-	"hostname": "=settings.qna.hostname",
+	"knowledgeBaseId": "=settings.qna.projectName",
+	"hostname": "=settings.qna.endpoint",
 	"endpointKey": "=settings.qna.endpointKey",
 	"includeDialogNameInMetadata": false
 }
