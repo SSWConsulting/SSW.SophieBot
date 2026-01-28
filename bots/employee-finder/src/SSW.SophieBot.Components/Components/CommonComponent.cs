@@ -1,7 +1,8 @@
-﻿using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SSW.SophieBot.Components.Actions;
+using SSW.SophieBot.Components.Recognizers;
 using SSW.SophieBot.Components.Services;
 
 namespace SSW.SophieBot.Components.Components
@@ -21,6 +22,9 @@ namespace SSW.SophieBot.Components.Components
             services.AddDeclarativeType<TimeDifferenceAction>(TimeDifferenceAction.Kind);
             services.AddDeclarativeType<EnrichDatatimeAction>(EnrichDatatimeAction.Kind);
             services.AddDeclarativeType<UsageByUserAction>(UsageByUserAction.Kind);
+
+            // Register Custom Question Answering recognizer
+            services.AddDeclarativeType<CustomQuestionAnsweringRecognizer>(CustomQuestionAnsweringRecognizer.Kind);
         }
     }
 }

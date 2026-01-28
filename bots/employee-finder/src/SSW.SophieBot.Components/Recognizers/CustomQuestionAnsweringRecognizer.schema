@@ -1,0 +1,125 @@
+{
+    "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+    "$role": "implements(Microsoft.IRecognizer)",
+    "title": "Custom Question Answering recognizer",
+    "description": "Recognizer for generating QnAMatch intents from Custom Question Answering (Azure Language Service).",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "Optional unique id using with RecognizerSet."
+        },
+        "projectName": {
+            "$ref": "schema:#/definitions/stringExpression",
+            "title": "Project Name",
+            "description": "Custom Question Answering project name (knowledge base name).",
+            "default": "=settings.qna.projectName"
+        },
+        "endpointKey": {
+            "$ref": "schema:#/definitions/stringExpression",
+            "title": "Endpoint key",
+            "description": "Language Service API key.",
+            "default": "=settings.qna.endpointKey"
+        },
+        "hostname": {
+            "$ref": "schema:#/definitions/stringExpression",
+            "title": "Hostname",
+            "description": "Language Service endpoint URL.",
+            "default": "=settings.qna.endpoint",
+            "examples": [
+                "https://your-resource.cognitiveservices.azure.com"
+            ]
+        },
+        "deploymentName": {
+            "$ref": "schema:#/definitions/stringExpression",
+            "title": "Deployment Name",
+            "description": "Deployment name (e.g., 'production' or 'test').",
+            "default": "production"
+        },
+        "threshold": {
+            "$ref": "schema:#/definitions/numberExpression",
+            "title": "Threshold",
+            "description": "Threshold score to filter results.",
+            "default": 0.3
+        },
+        "top": {
+            "$ref": "schema:#/definitions/numberExpression",
+            "title": "Top",
+            "description": "The number of answers you want to retrieve.",
+            "default": 3
+        },
+        "isTest": {
+            "$ref": "schema:#/definitions/booleanExpression",
+            "title": "Use test environment",
+            "description": "True, if pointing to Test environment, else false.",
+            "examples": [
+                true,
+                "=f(x)"
+            ]
+        },
+        "rankerType": {
+            "title": "Ranker type",
+            "description": "Type of Ranker.",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "title": "Ranker type",
+                    "description": "Type of Ranker.",
+                    "enum": [
+                        "default",
+                        "questionOnly",
+                        "autoSuggestQuestion"
+                    ],
+                    "default": "default"
+                },
+                {
+                    "$ref": "schema:#/definitions/equalsExpression"
+                }
+            ]
+        },
+        "includeDialogNameInMetadata": {
+            "$ref": "schema:#/definitions/booleanExpression",
+            "title": "Include dialog name",
+            "description": "When set to false, the dialog name will not be passed to Custom Question Answering. (default) is true",
+            "default": true,
+            "examples": [
+                true,
+                "=f(x)"
+            ]
+        },
+        "metadata": {
+            "$ref": "schema:#/definitions/arrayExpression",
+            "title": "Metadata filters",
+            "description": "Metadata filters to use when calling Custom Question Answering.",
+            "items": {
+                "type": "object",
+                "title": "Metadata filter",
+                "description": "Metadata filter to use when calling Custom Question Answering.",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "description": "Name of value to test."
+                    },
+                    "value": {
+                        "type": "string",
+                        "title": "Value",
+                        "description": "Value to filter against."
+                    }
+                }
+            }
+        },
+        "enablePreciseAnswer": {
+            "$ref": "schema:#/definitions/booleanExpression",
+            "title": "Enable Precise Answer",
+            "description": "Enable precise answer feature.",
+            "default": true
+        }
+    },
+    "required": [
+        "projectName",
+        "endpointKey",
+        "hostname"
+    ]
+}
