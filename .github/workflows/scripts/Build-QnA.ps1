@@ -33,16 +33,25 @@ foreach ($path in $possiblePaths) {
     Write-Host "Checking: $path"
     if (Test-Path $path) {
         $content = Get-Content -Path $path -Raw -Encoding UTF8
+        Write-Host "  File size: $($content.Length) chars"
+        
         # Check if file has actual QnA content (not just imports)
-        if ($content -match "^#{1,2}\s*\?\s*.+$" -and $content.Length -gt 100) {
+        # Use (?m) for multiline mode so ^ matches start of each line
+        if ($content -match "(?m)^#\s*\?\s*.+" -and $content.Length -gt 100) {
             $inputFilePath = $path
             $qnaContent = $content
-            Write-Host "Found QnA content in: $path"
+            Write-Host "  Found QnA content!"
             break
         }
         else {
-            Write-Host "File exists but may only contain imports: $path"
+            Write-Host "  No QnA questions found (pattern: # ? question)"
+            # Show first 200 chars for debugging
+            $preview = if ($content.Length -gt 200) { $content.Substring(0, 200) } else { $content }
+            Write-Host "  Preview: $preview"
         }
+    }
+    else {
+        Write-Host "  File not found"
     }
 }
 
