@@ -61,8 +61,8 @@ function Merge-LUIS {
     
     $luisSettingsFile = Get-ChildItem -Path $generatedFolder -Filter "luis.settings.*.json" -file
     if (-not $luisSettingsFile) {
-        Write-Error "LUIS settings file not found in generated folder: $generatedFolder"
-        exit 1
+        Write-Host "No LUIS settings file found — skipping LUIS merge (CLU recognizer does not need it)."
+        return
     }
 
     $luisSettings = Get-Content $luisSettingsFile.FullName | ConvertFrom-Json

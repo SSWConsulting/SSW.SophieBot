@@ -1,0 +1,43 @@
+{
+    "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+    "$role": "implements(Microsoft.IRecognizer)",
+    "title": "CLU recognizer",
+    "description": "Recognizer that calls Conversational Language Understanding and emits LUIS-shaped entities.",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "Optional unique id used with RecognizerSet."
+        },
+        "projectName": {
+            "$ref": "schema:#/definitions/stringExpression",
+            "title": "Project Name",
+            "description": "Conversational Language Understanding project name.",
+            "default": "sswsophiebot-clu"
+        },
+        "deploymentName": {
+            "$ref": "schema:#/definitions/stringExpression",
+            "title": "Deployment Name",
+            "description": "CLU deployment name.",
+            "default": "production"
+        },
+        "endpoint": {
+            "$ref": "schema:#/definitions/stringExpression",
+            "title": "Endpoint",
+            "description": "Language Service endpoint URL.",
+            "default": "=settings.qna.endpoint"
+        },
+        "endpointKey": {
+            "$ref": "schema:#/definitions/stringExpression",
+            "title": "Endpoint key",
+            "description": "Language Service API key.",
+            "default": "=settings.qna.endpointKey"
+        }
+    },
+    "required": [
+        "projectName",
+        "endpoint",
+        "endpointKey"
+    ]
+}

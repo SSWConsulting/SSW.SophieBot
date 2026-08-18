@@ -25,6 +25,7 @@ namespace SSW.SophieBot.Components.Components
 
             // Register Custom Question Answering recognizer
             services.AddDeclarativeType<CustomQuestionAnsweringRecognizer>(CustomQuestionAnsweringRecognizer.Kind);
+            services.AddDeclarativeType<CluRecognizer>(CluRecognizer.Kind);
         }
     }
 }
