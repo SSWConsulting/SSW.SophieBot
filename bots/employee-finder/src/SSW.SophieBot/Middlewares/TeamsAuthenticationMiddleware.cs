@@ -22,16 +22,7 @@ namespace SSW.SophieBot.Middlewares
 
 		public async Task OnTurnAsync(ITurnContext turnContext, NextDelegate next, CancellationToken cancellationToken = default)
 		{
-			var channelId = turnContext.Activity.ChannelId;
-
-			// Only Teams and the local Emulator may reach the bot, so channels like Direct Line can't pull employee data
-			if (!string.Equals(Channels.Msteams, channelId, StringComparison.OrdinalIgnoreCase)
-				&& !string.Equals(Channels.Emulator, channelId, StringComparison.OrdinalIgnoreCase))
-			{
-				return;
-			}
-
-			if (string.Equals(Channels.Msteams, channelId, StringComparison.OrdinalIgnoreCase))
+			if (string.Equals(Channels.Msteams, turnContext.Activity.ChannelId, StringComparison.OrdinalIgnoreCase))
 			{
 				var tenantAuthenticated = false;
 
