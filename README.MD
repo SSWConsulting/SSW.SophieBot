@@ -24,7 +24,7 @@ The best open-source office bot to ask questions about your company.
 
 # Features
 - An awesome Conversational UI solution
-- Microsoft Teams, DirectLine (for customers own Chat UI)
+- Microsoft Teams
 - Dynamics 365 integration
 - SharePoint integration
 
